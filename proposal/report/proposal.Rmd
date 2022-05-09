@@ -7,6 +7,8 @@ output:
     number_sections: true
     toc: true
     toc_depth: 2
+bibliography: references.bib
+link-citations: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -39,12 +41,12 @@ knitr::include_graphics(here::here("proposal/report/images", "NA62_beam_detector
 
 The RICH AI dataset was created as part of the NA62 experiment at CERN in Switzerland in 2016, 2017, 2018, and 2021.  In order to generate data, several experiment "runs" are performed.  For each run, the experiment configuration is fixed and then the following steps are performed:
 
-1. A beam rich in kaon particles is delivered in “bursts” every four or five seconds into the beam and detector set up as shown in Figure X.
+1. A beam rich in kaon particles is delivered in “bursts” every four or five seconds into the beam and detector set up as shown in Figure X [@anzivino2020light].
 2. During a burst, several particle decays occur.  Each particle decay has an individual “event” ID associated with it.
-3. The product of the decay is accelerated through a chamber of neon gas in the RICH detector and produces/emits a cone of light.  The RICH detector is shown in Figure X.
+3. The product of the decay is accelerated through a chamber of neon gas in the RICH detector and produces/emits a cone of light.  The RICH detector is shown in Figure X [@anzivino2020light].
 4. The cone of light is reflected by a mosaic of mirrors onto an array of photomultiplier tubes (“PM”).  In an ideal situation, the cone of light forms a “ring” on the PM array.
 6. Each individual PM in the array records whether or not it was hit by light, as well as the time of arrival for each hit of light.
-7. The CHOD detector shown in Figure X records the time that the particle decay occurs.
+7. The CHOD detector shown in Figure X [@anzivino2020light] records the time that the particle decay occurs.
 
 ### RICH AI dataset
 
@@ -108,7 +110,7 @@ In building a more complicated machine learning model we will employ deep learni
 1. PointNet or PointNet++
 2. Graph Convolutional Neural Networks (“Graph CNN”)
 
-The first model architecture is called PointNet, which was originally designed to work with point cloud coordinate data (x, y, z).  We will first try out the “vanilla” version of PointNet, and if needed we will also implement the more complex updated architecture called PointNet++.
+The first model architecture is called PointNet, which was originally designed to work with point cloud coordinate data [@qi2017pointnet].  We will first try out the “vanilla” version of PointNet, and if needed we will also implement the more complex updated architecture called PointNet++.
 
 The second model architecture is called a Graph CNN.  Depending on the performance of our PointNet model, we may or may not implement this architecture for our task.
 
@@ -164,5 +166,3 @@ The total time allocated for our capstone project is eight weeks.  We propose th
 - Submit final product to TRIUMF and perform handover session
 
 # References
-
-- *TODO: References (bibliography)*
