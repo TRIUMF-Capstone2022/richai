@@ -17,11 +17,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Executive Summary
 
-- *TODO: Mukund to add exec summary*
+The NA62 experiment at CERN aims to verify the Standard Model which explains the rate of decay of the Kaon into a pion using the RICH detector and other instruments. However, the pion is only one of the three particles that may be produced in the decay event due to its stochastic nature. Hence the main challenge is to increase the pion efficiency, that is, the precision in which the pion is identified. The ultimate goal of this project is to develop a Python package that applies a combination of machine learning and deep learning techniques to accurately classify the particle produced in a decay event. The data for this project is from the NA62 experiments run in 2018 and contains examples of 11 million decay events. For each event, the subatomic particle produced in the decay is tagged, and contains features specific to the decay such as the particle momentum, CHOD time and the PMT data. This data is the hit times and X and Y positions of the photons produced as the subatomic particle passes through the RICH detector. The ML and DL algorithms will be developed with the objective of achieving a 95% pion efficiency whilst reducing the misclassification rate of muons and positrons  to 0.001%. The baseline classification model will be a boosted tree approach (LightGBM or XGBoost) that will only utilise the base features. The more sophisticated classification models will involve deep learning. Due to the sparse and scattered nature of the images from the experiment, the neural network structures that will be explored are PointNet and Graph Convolution Neural networks. These algorithms are specifically designed to handle the kind of image data described above, and are preferred over a traditional CNN. In the implementation of these neural networks, we expect to use the hit times of the photons as the third dimension. The receiver operating characteristic (ROC) curves will be used to assess the performance of each of these classifiers. Additionally, the pion efficiency will be maximised. The project will be executed in 6 phases: proposal, implementation, evaluation, code refactoring, documenting and reporting, and the final handover.  
+
 
 # Introduction
 
-- *TODO: Mukund to add exec intro*
+Particle physics involves the study of subatomic particles that are the most elementary constituents of matter. However these entities are extremely small and exist at very high energies, and therefore complex instruments are needed to study and characterise them. The NA62 experiment at CERN is one such experiment which is focused on the study of the decay of Kaon particles into a pion particle. The objective of this experiment is to verify the theoretical Standard Model which explains this rate of decay by precisely comparing the relationships between the quarks. 
+
+The main detector in the NA62 experiment is the RICH detector, which captures the ring of light produced by every product after a decay event. Other detectors in the instrument measure the particle momentum, velocity and time of passage. The images formed are in the shape of the ring, as it is the 2D projection of the conical light emitted due to the Cherenkov radiation. The light is emitted in packets of energy called photons, and therefore the final image is a scatter of X and Y coordinates. 
+
+The challenges of this study arise due to the rarity of the decay event, and the stochastic and uncontrolled nature of the particle decay. In the experimental setup of NA62, the Kaon can randomly decay into 3 particles: the pion, muon or positron. The probability of each of these decays is non-uniform. Hence the precision in identifying the pion after the decay process is of key interest. In physics, this is referred to as pion efficiency.
+
+The structure of this problem sets up perfectly for an image classification to identify the three types of particles that are imaged using a combination of machine learning and deep learning techniques. The metric of focus for these algorithms will be the efficiency of detection with regards to the pion. The ML models can be built based on the features associated with each decay such as the momentum and ring radius of each decay. On the other hand, the relevant deep learning methods to this problem can involve PointNet or graph neural networks as they will be effective in modelling the sparse and scattered structure of the image data. These deep learning architectures can also be used as feature extractors.The technique applied must achieve the desired pion efficiency whilst maintaining the overall accuracy by limiting the misclassification of muons and positrons as pions.
+
+Based on the targets for this project, the final product will be a python package that has functions to convert the raw data of each decay event to image data and other relevant features that can be fed into the main algorithm, a classification algorithm based on deep learning and machine learning techniques and another function that can be used to visualise the results and run an evaluation. These will be developed under the poetry framework so that the package dependencies are effectively managed. The product will be scalable and generalised so that it can be applied to the NA62 data from all the years. This is based on the assumption that the structure of the raw data such as the indexing will be consistent throughout the periods of the experiment. The scripts will be modularized so that the package can easily be incorporated into the existing architecture at TRIUMPH/CERN. 
 
 # Data Science Techniques
 
@@ -80,7 +89,7 @@ The task of our project is to build a machine learning model that can accurately
 
 TRIUMF currently employs an analytical approach without the use of machine learning to classify particle decays.  Specifically, maximum likelihood estimation is used to fit a ring to the PM hit data, and the ring radius is used to classify the particle decay.  With this methodology, TRIUMF achieves the following results:
 
-1. Pion efficiency of 95% (true positive rate for pion classification)
+1. pion efficiency of 95% (true positive rate for pion classification)
 2. Misclassification of a pion as a muon 1% of the time.
 
 ### Goals
@@ -95,7 +104,7 @@ In building our machine learning model we have the following goals:
 In building our machine learning model, we will attempt to maximize pion efficiency, which is defined as:
 
 $$
-\text{Pion efficiency} = \frac{\text{total number of pions detected}}{\text{total number of pions in dataset}}
+\text{pion efficiency} = \frac{\text{total number of pions detected}}{\text{total number of pions in dataset}}
 $$
 In comparing multiple machine learning models, we will utilize receiver operating characteristic (“ROC”) curves.
 
@@ -113,6 +122,8 @@ In building a more complicated machine learning model we will employ deep learni
 The first model architecture is called PointNet, which was originally designed to work with point cloud coordinate data [@qi2017pointnet].  We will first try out the “vanilla” version of PointNet, and if needed we will also implement the more complex updated architecture called PointNet++.
 
 The second model architecture is called a Graph CNN.  Depending on the performance of our PointNet model, we may or may not implement this architecture for our task.
+
+These two architectures are relevant for the type of images produced using the RICH detector as the scatter of photons are both sparse and in point form. Running a traditional CNN would be disadvantageous as a significant portion of the image cintains no information.
 
 ### Implementation
 
