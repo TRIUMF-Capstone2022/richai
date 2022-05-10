@@ -1,5 +1,5 @@
 ---
-title: "RICH AI - MDS Team Proposal"
+title: "RICH AI - MDS Team Proposal (DRAFT)"
 author: "Nico Van den Hooff, Mukund Iyer, Rakesh Pandey, Shiva Jena"
 date: "May 13, 2022"
 output: 
@@ -15,58 +15,64 @@ link-citations: yes
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Executive Summary
+# Executive summary
 
 The capstone project titled "*RICH AI*" floated by TRIUMF is aimed at improving Particle Identification (PID) performance of the Ring Imaging Cherenkov (RICH) by developing a classification model based on advanced Machine Learning (ML) and Deep Learning (DL) methods.
 
 The background of the project lies in the NA62 experiment at CERN (European organization for nuclear reasearch), which aims to measure an ultra-rare meson decay reaction to identify pion, which is produced along with muon and positron. The main challenge is to increase pion efficiency, that is, the fraction of the matched detected pions out of total number of pions or the true positive rate.
 
-The expected data product of this project is a Python package that applies a combination of ML and DL techniques to accurately classify the particle produced in a decay event. The initial data provided by TRIUMF for this project is from the NA62 experiments run in 2018 and contains particle tagged examples of approximately 11.5 million muon, pion and positron type events. Each event data consists of features specific to the decay such as the particle momentum, CHOD time and the PMT data comprising hit times, and X and Y positions of the photons produced as the subatomic particle passes through the RICH detector. More data, if needed, is to be provided by TRIUMF.
-
-The discussed modeling approach is comprised of developing models from simpler to complex ones, starting with a gradient-boosted tree (LightGBM or XGBoost) as our baseline model. Going further, due to the sparse and scattered nature of the images from the experiment, the neural network structures that are proposed to be explored are PointNet and Graph Convolution Neural networks (CNN). These algorithms are specifically designed to handle the specific kind of image data as described above, and are preferred over traditional CNN. For assessment of the models' performances, pion efficiency and Receiver Operating Characteristic (ROC) curve are proposed as evaluation metrics .
-
-The project is proposed to be executed in 6 phases: proposal, implementation, evaluation, code refactoring, documenting and reporting, and the final handover.
+The goal of our Capstone project is to build a deep learning model that can accurately classify a particle produced in a decay event.  The formal deliverable for our project is a Python package that encapsulates this model. The data for our project was generated as part of the 2018 NA62 experiments performed at CERN.  There are a total of 11 million labelled decay events, that contain features to be used in building our model.
 
 # Introduction
 
-Particle physics involves the study of subatomic particles that are the most elementary constituents of matter. However these entities are extremely small and exist at very high energies, and therefore complex instruments are needed to study and characterise them. The NA62 experiment at CERN is one such experiment which is focused on the study of the decay of Kaon particles into a pion particle. The objective of this experiment is to verify the theoretical Standard Model which explains this rate of decay by precisely comparing the relationships between the quarks.
+## Particle physics
 
-The main detector in the NA62 experiment is the RICH detector, which captures the ring of light produced by every product after a decay event. Other detectors in the instrument measure the particle momentum, velocity and time of passage. The images formed are in the shape of the ring, as it is the 2D projection of the conical light emitted due to the Cherenkov radiation. The light is emitted in packets of energy called photons, and therefore the final image is a scatter of X and Y coordinates.
+Particle physics involves the study of subatomic particles that are the most elementary constituents of matter. However these entities are extremely small and exist at very high energies, and therefore complex instruments are needed to study and characterize them.   The NA62 experiment at CERN is one such experiment which is focused on the study of the decay a Kaon particle into a pion, muon, or positron.  The objective of this experiment is to verify the theoretical Standard Model which explains this rate of decay by precisely comparing the relationships between the quarks.
 
-The challenges of this study arise due to the rarity of the decay event, and the stochastic and uncontrolled nature of the particle decay. In the experimental setup of NA62, the Kaon can randomly decay into 3 particles: the pion, muon or positron. The probability of each of these decays is non-uniform. Hence the efficiency in identifying the pion after the decay process is of key interest. 
+The current challenges of this study arise due to the rarity of a pion decay event, and the stochastic and uncontrolled nature of each particle decay. Further, the probability of each decay is non-uniform. Hence, the precision in identifying the pion after the decay process is of key interest.
 
-The structure of this problem sets up perfectly for an image classification to identify the three types of particles that are imaged using a combination of machine learning and deep learning techniques. The metric of focus for these algorithms will be the efficiency of detection with regards to the pion. The ML models can be built based on the features associated with each decay such as the momentum and ring radius of each decay. On the other hand, the relevant deep learning methods to this problem can involve PointNet or graph neural networks as they will be effective in modelling the sparse and scattered structure of the image data. These deep learning architectures can also be used as feature extractors.The technique applied must achieve the desired pion efficiency whilst maintaining the overall accuracy by limiting the misclassification of muons and positrons as pions.
-
-Based on the targets for this project, the final product will be a python package that has functions to convert the raw data of each decay event to image data and other relevant features that can be fed into the main algorithm, a classification algorithm based on deep learning and machine learning techniques and another function that can be used to visualise the results and run an evaluation. These will be developed under the poetry framework so that the package dependencies are effectively managed. The product will be scalable and generalised so that it can be applied to the NA62 data from all the years. This is based on the assumption that the structure of the raw data such as the indexing will be consistent throughout the periods of the experiment. The scripts will be modularized so that the package can easily be incorporated into the existing architecture at TRIUMPH/CERN.
-
-# Data Science Techniques
-
--   *TODO: Change "Figure X" with dynamic figure captions in markdown*
-
-## Data
+## RICH detector
 
 ```{r rich_detector, fig.align = 'center', out.width = "70%", fig.cap = "RICH AI beam and detector set up.", echo=FALSE}
 knitr::include_graphics(here::here("proposal/report/images", "RICH_detector.png"))
 ```
 
-```{r beam_detector, fig.align = 'center', out.width = "80%", fig.cap = "RICH AI beam and detector set up.", echo=FALSE}
+```{r beam_detector, fig.align = 'center', out.width = "80%", fig.cap = "NA62 experiement beam and detector set up.", echo=FALSE}
 knitr::include_graphics(here::here("proposal/report/images", "NA62_beam_detector.png"))
 ```
 
-### Data Generation process
+The main detector in the NA62 experiment is called a RICH detector as shown in Figure 1 [@anzivino2020light]. The RICH detector collects data on light that is emitted during each particle decay. Other detectors as shown in Figure 2 [@anzivino2020light] measure additional data such as particle momentum, velocity, and time of passage. 
 
-The RICH AI dataset was created as part of the NA62 experiment at CERN in Switzerland in 2016, 2017, 2018, and 2021. In order to generate data, several experiment "runs" are performed. For each run, the experiment configuration is fixed and then the following steps are performed:
+The data collected by the RICH detector forms an image of a ring, as it is the 2D projection of the conical light emitted due to the Cherenkov radiation. The light is emitted in packets of energy called photons, and the image produced can be represented as a scatter plot of $x$ and $y$ coordinates.
 
-1.  A beam rich in kaon particles is delivered in "bursts" every four or five seconds into the beam and detector set up as shown in Figure X [@anzivino2020light].
-2.  During a burst, several particle decays occur. Each particle decay has an individual "event" ID associated with it.
-3.  The product of the decay is accelerated through a chamber of neon gas in the RICH detector and produces/emits a cone of light. The RICH detector is shown in Figure X [@anzivino2020light].
-4.  The cone of light is reflected by a mosaic of mirrors onto an array of photomultiplier tubes ("PM"). In an ideal situation, the cone of light forms a "ring" on the PM array.
-5.  Each individual PM in the array records whether or not it was hit by light, as well as the time of arrival for each hit of light.
-6.  The CHOD detector shown in Figure X [@anzivino2020light] records the time that the particle decay occurs.
+## How data science can help
+
+The goal of the NA62 experiment at CERN can be expressed as a classification problem that can be solved using data science techniques.  Specifically, a classification machine learning or deep learning model can be built using the data generated in the experiment.  The goal in building the model would be to accurately classify each particle decay, with an emphasis on pion decays.
+
+## Project deliverable
+
+The project deliverable is a Python package that allows for training of the model that is developed, as well as evaluation on new data.  A knowledge transfer session will also be performed, so that the package can be utilized and further developed by the NA62 project team at TRIUMF.
+
+We plan to utilize `poetry` in developing our package so that the respective dependencies are effectively managed. The product will be designed so that it can be applied to the NA62 data from any year with the same input structure. The package scripts will be modular so that the package can easily be incorporated into the existing architecture at TRIUMF. 
+
+# Data science techniques
+
+## Data
+
+### Data generation process
+
+In order to generate the NA62 data, several experiment "runs" are performed.  For each run, the experiment configuration is fixed and the following steps are performed:
+
+1. A beam rich in kaon particles is delivered in “bursts” every four or five seconds into the beam and detector set up as shown in Figure 2 [@anzivino2020light].
+2. During a burst, several particle decays occur.  Each particle decay has an individual “event” ID associated with it.
+3. The product of the decay is accelerated through a chamber of neon gas in the RICH detector and produces/emits a cone of light.  The RICH detector is shown in Figure 1 [@anzivino2020light].
+4. The cone of light is reflected by a mosaic of mirrors onto an array of photomultiplier tubes (“PM”).  In an ideal situation, the cone of light forms a “ring” on the PM array.
+6. Each individual PM in the array records whether or not it was hit by light, as well as the time of arrival for each hit of light.
+7. The CHOD detector shown in Figure 2 [@anzivino2020light] records the time that the particle decay occurs.
 
 ### RICH AI dataset
 
-Our project will be utilising the 2018 data generated as part of the NA62 experiment. The 2018 dataset contains information on approximately 11 million particle decays and is stored in HDF5 format. Each particle decay contains the following features:
+Our project will be utilizing data as part of the 2018 NA62 experiment.  The dataset contains information on approximately 11 million particle decays and is stored in HDF5 format.  
 
 -   Decay label (pion, muon, positron)
 
@@ -93,13 +99,13 @@ The total number of decays for each class is as follows:
 -   1,169,556 pion decays
 -   113,112 positron decays
 
-## Machine Learning
+## Machine learning
 
 ### Task
 
 The task of our project is to build a machine learning model that can accurately classify an individual particle decay event as a pion, muon, or positron. The rarest and most interesting decay is a pion, whereas muon and positron decays are more common and less interesting. We note that the rarity of pion decays is demonstrated by the imbalanced dataset.
 
-### TRIUMF's Current Approach
+### TRIUMF's current approach
 
 TRIUMF currently employs an analytical approach without the use of machine learning to classify particle decays. Specifically, maximum likelihood estimation is used to fit a ring to the PM hit data, and the ring radius is used to classify the particle decay. With this methodology, TRIUMF achieves the following results:
 
@@ -119,24 +125,24 @@ In building our machine learning model, we will attempt to maximize pion efficie
 
 $$
 \text{pion efficiency} = \frac{\text{total number of pions detected}}{\text{total number of pions in dataset}}
-$$ In comparing multiple machine learning models, we will utilize receiver operating characteristic ("ROC") curves.
+$$ 
+
+In comparing multiple machine learning models, we will utilize receiver operating characteristic ("ROC") curves.
 
 ### Baseline model
 
-We have decided to use a gradient boosted tree as our baseline model. Specifically, we will try both XGBoost and LightGBM. These models will be trained on raw feature data, and the one that performs better will be selected as the baseline mode to use in assessing the performance of our more complex models.
+A gradient boosted tree will serve as our baseline model.  We will try both XGBoost and LightGBM.  These models will be trained on raw feature data, and the one that performs better will be selected as the baseline.
 
 ### Deep learning models
 
-In building a more complicated machine learning model we will employ deep learning. We have identified two potential models that may work well in achieving our task and goals:
+In building a more complicated machine learning model we will employ deep learning.  We have identified two potential model architectures that may work well in achieving our task and goals:
 
 1.  PointNet or PointNet++
 2.  Graph Convolutional Neural Networks ("Graph CNN")
 
-The first model architecture is called PointNet, which was originally designed to work with point cloud coordinate data [@qi2017pointnet]. We will first try out the "vanilla" version of PointNet, and if needed we will also implement the more complex updated architecture called PointNet++.
+The first model architecture is called PointNet, which was originally designed to work with point cloud coordinate data [@qi2017pointnet].  We will first try out the “vanilla” version of PointNet, and if needed we will also implement the more complex updated architecture called PointNet++.  We will also try out Graph CNNs on our data.
 
-The second model architecture is called a Graph CNN. Depending on the performance of our PointNet model, we may or may not implement this architecture for our task.
-
-These two architectures are relevant for the type of images produced using the RICH detector as the scatter of photons are both sparse and in point form. Running a traditional CNN would be disadvantageous as a significant portion of the image cintains no information.
+These two deep learning models were selected as their architecture is suited to the sparse image data produced by the RICH detector. We note that a traditional CNN would be disadvantageous as a significant portion of the image contains no information.
 
 ### Implementation
 
@@ -152,7 +158,7 @@ The following modes of communication exist for communication between the two tea
 -   Thursday Zoom meetings between TRIUMF and MDS
 -   Email
 
-## Overall Project Timeline
+## Overall project timeline
 
 The total time allocated for our capstone project is eight weeks. We propose the following high level project timeline:
 
