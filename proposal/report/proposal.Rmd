@@ -135,28 +135,18 @@ A gradient boosted tree will serve as our baseline model.  We will try both XGBo
 
 ### Deep learning models
 
-In building a more complicated machine learning model we will employ deep learning.  We have identified two potential model architectures that may work well in achieving our task and goals:
+In building a more complicated machine learning model we will employ deep learning. We note that the image data produced by the RICH detector is sparse. Hence a traditional CNN would be disadvantageous as a significant portion of the image contains no information.We have identified two potential model architectures that may work well in achieving our task and goals:
 
-1.  PointNet or PointNet++
-2.  Graph Convolutional Neural Networks ("Graph CNN")
+1.  PointNet [@qi2017pointnet] 
+2.  Graph Convolutional Neural Networks ("Graph CNN") [@zhougraph]
 
-The first model architecture is called PointNet, which was originally designed to work with point cloud coordinate data [@qi2017pointnet].  We will first try out the “vanilla” version of PointNet, and if needed we will also implement the more complex updated architecture called PointNet++.  We will also try out Graph CNNs on our data.
-
-These two deep learning models were selected as their architecture is suited to the sparse image data produced by the RICH detector. We note that a traditional CNN would be disadvantageous as a significant portion of the image contains no information.
+The first model architecture is called PointNet, which was originally designed to work with point cloud coordinate data.  We will first try out the “vanilla” version of PointNet, and if needed we will also implement the more complex updated architecture called PointNet++.  We will also try out Graph CNNs on our data.
 
 ### Implementation
 
-The baseline model will be implemented with the python libraries for XGBoost [Chen_2016] or LightGBM [ke2017lightgbm], respectively. The deep learning models will be built with PyTorch and PyTorch Geometric.
+The baseline model will be implemented with the python libraries for XGBoost [@Chen_2016] or LightGBM [@ke2017lightgbm], respectively. The deep learning models will be built with PyTorch [@NEURIPS2019_9015] and PyTorch Geometric [@fey].
 
 # Communication and timeline
-
-## Communication between TRIUMF and MDS
-
-The following modes of communication exist for communication between the two teams:
-
--   TRIUMF/MDS slack channel
--   Thursday Zoom meetings between TRIUMF and MDS
--   Email
 
 ## Overall project timeline
 
