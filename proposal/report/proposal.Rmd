@@ -1,5 +1,5 @@
 ---
-title: "RICH AI - MDS Team Proposal (DRAFT)"
+title: "RICH AI - MDS Team Proposal"
 author: "Nico Van den Hooff, Mukund Iyer, Rakesh Pandey, Shiva Jena"
 date: "May 13, 2022"
 output: 
