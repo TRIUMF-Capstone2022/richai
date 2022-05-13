@@ -17,9 +17,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Executive summary
 
-The capstone project titled "*RICH AI*" floated by TRIUMF is aimed at improving Particle Identification (PID) performance of the Ring Imaging Cherenkov (RICH) by developing a classification model based on advanced Machine Learning (ML) and Deep Learning (DL) methods.
+The capstone project titled "*RICH AI*" floated by TRIUMF (Canada's national particle accelerator center) is aimed at improving Particle Identification (PID) performance of the Ring Imaging Cherenkov (RICH) by developing a classification model based on advanced Machine Learning (ML).
 
-The background of the project lies in the NA62 experiment at CERN (European organization for nuclear reasearch), which aims to measure an ultra-rare meson decay reaction to identify pion, which is produced along with muon and positron. The main challenge is to increase pion efficiency, that is, the fraction of the matched detected pions out of total number of pions or the true positive rate.
+The background of the project lies in the NA62 experiment at CERN (European organization for nuclear research), which aims to measure an ultra-rare meson decay reaction to identify a pion, which is produced along with a muon and a positron. The main challenge is to increase pion efficiency, that is, the fraction of the matched detected pions out of total number of pions or the true positive rate.
 
 The goal of our Capstone project is to build a deep learning model that can accurately classify a particle produced in a decay event.  The formal deliverable for our project is a Python package that encapsulates this model. The data for our project was generated as part of the 2018 NA62 experiments performed at CERN.  There are a total of 11 million labelled decay events, that contain features to be used in building our model.
 
@@ -27,7 +27,7 @@ The goal of our Capstone project is to build a deep learning model that can accu
 
 ## Particle physics
 
-Particle physics involves the study of subatomic particles that are the most elementary constituents of matter. However these entities are extremely small and exist at very high energies, and therefore complex instruments are needed to study and characterize them.   The NA62 experiment at CERN is one such experiment which is focused on the study of the decay a Kaon particle into a pion, muon, or positron.  The objective of this experiment is to verify the theoretical Standard Model which explains this rate of decay by precisely comparing the relationships between the quarks.
+Particle physics involves the study of subatomic particles that are the most elementary constituents of matter. However these entities are extremely small and exist at very high energies, and therefore complex instruments are needed to study and characterize them.   The NA62 experiment at CERN is one such experiment which is focused on the study of the decay a Kaon particle into a pion, muon, or positron.  The objective of this experiment is to verify the theoretical Standard Model which explains this rate of decay by precisely comparing the relationships between the quarks [@Gil_2017].
 
 The current challenges of this study arise due to the rarity of a pion decay event, and the stochastic and uncontrolled nature of each particle decay. Further, the probability of each decay is non-uniform. Hence, the precision in identifying the pion after the decay process is of key interest.
 
@@ -43,11 +43,11 @@ knitr::include_graphics(here::here("proposal/report/images", "NA62_beam_detector
 
 The main detector in the NA62 experiment is called a RICH detector as shown in Figure 1 [@anzivino2020light]. The RICH detector collects data on light that is emitted during each particle decay. Other detectors as shown in Figure 2 [@anzivino2020light] measure additional data such as particle momentum, velocity, and time of passage. 
 
-The data collected by the RICH detector forms an image of a ring, as it is the 2D projection of the conical light emitted due to the Cherenkov radiation. The light is emitted in packets of energy called photons, and the image produced can be represented as a scatter plot of $x$ and $y$ coordinates.
+The data collected by the RICH detector forms an image of a ring, as it is the 2D projection of the conical light emitted due to the Cherenkov radiation [@Gil_2017]. The light is emitted in packets of energy called photons, and the image produced can be represented as a scatter plot of $x$ and $y$ coordinates.
 
 ## How data science can help
 
-The goal of the NA62 experiment at CERN can be expressed as a classification problem that can be solved using data science techniques.  Specifically, a classification machine learning or deep learning model can be built using the data generated in the experiment.  The goal in building the model would be to accurately classify each particle decay, with an emphasis on pion decays.
+The goal of the NA62 experiment at CERN can be expressed as a classification problem that can be solved using data science techniques.  Specifically, a classification machine learning or deep learning model can be built using the data generated in the experiment. The goal in building the model would be to accurately classify each particle decay, with an emphasis on pion decays.
 
 ## Project deliverable
 
@@ -63,12 +63,12 @@ We plan to utilize `poetry` in developing our package so that the respective dep
 
 In order to generate the NA62 data, several experiment "runs" are performed.  For each run, the experiment configuration is fixed and the following steps are performed:
 
-1. A beam rich in kaon particles is delivered in “bursts” every four or five seconds into the beam and detector set up as shown in Figure 2 [@anzivino2020light].
+1. A beam rich in kaon particles is delivered in “bursts” every four or five seconds into the beam and detector set up as shown in Figure 2.
 2. During a burst, several particle decays occur.  Each particle decay has an individual “event” ID associated with it.
-3. The product of the decay is accelerated through a chamber of neon gas in the RICH detector and produces/emits a cone of light.  The RICH detector is shown in Figure 1 [@anzivino2020light].
-4. The cone of light is reflected by a mosaic of mirrors onto an array of photomultiplier tubes (“PM”).  In an ideal situation, the cone of light forms a “ring” on the PM array.
-6. Each individual PM in the array records whether or not it was hit by light, as well as the time of arrival for each hit of light.
-7. The CHOD detector shown in Figure 2 [@anzivino2020light] records the time that the particle decay occurs.
+3. The product of the decay is accelerated through a chamber of neon gas in the RICH detector and produces/emits a cone of light.  The RICH detector is shown in Figure 1.
+4. The cone of light is reflected by a mosaic of mirrors onto an array of photomultiplier tubes (“PMT”).  In an ideal situation, the cone of light forms a “ring” on the PMT array.
+6. Each individual PMT in the array records whether or not it was hit by light, as well as the time of arrival for each hit of light.
+7. The hodoscope counters (CHOD) detector shown in Figure 2 records the time that the particle decay occurs.
 
 ### RICH AI dataset
 
@@ -85,7 +85,7 @@ Our project will be utilizing data as part of the 2018 NA62 experiment.  The dat
 
 -   CHOD time
 
--   Features from TRIUMFs maximum likelihood fit:
+-   Features from TRIUMF's maximum likelihood fit:
 
     -   Ring radius
     -   Ring centre (x, y)
@@ -107,7 +107,7 @@ The task of our project is to build a machine learning model that can accurately
 
 ### TRIUMF's current approach
 
-TRIUMF currently employs an analytical approach without the use of machine learning to classify particle decays. Specifically, maximum likelihood estimation is used to fit a ring to the PM hit data, and the ring radius is used to classify the particle decay. With this methodology, TRIUMF achieves the following results:
+TRIUMF currently employs an analytical approach without the use of machine learning to classify particle decays. Specifically, maximum likelihood estimation is used to fit a ring to the PMT hit data, and the ring radius is used to classify the particle decay. With this methodology, TRIUMF achieves the following results:
 
 1.  pion efficiency of 95% (true positive rate for pion classification)
 2.  Misclassification of a pion as a muon 1% of the time.
@@ -146,7 +146,7 @@ These two deep learning models were selected as their architecture is suited to 
 
 ### Implementation
 
-The baseline model will be implemented with the python libraries for XGBoost or LightGBM, respectively. The deep learning models will be built with PyTorch and PyTorch Geometric.
+The baseline model will be implemented with the python libraries for XGBoost [Chen_2016] or LightGBM [ke2017lightgbm], respectively. The deep learning models will be built with PyTorch and PyTorch Geometric.
 
 # Communication and timeline
 
