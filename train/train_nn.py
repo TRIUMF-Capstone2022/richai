@@ -1,6 +1,4 @@
-from asyncio.log import logger
 import os
-from tokenize import Pointfloat
 from models.pointnet import PointNetFeat
 import torch
 import torch.nn.parallel
@@ -12,7 +10,9 @@ from tqdm import tqdm
 
 from dataset.rich_dataset import RICHDataset
 from dataset.data_loader import data_loader
-from utils.helpers import get_config
+from utils.helpers import get_config, get_logger
+
+logger = get_logger()
 
 # device
 # device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
@@ -120,8 +120,8 @@ if __name__ == "__main__":
 
     # Save model
     PATH = "pointnet.pt"
-    torch.save(model.state_dict(), PATH)     # save model at PATH
+    torch.save(model.state_dict(), PATH)  # save model at PATH
 
     # Load model
-    model = PointNetFeat(k=num_classes)             # create an instance of the model
+    model = PointNetFeat(k=num_classes)  # create an instance of the model
     model.load_state_dict(torch.load(PATH))  # load model from PATH
