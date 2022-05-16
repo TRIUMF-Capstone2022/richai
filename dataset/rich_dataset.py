@@ -56,6 +56,15 @@ class RICHDataset(Dataset):
             if [mu_off, pi_off, pos_off] != sorted([mu_off, pi_off, pos_off]):
                 raise Exception("Offsets are not correct")
 
+            self.offsets = {
+                "entries": entries,
+                "muon": mu_off,
+                "pion": pi_off,
+                "positron": pos_off,
+            }
+
+            logger.info(f"Offsets: {self.offsets}")
+
             # muon: 0, pion: 1, positron: 2
             self.labels = np.zeros(entries, dtype=np.int32)
             self.labels[mu_off:pi_off] = 0
@@ -68,7 +77,7 @@ class RICHDataset(Dataset):
             logger.info(f"Positron start at index: {pos_off}")
 
             # shuffle indices
-            indices = np.arange(len(self))
+            indices = np.arange(self.N)
             np.random.shuffle(indices)
 
             # train, validation, test

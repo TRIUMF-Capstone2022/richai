@@ -117,3 +117,11 @@ if __name__ == "__main__":
         epochs=5,
         verbose=True,
     )
+
+    # Save model
+    PATH = "pointnet.pt"
+    torch.save(model.state_dict(), PATH)     # save model at PATH
+
+    # Load model
+    model = PointNetFeat(k=num_classes)             # create an instance of the model
+    model.load_state_dict(torch.load(PATH))  # load model from PATH
