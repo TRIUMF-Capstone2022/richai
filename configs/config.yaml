@@ -1,0 +1,10 @@
+dataset:
+  base_dir: "/data/bvelghe/capstone2022/"
+
+data_loader:
+  batch_size: 64
+  num_workers: 8  
+
+model:
+  pointnet:
+    num_classes: 3  
