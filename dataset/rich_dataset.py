@@ -7,6 +7,7 @@ import torch
 from torch.utils.data import Dataset
 import numpy as np
 import os
+from collections import defaultdict
 
 from utils.helpers import compute_seq_id, get_config, get_logger
 
@@ -16,7 +17,7 @@ logger = get_logger()
 class RICHDataset(Dataset):
     """RICH pytorch dataset."""
 
-    def __init__(self, dset_path, val_split, test_split=None, seed=None):
+    def __init__(self, dset_path, val_split=None, test_split=None, seed=None):
 
         # set seed
         if seed:
@@ -81,17 +82,16 @@ class RICHDataset(Dataset):
             np.random.shuffle(indices)
 
             # train, validation, test
-            n_val = int(len(indices) * val_split)
-
             if test_split:
+                n_val = int(len(indices) * val_split)
                 n_test = int(len(indices) * test_split)
                 self.train_indices = indices[: -n_val - n_test]
                 self.val_indices = indices[-n_test - n_val : -n_test]
                 self.test_indices = indices[-n_test:]
-            else:
-                self.train_indices = indices[: -n_val]
-                self.val_indices = indices[-n_val: ]
-                    
+            elif val_split:
+                n_val = int(len(indices) * val_split)
+                self.train_indices = indices[:-n_val]
+                self.val_indices = indices[-n_val:]
 
         # We don't attempt to catch exception here, crash if we cannot open the file.
         with open(dset_path, "rb") as fh:
@@ -153,12 +153,43 @@ class RICHDataset(Dataset):
         return (torch.tensor(self.data["event_pos"]), torch.tensor(self.data["label"]))
 
 
+def combine_datset(key, **kwargs):
+    """Combine all the datasets on specified path
+    key: train or test
+    """
+    # get it from config
+    dset_dirs = [
+        os.path.join(get_config("dataset.base_dir"), i)
+        for i in get_config(f"dataset.{key}")
+    ]
+
+    logger.info(f"Train directories: {dset_dirs}")
+
+    # file list
+    dset_dict = defaultdict()
+
+    for dset_dir in dset_dirs:
+        # check if the directory exists
+        if not os.path.exists(dset_dir):
+            raise Exception(f"Directory {dset_dir} does not exist")
+
+        # get list of files
+        for dset_file in os.listdir(dset_dir):
+            file_ = os.path.join(dset_dir, dset_file)
+            dset_dict[file_] = RICHDataset(file_, **kwargs)
+
+    logger.info(f"Training files: {dset_dict}")
+
+    return dset_dict
+
+
 if __name__ == "__main__":
-    path = os.path.join(
-        get_config("dataset.base_dir"),
-        "A",
-        "Run008548.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01.h5",
-    )
-    dset = RICHDataset(dset_path=path, val_split=0.1, test_split=0.1)
-    print(dset[0])
-    print(dset.data)
+    combine_datset("test")
+    # path = os.path.join(
+    #     get_config("dataset.base_dir"),
+    #     "A",
+    #     "Run008548.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01.h5",
+    # )
+    # dset = RICHDataset(dset_path=path, val_split=0.1, test_split=0.1)
+    # print(dset[0])
+    # print(dset.data)

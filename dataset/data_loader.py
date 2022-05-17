@@ -22,12 +22,14 @@ def data_loader(dset):
         num_workers=get_config("data_loader.num_workers"),
     )
 
-    test_loader = DataLoader(
-        dset,
-        batch_size=get_config("data_loader.batch_size"),
-        shuffle=False,
-        sampler=SubsetRandomSampler(dset.test_indices),
-        num_workers=get_config("data_loader.num_workers"),
-    )
+    test_loader = None
+    if hasattr(dset, 'test_indices'):
+        test_loader = DataLoader(
+            dset,
+            batch_size=get_config("data_loader.batch_size"),
+            shuffle=False,
+            sampler=SubsetRandomSampler(dset.test_indices),
+            num_workers=get_config("data_loader.num_workers"),
+        )
 
     return (train_loader, val_loader, test_loader)

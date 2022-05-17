@@ -8,15 +8,11 @@ import torch.nn.functional as F
 from tqdm import tqdm
 
 
-from dataset.rich_dataset import RICHDataset
+from dataset.rich_dataset import RICHDataset, combine_datset
 from dataset.data_loader import data_loader
 from utils.helpers import get_config, get_logger
 
 logger = get_logger()
-
-# device
-# device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-device = "cpu"
 
 
 def trainer(
@@ -27,6 +23,7 @@ def trainer(
     trainloader,
     validloader,
     epochs=5,
+    device="cpu",
     verbose=True,
 ):
     """Simple training wrapper for PyTorch network."""
@@ -47,7 +44,7 @@ def trainer(
             y = y.long().to(device)
 
             optimizer.zero_grad()  # Zero all the gradients w.r.t. parameters
-            y_hat = model(X)  # Forward pass to get output
+            y_hat = model(X).to(device)  # Forward pass to get output
             loss = criterion(y_hat, y)  # Calculate loss based on output
             loss.backward()  # Calculate gradients w.r.t. parameters
             optimizer.step()  # Update parameters
@@ -62,7 +59,7 @@ def trainer(
                 X = X.transpose(2, 1).to(device)
                 y = y.long().to(device)
 
-                y_hat = model(X)
+                y_hat = model(X).to(device)
                 _, y_hat_labels = torch.softmax(y_hat, dim=1).topk(1, dim=1)
                 loss = criterion(y_hat, y)
                 valid_batch_loss += loss.item()
@@ -92,37 +89,96 @@ def trainer(
     return results
 
 
-if __name__ == "__main__":
-    path = os.path.join(
-        get_config("dataset.base_dir"),
-        "A",
-        "Run008548.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01.h5",
-    )
-    dataset = RICHDataset(dset_path=path, val_split=0.1, test_split=0.1)
-    num_classes = get_config("model.pointnet.num_classes")
-    batch_size = get_config("data_loader.batch_size")
-    model = PointNetFeat(k=num_classes).to(device)
+def train_combined(reload_model=True):
+    """Train the model on combined dataset"""
+
+    # device
+    # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = "cpu"
+
+    # define model
+    model = PointNetFeat(k=get_config("model.pointnet.num_classes")).to(
+        device
+    )  # create an instance of the model
     criterion = F.nll_loss
     optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
-    trainloader, validloader, testloader = data_loader(dataset)
 
-    # start training
-    trainer(
-        model,
-        criterion,
-        optimizer,
-        scheduler,
-        trainloader,
-        validloader,
-        epochs=5,
-        verbose=True,
+    # model path
+    model_path = get_config("model.pointnet.saved_model")
+
+    logger.info(
+        f"""
+    Device: {device},
+    model_path: {model_path}
+    """
     )
 
-    # Save model
-    PATH = "pointnet.pt"
-    torch.save(model.state_dict(), PATH)  # save model at PATH
+    for file_, dataset in combine_datset("train", val_split=0.2).items():
 
-    # Load model
-    model = PointNetFeat(k=num_classes)  # create an instance of the model
-    model.load_state_dict(torch.load(PATH))  # load model from PATH
+        logger.info(f"Training for {file_}")
+
+        trainloader, validloader, _ = data_loader(dataset)
+
+        if reload_model and os.path.exists(model_path):
+            model.load_state_dict(torch.load(model_path))
+            logger.info(
+                f"model reloaded from existing path {model_path}, continue training"
+            )
+
+        # start training
+        trainer(
+            model,
+            criterion,
+            optimizer,
+            scheduler,
+            trainloader,
+            validloader,
+            epochs=5,
+            # device=device,
+            verbose=True,
+        )
+
+        logger.info(f"Training completed with file: {file_}")
+        logger.info(f"Saving trained model to {model_path}")
+
+        # save model
+        torch.save(model.state_dict(), model_path)
+        logger.info(f"model successfully saved to {model_path}")
+
+
+if __name__ == "__main__":
+    train_combined()
+    # path = os.path.join(
+    #     get_config("dataset.base_dir"),
+    #     "A",
+    #     "Run008548.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01.h5",
+    # )
+    # dataset = RICHDataset(dset_path=path, val_split=0.1, test_split=0.1)
+    # num_classes = get_config("model.pointnet.num_classes")
+    # batch_size = get_config("data_loader.batch_size")
+    # model = PointNetFeat(k=num_classes).to(device)
+    # criterion = F.nll_loss
+    # optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
+    # scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
+    # trainloader, validloader, testloader = data_loader(dataset)
+
+    # # start training
+    # trainer(
+    #     model,
+    #     criterion,
+    #     optimizer,
+    #     scheduler,
+    #     trainloader,
+    #     validloader,
+    #     epochs=5,
+    #     verbose=True,
+    # )
+
+    # # Save model
+    # PATH = "pointnet.pt"
+    # torch.save(model.state_dict(), PATH)  # save model at PATH
+
+    # # Load model
+    # model = PointNetFeat(k=num_classes)  # create an instance of the model
+    # model.load_state_dict(torch.load(PATH))  # load model from PATH

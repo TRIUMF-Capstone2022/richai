@@ -1,5 +1,7 @@
 dataset:
   base_dir: "/data/bvelghe/capstone2022/"
+  train: ["B", "C"]
+  test: ["A"]
 
 data_loader:
   batch_size: 64
@@ -7,4 +9,5 @@ data_loader:
 
 model:
   pointnet:
-    num_classes: 3  
+    num_classes: 3
+    saved_model: "saved_models/pointnet.pt"
