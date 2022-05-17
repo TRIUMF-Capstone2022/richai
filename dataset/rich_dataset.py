@@ -16,7 +16,7 @@ logger = get_logger()
 class RICHDataset(Dataset):
     """RICH pytorch dataset."""
 
-    def __init__(self, dset_path, val_split, test_split, seed=None):
+    def __init__(self, dset_path, val_split, test_split=None, seed=None):
 
         # set seed
         if seed:
@@ -82,10 +82,16 @@ class RICHDataset(Dataset):
 
             # train, validation, test
             n_val = int(len(indices) * val_split)
-            n_test = int(len(indices) * test_split)
-            self.train_indices = indices[: -n_val - n_test]
-            self.val_indices = indices[-n_test - n_val : -n_test]
-            self.test_indices = indices[-n_test:]
+
+            if test_split:
+                n_test = int(len(indices) * test_split)
+                self.train_indices = indices[: -n_val - n_test]
+                self.val_indices = indices[-n_test - n_val : -n_test]
+                self.test_indices = indices[-n_test:]
+            else:
+                self.train_indices = indices[: -n_val]
+                self.val_indices = indices[-n_val: ]
+                    
 
         # We don't attempt to catch exception here, crash if we cannot open the file.
         with open(dset_path, "rb") as fh:
