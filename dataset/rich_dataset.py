@@ -77,7 +77,7 @@ class RICHDataset(Dataset):
             logger.info(f"Positron start at index: {pos_off}")
 
             # shuffle indices
-            indices = np.arange(self.N)
+            indices = np.arange(self.N - 2)
             np.random.shuffle(indices)
 
             # train, validation, test

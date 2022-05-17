@@ -77,10 +77,11 @@ def trainer(
         # Print progress
         if verbose:
             logger.info(
-                f"Epoch {epoch + 1}:",
-                f"Train Loss: {train_loss[-1]:.3f}.",
-                f"Valid Loss: {valid_loss[-1]:.3f}.",
-                f"Valid Accuracy: {valid_accuracy[-1]:.2f}.",
+                f"""Epoch {epoch + 1}
+                Train Loss: {train_loss[-1]:.3f}
+                Valid Loss: {valid_loss[-1]:.3f}
+                Valid Accuracy: {valid_accuracy[-1]:.2f}
+                """
             )
 
     results = {
