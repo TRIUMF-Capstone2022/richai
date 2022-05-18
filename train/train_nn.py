@@ -93,8 +93,8 @@ def train_combined(reload_model=True):
     """Train the model on combined dataset"""
 
     # device
-    # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    device = "cpu"
+    device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
+    # device = "cpu"
 
     # define model
     model = PointNetFeat(k=get_config("model.pointnet.num_classes")).to(
@@ -135,7 +135,7 @@ def train_combined(reload_model=True):
             trainloader,
             validloader,
             epochs=5,
-            # device=device,
+            device=device,
             verbose=True,
         )
 
