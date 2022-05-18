@@ -92,14 +92,19 @@ def trainer(
 def train_combined(reload_model=True):
     """Train the model on combined dataset"""
 
-    # device
-    device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
-    # device = "cpu"
-
     # define model
-    model = PointNetFeat(k=get_config("model.pointnet.num_classes")).to(
-        device
-    )  # create an instance of the model
+    model = PointNetFeat(k=get_config("model.pointnet.num_classes"))
+    
+    # device
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    # enable multi GPUs
+    if torch.cuda.device_count() > 1:
+        model = torch.nn.DataParallel(model, device_ids = [1, 3, 7])
+        device = f'cuda:{model.device_ids[0]}'
+
+    model.to(device)
+    
     criterion = F.nll_loss
     optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
