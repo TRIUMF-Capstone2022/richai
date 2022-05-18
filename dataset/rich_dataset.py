@@ -1,6 +1,7 @@
 from cProfile import label
 import logging
 import mmap
+from operator import pos
 from webbrowser import get
 import h5py
 import torch
@@ -128,6 +129,10 @@ class RICHDataset(Dataset):
             self.event_array[idx]["chod_time"]
             - self.hit_array[idx_from:idx_to]["hit_time"]
         )
+
+        if event_pos.shape[0] > position_map.shape[0]:
+            logger.warning("Unusual event pos")
+            return position_map
 
         data = np.zeros_like(position_map)
         data[: event_pos.shape[0], : event_pos.shape[1]] = event_pos

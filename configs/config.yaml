@@ -11,3 +11,4 @@ model:
   pointnet:
     num_classes: 3
     saved_model: "saved_models/pointnet.pt"
+    predictions: "saved_models/predictions.csv"
