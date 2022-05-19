@@ -5,8 +5,8 @@ from functools import reduce
 import yaml
 
 def compute_seq_id(hit, or_id=0):
-    disk_id, pm_id, sc_id, up_dw_id, _ = hit
     """Compute the RICH PMT sequence ID"""
+    disk_id, pm_id, sc_id, up_dw_id, _ = hit
     if or_id < 1:
         seq_id = sc_id * 8 + pm_id + up_dw_id * 61 * 8 + disk_id * 61 * 8 * 2
     else:
@@ -35,7 +35,7 @@ def get_config(key=None, config_file="configs/config.yaml"):
         conf = reduce(lambda c, k: c[k], key.split("."), conf)
     return conf
 
-def get_logger(file_path="", file_name=""):
+def get_logger(file_path=None, file_name=None):
     """
     This function initialize the log file
 

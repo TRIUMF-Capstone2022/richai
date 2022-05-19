@@ -155,7 +155,9 @@ class RICHDataset(Dataset):
             "ring_radius": self.event_array[idx]["ring_radius"],
         }
 
-        return (torch.tensor(self.data["event_pos"]), torch.tensor(self.data["label"]))
+        return (
+            torch.tensor(self.data["event_pos"]),
+            torch.tensor(self.data["label"]), torch.tensor(self.data["track_momentum"]))
 
 
 def combine_datset(key, **kwargs):

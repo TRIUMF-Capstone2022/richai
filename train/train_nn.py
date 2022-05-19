@@ -1,5 +1,5 @@
 import os
-from models.pointnet import PointNetFeat
+from models.pointnet import PointNetFeat, PointNetFeedForward
 import torch
 import torch.nn.parallel
 import torch.optim as optim
@@ -16,6 +16,7 @@ logger = get_logger()
 
 
 def trainer(
+    feature_extractor,
     model,
     criterion,
     optimizer,
@@ -38,13 +39,15 @@ def trainer(
         valid_batch_acc = 0
 
         # Training
-        for X, y in trainloader:
+        for X, y, p in trainloader:
             # GPU
             X = X.transpose(2, 1).to(device)
             y = y.long().to(device)
+            p = p.to(device)
 
             optimizer.zero_grad()  # Zero all the gradients w.r.t. parameters
-            y_hat = model(X).to(device)  # Forward pass to get output
+            X = feature_extractor(X).to(device)  # Forward pass to get output
+            y_hat = model(X, p).to(device)
             loss = criterion(y_hat, y)  # Calculate loss based on output
             loss.backward()  # Calculate gradients w.r.t. parameters
             optimizer.step()  # Update parameters
@@ -54,12 +57,14 @@ def trainer(
         # Validation
         model.eval()
         with torch.no_grad():  # this stops pytorch doing computational graph stuff under-the-hood and saves memory and time
-            for X, y in validloader:
+            for X, y, p in validloader:
                 # GPU
                 X = X.transpose(2, 1).to(device)
                 y = y.long().to(device)
+                p = p.to(device)
 
-                y_hat = model(X).to(device)
+                X = feature_extractor(X).to(device)  # Forward pass to get output
+                y_hat = model(X, p).to(device)
                 _, y_hat_labels = torch.softmax(y_hat, dim=1).topk(1, dim=1)
                 loss = criterion(y_hat, y)
                 valid_batch_loss += loss.item()
@@ -92,19 +97,28 @@ def trainer(
 def train_combined(reload_model=True):
     """Train the model on combined dataset"""
 
-    # define model
-    model = PointNetFeat(k=get_config("model.pointnet.num_classes"))
-    
+    logger.info(f"Using gpus: {get_config('gpu')}")
+
+    # define feature extractor
+    feature_extractor = PointNetFeat(k=get_config("model.pointnet.num_classes"))
+
+    # Fully connected model
+    model = PointNetFeedForward(257, 3)
+
     # device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # enable multi GPUs
     if torch.cuda.device_count() > 1:
-        model = torch.nn.DataParallel(model, device_ids = [1, 3, 7])
-        device = f'cuda:{model.device_ids[0]}'
+        feature_extractor = torch.nn.DataParallel(
+            feature_extractor, device_ids=get_config("gpu")
+        )
+        model = torch.nn.DataParallel(model, device_ids=get_config("gpu"))
+        device = f"cuda:{feature_extractor.device_ids[0]}"
 
+    feature_extractor.to(device)
     model.to(device)
-    
+
     criterion = F.nll_loss
     optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
@@ -133,13 +147,14 @@ def train_combined(reload_model=True):
 
         # start training
         trainer(
+            feature_extractor,
             model,
             criterion,
             optimizer,
             scheduler,
             trainloader,
             validloader,
-            epochs=5,
+            epochs=get_config("model.pointnet.epochs"),
             device=device,
             verbose=True,
         )
