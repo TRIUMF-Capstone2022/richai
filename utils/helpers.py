@@ -48,25 +48,28 @@ def get_logger(file_path=None, file_name=None):
     -------
     log: log configuration
     """
+
     logging.getLogger("py4j").setLevel(logging.ERROR)
     log = logging.getLogger("main_logger")
     log.setLevel("INFO")
 
-    formatter = logging.Formatter("%(asctime)s  %(levelname)-8s  %(message)s")
-    
-    # Create file handler
-    if file_path:
-        logger_filepath = os.path.join(file_path, file_name)
-        os.makedirs(file_path, exist_ok=True)  # create folder if needed
-        fh = logging.FileHandler(logger_filepath)
-        fh.setLevel("INFO")
-        fh.setFormatter(formatter)
-        log.addHandler(fh)
+    if not log.handlers:
 
-    # Create console handler
-    ch = logging.StreamHandler()
-    ch.setLevel("INFO")
-    ch.setFormatter(formatter)
-    log.addHandler(ch)
+        formatter = logging.Formatter("%(asctime)s  %(levelname)-8s  %(message)s")
+        
+        # Create file handler
+        if file_path:
+            logger_filepath = os.path.join(file_path, file_name)
+            os.makedirs(file_path, exist_ok=True)  # create folder if needed
+            fh = logging.FileHandler(logger_filepath)
+            fh.setLevel("INFO")
+            fh.setFormatter(formatter)
+            log.addHandler(fh)
+
+        # Create console handler
+        ch = logging.StreamHandler()
+        ch.setLevel("INFO")
+        ch.setFormatter(formatter)
+        log.addHandler(ch)
 
     return log

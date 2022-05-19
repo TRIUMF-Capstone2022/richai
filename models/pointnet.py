@@ -1,7 +1,6 @@
 """Adapted from watchML 
 """
 
-from asyncio.log import logger
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
@@ -132,24 +131,26 @@ class PointNetFeat(nn.Module):
 
 
 class PointNetFeedForward(nn.Module):
-    def __init__(self, num_inputs, num_classes):
+    
+    def __init__(self, k):
         super().__init__()
-        min_channels = 257
-        channels_1 = max(num_inputs // 2, min_channels)  # include moemntum
-        channels_2 = max(num_inputs // 4, min_channels)
-        self.fc1 = nn.Linear(num_inputs, channels_1)
-        self.fc2 = nn.Linear(channels_1, channels_2)
-        self.fc3 = nn.Linear(channels_2, num_classes)
+
+        self.feat = PointNetFeat(k=k)
+        self.fc1 = nn.Linear(257, 257)
+        self.fc2 = nn.Linear(257, 257)
+        self.fc3 = nn.Linear(257, k)
         self.dropout = nn.Dropout(p=0.3)
-        self.bn1 = nn.BatchNorm1d(channels_1)
-        self.bn2 = nn.BatchNorm1d(channels_2)
+        self.bn = nn.BatchNorm1d(257)
         self.relu = nn.ReLU()
 
     def forward(self, x, p):
+
+        x = self.feat(x)
+
         # concatenate momentum
         x = torch.hstack([x, p.unsqueeze(1)])
 
-        x = self.relu(self.bn1(self.fc1(x)))
-        x = self.relu(self.bn2(self.dropout(self.fc2(x))))
+        x = self.relu(self.bn(self.fc1(x)))
+        x = self.relu(self.bn(self.dropout(self.fc2(x))))
         x = self.fc3(x)
         return x
