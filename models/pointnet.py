@@ -1,4 +1,6 @@
-"""https://github.com/nikitakaraevv/pointnet/blob/master/nbs/PointNetClass.ipynb
+"""
+Adapted from
+https://github.com/nikitakaraevv/pointnet/blob/master/nbs/PointNetClass.ipynb
 """
 
 import torch
@@ -79,7 +81,7 @@ class PointNetFc(nn.Module):
     def __init__(self, k=3):
         super().__init__()
         self.transform = Transform()
-        self.fc1 = nn.Linear(1024, 512)
+        self.fc1 = nn.Linear(1024, 512) 
         self.fc2 = nn.Linear(512, 256)
         self.fc3 = nn.Linear(256, k)
 
@@ -88,9 +90,15 @@ class PointNetFc(nn.Module):
         self.dropout = nn.Dropout(p=0.3)
         self.logsoftmax = nn.LogSoftmax(dim=1)
 
-    def forward(self, input):
-        xb, matrix3x3, matrix64x64 = self.transform(input)
-        xb = F.relu(self.bn1(self.fc1(xb)))
-        xb = F.relu(self.bn2(self.dropout(self.fc2(xb))))
-        output = self.fc3(xb)
+    def forward(self, input, momentum=None):
+        x, matrix3x3, matrix64x64 = self.transform(input)
+
+        # Attach moemntum
+        if momentum:
+            x = torch.hstack([x, momentum.unsqueeze(1)])
+            self.fc1 = nn.Linear(1024 + 1, 512)
+
+        x = F.relu(self.bn1(self.fc1(x)))
+        x = F.relu(self.bn2(self.dropout(self.fc2(x))))
+        output = self.fc3(x)
         return self.logsoftmax(output), matrix3x3, matrix64x64

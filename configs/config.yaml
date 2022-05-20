@@ -11,10 +11,8 @@ model:
   pointnet:
     num_classes: 3
     epochs: 5
-    saved_model: 
-      model: "saved_models/pointnet_momentum.pt"
-      feature_extractor: "saved_models/feature_extractor.pt"
-    predictions: "saved_models/predictions_momentum.csv"
+    saved_model: "saved_models/pointnet_2.pt"
+    predictions: "saved_models/predictions_2.csv"
 
 gpu:
   - 1
