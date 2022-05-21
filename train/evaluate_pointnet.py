@@ -3,7 +3,7 @@ import torch
 from utils.helpers import get_logger, get_config
 import pandas as pd
 
-from models.pointnet import PointNetc
+from models.pointnet import PointNetFc
 from dataset.rich_dataset import combine_datset
 
 logger = get_logger()
@@ -15,7 +15,6 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 def evaluate(model, data_loader):
     """Evaluate the trained model on the test set."""
     labels, predictions = [], []
-    accuracy = 0
 
     # enable multi GPUs
     if torch.cuda.device_count() > 1:
@@ -26,6 +25,7 @@ def evaluate(model, data_loader):
     model.load_state_dict(torch.load(get_config("model.pointnet.saved_model")))
 
     model.eval()
+    correct = total = 0
     with torch.no_grad():  # this stops pytorch doing computational graph stuff under-the-hood and saves memory and time
         for X, y, p in data_loader:
             X, y = X.to(device).float(), y.long().to(device)
@@ -61,7 +61,8 @@ def evaluate(model, data_loader):
     positron_efficiency = sum(positron.predictions == 2) / len(positron)
 
     logger.info(
-        f"""Pion efficiency : {pion_efficiency}
+        f"""
+    Pion efficiency : {pion_efficiency}
     Muon efficiency : {muon_efficiency}
     Positron efficiency : {positron_efficiency}
     """
@@ -77,7 +78,7 @@ def evaluate_pointnet():
     result = pd.DataFrame()
 
     # define model
-    model = PointNetc(k=get_config("model.pointnet.num_classes"))
+    model = PointNetFc(k=get_config("model.pointnet.num_classes"))
 
     # data_loader
     for file_, dataset in combine_datset("test").items():

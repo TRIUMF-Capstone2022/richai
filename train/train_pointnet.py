@@ -48,7 +48,7 @@ def trainer(
             X, y = X.to(device).float(), y.long().to(device)
             optimizer.zero_grad()
             # outputs, m3x3, m64x64 = model(X.transpose(1, 2), p) # with momentum
-            outputs, m3x3, m64x64 = model(X.transpose(1, 2)) # Without momentum
+            outputs, m3x3, m64x64 = model(X.transpose(1, 2))  # Without momentum
             loss = pointnetloss(outputs, y, m3x3, m64x64, device=device)
             loss.backward()
             optimizer.step()
@@ -57,7 +57,7 @@ def trainer(
 
             # print statistics
             running_loss += loss.item()
-            if i % 10 == 9:  
+            if i % 10 == 9:
                 logger.info(
                     "[Epoch: %d, Batch: %4d / %4d], loss: %.3f"
                     % (epoch + 1, i + 1, len(train_loader), running_loss / 10)
@@ -73,15 +73,14 @@ def trainer(
                 for X, y, p in val_loader:
                     X, y = X.to(device).float(), y.long().to(device)
                     # outputs, __, __ = model(X.transpose(1, 2), p) # With momentum
-                    outputs, __, __ = model(X.transpose(1, 2)) # Without momentum 
+                    outputs, __, __ = model(X.transpose(1, 2))  # Without momentum
                     _, predicted = torch.max(outputs.data, 1)
                     total += y.size(0)
                     correct += (predicted == y).sum().item()
             val_acc = 100.0 * correct / total
             logger.info("Validation accuracy: %d %%" % val_acc)
 
-    logger.info("Training completed")       
-        
+    logger.info("Training completed")
 
 
 def train_combined(reload_model=True):
@@ -94,7 +93,7 @@ def train_combined(reload_model=True):
 
     # enable multi GPUs
     if torch.cuda.device_count() > 1:
-        model = torch.nn.DataParallel(model, device_ids=[1, 3, 7])
+        model = torch.nn.DataParallel(model, device_ids=get_config("gpu"))
         device = f"cuda:{model.device_ids[0]}"
 
     model.to(device)
