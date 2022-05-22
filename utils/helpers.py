@@ -4,6 +4,7 @@ import logging
 from functools import reduce
 import yaml
 
+
 def compute_seq_id(hit, or_id=0):
     """Compute the RICH PMT sequence ID"""
     disk_id, pm_id, sc_id, up_dw_id, _ = hit
@@ -13,9 +14,11 @@ def compute_seq_id(hit, or_id=0):
         seq_id = 61 * 8 * 2 * 2 + sc_id + up_dw_id * 61 + disk_id * 61 * 2
     return int(seq_id)
 
+
 compute_seq_id = np.vectorize(compute_seq_id, otypes=[int])
 
-def get_config(key=None, config_file="configs/config.yaml"):
+
+def get_config(key=None, config_file='configs/config.yaml'):
     """
     Read the configuration file and return value of the key if present
 
@@ -26,14 +29,15 @@ def get_config(key=None, config_file="configs/config.yaml"):
         conf: Value for the specified key else dictionary of config_file contents
     """
     global yaml
-    with open(config_file, "r") as conf:
+    with open(config_file, 'r') as conf:
         try:
             conf = yaml.safe_load(conf)
         except yaml.YAMLError as err:
-            print("Error reading config file: {}".format(err))
+            print('Error reading config file: {}'.format(err))
     if key:
-        conf = reduce(lambda c, k: c[k], key.split("."), conf)
+        conf = reduce(lambda c, k: c[k], key.split('.'), conf)
     return conf
+
 
 def get_logger(file_path=None, file_name=None):
     """
@@ -49,26 +53,28 @@ def get_logger(file_path=None, file_name=None):
     log: log configuration
     """
 
-    logging.getLogger("py4j").setLevel(logging.ERROR)
-    log = logging.getLogger("main_logger")
-    log.setLevel("INFO")
+    logging.getLogger('py4j').setLevel(logging.ERROR)
+    log = logging.getLogger('main_logger')
+    log.setLevel('INFO')
 
     if not log.handlers:
 
-        formatter = logging.Formatter("%(asctime)s  %(levelname)-8s  %(message)s")
-        
+        formatter = logging.Formatter(
+            '%(asctime)s  %(levelname)-8s  %(message)s'
+        )
+
         # Create file handler
         if file_path:
             logger_filepath = os.path.join(file_path, file_name)
             os.makedirs(file_path, exist_ok=True)  # create folder if needed
             fh = logging.FileHandler(logger_filepath)
-            fh.setLevel("INFO")
+            fh.setLevel('INFO')
             fh.setFormatter(formatter)
             log.addHandler(fh)
 
         # Create console handler
         ch = logging.StreamHandler()
-        ch.setLevel("INFO")
+        ch.setLevel('INFO')
         ch.setFormatter(formatter)
         log.addHandler(ch)
 

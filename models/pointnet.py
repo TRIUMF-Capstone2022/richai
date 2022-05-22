@@ -8,7 +8,7 @@ import torch.nn as nn
 import numpy as np
 import torch.nn.functional as F
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
 class STNkd(nn.Module):
@@ -80,7 +80,7 @@ class PointNetFc(nn.Module):
     def __init__(self, k=3):
         super().__init__()
         self.transform = Transform()
-        self.fc1 = nn.Linear(1024, 512) 
+        self.fc1 = nn.Linear(1024, 512)
         self.fc2 = nn.Linear(512, 256)
         self.fc3 = nn.Linear(256, k)
 

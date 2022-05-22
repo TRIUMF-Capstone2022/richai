@@ -25,47 +25,49 @@ class RICHDataset(Dataset):
             np.random.seed(seed)
 
         # read input dataset
-        with h5py.File(dset_path, "r") as dfile:
+        with h5py.File(dset_path, 'r') as dfile:
 
             for key in dfile.attrs:
-                logger.info("%s: %s", key, dfile.attrs[key])
+                logger.info('%s: %s', key, dfile.attrs[key])
 
             # Load the hit map into memory
-            self.hit_mapping = np.asarray(dfile["HitMapping"][:])
-            logger.info("hit map size: %i bytes", self.hit_mapping.nbytes)
-            self.N = len(self.hit_mapping) - 1  # !!! The last cell is the sentinel !!!
+            self.hit_mapping = np.asarray(dfile['HitMapping'][:])
+            logger.info('hit map size: %i bytes', self.hit_mapping.nbytes)
+            self.N = (
+                len(self.hit_mapping) - 1
+            )  # !!! The last cell is the sentinel !!!
 
             # Get the info we need to memory map the hits
-            hit_ds = dfile["Hits"]
+            hit_ds = dfile['Hits']
             hit_offset = hit_ds.id.get_offset()
             hit_dtype = hit_ds.dtype
             hit_shape = hit_ds.shape
             hit_length = np.prod(hit_shape)
 
             # Get the info we need to memory map the events
-            event_ds = dfile["Events"]
+            event_ds = dfile['Events']
             event_offset = event_ds.id.get_offset()
             event_dtype = event_ds.dtype
             event_shape = event_ds.shape
             event_length = np.prod(event_shape)
 
             # Add labels
-            mu_off = dfile.attrs["muon_offset"]
-            pi_off = dfile.attrs["pion_offset"]
-            pos_off = dfile.attrs["positron_offset"]
-            entries = dfile.attrs["entries"]
+            mu_off = dfile.attrs['muon_offset']
+            pi_off = dfile.attrs['pion_offset']
+            pos_off = dfile.attrs['positron_offset']
+            entries = dfile.attrs['entries']
 
             if [mu_off, pi_off, pos_off] != sorted([mu_off, pi_off, pos_off]):
-                raise Exception("Offsets are not correct")
+                raise Exception('Offsets are not correct')
 
             self.offsets = {
-                "entries": entries,
-                "muon": mu_off,
-                "pion": pi_off,
-                "positron": pos_off,
+                'entries': entries,
+                'muon': mu_off,
+                'pion': pi_off,
+                'positron': pos_off,
             }
 
-            logger.info(f"Offsets: {self.offsets}")
+            logger.info(f'Offsets: {self.offsets}')
 
             # muon: 0, pion: 1, positron: 2
             self.labels = np.zeros(entries, dtype=np.int32)
@@ -73,10 +75,10 @@ class RICHDataset(Dataset):
             self.labels[pi_off:pos_off] = 1
             self.labels[pos_off:] = 2
 
-            logger.info(f"Entries: {entries}")
-            logger.info(f"Muons start at index: {mu_off}")
-            logger.info(f"Pions start at index: {pi_off}")
-            logger.info(f"Positron start at index: {pos_off}")
+            logger.info(f'Entries: {entries}')
+            logger.info(f'Muons start at index: {mu_off}')
+            logger.info(f'Pions start at index: {pi_off}')
+            logger.info(f'Positron start at index: {pos_off}')
 
             # shuffle indices
             indices = np.arange(self.N - 2)
@@ -95,20 +97,25 @@ class RICHDataset(Dataset):
                 self.val_indices = indices[-n_val:]
 
         # We don't attempt to catch exception here, crash if we cannot open the file.
-        with open(dset_path, "rb") as fh:
+        with open(dset_path, 'rb') as fh:
             fileno = fh.fileno()
             mapping = mmap.mmap(fileno, 0, access=mmap.ACCESS_READ)
             self.hit_array = np.frombuffer(
                 mapping, dtype=hit_dtype, count=hit_length, offset=hit_offset
             ).reshape(hit_shape)
-            logger.info("hit array mmap size: %i bytes", self.hit_array.nbytes)
+            logger.info('hit array mmap size: %i bytes', self.hit_array.nbytes)
             self.event_array = np.frombuffer(
-                mapping, dtype=event_dtype, count=event_length, offset=event_offset
+                mapping,
+                dtype=event_dtype,
+                count=event_length,
+                offset=event_offset,
             ).reshape(event_shape)
-            logger.info("event array mmap size: %i bytes", self.event_array.nbytes)
+            logger.info(
+                'event array mmap size: %i bytes', self.event_array.nbytes
+            )
 
     def get_position_data(self):
-        return np.load("rich_pmt_positions.npy")
+        return np.load('rich_pmt_positions.npy')
 
     def get_event_pos(self, idx):
 
@@ -126,12 +133,12 @@ class RICHDataset(Dataset):
 
         # add difference between chod_time and hit_time as 3rd dim
         event_pos[:, 2] = (
-            self.event_array[idx]["chod_time"]
-            - self.hit_array[idx_from:idx_to]["hit_time"]
+            self.event_array[idx]['chod_time']
+            - self.hit_array[idx_from:idx_to]['hit_time']
         )
 
         if event_pos.shape[0] > position_map.shape[0]:
-            logger.warning("Unusual event pos")
+            logger.warning('Unusual event pos')
             return position_map
 
         data = np.zeros_like(position_map)
@@ -147,17 +154,19 @@ class RICHDataset(Dataset):
         idx_to = self.hit_mapping[idx + 1]
 
         self.data = {
-            "event_pos": self.get_event_pos(idx),
-            "label": self.labels[idx],
-            "hit_time": self.hit_array[idx_from:idx_to]["hit_time"],
-            "chod_time": self.event_array[idx]["chod_time"],
-            "track_momentum": self.event_array[idx]["track_momentum"],
-            "ring_radius": self.event_array[idx]["ring_radius"],
+            'event_pos': self.get_event_pos(idx),
+            'label': self.labels[idx],
+            'hit_time': self.hit_array[idx_from:idx_to]['hit_time'],
+            'chod_time': self.event_array[idx]['chod_time'],
+            'track_momentum': self.event_array[idx]['track_momentum'],
+            'ring_radius': self.event_array[idx]['ring_radius'],
         }
 
         return (
-            torch.tensor(self.data["event_pos"]),
-            torch.tensor(self.data["label"]), torch.tensor(self.data["track_momentum"]))
+            torch.tensor(self.data['event_pos']),
+            torch.tensor(self.data['label']),
+            torch.tensor(self.data['track_momentum']),
+        )
 
 
 def combine_datset(key, **kwargs):
@@ -166,11 +175,11 @@ def combine_datset(key, **kwargs):
     """
     # get it from config
     dset_dirs = [
-        os.path.join(get_config("dataset.base_dir"), i)
-        for i in get_config(f"dataset.{key}")
+        os.path.join(get_config('dataset.base_dir'), i)
+        for i in get_config(f'dataset.{key}')
     ]
 
-    logger.info(f"Train directories: {dset_dirs}")
+    logger.info(f'Train directories: {dset_dirs}')
 
     # file list
     dset_dict = defaultdict()
@@ -178,20 +187,20 @@ def combine_datset(key, **kwargs):
     for dset_dir in dset_dirs:
         # check if the directory exists
         if not os.path.exists(dset_dir):
-            raise Exception(f"Directory {dset_dir} does not exist")
+            raise Exception(f'Directory {dset_dir} does not exist')
 
         # get list of files
         for dset_file in os.listdir(dset_dir):
             file_ = os.path.join(dset_dir, dset_file)
             dset_dict[file_] = RICHDataset(file_, **kwargs)
 
-    logger.info(f"Training files: {dset_dict}")
+    logger.info(f'Training files: {dset_dict}')
 
     return dset_dict
 
 
-if __name__ == "__main__":
-    combine_datset("test")
+if __name__ == '__main__':
+    combine_datset('test')
     # path = os.path.join(
     #     get_config("dataset.base_dir"),
     #     "A",
