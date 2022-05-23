@@ -10,9 +10,10 @@ data_loader:
 model:
   pointnet:
     num_classes: 3
-    epochs: 5
-    saved_model: "saved_models/pointnet_2.pt"
-    predictions: "saved_models/predictions_2.csv"
+    epochs: 4
+    class_weights:
+    saved_model: "saved_models/pointnet_class_weight.pt"
+    predictions: "saved_models/predictions_class_weight.csv"
 
 gpu:
   - 1

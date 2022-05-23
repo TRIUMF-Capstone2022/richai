@@ -13,7 +13,9 @@ from utils.helpers import get_config, get_logger
 logger = get_logger()
 
 
-def pointnetloss(outputs, Y, m3x3, m64x64, alpha=0.0001, device='cpu'):
+def pointnetloss(
+    outputs, Y, m3x3, m64x64, alpha=0.0001, weight=None, device='cpu'
+):
     """Loss function for pointnet
     Ref: https://github.com/nikitakaraevv/pointnet/
     """
@@ -25,6 +27,8 @@ def pointnetloss(outputs, Y, m3x3, m64x64, alpha=0.0001, device='cpu'):
     id64x64 = id64x64.to(device)
     diff3x3 = id3x3 - torch.bmm(m3x3, m3x3.transpose(1, 2))
     diff64x64 = id64x64 - torch.bmm(m64x64, m64x64.transpose(1, 2))
+    if weight is not None:
+        criterion = nn.NLLLoss(weight=weight)
     return criterion(outputs, Y) + alpha * (
         torch.norm(diff3x3) + torch.norm(diff64x64)
     ) / float(bs)
@@ -35,12 +39,12 @@ def trainer(
     optimizer,
     train_loader,
     val_loader=None,
+    class_weights=None,
     scheduler=None,
     epochs=5,
     device='cpu',
 ):
     """Simple training wrapper for PyTorch network."""
-    labels, predictions = [], []
     for epoch in range(epochs):
         model.train()
         running_loss = 0.0
@@ -51,9 +55,21 @@ def trainer(
             outputs, m3x3, m64x64 = model(
                 X.transpose(1, 2)
             )  # Without momentum
-            loss = pointnetloss(outputs, y, m3x3, m64x64, device=device)
+            if class_weights is not None: 
+                loss = pointnetloss(
+                    outputs,
+                    y,
+                    m3x3,
+                    m64x64,
+                    weight=class_weights,
+                    device=device,
+                )
+            else:
+                loss = pointnetloss(outputs, y, m3x3, m64x64, device=device)
+
             loss.backward()
             optimizer.step()
+
             if scheduler:
                 scheduler.step()
 
@@ -87,7 +103,7 @@ def trainer(
     logger.info('Training completed')
 
 
-def train_combined(reload_model=True):
+def train_combined(reload_model=True, class_weights=True):
     """Train the model on combined dataset"""
 
     # device
@@ -119,6 +135,13 @@ def train_combined(reload_model=True):
 
         logger.info(f'Training for {file_}')
 
+        # get class weights for training
+        if class_weights is not None:
+            class_weights = torch.Tensor(dataset.get_class_weights()).to(
+                    device
+                )
+            logger.info(f'Class weights: {class_weights}')
+
         trainloader, validloader, _ = data_loader(dataset)
 
         if reload_model and os.path.exists(model_path):
@@ -132,6 +155,7 @@ def train_combined(reload_model=True):
             optimizer,
             train_loader=trainloader,
             val_loader=validloader,
+            class_weights=class_weights,
             scheduler=None,
             epochs=get_config('model.pointnet.epochs'),
             device=device,
@@ -146,4 +170,4 @@ def train_combined(reload_model=True):
 
 
 if __name__ == '__main__':
-    train_combined()
+    train_combined(class_weights=get_config('model.pointnet.class_weights'))
