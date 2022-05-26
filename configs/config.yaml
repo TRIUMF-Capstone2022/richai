@@ -22,6 +22,12 @@ dataset:
     std_momentum: 7.523443
     mean_radius: 174.97235
     std_radius: 12.013085
+  filters:
+    momentum_lower: 15
+    momentum_upper: 45
+    radius_lower: -2500
+    radius_upper: 2500
+
 
 data_loader:
   batch_size: 32
@@ -30,24 +36,30 @@ data_loader:
 
 model:
   pointnet:
-    num_classes: 3
-    epochs: 4
-    class_weights:
-    saved_model: "saved_models/pointnet_class_weight.pt"
-    predictions: "saved_models/predictions_class_weight.csv"
+    num_classes: 1
+    epochs: 16
+    saved_model: "saved_models/pointnet_momentum_radius_delta_0.5_16e_0706.pt"
+    predictions: "saved_models/pointnet_momentum_radius_delta_0.5_16e_0706_unbalanced_p_15_45.csv"
+    train_result: "saved_models/train_result_pointnet.csv"
+    momentum: True
+    radius: True
+    delta: 0.5
+    seed: 2022
+    learning_rate: 0003
   dgcnn:
     num_classes: 1
     epochs: 4
     k: 8
     saved_model: "saved_models/dgcnn.pt"
     predictions: "saved_models/dgcnn_predictions.csv"
+    train_result: "saved_models/train_result_dgcnn.csv"
     momentum: True
     radius: True
     delta: 0.3
+    seed: 42
+    learning_rate: 0003
 
 gpu:
   - 1
   - 2 
   - 3
-
-seed: 42
