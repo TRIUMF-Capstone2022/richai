@@ -1,0 +1,24 @@
+dataset:
+  base_dir: "/data/bvelghe/capstone2022/"
+  train: ["B", "C"]
+  test: ["A"]
+
+data_loader:
+  batch_size: 64
+  num_workers: 8  
+
+model:
+  pointnet:
+    num_classes: 3
+    epochs: 4
+    class_weights:
+    saved_model: "saved_models/pointnet_class_weight.pt"
+    predictions: "saved_models/predictions_class_weight.csv"
+
+gpu:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 7
