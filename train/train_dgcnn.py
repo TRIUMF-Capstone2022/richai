@@ -8,8 +8,11 @@ https://github.com/AnTao97/dgcnn.pytorch/blob/master/main_cls.py
 
 
 import time
+
+from sklearn.feature_selection import VarianceThreshold
 import torch
 import torch.nn as nn
+import pandas as pd
 import numpy as np
 import torch.nn.functional as F
 from utils.helpers import get_config, get_logger
@@ -207,4 +210,12 @@ def trainer(
     logger.info(outstr)
 
     if results:
-        return train_losses, train_accs, valid_losses, valid_accs
+        data = {
+            "train_loss": train_losses,
+            "train_acc": train_accs,
+            "val_loss": valid_losses,
+            "val_acc": valid_accs,
+        }
+        results = pd.DataFrame(data)
+
+        results.to_csv("dgcnn_training_results.csv")
