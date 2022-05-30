@@ -7,11 +7,11 @@ https://github.com/AnTao97/dgcnn.pytorch/blob/master/main_cls.py
 """
 
 
+import time
 import torch
 import torch.nn as nn
 import numpy as np
 import torch.nn.functional as F
-import sklearn.metrics as metrics
 from utils.helpers import get_config, get_logger
 
 logger = get_logger()
@@ -46,15 +46,16 @@ def trainer(
     train_loader,
     val_loader=None,
     epochs=5,
+    scheduler=None,
     device="cuda",
+    results=False,
 ):
-    """Simple training wrapper for PyTorch network."""
+    """Trainer for DGCNN"""
 
-    # add logging time
-    # add support for multiple GPU training
-    # add support for early stopping
-    # add support for learning rate scheduler
-    # add support for printing relevant metrics
+    # TODO add support for early stopping
+
+    logger.info(f"Starting training...")
+    training_start = time.time()
 
     train_losses, train_accs = [], []
     valid_losses, valid_accs = [], []
@@ -63,109 +64,147 @@ def trainer(
     criterion = cross_entropy_ls
 
     for epoch in range(epochs):
-        logger.info(f"Starting epoch {epoch}")
+        logger.info(f"Starting epoch {epoch+1}/{epochs}...")
+        epoch_start = time.time()
 
-        train_loss, train_acc, count = 0.0, 0.0, 0.0
-        train_pred, train_true = [], []
+        running_loss = 0.0
+        running_total, running_correct = 0, 0
+        total_pions, true_pions = 0, 0
 
         # --------------------------------------- TRAINING ---------------------------------------
-        logger.info(f"Starting training phase of epoch {epoch}")
-
+        logger.info(f"Starting training phase of epoch {epoch+1}...")
         model.train()
 
         for i, (X, y, p) in enumerate(train_loader, 0):
             # X needs to be reshaped for knn calculation to work
-            # (batch_size, PMTs, points) -> (batch_size, points, PTs)
+            # (batch_size, PMTs, points) -> (batch_size, points, PMTs)
             X = X.float().to(device)
             X = X.permute(0, 2, 1)
 
-            # label and momentum are OK with size (1, batch_size)
+            # label and momentum are OK with shape (1, batch_size)
             y = y.long().to(device)
             p = p.float().to(device)
 
-            # number of examples processed this epoch
-            batch_size = X.size()[0]
-            count += batch_size
-
-            # zero gradients
+            # zero parameter gradients
             optimizer.zero_grad()
 
-            # forward pass and calc batch training loss
+            # forward pass and calculate loss
             logits = model(X)
             loss = criterion(logits, y)
-            # train_loss += loss.item() * batch_size
-            train_loss += loss.item()
+            running_loss += loss.item()
 
-            # track batch predictions
+            # calculate predictions and accuracy
             preds = logits.max(dim=1)[1]
-            train_acc += (preds == y).type(torch.float32).mean().item()
-            train_pred.append(preds.detach().cpu().numpy())
-            train_true.append(y.cpu().numpy())
+            running_total += X.size(0)
+            running_correct += preds.eq(y).sum().item()
+            acc = running_correct / running_total
+
+            # calculate pion efficiency
+            pions = torch.where(y == 1, 1, 0)
+            total_pions += len(pions)
+            true_pions += (preds == pions).sum().item()
+            pion_efficiency = true_pions / total_pions
 
             # back prop and update weights
             loss.backward()
             optimizer.step()
 
-            # print results every 10 batches or upon final batch
-            if (i + 1) % 10 == 0 or i == len(train_loader) - 1:
-                outstr = "Epoch %d, batch %4d / %4d, train loss: %.6f" % (
-                    epoch,
-                    i,
+            if scheduler:
+                scheduler.step()
+
+            # log results every 100 batches or upon final batch
+            if (i + 1) % 250 == 0 or i == len(train_loader) - 1:
+                outstr = "Epoch %d (batch %4d/%4d), loss: %.4f, accuracy: %.4f, pion eff: %.4f" % (
+                    epoch + 1,
+                    i + 1,
                     len(train_loader),
-                    train_loss * 1.0 / count,
+                    running_loss / running_total,
+                    acc,
+                    pion_efficiency,
                 )
 
                 logger.info(outstr)
 
                 # TODO remove break
-                break
+                # break
 
-        # epoch training results
-        train_true = np.concatenate(train_true)
-        train_pred = np.concatenate(train_pred)
+        train_losses.append(running_loss / len(train_loader))
+        train_accs.append(acc)
 
-        logger.info(f"Completed training phase of epoch {epoch}")
+        logger.info(f"Completed training phase of epoch {epoch+1}!")
 
         # --------------------------------------- VALIDATION -------------------------------------
-        logger.info(f"Starting validation phase of epoch {epoch}")
+        if val_loader:
+            logger.info(f"Starting validation phase of epoch {epoch+1}...")
+            model.eval()
 
-        valid_loss, valid_acc, count = 0.0, 0.0, 0.0
-        valid_pred, valid_true = [], []
-        model.eval()
+            running_loss = 0.0
+            running_total, running_correct = 0, 0
+            total_pions, true_pions = 0, 0
 
-        for i, (X, y, p) in enumerate(val_loader, 0):
-            # see train loader comments for shapes
-            X = X.float().to(device)
-            X = X.permute(0, 2, 1)
-            y = y.long().to(device)
-            p = p.float().to(device)
+            with torch.no_grad():
+                for i, (X, y, p) in enumerate(val_loader, 0):
+                    X = X.float().to(device)
+                    X = X.permute(0, 2, 1)
+                    y = y.long().to(device)
+                    p = p.float().to(device)
 
-            # number of examples processed this epoch
-            batch_size = X.size()[0]
-            count += batch_size
+                    logits = model(X)
+                    loss = criterion(logits, y)
+                    running_loss += loss.item()
 
-            # calc batch validation loss
-            logits = model(X)
-            loss = criterion(logits, y)
-            valid_loss += loss.item() * batch_size
+                    preds = logits.max(dim=1)[1]
+                    running_total += X.size(0)
+                    running_correct += preds.eq(y).sum().item()
+                    acc = running_correct / running_total
 
-            # track batch predictions
-            preds = logits.max(dim=1)[1]
-            valid_pred.append(preds.detach().cpu().numpy())
-            valid_true.append(y.cpu().numpy())
+                    pions = torch.where(y == 1, 1, 0)
+                    total_pions += len(pions)
+                    true_pions += (preds == pions).sum().item()
+                    pion_efficiency = true_pions / total_pions
 
-            # TODO remove break
-            break
+                    # TODO remove break
+                    # break
 
-        # epoch validation results
-        valid_true = np.concatenate(valid_true)
-        valid_pred = np.concatenate(valid_pred)
+            valid_losses.append(running_loss / len(val_loader))
+            valid_accs.append(acc)
 
-        outstr = "Epoch %d, validation loss: %.6f" % (
-            epoch,
-            valid_loss * 1.0 / count,
+            # log validation results
+            outstr = (
+                "Epoch %d, validation accuracy: %.4f, validation pion eff: %.4f"
+                % (
+                    epoch + 1,
+                    acc,
+                    pion_efficiency,
+                )
+            )
+
+            logger.info(outstr)
+
+        logger.info(f"Completed validation phase of epoch {epoch+1}!")
+
+        # log epoch elapsed time
+        epoch_time_elapsed = time.time() - epoch_start
+
+        outstr = ("Epoch %d/%d completed in %.0fm %.0fs") % (
+            epoch + 1,
+            epochs,
+            epoch_time_elapsed // 60,
+            epoch_time_elapsed % 60,
         )
 
         logger.info(outstr)
+
         # TODO remove break
-        break
+        # break
+
+    # log total elapsed training time
+    total_time_elapsed = time.time() - training_start
+    outstr = "Training completed in {:.0f}m {:.0f}s".format(
+        total_time_elapsed // 60, total_time_elapsed % 60
+    )
+
+    logger.info(outstr)
+
+    if results:
+        return train_losses, train_accs, valid_losses, valid_accs
