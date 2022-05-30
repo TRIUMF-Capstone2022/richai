@@ -33,14 +33,10 @@ def get_graph_feature(x, k=20, idx=None, dim9=False):
             idx = knn(x, k=k)  # (batch_size, num_points, k)
         else:
             idx = knn(x[:, 6:], k=k)
-    # device = torch.device("cuda")
 
     idx_base = torch.arange(0, batch_size, device=device).view(-1, 1, 1) * num_points
-
     idx = idx + idx_base
-
     idx = idx.view(-1)
-
     _, num_dims, _ = x.size()
 
     # (batch_size, num_points, num_dims)  -> (batch_size*num_points, num_dims) #   batch_size * num_points * k + range(0, batch_size*num_points)
@@ -48,33 +44,28 @@ def get_graph_feature(x, k=20, idx=None, dim9=False):
     feature = x.view(batch_size * num_points, -1)[idx, :]
     feature = feature.view(batch_size, num_points, k, num_dims)
     x = x.view(batch_size, num_points, 1, num_dims).repeat(1, 1, k, 1)
-
     feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
 
-    return feature  # (batch_size, 2*num_dims, num_points, k)
+    # (batch_size, 2*num_dims, num_points, k)
+    return feature
 
 
 class DGCNN(nn.Module):
-    def __init__(self, args, input_channels=3, output_channels=3, k=16, p=0.5):
-        super(DGCNN_cls, self).__init__()
-        # self.args = args
+    def __init__(self, input_channels=6, output_channels=3, k=16, p=0.5):
+        super(DGCNN, self).__init__()
+
+        # default input features are 6 since 3 edge features + 3 coordinate features
         self.input_channels = input_channels
         self.output_channels = output_channels
-        self.k = args.k
+        self.k = k
         self.p = p
 
         self.bn1 = nn.BatchNorm2d(64)
         self.bn2 = nn.BatchNorm2d(64)
         self.bn3 = nn.BatchNorm2d(128)
         self.bn4 = nn.BatchNorm2d(256)
-        # self.bn5 = nn.BatchNorm1d(args.emb_dims)
         self.bn5 = nn.BatchNorm1d(1024)
 
-        # self.conv1 = nn.Sequential(
-        #     nn.Conv2d(6, 64, kernel_size=1, bias=False),
-        #     self.bn1,
-        #     nn.LeakyReLU(negative_slope=0.2),
-        # )
         self.conv1 = nn.Sequential(
             nn.Conv2d(self.input_channels, 64, kernel_size=1, bias=False),
             self.bn1,
@@ -95,25 +86,20 @@ class DGCNN(nn.Module):
             self.bn4,
             nn.LeakyReLU(negative_slope=0.2),
         )
-        # self.conv5 = nn.Sequential(
-        #     nn.Conv1d(512, args.emb_dims, kernel_size=1, bias=False),
-        #     self.bn5,
-        #     nn.LeakyReLU(negative_slope=0.2),
-        # )
         self.conv5 = nn.Sequential(
             nn.Conv1d(512, 1024, kernel_size=1, bias=False),
             self.bn5,
             nn.LeakyReLU(negative_slope=0.2),
         )
-        # self.linear1 = nn.Linear(args.emb_dims * 2, 512, bias=False)
+
         self.linear1 = nn.Linear(1024 * 2, 512, bias=False)
         self.bn6 = nn.BatchNorm1d(512)
-        # self.dp1 = nn.Dropout(p=args.dropout)
         self.dp1 = nn.Dropout(p=self.p)
+
         self.linear2 = nn.Linear(512, 256)
         self.bn7 = nn.BatchNorm1d(256)
-        # self.dp2 = nn.Dropout(p=args.dropout)
         self.dp2 = nn.Dropout(p=self.p)
+
         self.linear3 = nn.Linear(256, self.output_channels)
 
     def forward(self, x):
@@ -158,19 +144,19 @@ class DGCNN(nn.Module):
         # (batch_size, 64+64+128+256, num_points)
         x = torch.cat((x1, x2, x3, x4), dim=1)
 
-        # (batch_size, 64+64+128+256, num_points) -> (batch_size, emb_dims, num_points)
+        # (batch_size, 64+64+128+256, num_points) -> (batch_size, 1024, num_points)
         x = self.conv5(x)
 
-        # (batch_size, emb_dims, num_points) -> (batch_size, emb_dims)
+        # (batch_size, 1024, num_points) -> (batch_size, 1024)
         x1 = F.adaptive_max_pool1d(x, 1).view(batch_size, -1)
 
-        # (batch_size, emb_dims, num_points) -> (batch_size, emb_dims)
+        # (batch_size, 1024, num_points) -> (batch_size, 1024)
         x2 = F.adaptive_avg_pool1d(x, 1).view(batch_size, -1)
 
-        # (batch_size, emb_dims*2)
+        # (batch_size, 1024*2)
         x = torch.cat((x1, x2), 1)
 
-        # (batch_size, emb_dims*2) -> (batch_size, 512)
+        # (batch_size, 1024*2) -> (batch_size, 512)
         x = F.leaky_relu(self.bn6(self.linear1(x)), negative_slope=0.2)
 
         # (batch_size, 512) -> (batch_size, 256)
