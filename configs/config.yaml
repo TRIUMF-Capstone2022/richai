@@ -3,8 +3,8 @@ dataset:
   train: ["B", "C"]
   test: ["A"]
   dgcnn:
-    dataset: "/data/bvelghe/capstone2022/A/Run008553.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01.h5"
-    # dataset: "/data/bvelghe/capstone2022/C/2018E.EOSlist.CTRL_patched.h5"
+#     dataset: "/data/bvelghe/capstone2022/A/Run008553.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01.h5"
+    dataset: "/data/bvelghe/capstone2022/C/2018E.EOSlist.CTRL_patched.h5"
     val: 0.1
     test: 0.1
 

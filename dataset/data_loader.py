@@ -12,6 +12,7 @@ def data_loader(dset):
         shuffle=False,
         sampler=SubsetRandomSampler(dset.train_indices),
         num_workers=get_config('data_loader.num_workers'),
+        drop_last=True
     )
 
     val_loader = DataLoader(
@@ -20,6 +21,7 @@ def data_loader(dset):
         shuffle=False,
         sampler=SubsetRandomSampler(dset.val_indices),
         num_workers=get_config('data_loader.num_workers'),
+        drop_last=True
     )
 
     test_loader = None
@@ -30,6 +32,7 @@ def data_loader(dset):
             shuffle=False,
             sampler=SubsetRandomSampler(dset.test_indices),
             num_workers=get_config('data_loader.num_workers'),
+            drop_last=True
         )
 
     return (train_loader, val_loader, test_loader)
