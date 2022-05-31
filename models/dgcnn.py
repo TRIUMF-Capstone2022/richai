@@ -57,6 +57,8 @@ class DGCNN(nn.Module):
         # default input features are 6 since 3 edge features + 3 coordinate features
         self.input_channels = input_channels
         self.output_channels = output_channels
+
+        # TODO tune k for KNN graph
         self.k = k
         self.p = p
 
