@@ -8,14 +8,14 @@ https://github.com/AnTao97/dgcnn.pytorch/blob/master/main_cls.py
 
 
 import time
-
-from sklearn.feature_selection import VarianceThreshold
 import torch
 import torch.nn as nn
 import pandas as pd
-import numpy as np
 import torch.nn.functional as F
 from utils.helpers import get_config, get_logger
+from models.dgcnn import DGCNN
+from dataset.rich_dataset import RICHDataset
+from dataset.data_loader import data_loader
 
 logger = get_logger()
 device = torch.device("cuda" if torch.cuda else "cpu")
@@ -219,3 +219,55 @@ def trainer(
         results = pd.DataFrame(data)
 
         results.to_csv("dgcnn_training_results.csv")
+
+
+def train_combined(reload_model=False):
+
+    model = DGCNN(k=get_config("model.dgcnn.k"))
+
+    # enable multi GPUs
+    if torch.cuda.device_count() > 1:
+        model = torch.nn.DataParallel(model, device_ids=get_config("gpu"))
+        device = f"cuda:{model.device_ids[0]}"
+    else:
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    model.to(device)
+
+    # model path
+    model_path = get_config("model.dgcnn.saved_model")
+
+    logger.info(
+        f"""Device: {device}"""
+        # model_path: {model_path}
+    )
+
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    # scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
+
+    # get the dataset, for now this is C since it's been updated
+    dataset = RICHDataset(
+        get_config("dataset.dgcnn.dataset"),
+        val_split=get_config("dataset.dgcnn.val"),
+        seed=get_config("seed"),
+    )
+
+    # get the data loaders
+    train_loader, val_loader, _ = data_loader(dataset)
+
+    trainer(
+        model,
+        optimizer,
+        train_loader=train_loader,
+        val_loader=val_loader,
+        epochs=get_config("model.dgcnn.epochs"),
+        device=device,
+    )
+
+    logger.info(f"Saving trained model to {model_path}")
+    torch.save(model.state_dict(), model_path)
+    logger.info(f"Model successfully saved to {model_path}")
+
+
+if __name__ == "__main__":
+    train_combined()
