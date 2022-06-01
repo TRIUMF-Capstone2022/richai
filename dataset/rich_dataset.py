@@ -155,7 +155,6 @@ class RICHDataset(Dataset):
             np.random.shuffle(indices)
 
             logger.info(f'Total indices: {len(indices)}')
-
             self.train_indices = []
             self.test_indices = []
             self.val_indices = []
@@ -171,6 +170,13 @@ class RICHDataset(Dataset):
                 n_val = int(len(indices) * val_split)
                 self.train_indices = indices[:-n_val]
                 self.val_indices = indices[-n_val:]
+
+            logger.info(f'Total Train indices: {len(self.train_indices)}')
+            logger.info(f'Sample Train indices: {self.train_indices[:10]}')
+            logger.info(f'Total Validation indices: {len(self.val_indices)}')
+            logger.info(f'Sample Validation indices: {self.val_indices[:10]}')
+            logger.info(f'Total Test indices: {len(self.test_indices)}')
+            logger.info(f'Sample Test indices: {self.test_indices[:10]}')
 
             if test_only:
 
