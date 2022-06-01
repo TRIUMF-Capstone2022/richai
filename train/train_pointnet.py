@@ -14,27 +14,6 @@ from utils.helpers import get_config, get_logger
 
 logger = get_logger()
 
-def cross_entropy_ls(y_pred, y_true, smoothing=True):
-    """Calculate cross entropy loss, apply label smoothing if needed."""
-
-    y_true = y_true.contiguous().view(-1)
-
-    # TODO PyTorch now has built in support for this.  Consider removing
-    # if/else logic in favour of this.  Left as is in the meantime.
-    if smoothing:
-        eps = 0.2
-        n_class = y_pred.size(1)
-
-        one_hot = torch.zeros_like(y_pred).scatter(1, y_true.view(-1, 1), 1)
-        one_hot = one_hot * (1 - eps) + (1 - one_hot) * eps / (n_class - 1)
-        log_prb = F.log_softmax(y_pred, dim=1)
-
-        loss = -(one_hot * log_prb).sum(dim=1).mean()
-    else:
-        loss = F.cross_entropy(y_pred, y_true, reduction="mean")
-
-    return loss
-
 def trainer(
     model,
     criterion,
@@ -66,15 +45,15 @@ def trainer(
             p = p.to(device)
 
             optimizer.zero_grad()  # Zero all the gradients w.r.t. parameters
-            y_hat = model(X, p).to(device)  # Forward pass to get output
-            loss = criterion(y_hat, y)  # Calculate loss based on output
+            y_hat = model(X, p).flatten()
+            y_hat_labels = torch.sigmoid(y_hat) > 0.5
+            loss = criterion(y_hat, y.type(torch.float32))
             loss.backward()  # Calculate gradients w.r.t. parameters
             optimizer.step()  # Update parameters
             scheduler.step()
             running_loss += loss.item()  # Add loss for this batch to running total
             
             # calculate predictions and accuracy
-            y_hat_labels = y_hat.max(dim=1)[1]
             running_total += X.size(0)
             running_correct += y_hat_labels.eq(y).sum().item()
             acc = running_correct / running_total
@@ -118,9 +97,9 @@ def trainer(
                 y = y.long().to(device)
                 p = p.to(device)
 
-                y_hat = model(X, p).to(device)
-                y_hat_labels = y_hat.max(dim=1)[1]
-                loss = criterion(y_hat, y)
+                y_hat = model(X, p).flatten()
+                y_hat_labels = torch.sigmoid(y_hat) > 0.5
+                loss = criterion(y_hat, y.type(torch.float32))
                 valid_batch_loss += loss.item()
                 running_loss += loss.item()
 
@@ -170,7 +149,7 @@ def train_combined(reload_model=True):
 
     model.to(device)
 
-    criterion = cross_entropy_ls
+    criterion = torch.nn.BCEWithLogitsLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
 
