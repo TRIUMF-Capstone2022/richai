@@ -7,6 +7,7 @@ https://github.com/AnTao97/dgcnn.pytorch/blob/master/main_cls.py
 """
 
 
+import pickle
 import time
 import torch
 import torch.nn as nn
@@ -48,14 +49,13 @@ def trainer(
     optimizer,
     train_loader,
     val_loader=None,
+    criterion=cross_entropy_ls,
     epochs=5,
     scheduler=None,
     device="cuda",
     results=False,
 ):
     """Trainer for DGCNN"""
-
-    # TODO add support for early stopping
 
     logger.info(f"Starting training...")
     training_start = time.time()
@@ -64,7 +64,6 @@ def trainer(
     valid_losses, valid_accs = [], []
 
     model.to(device)
-    criterion = cross_entropy_ls
 
     for epoch in range(epochs):
         logger.info(f"Starting epoch {epoch+1}/{epochs}...")
@@ -78,26 +77,32 @@ def trainer(
         logger.info(f"Starting training phase of epoch {epoch+1}...")
         model.train()
 
+        # for i, (X, y, p, radius) in enumerate(train_loader, 0):
         for i, (X, y, p) in enumerate(train_loader, 0):
             # X needs to be reshaped for knn calculation to work
             # (batch_size, PMTs, points) -> (batch_size, points, PMTs)
             X = X.float().to(device)
             X = X.permute(0, 2, 1)
 
-            # label and momentum are OK with shape (1, batch_size)
+            # label, momentum, radius are OK with shape (1, batch_size)
             y = y.long().to(device)
             p = p.float().to(device)
+            # radius = radius.float().to(device)
 
             # zero parameter gradients
             optimizer.zero_grad()
 
             # forward pass and calculate loss
-            logits = model(X)
-            loss = criterion(logits, y)
+            # logits = model(X, p, radius)
+            # logits = model(X, p)
+            logits = model(X, p).flatten()  # binary classification
+            # loss = criterion(logits, y)
+            loss = criterion(logits, y.type(torch.float32))  # binary classification
             running_loss += loss.item()
 
             # calculate predictions and accuracy
-            preds = logits.max(dim=1)[1]
+            # preds = logits.max(dim=1)[1]
+            preds = torch.sigmoid(logits) > 0.5  # binary classification
             running_total += X.size(0)
             running_correct += preds.eq(y).sum().item()
             acc = running_correct / running_total
@@ -116,20 +121,20 @@ def trainer(
                 scheduler.step()
 
             # log results every 100 batches or upon final batch
-            if (i + 1) % 250 == 0 or i == len(train_loader) - 1:
-                outstr = "Epoch %d (batch %4d/%4d), loss: %.4f, accuracy: %.4f, pion eff: %.4f" % (
-                    epoch + 1,
-                    i + 1,
-                    len(train_loader),
-                    running_loss / running_total,
-                    acc,
-                    pion_efficiency,
+            if (i + 1) % 2500 == 0 or i == len(train_loader) - 1:
+                outstr = (
+                    "Epoch %d (batch %4d/%4d), loss: %.4f, accuracy: %.4f, pion eff: %.4f"
+                    % (
+                        epoch + 1,
+                        i + 1,
+                        len(train_loader),
+                        running_loss / running_total,
+                        acc,
+                        pion_efficiency,
+                    )
                 )
 
                 logger.info(outstr)
-
-                # TODO remove break
-                # break
 
         train_losses.append(running_loss / len(train_loader))
         train_accs.append(acc)
@@ -146,17 +151,23 @@ def trainer(
             total_pions, true_pions = 0, 0
 
             with torch.no_grad():
+                # for i, (X, y, p, radius) in enumerate(val_loader, 0):
                 for i, (X, y, p) in enumerate(val_loader, 0):
                     X = X.float().to(device)
                     X = X.permute(0, 2, 1)
                     y = y.long().to(device)
                     p = p.float().to(device)
+                    # radius = radius.float().to(device)
 
-                    logits = model(X)
-                    loss = criterion(logits, y)
+                    # logits = model(X, p)
+                    # logits = model(X, p, radius)
+                    logits = model(X, p).flatten()
+                    # loss = criterion(logits, y)
+                    loss = criterion(logits, y.type(torch.float32))
                     running_loss += loss.item()
 
-                    preds = logits.max(dim=1)[1]
+                    # preds = logits.max(dim=1)[1]
+                    preds = torch.sigmoid(logits) > 0.5
                     running_total += X.size(0)
                     running_correct += preds.eq(y).sum().item()
                     acc = running_correct / running_total
@@ -165,9 +176,6 @@ def trainer(
                     total_pions += len(pions)
                     true_pions += (preds == pions).sum().item()
                     pion_efficiency = true_pions / total_pions
-
-                    # TODO remove break
-                    # break
 
             valid_losses.append(running_loss / len(val_loader))
             valid_accs.append(acc)
@@ -198,9 +206,6 @@ def trainer(
 
         logger.info(outstr)
 
-        # TODO remove break
-        # break
-
     # log total elapsed training time
     total_time_elapsed = time.time() - training_start
     outstr = "Training completed in {:.0f}m {:.0f}s".format(
@@ -221,9 +226,14 @@ def trainer(
         results.to_csv("dgcnn_training_results.csv")
 
 
-def train_combined(reload_model=False):
+def train_combined():
 
-    model = DGCNN(k=get_config("model.dgcnn.k"))
+    model = DGCNN(
+        k=get_config("model.dgcnn.k"),
+        output_channels=get_config("model.dgcnn.output_channels")
+        # momentum=get_config("model.dgcnn.momentum"),
+        # radius=get_config("model.dgcnn.radius"),
+    )
 
     # enable multi GPUs
     if torch.cuda.device_count() > 1:
@@ -238,28 +248,33 @@ def train_combined(reload_model=False):
     model_path = get_config("model.dgcnn.saved_model")
 
     logger.info(
-        f"""Device: {device}"""
-        # model_path: {model_path}
+        f"""Device: {device}
+        model_path: {model_path}
+        """
     )
 
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    criterion = torch.nn.BCEWithLogitsLoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.0003)
     # scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
 
     # get the dataset, for now this is C since it's been updated
     dataset = RICHDataset(
         get_config("dataset.dgcnn.dataset"),
         val_split=get_config("dataset.dgcnn.val"),
+        test_split=get_config("dataset.dgcnn.test"),
         seed=get_config("seed"),
+        sample_file="/fast_scratch_1/capstone_2022/datasetC_combined.h5",
     )
 
     # get the data loaders
-    train_loader, val_loader, _ = data_loader(dataset)
+    train_loader, val_loader, test_loader = data_loader(dataset)
 
     trainer(
         model,
         optimizer,
         train_loader=train_loader,
         val_loader=val_loader,
+        criterion=criterion,
         epochs=get_config("model.dgcnn.epochs"),
         device=device,
     )

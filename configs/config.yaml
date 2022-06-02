@@ -3,14 +3,15 @@ dataset:
   train: ["B", "C"]
   test: ["A"]
   dgcnn:
-#     dataset: "/data/bvelghe/capstone2022/A/Run008553.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01.h5"
+    # dataset: "/data/bvelghe/capstone2022/A/Run008553.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01.h5"
     dataset: "/data/bvelghe/capstone2022/C/2018E.EOSlist.CTRL_patched.h5"
-    val: 0.1
-    test: 0.1
+    val: 0.05
+    test: 0.05
 
 data_loader:
   batch_size: 32
-  num_workers: 2
+  num_workers: 4
+  drop_last: True
 
 model:
   pointnet:
@@ -20,13 +21,18 @@ model:
     saved_model: "saved_models/pointnet_class_weight.pt"
     predictions: "saved_models/predictions_class_weight.csv"
   dgcnn:
-    num_classes: 3
-    epochs: 1
+    num_classes: 2
+    epochs: 5
     k: 16
-    saved_model: "saved_models/dgcnn.pt"
+    output_channels: 1
+    saved_model: "saved_models/dgcnn_v3_binary.pt"
+    predictions: "saved_models/dgcnn_predictions_v3_binary.csv"
+    momentum: False
+    radius: False
 
 gpu:
   - 4
   - 5
+  - 6 
 
 seed: 42

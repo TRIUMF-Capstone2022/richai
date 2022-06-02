@@ -9,6 +9,8 @@ https://dl.acm.org/doi/pdf/10.1145/3326362 (Original paper)
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torch.autograd import Variable
+import numpy as np
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -17,50 +19,70 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 def knn(x, k):
     """KNN implementation for finding graph neighbors."""
     inner = -2 * torch.matmul(x.transpose(2, 1), x)
-    xx = torch.sum(x ** 2, dim=1, keepdim=True)
+    xx = torch.sum(x**2, dim=1, keepdim=True)
     pairwise_distance = -xx - inner - xx.transpose(2, 1)
-    idx = pairwise_distance.topk(k=k, dim=-1)[1]  # (batch_size, num_points, k)
+
+    # (batch_size, num_points, k)
+    idx = pairwise_distance.topk(k=k, dim=-1)[1]
     return idx
 
 
-def get_graph_feature(x, k=20, idx=None, dim9=False):
+def get_graph_feature(x, k=20, idx=None):
     """Dynamically calculate graph edge features."""
-    batch_size = x.size(0)
-    num_points = x.size(2)
-    x = x.view(batch_size, -1, num_points)
+    batch_size, num_dims, num_points = x.size()
+
+    # find knn
     if idx is None:
-        if dim9 == False:
-            idx = knn(x, k=k)  # (batch_size, num_points, k)
-        else:
-            idx = knn(x[:, 6:], k=k)
+        idx = knn(x, k=k)
 
-    idx_base = torch.arange(0, batch_size, device=device).view(-1, 1, 1) * num_points
+    # index for each point: (batch_size) -> view -> (batch_size, 1, 1)
+    idx_base = torch.arange(0, batch_size, device=x.device).view(-1, 1, 1) * num_points
+
+    # index + knn index: (batch_size, num_dims, num_points)
     idx = idx + idx_base
-    idx = idx.view(-1)
-    _, num_dims, _ = x.size()
 
-    # (batch_size, num_points, num_dims)  -> (batch_size*num_points, num_dims) #   batch_size * num_points * k + range(0, batch_size*num_points)
+    # (batch_size * num_dims * num_points)
+    idx = idx.view(-1)
+
+    # (batch_size, num_dims, num_points) -> (batch_size, num_points, num_dims)
     x = x.transpose(2, 1).contiguous()
+
+    # (batch_size * num_points * k, num_dims)
     feature = x.view(batch_size * num_points, -1)[idx, :]
+
+    # (batch_size, num_points, k, num_dims)
     feature = feature.view(batch_size, num_points, k, num_dims)
+
+    # (batch_size, num_points, 1, num_dims) -> repeat -> (batch_size, num_points, k, num_dims)
     x = x.view(batch_size, num_points, 1, num_dims).repeat(1, 1, k, 1)
-    feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
 
     # (batch_size, 2*num_dims, num_points, k)
+    feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
+
     return feature
 
 
 class DGCNN(nn.Module):
-    def __init__(self, input_channels=6, output_channels=3, k=16, p=0.5):
+    """Dynamic Graph CNN."""
+
+    def __init__(
+        self,
+        input_channels=6,
+        output_channels=3,
+        k=16,
+        p=0.5,
+        momentum=False,
+        radius=False,
+    ):
         super(DGCNN, self).__init__()
 
-        # default input features are 6 since 3 edge features + 3 coordinate features
+        # default input features are 3 coordinates * 2 because of edge features
         self.input_channels = input_channels
         self.output_channels = output_channels
-
-        # TODO tune k for KNN graph
         self.k = k
         self.p = p
+        self.momentum = momentum
+        self.radius = radius
 
         self.bn1 = nn.BatchNorm2d(64)
         self.bn2 = nn.BatchNorm2d(64)
@@ -94,7 +116,13 @@ class DGCNN(nn.Module):
             nn.LeakyReLU(negative_slope=0.2),
         )
 
+        # if self.momentum and self.radius:
+        #     self.linear1 = nn.Linear(1024 * 2 + 2, 512, bias=False)
+        # elif self.momentum or self.radius:
+        #     self.linear1 = nn.Linear(1024 * 2 + 1, 512, bias=False)
+        # else:
         self.linear1 = nn.Linear(1024 * 2, 512, bias=False)
+
         self.bn6 = nn.BatchNorm1d(512)
         self.dp1 = nn.Dropout(p=self.p)
 
@@ -104,7 +132,7 @@ class DGCNN(nn.Module):
 
         self.linear3 = nn.Linear(256, self.output_channels)
 
-    def forward(self, x):
+    def forward(self, x, p=None, radius=None):
         batch_size = x.size(0)
 
         # (batch_size, 3, num_points) -> (batch_size, 3*2, num_points, k)
@@ -155,10 +183,18 @@ class DGCNN(nn.Module):
         # (batch_size, 1024, num_points) -> (batch_size, 1024)
         x2 = F.adaptive_avg_pool1d(x, 1).view(batch_size, -1)
 
-        # (batch_size, 1024*2)
+        # (batch_size, 1024*2 + mom + rad)
         x = torch.cat((x1, x2), 1)
 
-        # (batch_size, 1024*2) -> (batch_size, 512)
+        # add momentum dimension if desired
+        # if self.momentum and p is not None:
+        #     x = torch.hstack([x, p.unsqueeze(1)])
+
+        # add radius dimension if desired
+        # if self.radius and radius is not None:
+        #     x = torch.hstack([x, radius.unsqueeze(1)])
+
+        # (batch_size, 1024*2 + mom + rad) -> (batch_size, 512)
         x = F.leaky_relu(self.bn6(self.linear1(x)), negative_slope=0.2)
 
         # (batch_size, 512) -> (batch_size, 256)
