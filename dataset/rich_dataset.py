@@ -92,22 +92,17 @@ class RICHDataset(Dataset):
                 df = pd.read_hdf(sample_file)
                 logger.info(f"Total samples: {df.shape[0]}")
 
-                # filter outliers
+                # filter ring centre outliers (some very small or large values in data)
                 df = df.query("ring_centre_pos_x < 2500 and ring_centre_pos_y < 2500")
                 df = df.query("ring_centre_pos_x > -2500 and ring_centre_pos_y > -2500")
+
+                # filter very large radii or negative radii
+                # df = df.query("ring_radius < 500 and ring_radius > 0")
 
                 logger.info(f"Total samples with no outliers: {df.shape[0]}")
 
                 # self.mean_centre_x = df["ring_centre_pos_x"].mean()
                 # self.mean_centre_y = df["ring_centre_pos_y"].mean()
-
-                # we need to hardcode this otherwise the model cannot generalize
-                self.mean_centre_x = -110.25
-                self.mean_centre_y = 1.14
-
-                logger.info(
-                    f"Mean centre locations: ({self.mean_centre_x:.2f},{self.mean_centre_y:.2f})"
-                )
 
                 indices = df["original_index"].to_numpy()
 
@@ -115,6 +110,21 @@ class RICHDataset(Dataset):
                 del df
             else:
                 indices = np.arange(self.N - 2)
+
+            # we need to hardcode these global values otherwise the model cannot generalize
+            self.mean_centre_x = -110.25
+            self.mean_centre_y = 1.14
+            self.mean_momentum = 31.338661
+            self.std_momentum = 7.523443
+            self.mean_radius = 174.97235
+            self.std_radius = 12.013085
+
+            logger.info(
+                f"""
+                    Mean centre locations: ({self.mean_centre_x},{self.mean_centre_y})
+                    Mean/std momentum: {self.mean_momentum}, {self.std_momentum}
+                    Mean/std radius: {self.mean_radius}, {self.std_radius}"""
+            )
 
             # shuffle indices
             np.random.shuffle(indices)
@@ -204,7 +214,7 @@ class RICHDataset(Dataset):
 
     def filter_events_delta(self, event, delta):
         """Filter hits data based on a delta = hit time - chod time"""
-        mask = (np.abs(event[:, 2:]) < delta).flatten()
+        mask = (np.abs(event[:, 2:3]) < delta).flatten()
         return event[mask]
 
     def __len__(self):
@@ -222,6 +232,14 @@ class RICHDataset(Dataset):
             "track_momentum": self.event_array[idx]["track_momentum"],
             "ring_radius": self.event_array[idx]["ring_radius"],
         }
+
+        # standardize momentum
+        self.data["track_momentum"] -= self.mean_momentum
+        self.data["track_momentum"] /= self.std_momentum
+
+        # standardize ring radius
+        self.data["ring_radius"] -= self.mean_radius
+        self.data["ring_radius"] /= self.std_radius
 
         return (
             torch.tensor(self.data["event_pos"]),
