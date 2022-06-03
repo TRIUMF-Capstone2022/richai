@@ -21,7 +21,10 @@ class RICHDataset(Dataset):
         val_split=None,
         test_split=None,
         seed=None,
+        delta=get_config("dataset.delta"),
     ):
+
+        self.delta = delta
 
         # set seed
         if seed:
@@ -85,6 +88,7 @@ class RICHDataset(Dataset):
             if sample_file:
                 logger.info(f"Filtering indices for sample: {sample_file}")
 
+                # read in sample file
                 df = pd.read_hdf(sample_file)
                 logger.info(f"Total samples: {df.shape[0]}")
 
@@ -94,8 +98,12 @@ class RICHDataset(Dataset):
 
                 logger.info(f"Total samples with no outliers: {df.shape[0]}")
 
-                self.mean_centre_x = df["ring_centre_pos_x"].mean()
-                self.mean_centre_y = df["ring_centre_pos_y"].mean()
+                # self.mean_centre_x = df["ring_centre_pos_x"].mean()
+                # self.mean_centre_y = df["ring_centre_pos_y"].mean()
+
+                # we need to hardcode this otherwise the model cannot generalize
+                self.mean_centre_x = -110.25
+                self.mean_centre_y = 1.14
 
                 logger.info(
                     f"Mean centre locations: ({self.mean_centre_x:.2f},{self.mean_centre_y:.2f})"
@@ -134,9 +142,9 @@ class RICHDataset(Dataset):
         logger.info(f"Total Test indices: {len(self.test_indices)}")
 
         # for reproducibility (to check that test set is the same)
-        logger.info(f"First 10 Train indices: {self.train_indices[:10]}")
-        logger.info(f"First 10 Validation indices: {self.val_indices[:10]}")
-        logger.info(f"First 10 Test indices: {self.test_indices[:10]}")
+        logger.info(f"First 5 Train indices: {self.train_indices[:5]}")
+        logger.info(f"First 5 Validation indices: {self.val_indices[:5]}")
+        logger.info(f"First 5 Test indices: {self.test_indices[:5]}")
 
         # We don't attempt to catch exception here, crash if we cannot open the file.
         with open(dset_path, "rb") as fh:
@@ -182,8 +190,7 @@ class RICHDataset(Dataset):
             return position_map
 
         # filter events for small time deltas
-        delta = get_config("dataset.delta")
-        event_pos = self.filter_events_delta(event_pos, delta)
+        event_pos = self.filter_events_delta(event_pos, self.delta)
 
         # demean x and y locations
         event_pos[:, :1] = event_pos[:, :1] - self.mean_centre_x
@@ -196,7 +203,7 @@ class RICHDataset(Dataset):
         return data
 
     def filter_events_delta(self, event, delta):
-        """Filter hits array based on a delta = hit time - chod time"""
+        """Filter hits data based on a delta = hit time - chod time"""
         mask = (np.abs(event[:, 2:]) < delta).flatten()
         return event[mask]
 
