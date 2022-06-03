@@ -27,7 +27,7 @@ def knn(x, k):
     return idx
 
 
-def get_graph_feature(x, k=20, idx=None):
+def get_graph_feature(x, k, idx=None):
     """Dynamically calculate graph edge features."""
     batch_size, num_dims, num_points = x.size()
 
@@ -116,12 +116,12 @@ class DGCNN(nn.Module):
             nn.LeakyReLU(negative_slope=0.2),
         )
 
-        # if self.momentum and self.radius:
-        #     self.linear1 = nn.Linear(1024 * 2 + 2, 512, bias=False)
-        # elif self.momentum or self.radius:
-        #     self.linear1 = nn.Linear(1024 * 2 + 1, 512, bias=False)
-        # else:
-        self.linear1 = nn.Linear(1024 * 2, 512, bias=False)
+        if self.momentum and self.radius:
+            self.linear1 = nn.Linear(1024 * 2 + 2, 512, bias=False)
+        elif self.momentum or self.radius:
+            self.linear1 = nn.Linear(1024 * 2 + 1, 512, bias=False)
+        else:
+            self.linear1 = nn.Linear(1024 * 2, 512, bias=False)
 
         self.bn6 = nn.BatchNorm1d(512)
         self.dp1 = nn.Dropout(p=self.p)
@@ -187,12 +187,12 @@ class DGCNN(nn.Module):
         x = torch.cat((x1, x2), 1)
 
         # add momentum dimension if desired
-        # if self.momentum and p is not None:
-        #     x = torch.hstack([x, p.unsqueeze(1)])
+        if self.momentum and p is not None:
+            x = torch.hstack([x, p.unsqueeze(1)])
 
         # add radius dimension if desired
-        # if self.radius and radius is not None:
-        #     x = torch.hstack([x, radius.unsqueeze(1)])
+        if self.radius and radius is not None:
+            x = torch.hstack([x, radius.unsqueeze(1)])
 
         # (batch_size, 1024*2 + mom + rad) -> (batch_size, 512)
         x = F.leaky_relu(self.bn6(self.linear1(x)), negative_slope=0.2)
