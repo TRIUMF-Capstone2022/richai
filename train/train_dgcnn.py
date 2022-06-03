@@ -77,7 +77,7 @@ def trainer(
         logger.info(f"Starting training phase of epoch {epoch+1}...")
         model.train()
 
-        for i, (X, y, p) in enumerate(train_loader, 0):
+        for i, (X, y, p, r) in enumerate(train_loader, 0):
             # X needs to be reshaped for knn calculation to work
             # (batch_size, PMTs, points) -> (batch_size, points, PMTs)
             X = X.float().to(device)
@@ -86,12 +86,13 @@ def trainer(
             # label, momentum, radius are OK with shape (1, batch_size)
             y = y.long().to(device)
             p = p.float().to(device)
+            r = r.float().to(device)
 
             # zero parameter gradients
             optimizer.zero_grad()
 
             # forward pass and calculate loss
-            logits = model(X, p).flatten()
+            logits = model(X, p, r).flatten()
             loss = criterion(logits, y.type(torch.float32))
             running_loss += loss.item()
 
@@ -153,13 +154,14 @@ def trainer(
             true_pion_preds, false_neg_muons = 0, 0
 
             with torch.no_grad():
-                for i, (X, y, p) in enumerate(val_loader, 0):
+                for i, (X, y, p, r) in enumerate(val_loader, 0):
                     X = X.float().to(device)
                     X = X.permute(0, 2, 1)
                     y = y.long().to(device)
                     p = p.float().to(device)
+                    r = r.float().to(device)
 
-                    logits = model(X, p).flatten()
+                    logits = model(X, p, r).flatten()
                     loss = criterion(logits, y.type(torch.float32))
                     running_loss += loss.item()
 
@@ -238,9 +240,9 @@ def trainer(
 def train_combined():
 
     k = 8
-    gpus = [7]
+    gpus = [4, 5]
     delta = 0.3
-    model_path = f"saved_models/dgcnn_k{k}_delta{delta}.pt"
+    model_path = f"saved_models/dgcnn_k{k}_delta030_momentum_radius.pt"
 
     # model parameters
     # k = get_config("model.dgcnn.k")
@@ -274,7 +276,7 @@ def train_combined():
     """
     )
 
-    model = DGCNN(k=k, output_channels=output_channels)
+    model = DGCNN(k=k, output_channels=output_channels, momentum=True, radius=True)
 
     # enable multi GPUs
     if torch.cuda.device_count() > 1:
