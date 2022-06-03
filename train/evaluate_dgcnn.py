@@ -121,10 +121,10 @@ def evaluate_dgcnn():
 
 
 def get_predictions(
-    model,
     dataloader,
+    model,
+    state_dict=get_config("model.dgcnn.saved_model"),
     operating_point=0.5,
-    weights=get_config("model.dgcnn.saved_model"),
     gpus=get_config("gpu"),
 ):
     """Evaluate the trained DGCNN model on the test set."""
@@ -141,14 +141,14 @@ def get_predictions(
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         logger.info(f"Using {device}")
 
-    model.load_state_dict(torch.load(weights))
+    model.load_state_dict(torch.load(state_dict))
     model.to(device)
     model.eval()
 
-    logger.info(f"Model loaded from {weights}")
+    logger.info(f"Model loaded from {state_dict}")
 
     with torch.no_grad():
-        for X, y, p in tqdm(dataloader, total=len(dataloader)):
+        for X, y, p in dataloader:
             X = X.float().to(device)
             X = X.permute(0, 2, 1)
             y = y.long().to(device)
@@ -169,7 +169,7 @@ def get_predictions(
             probabilities.extend(probs)
             predictions.extend(preds)
 
-    logger.info(f"Model loaded from {weights}")
+    logger.info(f"Model evaluation complete")
 
     df = pd.DataFrame(
         {"labels": labels, "predictions": predictions, "probabilities": probabilities}
@@ -179,4 +179,38 @@ def get_predictions(
 
 
 if __name__ == "__main__":
-    evaluate_dgcnn()
+    # evaluate_dgcnn()
+
+    k = 8
+    gpus = [4, 5]
+    operating_point = 0.5
+
+    state_dicts = [
+        "saved_models/dgcnn_k8_delta015.pt",
+        "saved_models/dgcnn_k8_delta030.pt",
+    ]
+
+    deltas = [0.15, 0.30]
+
+    paths = [
+        "saved_models/dgcnn_k8_delta015_results.csv",
+        "saved_models/dgcnn_k8_delta030_results.csv",
+    ]
+
+    for state_dict, delta, path in zip(state_dicts, deltas, paths):
+        dataset = RICHDataset(
+            dset_path=get_config("dataset.dgcnn.dataset"),
+            sample_file=get_config("dataset.dgcnn.sample_file"),
+            val_split=get_config("dataset.dgcnn.val"),
+            test_split=get_config("dataset.dgcnn.test"),
+            seed=get_config("seed"),
+            delta=delta,
+        )
+
+        _, val_loader, _ = data_loader(dataset)
+
+        model = DGCNN(k=k, output_channels=1)
+
+        df = get_predictions(val_loader, model, state_dict, operating_point, gpus)
+
+        df.to_csv(path, index=False)
