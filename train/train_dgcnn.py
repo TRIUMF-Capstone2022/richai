@@ -7,10 +7,8 @@ https://github.com/AnTao97/dgcnn.pytorch/blob/master/main_cls.py
 """
 
 
-import pickle
 import time
 import torch
-import torch.nn as nn
 import pandas as pd
 import torch.nn.functional as F
 from utils.helpers import get_config, get_logger
@@ -19,7 +17,6 @@ from dataset.rich_dataset import RICHDataset
 from dataset.data_loader import data_loader
 
 logger = get_logger()
-device = torch.device("cuda" if torch.cuda else "cpu")
 
 
 def cross_entropy_ls(y_pred, y_true, smoothing=True):
@@ -54,6 +51,8 @@ def trainer(
     scheduler=None,
     device="cuda",
     results=False,
+    operating_point=0.5,
+    show_results=2500,
 ):
     """Trainer for DGCNN"""
 
@@ -71,13 +70,13 @@ def trainer(
 
         running_loss = 0.0
         running_total, running_correct = 0, 0
-        total_pions, true_pions = 0, 0
+        total_pions, total_muons = 0, 0
+        true_pion_preds, false_neg_muons = 0, 0
 
         # --------------------------------------- TRAINING ---------------------------------------
         logger.info(f"Starting training phase of epoch {epoch+1}...")
         model.train()
 
-        # for i, (X, y, p, radius) in enumerate(train_loader, 0):
         for i, (X, y, p) in enumerate(train_loader, 0):
             # X needs to be reshaped for knn calculation to work
             # (batch_size, PMTs, points) -> (batch_size, points, PMTs)
@@ -87,31 +86,32 @@ def trainer(
             # label, momentum, radius are OK with shape (1, batch_size)
             y = y.long().to(device)
             p = p.float().to(device)
-            # radius = radius.float().to(device)
 
             # zero parameter gradients
             optimizer.zero_grad()
 
             # forward pass and calculate loss
-            # logits = model(X, p, radius)
-            # logits = model(X, p)
-            logits = model(X, p).flatten()  # binary classification
-            # loss = criterion(logits, y)
-            loss = criterion(logits, y.type(torch.float32))  # binary classification
+            logits = model(X, p).flatten()
+            loss = criterion(logits, y.type(torch.float32))
             running_loss += loss.item()
 
             # calculate predictions and accuracy
-            # preds = logits.max(dim=1)[1]
-            preds = torch.sigmoid(logits) > 0.5  # binary classification
+            preds = torch.sigmoid(logits) > operating_point
             running_total += X.size(0)
             running_correct += preds.eq(y).sum().item()
             acc = running_correct / running_total
 
-            # calculate pion efficiency
-            pions = torch.where(y == 1, 1, 0)
-            total_pions += len(pions)
-            true_pions += (preds == pions).sum().item()
-            pion_efficiency = true_pions / total_pions
+            # total pions and muons this batch
+            total_pions += torch.sum(y == 1).item()
+            total_muons += torch.sum(y == 0).item()
+
+            # true positive pions and false negative muons
+            true_pion_preds += torch.sum((preds == 1) & (y == 1)).item()
+            false_neg_muons += torch.sum((preds == 0) & (y == 1)).item()
+
+            # pion efficiency and muon misclassification as pion
+            pion_efficiency = true_pion_preds / total_pions
+            muon_misclass = false_neg_muons / total_muons
 
             # back prop and update weights
             loss.backward()
@@ -121,9 +121,9 @@ def trainer(
                 scheduler.step()
 
             # log results every 100 batches or upon final batch
-            if (i + 1) % 2500 == 0 or i == len(train_loader) - 1:
+            if (i + 1) % show_results == 0 or i == len(train_loader) - 1:
                 outstr = (
-                    "Epoch %d (batch %4d/%4d), loss: %.4f, accuracy: %.4f, pion eff: %.4f"
+                    "(T)E: %d (B: %4d/%4d), Loss: %.4f, Acc: %.4f, Pion eff: %.4f, Muon misclass: %.4f"
                     % (
                         epoch + 1,
                         i + 1,
@@ -131,6 +131,7 @@ def trainer(
                         running_loss / running_total,
                         acc,
                         pion_efficiency,
+                        muon_misclass,
                     )
                 )
 
@@ -148,47 +149,55 @@ def trainer(
 
             running_loss = 0.0
             running_total, running_correct = 0, 0
-            total_pions, true_pions = 0, 0
+            total_pions, total_muons = 0, 0
+            true_pion_preds, false_neg_muons = 0, 0
 
             with torch.no_grad():
-                # for i, (X, y, p, radius) in enumerate(val_loader, 0):
                 for i, (X, y, p) in enumerate(val_loader, 0):
                     X = X.float().to(device)
                     X = X.permute(0, 2, 1)
                     y = y.long().to(device)
                     p = p.float().to(device)
-                    # radius = radius.float().to(device)
 
-                    # logits = model(X, p)
-                    # logits = model(X, p, radius)
                     logits = model(X, p).flatten()
-                    # loss = criterion(logits, y)
                     loss = criterion(logits, y.type(torch.float32))
                     running_loss += loss.item()
 
                     # preds = logits.max(dim=1)[1]
-                    preds = torch.sigmoid(logits) > 0.5
+                    preds = torch.sigmoid(logits) > operating_point
                     running_total += X.size(0)
                     running_correct += preds.eq(y).sum().item()
                     acc = running_correct / running_total
 
-                    pions = torch.where(y == 1, 1, 0)
-                    total_pions += len(pions)
-                    true_pions += (preds == pions).sum().item()
-                    pion_efficiency = true_pions / total_pions
+                    # total pions and muons this batch
+                    total_pions += torch.sum(y == 1).item()
+                    total_muons += torch.sum(y == 0).item()
+
+                    # true positive pions and false negative muons
+                    true_pion_preds += torch.sum((preds == 1) & (y == 1)).item()
+                    false_neg_muons += torch.sum((preds == 0) & (y == 1)).item()
+
+                    # pion efficiency and muon misclassification as pion
+                    pion_efficiency = true_pion_preds / total_pions
+                    muon_misclass = false_neg_muons / total_muons
+
+                    # log results every 100 batches or upon final batch
+                    if (i + 1) % show_results == 0 or i == len(val_loader) - 1:
+                        outstr = (
+                            "(V)E: %d (B: %4d/%4d), Loss: %.4f, Acc: %.4f, Pion eff: %.4f, Muon misclass: %.4f"
+                            % (
+                                epoch + 1,
+                                i + 1,
+                                len(val_loader),
+                                running_loss / running_total,
+                                acc,
+                                pion_efficiency,
+                                muon_misclass,
+                            )
+                        )
 
             valid_losses.append(running_loss / len(val_loader))
             valid_accs.append(acc)
-
-            # log validation results
-            outstr = (
-                "Epoch %d, validation accuracy: %.4f, validation pion eff: %.4f"
-                % (
-                    epoch + 1,
-                    acc,
-                    pion_efficiency,
-                )
-            )
 
             logger.info(outstr)
 
@@ -228,30 +237,53 @@ def trainer(
 
 def train_combined():
 
-    model = DGCNN(
-        k=get_config("model.dgcnn.k"),
-        output_channels=get_config("model.dgcnn.output_channels")
-        # momentum=get_config("model.dgcnn.momentum"),
-        # radius=get_config("model.dgcnn.radius"),
+    k = 8
+    gpus = [7]
+    delta = 0.3
+    model_path = f"saved_models/dgcnn_k{k}_delta{delta}.pt"
+
+    # model parameters
+    # k = get_config("model.dgcnn.k")
+    output_channels = get_config("model.dgcnn.output_channels")
+    # model_path = get_config("model.dgcnn.saved_model")
+    epochs = get_config("model.dgcnn.epochs")
+    # gpus = get_config("gpu")
+
+    # dataset parameters
+    dset_path = get_config("dataset.dgcnn.dataset")
+    sample_file = get_config("dataset.dgcnn.sample_file")
+    val_split = get_config("dataset.dgcnn.val")
+    test_split = get_config("dataset.dgcnn.test")
+    seed = get_config("seed")
+    # delta = get_config("model.dgcnn.k")
+
+    # log training information
+    logger.info(
+        f"""
+    TRAINING SESSION INFORMATION
+    Main dataset: {dset_path}
+    Sample file: {sample_file}
+    Model save path: {model_path}
+    Total epochs: {epochs}
+    Train/val/test: {1-val_split-test_split:.2f}/{val_split}/{test_split}
+    Seed: {seed}
+    Time delta: {delta}
+    KNN k: {k}
+    Final output layer nodes: {output_channels}
+    GPU: {gpus}
+    """
     )
+
+    model = DGCNN(k=k, output_channels=output_channels)
 
     # enable multi GPUs
     if torch.cuda.device_count() > 1:
-        model = torch.nn.DataParallel(model, device_ids=get_config("gpu"))
+        model = torch.nn.DataParallel(model, device_ids=gpus)
         device = f"cuda:{model.device_ids[0]}"
     else:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     model.to(device)
-
-    # model path
-    model_path = get_config("model.dgcnn.saved_model")
-
-    logger.info(
-        f"""Device: {device}
-        model_path: {model_path}
-        """
-    )
 
     criterion = torch.nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.0003)
@@ -259,27 +291,29 @@ def train_combined():
 
     # get the dataset, for now this is C since it's been updated
     dataset = RICHDataset(
-        get_config("dataset.dgcnn.dataset"),
-        val_split=get_config("dataset.dgcnn.val"),
-        test_split=get_config("dataset.dgcnn.test"),
-        seed=get_config("seed"),
-        sample_file="/fast_scratch_1/capstone_2022/datasetC_combined.h5",
+        dset_path=dset_path,
+        sample_file=sample_file,
+        val_split=val_split,
+        test_split=test_split,
+        seed=seed,
+        delta=delta,
     )
 
     # get the data loaders
-    train_loader, val_loader, test_loader = data_loader(dataset)
+    train_loader, val_loader, _ = data_loader(dataset)
 
+    # train the model
     trainer(
-        model,
-        optimizer,
+        model=model,
+        optimizer=optimizer,
         train_loader=train_loader,
         val_loader=val_loader,
         criterion=criterion,
-        epochs=get_config("model.dgcnn.epochs"),
+        epochs=epochs,
         device=device,
+        show_results=2500,
     )
 
-    logger.info(f"Saving trained model to {model_path}")
     torch.save(model.state_dict(), model_path)
     logger.info(f"Model successfully saved to {model_path}")
 
