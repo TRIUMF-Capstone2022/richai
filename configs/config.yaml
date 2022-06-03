@@ -2,9 +2,10 @@ dataset:
   base_dir: "/data/bvelghe/capstone2022/"
   train: ["B", "C"]
   test: ["A"]
+  delta: 0.2
   dgcnn:
-    # dataset: "/data/bvelghe/capstone2022/A/Run008553.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01.h5"
     dataset: "/data/bvelghe/capstone2022/C/2018E.EOSlist.CTRL_patched.h5"
+    sample_file: "/fast_scratch_1/capstone_2022/datasetC_combined.h5"
     val: 0.05
     test: 0.05
 
@@ -22,11 +23,11 @@ model:
     predictions: "saved_models/predictions_class_weight.csv"
   dgcnn:
     num_classes: 2
-    epochs: 5
+    epochs: 4
     k: 16
     output_channels: 1
-    saved_model: "saved_models/dgcnn_v3_binary.pt"
-    predictions: "saved_models/dgcnn_predictions_v3_binary.csv"
+    saved_model: "saved_models/test_dgcnn_2.pt"
+    predictions: "saved_models/dgcnn_predictions_v3_binary_validation.csv"
     momentum: False
     radius: False
 
