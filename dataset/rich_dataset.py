@@ -111,7 +111,7 @@ class RICHDataset(Dataset):
             else:
                 indices = np.arange(self.N - 2)
 
-            # we need to hardcode these global values otherwise the model cannot generalize
+            # we need to hardcode these global values otherwise the model cannot generalizem
             self.mean_centre_x = -110.25
             self.mean_centre_y = 1.14
             self.mean_momentum = 31.338661
@@ -245,6 +245,7 @@ class RICHDataset(Dataset):
             torch.tensor(self.data["event_pos"]),
             torch.tensor(self.data["label"]),
             torch.tensor(self.data["track_momentum"]),
+            torch.tensor(self.data["ring_radius"]),
         )
 
 
