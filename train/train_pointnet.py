@@ -1,198 +1,296 @@
+
+import time
 import os
-from models.pointnet import PointNetFeat, PointNetFeedForward
 import torch
-import torch.nn.parallel
-import torch.optim as optim
-import torch.utils.data
+import pandas as pd
 import torch.nn.functional as F
-from tqdm import tqdm
-
-
-from dataset.rich_dataset import RICHDataset, combine_dataset
-from dataset.data_loader import data_loader
 from utils.helpers import get_config, get_logger
+from models.pointnet import PointNetFc
+from dataset.rich_dataset import RICHDataset
+from dataset.data_loader import data_loader
 
 logger = get_logger()
 
+
 def trainer(
     model,
-    criterion,
     optimizer,
-    scheduler,
-    trainloader,
-    validloader,
+    train_loader,
+    val_loader=None,
+    criterion=None,
     epochs=5,
-    device="cpu"
+    scheduler=None,
+    device="cuda",
+    results=False,
+    operating_point=0.5,
+    show_results=2500,
 ):
-    """Simple training wrapper for PyTorch network."""
+    """Trainer for pointnet"""
+
+    logger.info(f"Starting training...")
+    training_start = time.time()
 
     train_losses, train_accs = [], []
     valid_losses, valid_accs = [], []
-    
+
+    model.to(device)
+
     for epoch in range(epochs):
         logger.info(f"Starting epoch {epoch+1}/{epochs}...")
+        epoch_start = time.time()
 
         running_loss = 0.0
         running_total, running_correct = 0, 0
-        total_pions, true_pions = 0, 0
+        total_pions, total_muons = 0, 0
+        true_pion_preds, false_neg_muons = 0, 0
 
-        # Training
+        # --------------------------------------- TRAINING ---------------------------------------
+        logger.info(f"Starting training phase of epoch {epoch+1}...")
         model.train()
-        for i, (X, y, p) in enumerate(trainloader, 0):    
-            # GPU
-            X = X.transpose(2, 1).to(device)
-            y = y.long().to(device)
-            p = p.to(device)
 
-            optimizer.zero_grad()  # Zero all the gradients w.r.t. parameters
-            y_hat = model(X, p).flatten()
-            y_hat_labels = torch.sigmoid(y_hat) > 0.5
-            loss = criterion(y_hat, y.type(torch.float32))
-            loss.backward()  # Calculate gradients w.r.t. parameters
-            optimizer.step()  # Update parameters
-            scheduler.step()
-            running_loss += loss.item()  # Add loss for this batch to running total
-            
+        for i, (X, y, p, r) in enumerate(train_loader, 0):
+            # X needs to be reshaped for knn calculation to work
+            # (batch_size, PMTs, points) -> (batch_size, points, PMTs)
+            X = X.float().to(device)
+
+            # label, momentum, radius are OK with shape (1, batch_size)
+            y = y.long().to(device)
+            p = p.float().to(device)
+            r = r.float().to(device)
+
+            # zero parameter gradients
+            optimizer.zero_grad()
+
+            # forward pass and calculate loss
+            logits = model(X, p, r).flatten()
+            loss = criterion(logits, y.type(torch.float32))
+            running_loss += loss.item()
+
             # calculate predictions and accuracy
+            preds = torch.sigmoid(logits) > operating_point
             running_total += X.size(0)
-            running_correct += y_hat_labels.eq(y).sum().item()
+            running_correct += preds.eq(y).sum().item()
             acc = running_correct / running_total
 
-            # calculate pion efficiency
-            pions = torch.where(y == 1, 1, 0)
-            total_pions += len(pions)
-            true_pions += (y_hat_labels == pions).sum().item()
-            pion_efficiency = true_pions / total_pions
-            
+            # total pions and muons this batch
+            total_pions += torch.sum(y == 1).item()
+            total_muons += torch.sum(y == 0).item()
+
+            # true positive pions and false negative muons
+            true_pion_preds += torch.sum((preds == 1) & (y == 1)).item()
+            false_neg_muons += torch.sum((preds == 0) & (y == 1)).item()
+
+            # pion efficiency and muon misclassification as pion
+            pion_efficiency = true_pion_preds / total_pions
+            muon_misclass = false_neg_muons / total_muons
+
+            # back prop and update weights
+            loss.backward()
+            optimizer.step()
+
+            if scheduler:
+                scheduler.step()
+
             # log results every 100 batches or upon final batch
-            if (i + 1) % 250 == 0 or i == len(trainloader) - 1:
-                outstr = "Epoch %d (batch %4d/%4d), loss: %.4f, accuracy: %.4f, pion eff: %.4f" % (
-                    epoch + 1,
-                    i + 1,
-                    len(trainloader),
-                    running_loss / running_total,
-                    acc,
-                    pion_efficiency,
+            if (i + 1) % show_results == 0 or i == len(train_loader) - 1:
+                outstr = (
+                    "(T)E: %d (B: %4d/%4d), Loss: %.4f, Acc: %.4f, Pion eff: %.4f, Muon misclass: %.4f"
+                    % (
+                        epoch + 1,
+                        i + 1,
+                        len(train_loader),
+                        running_loss / running_total,
+                        acc,
+                        pion_efficiency,
+                        muon_misclass,
+                    )
                 )
 
                 logger.info(outstr)
-        
-        train_losses.append(running_loss / len(trainloader))
+
+        train_losses.append(running_loss / len(train_loader))
         train_accs.append(acc)
 
-        logger.info(f"Completed training phase of epoch {epoch+1}!")        
+        logger.info(f"Completed training phase of epoch {epoch+1}!")
 
-        # Validation
-        logger.info(f"Starting validation phase of epoch {epoch+1}...")
-        model.eval()
+        # --------------------------------------- VALIDATION -------------------------------------
+        if val_loader:
+            logger.info(f"Starting validation phase of epoch {epoch+1}...")
+            model.eval()
 
-        running_loss = 0.0
-        running_total, running_correct = 0, 0
-        total_pions, true_pions = 0, 0
-        
-        with torch.no_grad():  # this stops pytorch doing computational graph stuff under-the-hood and saves memory and time
-            for i, (X, y, p) in enumerate(validloader, 0):
-                # GPU
-                X = X.transpose(2, 1).to(device)
-                y = y.long().to(device)
-                p = p.to(device)
+            running_loss = 0.0
+            running_total, running_correct = 0, 0
+            total_pions, total_muons = 0, 0
+            true_pion_preds, false_neg_muons = 0, 0
 
-                y_hat = model(X, p).flatten()
-                y_hat_labels = torch.sigmoid(y_hat) > 0.5
-                loss = criterion(y_hat, y.type(torch.float32))
-                valid_batch_loss += loss.item()
-                running_loss += loss.item()
+            with torch.no_grad():
+                for i, (X, y, p, r) in enumerate(val_loader, 0):
+                    X = X.float().to(device)
+                    y = y.long().to(device)
+                    p = p.float().to(device)
+                    r = r.float().to(device)
 
-                running_total += X.size(0)
-                running_correct += y_hat_labels.eq(y).sum().item()
-                acc = running_correct / running_total
+                    logits = model(X, p, r).flatten()
+                    loss = criterion(logits, y.type(torch.float32))
+                    running_loss += loss.item()
 
-                pions = torch.where(y == 1, 1, 0)
-                total_pions += len(pions)
-                true_pions += (y_hat_labels == pions).sum().item()
-                pion_efficiency = true_pions / total_pions
-                
-        valid_losses.append(running_loss / len(validloader))
-        valid_accs.append(acc)
+                    # preds = logits.max(dim=1)[1]
+                    preds = torch.sigmoid(logits) > operating_point
+                    running_total += X.size(0)
+                    running_correct += preds.eq(y).sum().item()
+                    acc = running_correct / running_total
 
-        # log validation results
-        outstr = (
-            "Epoch %d, validation accuracy: %.4f, validation pion eff: %.4f"
-            % (
-                epoch + 1,
-                acc,
-                pion_efficiency,
-            )
+                    # total pions and muons this batch
+                    total_pions += torch.sum(y == 1).item()
+                    total_muons += torch.sum(y == 0).item()
+
+                    # true positive pions and false negative muons
+                    true_pion_preds += torch.sum((preds == 1) & (y == 1)).item()
+                    false_neg_muons += torch.sum((preds == 0) & (y == 1)).item()
+
+                    # pion efficiency and muon misclassification as pion
+                    pion_efficiency = true_pion_preds / total_pions
+                    muon_misclass = false_neg_muons / total_muons
+
+                    # log results every 100 batches or upon final batch
+                    if (i + 1) % show_results == 0 or i == len(val_loader) - 1:
+                        outstr = (
+                            "(V)E: %d (B: %4d/%4d), Loss: %.4f, Acc: %.4f, Pion eff: %.4f, Muon misclass: %.4f"
+                            % (
+                                epoch + 1,
+                                i + 1,
+                                len(val_loader),
+                                running_loss / running_total,
+                                acc,
+                                pion_efficiency,
+                                muon_misclass,
+                            )
+                        )
+
+            valid_losses.append(running_loss / len(val_loader))
+            valid_accs.append(acc)
+
+            logger.info(outstr)
+
+        logger.info(f"Completed validation phase of epoch {epoch+1}!")
+
+        # log epoch elapsed time
+        epoch_time_elapsed = time.time() - epoch_start
+
+        outstr = ("Epoch %d/%d completed in %.0fm %.0fs") % (
+            epoch + 1,
+            epochs,
+            epoch_time_elapsed // 60,
+            epoch_time_elapsed % 60,
         )
 
-        logger.info(outstr) # accuracy
-        
-    logger.info(f"Completed validation phase of epoch {epoch+1}!")    
+        logger.info(outstr)
 
+    # log total elapsed training time
+    total_time_elapsed = time.time() - training_start
+    outstr = "Training completed in {:.0f}m {:.0f}s".format(
+        total_time_elapsed // 60, total_time_elapsed % 60
+    )
 
-    return
+    logger.info(outstr)
+
+    if results:
+        data = {
+            "train_loss": train_losses,
+            "train_acc": train_accs,
+            "val_loss": valid_losses,
+            "val_acc": valid_accs,
+        }
+        results = pd.DataFrame(data)
+
+        results.to_csv("pointnet_training_results.csv")
 
 
 def train_combined(reload_model=True):
-    """Train the model on combined dataset"""
+    """Combined training for all the files"""
+    
 
-    # define model
-    model = PointNetFeedForward(k=get_config("model.pointnet.num_classes"))
+    # model parameters
+    num_classes = get_config("model.pointnet.num_classes")
+    model_path = get_config("model.pointnet.saved_model")
+    epochs = get_config("model.pointnet.epochs")
 
-    # device
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # dataset parameters
+    dset_path = get_config("dataset.pointnet.dataset")
+    sample_file = get_config("dataset.pointnet.sample_file")
+    val_split = get_config("dataset.pointnet.val")
+    test_split = get_config("dataset.pointnet.test")
+    seed = get_config("seed")
+    delta = get_config("model.pointnet.delta")
+    
+    # log training information
+    logger.info(
+        f"""
+    TRAINING SESSION INFORMATION
+    Main dataset: {dset_path}
+    Sample file: {sample_file}
+    Model save path: {model_path}
+    Total epochs: {epochs}
+    Train/val/test: {1-val_split-test_split:.2f}/{val_split}/{test_split}
+    Seed: {seed}
+    Time delta: {delta}
+    Final output layer nodes: {num_classes}
+    """
+    )
+
+    model = PointNetFc(
+        num_classes=get_config('model.pointnet.num_classes'),
+        momentum=True, radius=True
+    )
 
     # enable multi GPUs
     if torch.cuda.device_count() > 1:
-        model = torch.nn.DataParallel(model, device_ids=get_config("gpu"))
-        device = f"cuda:{model.device_ids[0]}"
+        model = torch.nn.DataParallel(model, device_ids=get_config('gpu'))
+        device = f'cuda:{model.device_ids[0]}'
+    else:
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     model.to(device)
 
     criterion = torch.nn.BCEWithLogitsLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001, betas=(0.9, 0.999))
-    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.0003)
+    # scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
 
-    # model path
-    model_path = get_config("model.pointnet.saved_model")
-
-    logger.info(
-        f"""
-    Device: {device},
-    model_path: {model_path}
-    """
+    # get the dataset, for now this is C since it's been updated
+    dataset = RICHDataset(
+        dset_path=dset_path,
+        sample_file=sample_file,
+        val_split=val_split,
+        test_split=test_split,
+        seed=seed,
+        delta=delta,
+        # data_augmentation=True
     )
 
-    for file_, dataset in combine_dataset("train", val_split=0.2).items():
-
-        logger.info(f"Training for {file_}")
-
-        trainloader, validloader, _ = data_loader(dataset)
-
-        if reload_model and os.path.exists(model_path):
-            model.load_state_dict(torch.load(model_path))
-            logger.info(
-                f"model reloaded from existing path {model_path}, continue training"
-            )
-
-        # start training
-        trainer(
-            model,
-            criterion,
-            optimizer,
-            scheduler,
-            trainloader,
-            validloader,
-            epochs=get_config("model.pointnet.epochs"),
-            device=device
+    # get the data loaders
+    train_loader, val_loader, _ = data_loader(dataset)
+    
+    if reload_model and os.path.exists(model_path):
+        model.load_state_dict(torch.load(model_path))
+        logger.info(
+            f"model reloaded from existing path {model_path}, continue training"
         )
 
-        logger.info(f"Training completed with file: {file_}")
-        logger.info(f"Saving trained model to {model_path}")
 
-        # save model
-        torch.save(model.state_dict(), model_path)
-        logger.info(f"model successfully saved to {model_path}")
+    # train the model
+    trainer(
+        model=model,
+        optimizer=optimizer,
+        train_loader=train_loader,
+        val_loader=val_loader,
+        criterion=criterion,
+        epochs=epochs,
+        device=device,
+        show_results=2500,
+    )
+
+    torch.save(model.state_dict(), model_path)
+    logger.info(f"Model successfully saved to {model_path}")
 
 
 if __name__ == "__main__":

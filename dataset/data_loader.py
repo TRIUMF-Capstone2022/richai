@@ -8,7 +8,7 @@ def data_loader(dset):
     """Create pytorch data loader"""
     train_loader = DataLoader(
         dset,
-        batch_size=get_config('data_loader.batch_size'),
+        batch_size=get_config("data_loader.batch_size"),
         shuffle=False,
         sampler=SubsetRandomSampler(dset.train_indices),
         num_workers=get_config('data_loader.num_workers'),
@@ -17,7 +17,7 @@ def data_loader(dset):
 
     val_loader = DataLoader(
         dset,
-        batch_size=get_config('data_loader.batch_size'),
+        batch_size=get_config("data_loader.batch_size"),
         shuffle=False,
         sampler=SubsetRandomSampler(dset.val_indices),
         num_workers=get_config('data_loader.num_workers'),
@@ -25,10 +25,10 @@ def data_loader(dset):
     )
 
     test_loader = None
-    if hasattr(dset, 'test_indices'):
+    if hasattr(dset, "test_indices"):
         test_loader = DataLoader(
             dset,
-            batch_size=get_config('data_loader.batch_size'),
+            batch_size=get_config("data_loader.batch_size"),
             shuffle=False,
             sampler=SubsetRandomSampler(dset.test_indices),
             num_workers=get_config('data_loader.num_workers'),
