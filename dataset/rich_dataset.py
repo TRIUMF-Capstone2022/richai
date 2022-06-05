@@ -27,7 +27,11 @@ class RICHDataset(Dataset):
         val_split=None,
         test_split=None,
         seed=None,
+<<<<<<< HEAD
         delta=get_config('dataset.delta'),
+=======
+        delta=get_config("dataset.delta"),
+>>>>>>> pointnet: working version on new data
         data_augmentation=None,
         test_only=False,
     ):
@@ -117,14 +121,20 @@ class RICHDataset(Dataset):
                 # self.mean_centre_x = df["ring_centre_pos_x"].mean()
                 # self.mean_centre_y = df["ring_centre_pos_y"].mean()
 
+<<<<<<< HEAD
                 indices = df['original_index'].to_numpy()
 
+=======
+                indices = df["original_index"].to_numpy()
+                
+>>>>>>> pointnet: working version on new data
                 logger.info(f"Unique labels: {df['label'].unique()}")
 
                 # remove df from memory
                 del df
             else:
                 indices = np.arange(self.N - 2)
+                
 
             # Global Variables
             self.mean_centre_x, self.mean_centre_y = get_config(
@@ -170,6 +180,9 @@ class RICHDataset(Dataset):
                 n_val = int(len(indices) * val_split)
                 self.train_indices = indices[:-n_val]
                 self.val_indices = indices[-n_val:]
+        
+        if test_only:
+            self.test_indices = indices        
 
             logger.info(f'Total Train indices: {len(self.train_indices)}')
             logger.info(f'Sample Train indices: {self.train_indices[:10]}')
