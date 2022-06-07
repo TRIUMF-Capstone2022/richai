@@ -6,7 +6,12 @@ import pandas as pd
 import os
 from collections import defaultdict
 from torch.utils.data import Dataset
-from utils.helpers import compute_seq_id, get_config, get_logger
+from utils.helpers import (
+    compute_seq_id,
+    get_config,
+    get_logger,
+    # events_to_pandas,
+)
 
 logger = get_logger()
 
@@ -22,9 +27,12 @@ class RICHDataset(Dataset):
         test_split=None,
         seed=None,
         delta=get_config("dataset.delta"),
+        data_augmentation=None,
+        test_only=False,
     ):
 
         self.delta = delta
+        self.data_augmentation = data_augmentation
 
         # set seed
         if seed:
@@ -85,7 +93,7 @@ class RICHDataset(Dataset):
             logger.info(f"Positron start at index: {pos_off}")
 
             # Get indices
-            if sample_file:
+            if sample_file and not test_only:
                 logger.info(f"Filtering indices for sample: {sample_file}")
 
                 # read in sample file
@@ -106,18 +114,19 @@ class RICHDataset(Dataset):
 
                 indices = df["original_index"].to_numpy()
 
+                logger.info(f"Unique labels: {df['label'].unique()}")
+
                 # remove df from memory
                 del df
             else:
                 indices = np.arange(self.N - 2)
 
-            # we need to hardcode these global values otherwise the model cannot generalizem
-            self.mean_centre_x = -110.25
-            self.mean_centre_y = 1.14
-            self.mean_momentum = 31.338661
-            self.std_momentum = 7.523443
-            self.mean_radius = 174.97235
-            self.std_radius = 12.013085
+            self.mean_centre_x = get_config("dataset.centre_bias.mean_x")
+            self.mean_centre_y = get_config("dataset.centre_bias.mean_y")
+            self.mean_momentum = get_config("dataset.standardize.mean_momentum")
+            self.std_momentum = get_config("dataset.standardize.std_momentum")
+            self.mean_radius = get_config("dataset.standardize.mean_radius")
+            self.std_radius = get_config("dataset.standardize.std_radius")
 
             logger.info(
                 f"""
@@ -147,6 +156,26 @@ class RICHDataset(Dataset):
                 self.train_indices = indices[:-n_val]
                 self.val_indices = indices[-n_val:]
 
+            if test_only:
+
+                df = events_to_pandas(dfile)
+
+                # filter ring centre outliers (some very small or large values in data)
+                df = df.query("ring_centre_pos_x < 2500 and ring_centre_pos_y < 2500")
+                df = df.query("ring_centre_pos_x > -2500 and ring_centre_pos_y > -2500")
+
+                # filter out label = 2, positron
+                df = df.query("label != 2")
+
+                indices = df.index.to_numpy()
+
+                logger.info(f"Total Test indices: {len(indices)}")
+                logger.info(f"Unique labels: {df['label'].unique()}")
+
+                self.test_indices = indices
+
+                del df
+
         logger.info(f"Total Train indices: {len(self.train_indices)}")
         logger.info(f"Total Validation indices: {len(self.val_indices)}")
         logger.info(f"Total Test indices: {len(self.test_indices)}")
@@ -171,6 +200,16 @@ class RICHDataset(Dataset):
                 offset=event_offset,
             ).reshape(event_shape)
             logger.info("event array mmap size: %i bytes", self.event_array.nbytes)
+
+    def augment_data(self, data):
+        """Data Augmentation"""
+        theta = np.random.uniform(0, np.pi * 2)
+        rot_mat = np.array(
+            [[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]]
+        )
+        data[:, [0, 2]] = data[:, [0, 2]].dot(rot_mat)  # random rotation
+        data = data + np.random.normal(0, 0.02, size=data.shape)  # random jitter
+        return data
 
     def get_position_data(self):
         return np.load("rich_pmt_positions.npy")
@@ -210,6 +249,10 @@ class RICHDataset(Dataset):
         data = np.zeros_like(position_map)
         data[: event_pos.shape[0], : event_pos.shape[1]] = event_pos
 
+        # data augmentation
+        if self.data_augmentation:
+            data = self.augment_data(data)
+
         return data
 
     def filter_events_delta(self, event, delta):
@@ -247,48 +290,3 @@ class RICHDataset(Dataset):
             torch.tensor(self.data["track_momentum"]),
             torch.tensor(self.data["ring_radius"]),
         )
-
-
-def combine_dataset(key, prefix="patched", **kwargs):
-    """Combine all the datasets on specified path
-    key: train or test
-    """
-    # get it from config
-    dset_dirs = [
-        os.path.join(get_config("dataset.base_dir"), i)
-        for i in get_config(f"dataset.{key}")
-    ]
-
-    logger.info(f"Train directories: {dset_dirs}")
-
-    # file list
-    dset_dict = defaultdict()
-
-    for dset_dir in dset_dirs:
-        # check if the directory exists
-        if not os.path.exists(dset_dir):
-            raise Exception(f"Directory {dset_dir} does not exist")
-
-        # get list of files
-        for dset_file in os.listdir(dset_dir):
-            # check if prefix in kwargs and file name contains prefix
-            if prefix and prefix not in dset_file:
-                logger.info(f"Skipping {dset_file}")
-                continue
-            file_ = os.path.join(dset_dir, dset_file)
-            dset_dict[file_] = RICHDataset(
-                file_,
-                sample_file="/fast_scratch_1/capstone_2022/datasetC_combined.h5",
-                **kwargs,
-            )
-
-    logger.info(f"Training files: {dset_dict}")
-
-    return dset_dict
-
-
-if __name__ == "__main__":
-    logger.info(f"Test for training dataset")
-    combine_dataset("train", val_split=0.2, test_split=0.1)
-    logger.info(f"Test for test dataset")
-    combine_dataset("test")

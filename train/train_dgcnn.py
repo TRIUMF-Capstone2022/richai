@@ -122,7 +122,7 @@ def trainer(
                 scheduler.step()
 
             # log results every 100 batches or upon final batch
-            if (i + 1) % show_results == 0 or i == len(train_loader) - 1:
+            if (i + 1) % show_results == 0 or i == len(val_loader) - 1:
                 outstr = (
                     "(T)E: %d (B: %4d/%4d), Loss: %.4f, Acc: %.4f, Pion eff: %.4f, Muon misclass: %.4f"
                     % (
@@ -237,12 +237,12 @@ def trainer(
         results.to_csv("dgcnn_training_results.csv")
 
 
-def train_combined():
+def train_combined(reload_model=None):
 
     k = 8
-    gpus = [4, 5]
-    delta = 0.3
-    model_path = f"saved_models/dgcnn_k{k}_delta030_momentum_radius.pt"
+    gpus = [5, 6, 7]
+    delta = 0.75
+    model_path = f"saved_models/dgcnn_k{k}_delta075_momentum_radius.pt"
 
     # model parameters
     # k = get_config("model.dgcnn.k")
@@ -285,6 +285,10 @@ def train_combined():
     else:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    if reload_model:
+        model.load_state_dict(torch.load(reload_model))
+        logger.info(f"Model reloaded from: {reload_model}")
+
     model.to(device)
 
     criterion = torch.nn.BCEWithLogitsLoss()
@@ -321,4 +325,6 @@ def train_combined():
 
 
 if __name__ == "__main__":
+    # reload_model = "saved_models/dgcnn_k8_delta030_momentum_radius.pt"
+    # train_combined(reload_model=reload_model)
     train_combined()
