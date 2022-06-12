@@ -8,14 +8,18 @@ from sklearn.metrics import (
     ConfusionMatrixDisplay,
     roc_curve,
     RocCurveDisplay,
+    recall_score,
 )
 
 
-# TODO add option to save figures and save paths
-
-
 def plot_cm(
-    y_true, y_pred, target_names=["muon", "pion"], normalize="true", title=None
+    y_true,
+    y_pred,
+    target_names=["muon", "pion"],
+    normalize="true",
+    cmap="cividis",
+    title=None,
+    save=None,
 ):
     """Plot a confusion matrix for a classifier.
 
@@ -26,16 +30,20 @@ def plot_cm(
     y_pred : pandas Series
         The predicted label values.
     target_names : list of str, by default ["muon", "pion"]
-        The class labels
-    normalize : str, optional
-        Whether or not to normalize the CM, by default "true"
-    title : str, optional
-        Plot title, by default None
+        The class labels.
+    normalize : str or None
+        "true" normalizes by rows, "pred" normalizes by columns.
+    cmap : str or None
+        Matplotlib colormap.
+    title : str or None
+        Plot title.
+    save: str or None, optional
+        Path where to save figure, if desired.
     """
     fig, ax = plt.subplots(figsize=(10, 10))
     cm = confusion_matrix(y_true=y_true, y_pred=y_pred, normalize=normalize)
     disp = ConfusionMatrixDisplay(cm, display_labels=target_names)
-    disp.plot(ax=ax, cmap="cividis", values_format=".4f")
+    disp.plot(ax=ax, cmap=cmap, values_format=".4f")
 
     ax.set_ylabel("Actual class", fontsize=18)
     ax.set_xlabel("Predicted class", fontsize=18)
@@ -43,21 +51,28 @@ def plot_cm(
     plt.setp(ax.get_yticklabels(), fontsize=15)
 
     if title:
-        plt.suptitle(title, y=0.92, fontsize=20)
+        plt.title(title, fontsize=20)
 
     for labels in disp.text_.ravel():
         labels.set_fontsize(15)
 
+    plt.tight_layout()
+
+    if save:
+        fig.savefig(save)
+
     plt.show()
 
 
-def show_results(path):
+def show_results(path, title=None):
     """Show the classification report and confusion matrix for a classifier.
 
     Parameters
     ----------
     path : str
         The path to the model results .csv file.
+    title : str or None
+        The title for the confusion matrix.
     """
     results = pd.read_csv(path)
     target_names = ["muon", "pion"]
@@ -76,10 +91,11 @@ def show_results(path):
         y_true=results["labels"],
         y_pred=results["predictions"],
         target_names=target_names,
+        title=title,
     )
 
 
-def plot_roc_curves(models, title, op_point=None):
+def plot_roc_curves(models, title=None, op_point=None, save=None):
     """Plot ROC curves for multiple models.
 
     Parameters
@@ -89,13 +105,14 @@ def plot_roc_curves(models, title, op_point=None):
         "name" will be shown in the legend of the plot for that model.
         "model path" is the file path to the csv results for that model.
     title : str
-        Plot titile.
+        Plot title.
     op_point : float, optional
         The operating point to plot on the ROC curve, by default None.
+    save: str or None, optional
+        Path where to save figure, if desired.
     """
     fig, ax = plt.subplots(figsize=(10, 10))
 
-    # iterate through models and plot ROC curve for each
     for name, path in models.items():
         df = pd.read_csv(path)
 
@@ -104,38 +121,124 @@ def plot_roc_curves(models, title, op_point=None):
             y_score=df["probabilities"],
         )
 
-        # optionally plot operating points
         if op_point is not None:
+            # location of operating point
             op_point_loc = np.argmin(np.abs(thresholds - op_point))
+
+            # plot operating point
             ax.plot(fpr[op_point_loc], tpr[op_point_loc], "o", markersize=8, c="r")
 
         # plot roc curve
         disp = RocCurveDisplay(fpr=fpr, tpr=tpr, estimator_name=name)
         disp.plot(ax=ax)
 
-    ax.set_title(title, fontsize=20)
-    ax.set_xlabel("False Positive Rate (Muon/Pion)", fontsize=16)
-    ax.set_ylabel("True Positive Rate (Pion/Pion)", fontsize=16)
-
     # 45 degree line is equivalent of a random classifier
     ax.plot([0, 1], [0, 1], color="black", linestyle="--")
+    ax.set_xlabel("False Positive Rate (Muon/Pion)", fontsize=16)
+    ax.set_ylabel("True Positive Rate (Pion/Pion)", fontsize=16)
 
     for label in ax.get_xticklabels() + ax.get_yticklabels():
         label.set_fontsize(16)
 
+    if title:
+        ax.set_title(title, fontsize=20)
+
+    plt.tight_layout()
+
+    if save:
+        fig.savefig(save)
+
     plt.show()
 
 
-def plot_efficiencies(results_df, title=None):
+def wrangle_predictions(path, width=1):
+    """Wrangle model predictions in order to plot efficiency curves.
+
+    Parameters
+    ----------
+    path : str
+        Path to .csv file that contains model predictions to wrangle.
+        Columns must be: labels, predictions, probabilities, momentum.
+    width : int, optional
+        Width of momentum bins to add to data, by default 1
+
+    Returns
+    -------
+    wrangled_df
+        Wrangled data for plotting.
+    """
+    df = pd.read_csv(path)
+    bins = []
+    bin_labels = []
+
+    # generate bins and bin labels for momentum
+    for i in range(0, 40 + width, width):
+        bins.append(i)
+        bin_labels.append(f"({i}, {i+width}]")
+
+    bins.append(np.inf)
+    bin_labels.pop()
+    bin_labels.append("40+")
+
+    # add momentum bins to results
+    df["momentum_bin"] = pd.cut(x=df["momentum"], bins=bins, labels=bin_labels)
+
+    # pion efficiency by momentum bin (pion recall)
+    pion_effciency = df.groupby("momentum_bin").apply(
+        lambda x: recall_score(
+            x["labels"], x["predictions"], zero_division=0, pos_label=1
+        )
+    )
+
+    # muon efficiency by momentum bin (1 - muon recall)
+    muon_efficiency = 1 - (
+        df.groupby("momentum_bin").apply(
+            lambda x: recall_score(
+                x["labels"], x["predictions"], zero_division=0, pos_label=0
+            )
+        )
+    )
+
+    # combine pion/muon efficiency into one df
+    efficiency_df = pd.concat([pion_effciency, muon_efficiency], axis=1)
+
+    efficiency_df.columns = ["pion_efficiency", "muon_efficiency"]
+
+    # counts of actual/predicted muons/pions by momentum bin
+    labels_df = df.groupby(["momentum_bin", "labels"]).size().unstack(fill_value=0)
+    predictions_df = (
+        df.groupby(["momentum_bin", "predictions"]).size().unstack(fill_value=0)
+    )
+
+    labels_df.columns = ["actual_muons", "actual_pions"]
+    predictions_df.columns = ["predicted_muons", "predicted_pions"]
+
+    # combine efficiency df with counts dfs
+    wrangled_df = pd.concat([efficiency_df, labels_df, predictions_df], axis=1)
+    wrangled_df = wrangled_df.query("actual_muons + actual_pions != 0")
+
+    return wrangled_df
+
+
+def plot_efficiencies(path, title=None, pion_axlim=0.7, muon_axlim=0.3, save=None):
     """Plot pion and muon efficiencies by momentum bin.
 
     Parameters
     ----------
-    results_df : pandas DataFrame
-        Prediction data containing momentum bins and efficiencies.
+    path : str
+        Path to .csv file that contains model predictions.
+        Columns must be: labels, predictions, probabilities, momentum.
     title : str, optional
         Overall title for the plot.
+    pion_axlim : float
+        Lower bound for pion y-axis.
+    muon_axlim : float
+        Upper bound for muon y-axis.
+    save: str or None, optional
+        Path where to save figure, if desired.
     """
+    results_df = wrangle_predictions(path)
+
     fig, ax1 = plt.subplots(figsize=(9, 7))
 
     # global plot variables
@@ -174,7 +277,7 @@ def plot_efficiencies(results_df, title=None):
         label.set_fontweight("bold")
 
     # pion y-axis customization
-    ax1.set_ylim(0.7)
+    ax1.set_ylim(pion_axlim)
     ax1.set_ylabel(
         "Pion efficiency",
         color=pion_color,
@@ -207,7 +310,7 @@ def plot_efficiencies(results_df, title=None):
     )
 
     # muon x-axis customization
-    ax2.set_ylim(0, 0.3)
+    ax2.set_ylim(0, muon_axlim)
     ax2.set_ylabel(
         "Muon efficiency",
         color=muon_color,
@@ -227,6 +330,11 @@ def plot_efficiencies(results_df, title=None):
         label.set_fontweight("bold")
 
     if title:
-        plt.suptitle(title, fontsize=20, y=0.94)
+        plt.suptitle(title, fontsize=20, y=0.96)
+
+    plt.tight_layout()
+
+    if save:
+        fig.savefig(save)
 
     plt.show()
