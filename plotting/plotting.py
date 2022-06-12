@@ -220,7 +220,16 @@ def wrangle_predictions(path, width=1):
     return wrangled_df
 
 
-def plot_efficiencies(path, title=None, pion_axlim=0.7, muon_axlim=0.3, save=None):
+def plot_efficiencies(
+    path,
+    title=None,
+    cern_scale=True,
+    pion_axlims=(0.4, 1),
+    muon_axlims=(0, 200),
+    pion_axticks=(0.05, 0.01),
+    muon_axticks=(10, 1),
+    save=None,
+):
     """Plot pion and muon efficiencies by momentum bin.
 
     Parameters
@@ -230,10 +239,14 @@ def plot_efficiencies(path, title=None, pion_axlim=0.7, muon_axlim=0.3, save=Non
         Columns must be: labels, predictions, probabilities, momentum.
     title : str, optional
         Overall title for the plot.
-    pion_axlim : float
-        Lower bound for pion y-axis.
-    muon_axlim : float
-        Upper bound for muon y-axis.
+    pion_axlims : tuple of float
+        Bounds for the pion y-axis given as: (lower, upper).
+    muon_axlims : tuple of float
+        Bounds for the muon y-axis given as: (lower, upper).
+    pion_axticks : tuple of float
+        Tick locations for the pion y-axis given as: (major, minor).
+    muon_axticks : tuple of float
+        Tick locations for the muon y-axis given as: (major, minor).
     save: str or None, optional
         Path where to save figure, if desired.
     """
@@ -277,7 +290,7 @@ def plot_efficiencies(path, title=None, pion_axlim=0.7, muon_axlim=0.3, save=Non
         label.set_fontweight("bold")
 
     # pion y-axis customization
-    ax1.set_ylim(pion_axlim)
+    ax1.set_ylim(pion_axlims[0], pion_axlims[1])
     ax1.set_ylabel(
         "Pion efficiency",
         color=pion_color,
@@ -285,8 +298,8 @@ def plot_efficiencies(path, title=None, pion_axlim=0.7, muon_axlim=0.3, save=Non
         fontweight="bold",
         labelpad=labelpad,
     )
-    ax1.yaxis.set_major_locator(ticker.MultipleLocator(0.05))
-    ax1.yaxis.set_minor_locator(ticker.MultipleLocator(0.01))
+    ax1.yaxis.set_major_locator(ticker.MultipleLocator(pion_axticks[0]))
+    ax1.yaxis.set_minor_locator(ticker.MultipleLocator(pion_axticks[1]))
     ax1.tick_params(
         which="major", length=major_length, width=major_width, labelsize=tick_fs
     )
@@ -297,6 +310,13 @@ def plot_efficiencies(path, title=None, pion_axlim=0.7, muon_axlim=0.3, save=Non
 
     # second x-axis for muon
     ax2 = ax1.twinx()
+
+    # whether or not to match muon scale to original NA62 CERN plot (10^-3)
+    if cern_scale:
+        results_df["muon_efficiency"] *= 10**3
+        ax2.text(
+            28.5, muon_axlims[1], r"$10^{-3}$", fontsize=label_fs, color=muon_color
+        )
 
     # plot muon efficiency as squares with horizontal lines
     results_df["muon_efficiency"].plot(
@@ -310,16 +330,16 @@ def plot_efficiencies(path, title=None, pion_axlim=0.7, muon_axlim=0.3, save=Non
     )
 
     # muon x-axis customization
-    ax2.set_ylim(0, muon_axlim)
+    ax2.set_ylim(muon_axlims[0], muon_axlims[1])
     ax2.set_ylabel(
-        "Muon efficiency",
+        "Muon Efficiency",
         color=muon_color,
         fontsize=label_fs,
         fontweight="bold",
         labelpad=labelpad,
     )
-    ax2.yaxis.set_major_locator(ticker.MultipleLocator(0.05))
-    ax2.yaxis.set_minor_locator(ticker.MultipleLocator(0.01))
+    ax2.yaxis.set_major_locator(ticker.MultipleLocator(muon_axticks[0]))
+    ax2.yaxis.set_minor_locator(ticker.MultipleLocator(muon_axticks[1]))
     ax2.tick_params(
         which="major", length=major_length, width=major_width, labelsize=tick_fs
     )
@@ -330,7 +350,7 @@ def plot_efficiencies(path, title=None, pion_axlim=0.7, muon_axlim=0.3, save=Non
         label.set_fontweight("bold")
 
     if title:
-        plt.suptitle(title, fontsize=20, y=0.96)
+        plt.title(title, fontsize=20)
 
     plt.tight_layout()
 
