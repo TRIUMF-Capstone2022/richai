@@ -7,6 +7,7 @@ https://github.com/AnTao97/dgcnn.pytorch/blob/master/main_cls.py
 """
 
 
+import os
 import time
 import torch
 import pandas as pd
@@ -118,9 +119,6 @@ def trainer(
             loss.backward()
             optimizer.step()
 
-            if scheduler:
-                scheduler.step()
-
             # log results every 100 batches or upon final batch
             if (i + 1) % show_results == 0 or i == len(val_loader) - 1:
                 outstr = (
@@ -204,6 +202,13 @@ def trainer(
             logger.info(outstr)
 
         logger.info(f"Completed validation phase of epoch {epoch+1}!")
+        model_path = f"saved_models/dgcnn_k8_delta030_momentum_radius_tunedLR_8epochs_E{epoch+1}.pt"
+        torch.save(model.state_dict(), model_path)
+        logger.info(f"Snapshot saved at: {model_path}")
+
+        # update learning rate
+        if scheduler:
+            scheduler.step()
 
         # log epoch elapsed time
         epoch_time_elapsed = time.time() - epoch_start
@@ -237,34 +242,29 @@ def trainer(
         results.to_csv("dgcnn_training_results.csv")
 
 
-def train_combined(reload_model=None):
-
-    k = 8
-    gpus = [5, 6, 7]
-    delta = 0.75
-    model_path = f"saved_models/dgcnn_k{k}_delta075_momentum_radius.pt"
+def train_combined(reload_model=False):
 
     # model parameters
-    # k = get_config("model.dgcnn.k")
-    output_channels = get_config("model.dgcnn.output_channels")
-    # model_path = get_config("model.dgcnn.saved_model")
+    k = get_config("model.dgcnn.k")
+    output_channels = get_config("model.dgcnn.num_classes")
+    momentum = get_config("model.dgcnn.momentum")
+    radius = get_config("model.dgcnn.radius")
+    model_path = get_config("model.dgcnn.saved_model")
     epochs = get_config("model.dgcnn.epochs")
-    # gpus = get_config("gpu")
 
     # dataset parameters
-    dset_path = get_config("dataset.dgcnn.dataset")
-    sample_file = get_config("dataset.dgcnn.sample_file")
+    files = get_config(f"dataset.train")
     val_split = get_config("dataset.dgcnn.val")
     test_split = get_config("dataset.dgcnn.test")
+    delta = get_config("model.dgcnn.delta")
     seed = get_config("seed")
-    # delta = get_config("model.dgcnn.k")
+    gpus = get_config("gpu")
 
     # log training information
     logger.info(
         f"""
     TRAINING SESSION INFORMATION
-    Main dataset: {dset_path}
-    Sample file: {sample_file}
+    Files: {files}
     Model save path: {model_path}
     Total epochs: {epochs}
     Train/val/test: {1-val_split-test_split:.2f}/{val_split}/{test_split}
@@ -276,7 +276,9 @@ def train_combined(reload_model=None):
     """
     )
 
-    model = DGCNN(k=k, output_channels=output_channels, momentum=True, radius=True)
+    model = DGCNN(
+        k=k, output_channels=output_channels, momentum=momentum, radius=radius
+    )
 
     # enable multi GPUs
     if torch.cuda.device_count() > 1:
@@ -285,46 +287,62 @@ def train_combined(reload_model=None):
     else:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    if reload_model:
-        model.load_state_dict(torch.load(reload_model))
-        logger.info(f"Model reloaded from: {reload_model}")
-
     model.to(device)
 
     criterion = torch.nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.0003)
-    # scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
+    # scheduler = torch.optim.lr_scheduler.OneCycleLR(
+    #     optimizer=optimizer,
+    #     max_lr=0.003,
+    #     total_steps=epochs,
+    #     pct_start=0.5,
+    #     anneal_strategy="linear",
+    #     div_factor=10,
+    #     final_div_factor=1,
+    # )
 
-    # get the dataset, for now this is C since it's been updated
-    dataset = RICHDataset(
-        dset_path=dset_path,
-        sample_file=sample_file,
-        val_split=val_split,
-        test_split=test_split,
-        seed=seed,
-        delta=delta,
-    )
+    for file_, sample_file in files.items():
+        logger.info(f"Training on file {file_}")
+        logger.info(f"Training on sample file {sample_file}")
 
-    # get the data loaders
-    train_loader, val_loader, _ = data_loader(dataset)
+        # reload model if specified
+        if reload_model and os.path.exists(model_path):
+            model.load_state_dict(torch.load(model_path))
+            logger.info(
+                f"Model reloaded from existing path {model_path}, continue training"
+            )
 
-    # train the model
-    trainer(
-        model=model,
-        optimizer=optimizer,
-        train_loader=train_loader,
-        val_loader=val_loader,
-        criterion=criterion,
-        epochs=epochs,
-        device=device,
-        show_results=2500,
-    )
+        # get the dataset
+        dataset = RICHDataset(
+            dset_path=file_,
+            sample_file=sample_file,
+            val_split=val_split,
+            test_split=test_split,
+            seed=seed,
+            delta=delta,
+        )
 
-    torch.save(model.state_dict(), model_path)
-    logger.info(f"Model successfully saved to {model_path}")
+        # get the data loaders
+        train_loader, val_loader, _ = data_loader(dataset)
+
+        # train the model
+        trainer(
+            model=model,
+            optimizer=optimizer,
+            train_loader=train_loader,
+            val_loader=val_loader,
+            criterion=criterion,
+            epochs=epochs,
+            # scheduler=scheduler,
+            device=device,
+            show_results=2500,
+        )
+
+        torch.save(model.state_dict(), model_path)
+        logger.info(f"Model successfully saved to {model_path}")
 
 
 if __name__ == "__main__":
-    # reload_model = "saved_models/dgcnn_k8_delta030_momentum_radius.pt"
+    # reload_model = "saved_models/dgcnn_k8_delta030_momentum_radius_tunedLR_8epochs.pt"
     # train_combined(reload_model=reload_model)
     train_combined()

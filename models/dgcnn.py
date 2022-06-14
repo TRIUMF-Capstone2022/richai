@@ -9,8 +9,6 @@ https://dl.acm.org/doi/pdf/10.1145/3326362 (Original paper)
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.autograd import Variable
-import numpy as np
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -70,7 +68,7 @@ class DGCNN(nn.Module):
         input_channels=6,
         output_channels=3,
         k=16,
-        p=0.5,
+        dropout=0.5,
         momentum=False,
         radius=False,
     ):
@@ -80,7 +78,7 @@ class DGCNN(nn.Module):
         self.input_channels = input_channels
         self.output_channels = output_channels
         self.k = k
-        self.p = p
+        self.dropout = dropout
         self.momentum = momentum
         self.radius = radius
 
@@ -124,11 +122,11 @@ class DGCNN(nn.Module):
             self.linear1 = nn.Linear(1024 * 2, 512, bias=False)
 
         self.bn6 = nn.BatchNorm1d(512)
-        self.dp1 = nn.Dropout(p=self.p)
+        self.dp1 = nn.Dropout(p=self.dropout)
 
         self.linear2 = nn.Linear(512, 256)
         self.bn7 = nn.BatchNorm1d(256)
-        self.dp2 = nn.Dropout(p=self.p)
+        self.dp2 = nn.Dropout(p=self.dropout)
 
         self.linear3 = nn.Linear(256, self.output_channels)
 

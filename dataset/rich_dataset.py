@@ -10,7 +10,7 @@ from utils.helpers import (
     compute_seq_id,
     get_config,
     get_logger,
-    # events_to_pandas,
+    events_to_pandas,
 )
 
 logger = get_logger()
@@ -121,12 +121,13 @@ class RICHDataset(Dataset):
             else:
                 indices = np.arange(self.N - 2)
 
-            self.mean_centre_x = get_config("dataset.centre_bias.mean_x")
-            self.mean_centre_y = get_config("dataset.centre_bias.mean_y")
-            self.mean_momentum = get_config("dataset.standardize.mean_momentum")
-            self.std_momentum = get_config("dataset.standardize.std_momentum")
-            self.mean_radius = get_config("dataset.standardize.mean_radius")
-            self.std_radius = get_config("dataset.standardize.std_radius")
+            # we need to hardcode these global values otherwise the model cannot generalizem
+            self.mean_centre_x = -110.25
+            self.mean_centre_y = 1.14
+            self.mean_momentum = 31.338661
+            self.std_momentum = 7.523443
+            self.mean_radius = 174.97235
+            self.std_radius = 12.013085
 
             logger.info(
                 f"""
@@ -158,14 +159,27 @@ class RICHDataset(Dataset):
 
             if test_only:
 
+                # self.test_indices = indices
+
                 df = events_to_pandas(dfile)
+
+                logger.info("Testing....................")
+                logger.info(f"Total events: {df.shape[0]}")
+
+                # filter out label = 2, positron
+                df = df.query("label != 2")
+                logger.info(f"Total events with no positrons: {df.shape[0]}")
+
+                # momentum between 15 and 45
+                df = df.query("track_momentum >= 15 and track_momentum < 45")
+                logger.info(
+                    f"Total events with track_momentum between 15 and 45: {df.shape[0]}"
+                )
 
                 # filter ring centre outliers (some very small or large values in data)
                 df = df.query("ring_centre_pos_x < 2500 and ring_centre_pos_y < 2500")
                 df = df.query("ring_centre_pos_x > -2500 and ring_centre_pos_y > -2500")
-
-                # filter out label = 2, positron
-                df = df.query("label != 2")
+                logger.info(f"Total events with no outliers: {df.shape[0]}")
 
                 indices = df.index.to_numpy()
 

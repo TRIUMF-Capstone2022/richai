@@ -5,136 +5,21 @@ from models.dgcnn import DGCNN
 from dataset.rich_dataset import RICHDataset
 from dataset.data_loader import data_loader
 from utils.helpers import get_logger, get_config
-from tqdm import tqdm
-import numpy as np
-from sklearn.metrics import recall_score
+from torch.utils.data.sampler import SubsetRandomSampler
 
 
 logger = get_logger()
 
 
-def evaluate(model, data_loader):
-    """Evaluate the trained DGCNN model on the test set."""
-
-    labels, predictions = [], []
-
-    if torch.cuda.device_count() > 1:
-        model = torch.nn.DataParallel(model, device_ids=get_config("gpu"))
-        device = f"cuda:{model.device_ids[0]}"
-
-    model.to(device)
-
-    model.load_state_dict(torch.load(get_config("model.dgcnn.saved_model")))
-
-    model.eval()
-
-    running_total, running_correct = 0, 0
-
-    with torch.no_grad():
-        # for i, (X, y, p, radius) in tqdm(
-        #     enumerate(data_loader, 0), total=len(data_loader)
-        # ):
-        for i, (X, y, p) in tqdm(enumerate(data_loader, 0), total=len(data_loader)):
-            # for i, (X, y, p) in enumerate(data_loader, 0):
-            X = X.float().to(device)
-            X = X.permute(0, 2, 1)
-            y = y.long().to(device)
-            p = p.float().to(device)
-            # radius = radius.float().to(device)
-
-            # logits = model(X, p, radius)
-            # logits = model(X)
-            logits = model(X, p).flatten()
-            # preds = logits.max(dim=1)[1]
-            preds = torch.where(torch.sigmoid(logits) > 0.5, 1, 0)
-            running_total += X.size(0)
-            running_correct += preds.eq(y).sum().item()
-
-            y, preds = (
-                y.cpu().detach().numpy(),
-                preds.squeeze().cpu().detach().numpy(),
-            )
-
-            labels.extend(y)
-            predictions.extend(preds)
-
-    acc = running_correct / running_total
-
-    logger.info("Test accuracy: %d " % acc)
-
-    # convert labels and prediction in dataframe
-    df = pd.DataFrame({"labels": labels, "predictions": predictions})
-
-    # pion efficiency
-    pion = df[df.labels == 1]
-    pion_efficiency = sum(pion.predictions == 1) / len(pion)
-
-    # muon efficiency
-    muon = df[df.labels == 0]
-    muon_efficiency = sum(muon.predictions == 0) / len(muon)
-
-    # positron efficiency
-    # positron = df[df.labels == 2]
-    # positron_efficiency = sum(positron.predictions == 2) / len(positron)
-
-    logger.info(
-        f"""
-    Pion efficiency : {pion_efficiency}
-    Muon efficiency : {muon_efficiency}
-    """
-    )
-    # Positron efficiency : {positron_efficiency}
-    return df
-
-
-def evaluate_dgcnn():
-    """Evaluate DGCNN"""
-
-    logger.info("DGCNN evaluation starting...")
-
-    results_path = get_config("model.dgcnn.predictions")
-
-    model = DGCNN(
-        k=get_config("model.dgcnn.k"),
-        output_channels=get_config("model.dgcnn.output_channels"),
-        momentum=False,
-        radius=False,
-        # momentum=get_config("model.dgcnn.momentum"),
-        # radius=get_config("model.dgcnn.radius"),
-    )
-
-    dataset = RICHDataset(
-        get_config("dataset.dgcnn.dataset"),
-        val_split=get_config("dataset.dgcnn.val"),
-        test_split=get_config("dataset.dgcnn.test"),
-        seed=get_config("seed"),
-        sample_file="/fast_scratch_1/capstone_2022/datasetC_combined.h5",
-    )
-
-    # get the data loaders
-    _, val_loader, test_loader = data_loader(dataset)
-
-    # df = evaluate(model, test_loader)
-    df = evaluate(model, val_loader)
-
-    df.to_csv(results_path, index=False)
-
-    logger.info("DGCNN evaluation completed!")
-    logger.info(f"Results successfully saved to {results_path}")
-
-
-def get_predictions(
-    dataloader,
-    model,
-    state_dict=get_config("model.dgcnn.saved_model"),
-    operating_point=0.5,
-    gpus=get_config("gpu"),
-):
+def get_predictions(model, dataloader, operating_point=0.5, unstandardize=True):
     """Evaluate the trained DGCNN model on the test set."""
 
     logger.info("Getting predictions with DGCNN...")
 
     labels, predictions, probabilities, momentum = [], [], [], []
+
+    gpus = get_config("gpu")
+    state_dict = get_config("model.dgcnn.saved_model")
 
     if torch.cuda.device_count() > 1:
         logger.info(f"Using gpus {gpus}")
@@ -144,8 +29,8 @@ def get_predictions(
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         logger.info(f"Using {device}")
 
-    model.load_state_dict(torch.load(state_dict))
     model.to(device)
+    model.load_state_dict(torch.load(state_dict))
     model.eval()
 
     logger.info(f"Model loaded from {state_dict}")
@@ -186,139 +71,66 @@ def get_predictions(
         }
     )
 
-    # unstandardize momentum
-    mean_momentum = get_config("dataset.standardize.mean_momentum")
-    std_momentum = get_config("dataset.standardize.std_momentum")
-    df["momentum"] = df["momentum"] * std_momentum + mean_momentum
+    if unstandardize:
+        mean_momentum = get_config("dataset.standardize.mean_momentum")
+        std_momentum = get_config("dataset.standardize.std_momentum")
+        df["momentum"] = df["momentum"] * std_momentum + mean_momentum
 
     return df
 
 
-def wrangle_predictions(df, width=1):
-    """Wrangle model predictions for plotting.
+def evaluate_dgcnn(test_only=False):
+    """Evaluate DGCNN"""
 
-    Parameters
-    ----------
-    df : pandas DataFrame
-        Initial data from model predictions (output of `get_predictions`)
-    width : int, optional
-        Width of momentum bins to add to data, by default 1
+    logger.info("DGCNN evaluation starting...")
 
-    Returns
-    -------
-    wrangled_df
-        Wrangled data for plotting.
-    """
-    df = df.copy()
-    bins = []
-    bin_labels = []
+    result = pd.DataFrame()
 
-    # generate bins and bin labels for momentum
-    for i in range(0, 40 + width, width):
-        bins.append(i)
-        bin_labels.append(f"({i}, {i+width}]")
+    model = DGCNN(
+        output_channels=get_config("model.dgcnn.num_classes"),
+        k=get_config("model.dgcnn.k"),
+        momentum=get_config("model.dgcnn.momentum"),
+        radius=get_config("model.dgcnn.radius"),
+    )
 
-    bins.append(np.inf)
-    bin_labels.pop()
-    bin_labels.append("40+")
+    files = get_config("dataset.test")
 
-    # add momentum bins to results
-    df["momentum_bin"] = pd.cut(x=df["momentum"], bins=bins, labels=bin_labels)
+    for file_, sample_file in files.items():
 
-    # pion efficiency by momentum bin (pion recall)
-    pion_effciency = df.groupby("momentum_bin").apply(
-        lambda x: recall_score(
-            x["labels"], x["predictions"], zero_division=0, pos_label=1
+        logger.info(f"Evaluating for {file_}")
+
+        dataset = RICHDataset(
+            dset_path=file_,
+            # sample_file=sample_file,
+            # val_split=get_config("dataset.dgcnn.val"),
+            # test_split=get_config("dataset.dgcnn.test"),
+            val_split=None,
+            test_split=None,
+            seed=get_config("seed"),
+            delta=get_config("model.dgcnn.delta"),
+            test_only=test_only,
         )
-    )
 
-    # muon efficiency by momentum bin (1 - muon recall)
-    muon_efficiency = 1 - (
-        df.groupby("momentum_bin").apply(
-            lambda x: recall_score(
-                x["labels"], x["predictions"], zero_division=0, pos_label=0
-            )
+        # _, _, test_loader = data_loader(dataset)
+
+        data_loader = torch.utils.data.DataLoader(
+            dataset,
+            batch_size=get_config("data_loader.batch_size"),
+            shuffle=False,
+            sampler=SubsetRandomSampler(dataset.test_indices),
+            num_workers=get_config("data_loader.num_workers"),
+            drop_last=get_config("data_loader.drop_last"),
         )
-    )
 
-    # combine pion/muon efficiency into one df
-    efficiency_df = pd.concat([pion_effciency, muon_efficiency], axis=1)
+        df = get_predictions(model, data_loader)
+        result = pd.concat([result, df])
 
-    efficiency_df.columns = ["pion_efficiency", "muon_efficiency"]
+    results_path = get_config("model.dgcnn.predictions")
+    result.to_csv(results_path, index=False)
 
-    # counts of actual/predicted muons/pions by momentum bin
-    labels_df = df.groupby(["momentum_bin", "labels"]).size().unstack(fill_value=0)
-    predictions_df = (
-        df.groupby(["momentum_bin", "predictions"]).size().unstack(fill_value=0)
-    )
-
-    labels_df.columns = ["actual_muons", "actual_pions"]
-    predictions_df.columns = ["predicted_muons", "predicted_pions"]
-
-    # combine efficiency df with counts dfs
-    wrangled_df = pd.concat([efficiency_df, labels_df, predictions_df], axis=1)
-    wrangled_df = wrangled_df.query("actual_muons + actual_pions != 0")
-
-    return wrangled_df
+    logger.info("DGCNN evaluation completed!")
+    logger.info(f"Results successfully saved to {results_path}")
 
 
 if __name__ == "__main__":
-    # evaluate_dgcnn()
-
-    k = 8
-    gpus = [6, 7]
-    operating_point = 0.5
-
-    state_dicts = [
-        "saved_models/dgcnn_k8_delta040_momentum_4epochs.pt",
-        "saved_models/dgcnn_k8_delta040_momentum_radius_4epochs.pt",
-        "saved_models/dgcnn_k8_delta050_momentum_4epochs.pt",
-        "saved_models/dgcnn_k8_delta050_momentum_radius_4epochs.pt",
-        "saved_models/dgcnn_k8_delta075_momentum_radius_4epochs.pt",
-    ]
-
-    deltas = [0.40, 0.40, 0.50, 0.50, 0.75]
-    momentums = [True, True, True, True, True]
-    radii = [False, True, False, True, True]
-
-    paths = [
-        "saved_models/validation_results/dgcnn_k8_delta040_momentum_4epochs.csv",
-        "saved_models/validation_results/dgcnn_k8_delta040_momentum_radius_4epochs.csv",
-        "saved_models/validation_results/dgcnn_k8_delta050_momentum_4epochs.csv",
-        "saved_models/validation_results/dgcnn_k8_delta050_momentum_radius_4epochs.csv",
-        "saved_models/validation_results/dgcnn_k8_delta075_momentum_radius_4epochs.csv",
-    ]
-
-    for state_dict, delta, momentum, radius, path in zip(
-        state_dicts, deltas, momentums, radii, paths
-    ):
-        dataset = RICHDataset(
-            dset_path=get_config("dataset.dgcnn.dataset"),
-            sample_file=get_config("dataset.dgcnn.sample_file"),
-            val_split=get_config("dataset.dgcnn.val"),
-            test_split=get_config("dataset.dgcnn.test"),
-            seed=get_config("seed"),
-            delta=delta,
-        )
-
-        _, val_loader, _ = data_loader(dataset)
-        model = DGCNN(k=k, output_channels=1, momentum=momentum, radius=radius)
-        df = get_predictions(val_loader, model, state_dict, operating_point, gpus)
-        df.to_csv(path, index=False)
-
-    # dataset = RICHDataset(
-    #     dset_path=get_config("dataset.dgcnn.dataset"),
-    #     sample_file=get_config("dataset.dgcnn.sample_file"),
-    #     val_split=get_config("dataset.dgcnn.val"),
-    #     test_split=get_config("dataset.dgcnn.test"),
-    #     seed=get_config("seed"),
-    #     delta=deltas[0],
-    # )
-
-    # _, val_loader, _ = data_loader(dataset)
-
-    # model = DGCNN(k=k, output_channels=1, momentum=True, radius=True)
-
-    # df = get_predictions(val_loader, model, state_dicts[0], operating_point, gpus)
-
-    # df.to_csv(paths[0], index=False)
+    evaluate_dgcnn(test_only=True)
