@@ -111,7 +111,7 @@ def plot_roc_curves(models, title=None, op_point=None, save=None):
     save: str or None, optional
         Path where to save figure, if desired.
     """
-    fig, ax = plt.subplots(figsize=(10, 10))
+    fig, ax = plt.subplots(figsize=(8, 8))
 
     for name, path in models.items():
         df = pd.read_csv(path)
@@ -134,16 +134,17 @@ def plot_roc_curves(models, title=None, op_point=None, save=None):
 
     # 45 degree line is equivalent of a random classifier
     ax.plot([0, 1], [0, 1], color="black", linestyle="--")
-    ax.set_xlabel("False Positive Rate (Muon/Pion)", fontsize=16)
-    ax.set_ylabel("True Positive Rate (Pion/Pion)", fontsize=16)
+    ax.set_xlabel("False Positive Rate (Muon/Pion)", fontsize=20)
+    ax.set_ylabel("True Positive Rate (Pion/Pion)", fontsize=20)
 
     for label in ax.get_xticklabels() + ax.get_yticklabels():
-        label.set_fontsize(16)
+        label.set_fontsize(18)
 
     if title:
-        ax.set_title(title, fontsize=20)
+        ax.set_title(title, fontsize=25)
 
     plt.tight_layout()
+    plt.legend(fontsize=15)
 
     if save:
         fig.savefig(save)
@@ -296,7 +297,7 @@ def plot_efficiencies(
     # pion y-axis customization
     ax1.set_ylim(pion_axlims[0], pion_axlims[1])
     ax1.set_ylabel(
-        "Pion efficiency",
+        "Pion efficiency (recall)",
         color=pion_color,
         fontsize=label_fs,
         fontweight="bold",
@@ -319,7 +320,7 @@ def plot_efficiencies(
     if cern_scale:
         results_df["muon_efficiency"] *= 10**3
         ax2.text(
-            28.5, muon_axlims[1], r"$10^{-3}$", fontsize=label_fs, color=muon_color
+            28.5, muon_axlims[1], r"x$10^{-3}$", fontsize=label_fs, color=muon_color
         )
 
     # plot muon efficiency as squares with horizontal lines
@@ -336,7 +337,7 @@ def plot_efficiencies(
     # muon x-axis customization
     ax2.set_ylim(muon_axlims[0], muon_axlims[1])
     ax2.set_ylabel(
-        "Muon Efficiency",
+        "Muon Efficiency (1 - recall)",
         color=muon_color,
         fontsize=label_fs,
         fontweight="bold",
