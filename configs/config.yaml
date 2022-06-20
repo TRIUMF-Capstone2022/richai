@@ -1,0 +1,53 @@
+dataset:
+  delta: 0.3
+  train:
+    "/data/bvelghe/capstone2022/B/2018B.Sample.EOSlist.CTRL.p.v2.0.4_f.v2.0.4_patched.h5": "/fast_scratch_1/capstone_2022/combined_datasets/B.2018B.h5"
+    "/data/bvelghe/capstone2022/C/2018E.EOSlist.CTRL_patched.h5": "/fast_scratch_1/capstone_2022/datasetC_combined.h5"
+  test:
+    "/data/bvelghe/capstone2022/A/Run008548.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01_patched.h5": "/fast_scratch_1/capstone_2022/combined_datasets/A.Run008548.h5"
+    "/data/bvelghe/capstone2022/A/Run008553.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01_patched.h5": "/fast_scratch_1/capstone_2022/combined_datasets/A.Run008553.h5"
+    "/data/bvelghe/capstone2022/A/Run008562.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01_patched.h5": "/fast_scratch_1/capstone_2022/combined_datasets/A.Run008562.h5"
+    "/data/bvelghe/capstone2022/A/Run008563.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01_patched.h5": "/fast_scratch_1/capstone_2022/combined_datasets/A.Run008563.h5"
+    "/data/bvelghe/capstone2022/A/Run008564.EOSlist.CTRL.p.v2.0.4-01_f.v2.0.4-01_patched.h5": "/fast_scratch_1/capstone_2022/combined_datasets/A.Run008564.h5"
+  dgcnn:
+    dataset: "/data/bvelghe/capstone2022/C/2018E.EOSlist.CTRL_patched.h5"
+    sample_file: "/fast_scratch_1/capstone_2022/datasetC_combined.h5"
+    val: 0.05
+    test: 0.05
+  centre_bias:
+    mean_x: -110.25
+    mean_y: 1.14
+  standardize:
+    mean_momentum: 31.338661
+    std_momentum: 7.523443
+    mean_radius: 174.97235
+    std_radius: 12.013085
+
+data_loader:
+  batch_size: 32
+  num_workers: 4
+  drop_last: True
+
+model:
+  pointnet:
+    num_classes: 3
+    epochs: 4
+    class_weights:
+    saved_model: "saved_models/pointnet_class_weight.pt"
+    predictions: "saved_models/predictions_class_weight.csv"
+  dgcnn:
+    num_classes: 1
+    epochs: 4
+    k: 8
+    saved_model: "saved_models/dgcnn.pt"
+    predictions: "saved_models/dgcnn_predictions.csv"
+    momentum: True
+    radius: True
+    delta: 0.3
+
+gpu:
+  - 1
+  - 2 
+  - 3
+
+seed: 42
