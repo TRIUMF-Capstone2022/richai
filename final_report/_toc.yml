@@ -3,8 +3,8 @@
 
 # TODO: Update with final
 format: jb-book
-root: intro
-chapters:
-- file: markdown
-- file: notebooks
-- file: markdown-notebooks
+root: data_science_methods
+# chapters:
+# - file: markdown
+# - file: notebooks
+# - file: markdown-notebooks

@@ -3,25 +3,18 @@ author: Nico Van den Hooff, Rakesh Pandey, Mukund Iyer, Shiva Jena
 copyright: "2022"
 logo: assets/TRIUMF_Logo_Blue.jpeg
 
-execute:
-  execute_notebooks: force
-
-latex:
-  latex_documents:
-    targetname: book.tex
-
 bibtex_bibfiles:
   - references.bib
 
 repository:
   url: https://github.com/TRIUMF-Capstone2022/richai
-  path_to_book: docs  # Optional path to your book, relative to the repository root
-  branch: master  # Which branch of the repository should be used when creating links (optional)
+#   path_to_book: docs  # Optional path to your book, relative to the repository root
+#   branch: master  # Which branch of the repository should be used when creating links (optional)
 
 html:
   use_issues_button: true
   use_repository_button: true
-  favicon: "TRIUMF_Favicon.png"
+  favicon: "assets/TRIUMF_Favicon.png"
 
 sphinx:
   config:
