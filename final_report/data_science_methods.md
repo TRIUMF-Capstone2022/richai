@@ -1,23 +1,26 @@
-<!-- #region -->
 # Data Science Methods
 
 ## Baseline model: Gradient boosted trees
+
 ### Why GBT are a good baseline model?
+
 Gradient Boosted Decision Trees (GDBT) use ensemble of decision trees sequentially minimising a loss function and hence, are popular due their efficiency, accuracy and ability to avoid overfitting. Besides, the libraries associated offer flexibility in terms of parameters such as decision tree algorithm, loss function, regularization, GPU related parameters etc. which make them a popular first choice as baseline models. 
 
 There are several algorithm based GBDTs available on open source platforms such as Lightgbm, Catboost, Xgboost, Adaboost etc. They are mostly available in form of individual libraries with native implementations and with sklearn in some cases.
 
 ### Why we used this model
+
 As the number of features were low in our case, the decision tree algorithms were not expected to vary considerably. Therefore, Xgboost (XGBClassifier) with sklearn API was chosen as our baseline GBDT for benchmarking purposes primarily due to its support in form of [parameters](https://xgboost.readthedocs.io/en/stable/gpu/index.html) enabling GPU accelaration for faster training.
 
-
 ### Features that were used for GBT
+
 The following features were used for Xgboost:
 - ring_radius: radius of the the circle fitted by the MLE algorithm (provided by TRIUMF)
 - track_momentum: momentum data as provided along with data (provided by TRIUMF)
 - total_hits_filtered: an engineered feature on total number of hits per event/entry, filtered with a fixed value of delta (chod_time - hit_time)
 
 ### Pros/Cons
+
 Pros: 
 - simple and intuitive, as the features used are physics informed properties of the particles (classes)
 - efficient in terms of low training time
@@ -27,6 +30,7 @@ Cons:
 - low pion efficiency after limiting the muon efficiency
 
 ### Results
+
 ![](images/xgb_results.png)
 
 As observed above, the pion efficiency drops sharply with increase in momentum beyond 35 GeV/C. Besides, muon efficiency is poor at the chosen operating point.
@@ -37,6 +41,7 @@ The following ROC curves plot establishes that the models were actually leveragi
 ![](images/ROC_xgboost_3545.png)
 
 ### Justification for moving onto deep learning
+
  - Xgboost GBDT model did not use position data of the hits. Instead, it used the already engineered feature - ring_radius from the analytical MLE method leaving no scope for improving the results. 
 - Therefore, to improve results, more accurate models were required which could extract features directly and more precisely from the hits position data.
 
@@ -47,7 +52,7 @@ Thus, deep learning models were which leverage feature extraction from position 
 
 ### Selecting models
 
-In selecting our deep learning models, we searched for models that were specifically designed to work well with point cloud coordinate data.  Based on this research, we identified two models with architectures that appeared to fit our problem scope well.  The first model that we identified was called [PointNet](https://openaccess.thecvf.com/content_cvpr_2017/papers/Qi_PointNet_Deep_Learning_CVPR_2017_paper.pdf) {cite}`qi2017pointnet`, which was developed by researchers at Stanford University.  The second model that we identified was called Dynamic Graph CNN {cite}`wang2019dynamic`, which was developed by researchers at Massachusetts Institute of Technology, UC Berkely, and Imperial College London.  We also note that traditional convolutional neural networks would not work well for our data due to its sparsity.
+In selecting our deep learning models, we searched for models that were specifically designed to work well with point cloud coordinate data.  Based on this research, we identified two models with architectures that appeared to fit our problem scope well.  The first model that we identified was called [PointNet](https://arxiv.org/abs/1612.00593) {cite}`qi2017pointnet`, which was developed by researchers at Stanford University.  The second model that we identified was called [Dynamic Graph CNN](https://arxiv.org/abs/1801.07829) {cite}`wang2019dynamic`, which was developed by researchers at Massachusetts Institute of Technology, UC Berkely, and Imperial College London.  We also note that traditional convolutional neural networks would not work well for our data due to its sparsity.
 
 ### Tuning models
 
@@ -118,7 +123,6 @@ We selected an operating point of 0.96 on the ROC curve, as this allowed us to a
 ![all_models_roc](images/all_models_roc.png)
 
 In selecting our overall best model, we used the ROC curve.  As can be seen in the figure, our overall best model was PointNet, following by Dynamic Graph CNN.  Both deep learning models were able to surpass our baseline XGBoost model.
-<!-- #endregion -->
 
 ### Model efficiencies
 

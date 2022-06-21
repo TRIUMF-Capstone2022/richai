@@ -19,9 +19,11 @@ parts:
     chapters:
     - file: data_product.md
       title: Data product
-  # - caption: Conclusions and recommendations
-  #   numbered: True
-  #   chapters:
+  - caption: Conclusions and recommendations
+    numbered: True
+    chapters:
+    - file: conclusions_and_recommendations.md
+      title: Conclusions and recommendations
   - caption: Appendix
     chapters:
     - file: Data_generation_process.ipynb
