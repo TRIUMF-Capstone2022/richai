@@ -81,9 +81,13 @@ The Dynamic Graph CNN had an additional hyperparameter, which was the value $k$ 
 
 #### Best performing model
 
-![pointnet_roc](images/pointnet_roc.png)
+```{figure} images/pointnet_roc.png
+:name: pointnet_roc
 
-As can be seen in the receiver operating characteristic curves ("ROC") above, our best PointNet model consisted of the following:
+Pointnet ROC Curves
+```
+
+As can be seen in the receiver operating characteristic curves ("ROC") in {numref}`pointnet_roc`, our best PointNet model consisted of the following:
 
 - All features: hits point cloud, momentum, and radius
 - Time delta: 0.20ns
@@ -105,9 +109,13 @@ We selected an operating point of 0.93 on the ROC curve, as this allowed us to a
 
 #### Best performing model
 
-![dgcnn_roc](images/dgcnn_roc.png)
+```{figure} images/dgcnn_roc.png
+:name: dgcnn_roc
 
-As can be seen in the receiver operating characteristic curves ("ROC") above, our best Dynamic Graph CNN model consisted of the following:
+Dynamic Graph CNN ROC Curves
+```
+
+As can be seen in the receiver operating characteristic curves ("ROC") in {numref}`dgcnn_roc`, our best Dynamic Graph CNN model consisted of the following:
 
 - All features: hits point cloud, momentum, and radius
 - Time delta: 0.30ns
@@ -120,16 +128,29 @@ We selected an operating point of 0.96 on the ROC curve, as this allowed us to a
 
 ### Selecting the overall best model
 
-![all_models_roc](images/all_models_roc.png)
+```{figure} images/all_models_roc.png
+:name: all_models_roc
 
-In selecting our overall best model, we used the ROC curve.  As can be seen in the figure, our overall best model was PointNet, following by Dynamic Graph CNN.  Both deep learning models were able to surpass our baseline XGBoost model.
+ROC Curves: All models
+```
+
+In selecting our overall best model, we used the ROC curve.  As can be seen in the {numref}`all_models_roc`, our overall best model was PointNet, following by Dynamic Graph CNN.  Both deep learning models were able to surpass our baseline XGBoost model.
 
 ### Model efficiencies
 
-![dgcnn_efficiency](images/dgcnn_efficiency.png)
-![pointnet_efficiency](images/pointnet_efficiency.png)
+```{figure} images/dgcnn_efficiency.png
+:name: dgcnn_efficiency
 
-In analyzing our final model performance in terms of pion and muon efficiency, we note the following:
+Dynamic Graph CNN Model Efficiencies
+```
+
+```{figure} images/pointnet_efficiency.png
+:name: pointnet_efficiency
+
+PointNet Graph CNN Model Efficiencies
+```
+
+In analyzing our final model performance in terms of pion and muon efficiency in {numref}`dgcnn_efficiency` and {numref}`pointnet_efficiency`, we note the following:
 
 - Both the PointNet and Dynamic Graph CNN models were able to surpass the prior NA62 pion efficiency performance across all momentum bins.
 - The Dynamic Graph CNN model was unable to achieve a similar muon efficiency to NA62 in any momentum bin.

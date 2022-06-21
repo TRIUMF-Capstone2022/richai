@@ -10,4 +10,5 @@ This [Jupyter Book](https://jupyterbook.org/en/stable/intro.html) contains the f
 
 ## Table of contents
 
-*To insert TOC here once report is finalized*
+```{tableofcontents}
+```

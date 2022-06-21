@@ -1,27 +1,18 @@
 # TODO: Update with final
+# TODO: Follow https://github.com/executablebooks/jupyter-book/blob/master/docs/_toc.yml
 format: jb-book
 root: welcome
 parts:
-  - caption: Introduction
-    numbered: True
+  - caption: Analysis and results
     chapters:
     - file: introduction.md
       title: Introduction
     - file: data.md
       title: Data
-  - caption: Data science methods
-    numbered: True
-    chapters:
     - file: data_science_methods.md
       title: Data science methods
-  - caption: Data product and results
-    numbered: True
-    chapters:
     - file: data_product.md
       title: Data product
-  - caption: Conclusions and recommendations
-    numbered: True
-    chapters:
     - file: conclusions_and_recommendations.md
       title: Conclusions and recommendations
   - caption: Appendix
