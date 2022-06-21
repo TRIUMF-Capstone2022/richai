@@ -4,8 +4,8 @@ In order to generate the NA62 data, several experiment "runs" are performed.  Fo
 
 ```{figure} images/NA62_beam_detector.png
 ---
-height: 200px
-width: 100px
+height: 250px
+width: 1000px
 name: NA62_beam_detector
 ---
 
@@ -18,8 +18,8 @@ Cross section of the setup of the NA62 experiment
 
 ```{figure} images/RICH_detector.png
 ---
-height: 200px
-width: 100px
+height: 250px
+width: 525px
 name: rich_detector
 ---
 
@@ -45,8 +45,8 @@ The data was generated as part of the 2018 NA62 experiments performed at CERN.  
 
 ```{figure} images/momentum_distribution.png
 ---
-height: 200px
-width: 100px
+height: 350px
+width: 550px
 name: momentum_distribution
 ---
 
@@ -61,8 +61,8 @@ The class imbalance will be detrimental to achieving a high pion efficiency as t
 
 ```{figure} images/ring_cent_bias.png
 ---
-height: 200px
-width: 100px
+height: 450px
+width: 500px
 name: ring_center
 ---
 
@@ -75,8 +75,8 @@ Similarly,  {numref}`ring_center` details the difference in the ring centers com
 
 ```{figure} images/point_cloud.png
 ---
-height: 200px
-width: 100px
+height: 325px
+width: 750px
 name: point_cloud
 ---
 
