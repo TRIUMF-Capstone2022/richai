@@ -19,3 +19,10 @@ html:
 sphinx:
   config:
     bibtex_reference_style: author_year
+
+parse:
+  myst_enable_extensions:
+    - html_image
+
+execute:
+  execute_notebooks: 'off'
