@@ -61,7 +61,7 @@ The class imbalance will be detrimental to achieving a high pion efficiency as t
 
 ```{figure} images/ring_cent_bias.png
 ---
-height: 250px
+height: 450px
 width: 500px
 name: ring_center
 ---
@@ -75,8 +75,8 @@ Similarly,  {numref}`ring_center` details the difference in the ring centers com
 
 ```{figure} images/point_cloud.png
 ---
-height: 250px
-width: 650px
+height: 300px
+width: 550px
 name: point_cloud
 ---
 
