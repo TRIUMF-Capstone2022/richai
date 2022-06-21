@@ -75,8 +75,8 @@ Similarly,  {numref}`ring_center` details the difference in the ring centers com
 
 ```{figure} images/point_cloud.png
 ---
-height: 350px
-width: 1000px
+height: 500px
+width: 1250px
 name: point_cloud
 ---
 
