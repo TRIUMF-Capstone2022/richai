@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>2. Data Generation &#8212; RICH AI Final Report</title>
+    <title>Data Generation &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/TRIUMF_Favicon.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="3. Data Science Methods" href="data_science_methods.html" />
-    <link rel="prev" title="1. Introduction" href="introduction.html" />
+    <link rel="next" title="Data Science Methods" href="data_science_methods.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -116,42 +116,33 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Introduction
+  Analysis and results
  </span>
 </p>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="introduction.html">
-   1. Introduction
+   Introduction
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   2. Data
+   Data
   </a>
  </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Data science methods
- </span>
-</p>
-<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="data_science_methods.html">
-   3. Data science methods
+   Data science methods
   </a>
  </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Data product and results
- </span>
-</p>
-<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="data_product.html">
-   4. Data product
+   Data product
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="conclusions_and_recommendations.html">
+   Conclusions and recommendations
   </a>
  </li>
 </ul>
@@ -357,27 +348,27 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#data-volume">
-   2.1. Data volume
+   Data volume
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#preprocessing">
-   2.2. Preprocessing
+   Preprocessing
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#subsampling-w-respect-to-momentum-bins">
-     2.2.1. Subsampling w/ respect to momentum bins
+     Subsampling w/ respect to momentum bins
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#debiasing-w-respect-to-ring-center-bias">
-     2.2.2. Debiasing w/ respect to ring center bias
+     Debiasing w/ respect to ring center bias
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#point-cloud-generation">
-     2.2.3. Point cloud generation
+     Point cloud generation
     </a>
    </li>
   </ul>
@@ -403,27 +394,27 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#data-volume">
-   2.1. Data volume
+   Data volume
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#preprocessing">
-   2.2. Preprocessing
+   Preprocessing
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#subsampling-w-respect-to-momentum-bins">
-     2.2.1. Subsampling w/ respect to momentum bins
+     Subsampling w/ respect to momentum bins
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#debiasing-w-respect-to-ring-center-bias">
-     2.2.2. Debiasing w/ respect to ring center bias
+     Debiasing w/ respect to ring center bias
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#point-cloud-generation">
-     2.2.3. Point cloud generation
+     Point cloud generation
     </a>
    </li>
   </ul>
@@ -439,7 +430,7 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="data-generation">
-<h1><span class="section-number">2. </span>Data Generation<a class="headerlink" href="#data-generation" title="Permalink to this headline">#</a></h1>
+<h1>Data Generation<a class="headerlink" href="#data-generation" title="Permalink to this headline">#</a></h1>
 <p>In order to generate the NA62 data, several experiment “runs” are performed.  For each run, the experiment configuration is fixed and the following steps are performed:</p>
 <ol class="simple">
 <li><p>A beam rich in kaon particles is delivered in “bursts” every four or five seconds into the detector. The set up as shown in Figure 1 <span id="id1">[<a class="reference internal" href="references.html#id6" title="E. Cortina Gil, E. Martin Albarran, E. Minucci, G. Nüssle, S. Padolski, P. Petrov, N. Szilasi, B. Velghe, G. Georgiev, V. Kozhuharov, L. Litov, T. Husek, K. Kampf, M. Zamkovsky, R. Aliberti, K. H. Geib, G. Khoriauli, K. Kleinknecht, J. Kunze, D. Lomidze, R. Marchevski, L. Peruzzo, M. Vormstein, R. Wanke, A. Winhart, M. Bolognesi, V. Carassiti, S. Chiozzi, A. Cotta Ramusino, A. Gianoli, R. Malaguti, P. Dalpiaz, M. Fiorini, E. Gamberini, I. Neri, A. Norton, F. Petrucci, M. Statera, H. Wahl, F. Bucci, R. Ciaranfi, M. Lenti, F. Maletta, R. Volpe, A. Bizzeti, A. Cassese, E. Iacopini, A. Antonelli, E. Capitolo, C. Capoccia, A. Cecchetti, G. Corradi, V. Fascianelli, F. Gonnella, G. Lamanna, R. Lenci, G. Mannocchi, S. Martellotti, M. Moulson, C. Paglia, M. Raggi, V. Russo, M. Santoni, T. Spadaro, D. Tagnani, S. Valeri, T. Vassilieva, F. Cassese, L. Roscilli, F. Ambrosino, T. Capussela, D. Di Filippo, P. Massarotti, M. Mirra, M. Napolitano, G. Saracino, M. Barbanera, P. Cenci, B. Checcucci, V. Duk, L. Farnesini, E. Gersabeck, M. Lupi, A. Papi, M. Pepe, M. Piccini, G. Scolieri, D. Aisa, G. Anzivino, M. Bizzarri, C. Campeggi, E. Imbergamo, A. Piluso, C. Santoni, L. Berretta, S. Bianucci, A. Burato, C. Cerri, R. Fantechi, S. Galeotti, G. Magazzu\textquotesingle , M. Minuti, A. Orsini, G. Petragnani, L. Pontisso, F. Raffaelli, F. Spinella, G. Collazuol, I. Mannelli, C. Avanzini, F. Costantini, L. Di Lella, N. Doble, M. Giorgi, S. Giudici, E. Pedreschi, R. Piandani, G. Pierazzini, J. Pinzino, M. Sozzi, L. Zaccarelli, A. Biagioni, E. Leonardi, A. Lonardo, P. Valente, P. Vicini, G. D\textquotesingle Agostini, R. Ammendola, V. Bonaiuto, N. De Simone, L. Federici, A. Fucci, G. Paoluzzi, A. Salamon, G. Salina, F. Sargeni, C. Biino, G. Dellacasa, S. Garbolino, F. Marchetto, S. Martoiu, G. Mazza, A. Rivetti, R. Arcidiacono, B. Bloch-Devaux, M. Boretto, L. Iacobuzio, E. Menichetti, D. Soldi, J. Engelfried, N. Estrada-Tristan, A. M. Bragadireanu, O. E. Hutanu, N. Azorskiy, V. Elsha, T. Enik, V. Falaleev, L. Glonti, Y. Gusakov, S. Kakurin, V. Kekelidze, S. Kilchakovskaya, E. Kislov, A. Kolesnikov, D. Madigozhin, M. Misheva, S. Movchan, I. Polenkevich, Y. Potrebenikov, V. Samsonov, S. Shkarovskiy, S. Sotnikov, L. Tarasova, M. Zaytseva, A. Zinchenko, V. Bolotov, S. Fedotov, E. Gushin, A. Khotjantsev, A. Khudyakov, A. Kleimenova, Yu. Kudenko, A. Shaikhiev, A. Gorin, S. Kholodenko, V. Kurshetsov, V. Obraztsov, A. Ostankov, V. Rykalin, V. Semenov, V. Sugonyaev, O. Yushchenko, L. Bician, T. Blazek, V. Cerny, M. Koval, R. Lietava, G. Aglieri Rinella, J. Arroyo Garcia, S. Balev, M. Battistin, J. Bendotti, F. Bergsma, S. Bonacini, F. Butin, A. Ceccucci, P. Chiggiato, H. Danielsson, J. Degrange, N. Dixon, B. Döbrich, P. Farthouat, L. Gatignon, P. Golonka, S. Girod, A. Goncalves Martins De Oliveira, R. Guida, F. Hahn, E. Harrouch, M. Hatch, P. Jarron, O. Jamet, B. Jenninger, J. Kaplon, A. Kluge, G. Lehmann-Miotto, P. Lichard, G. Maire, A. Mapelli, J. Morant, M. Morel, J. Noël, M. Noy, V. Palladino, A. Pardons, F. Perez-Gomez, L. Perktold, M. Perrin-Terrin, P. Petagna, K. Poltorak, P. Riedler, G. Romagnoli, G. Ruggiero, T. Rutter, J. Rouet, V. Ryjov, A. Saputi, T. Schneider, G. Stefanini, C. Theis, S. Tiuraniemi, F. Vareia Rodriguez, S. Venditti, M. Vergain, H. Vincke, P. Wertelaers, M. B. Brunetti, S. Edwards, E. Goudzovski, B. Hallgren, M. Krivda, C. Lazzeroni, N. Lurkin, D. Munday, F. Newson, C. Parkinson, S. Pyatt, A. Romano, X. Serghi, A. Sergi, R. Staley, A. Sturgess, H. Heath, R. Page, B. Angelucci, D. Britton, D. Protopopescu, I. Skillicorn, P. Cooke, J. B. Dainton, J. R. Fry, L. Fulton, D. Hutchcroft, E. Jones, T. Jones, K. Massri, E. Maurice, K. McCormick, P. Sutcliffe, B. Wrona, A. Conovaloff, P. Cooper, D. Coward, P. Rubin, and R. Winston. The beam and detector of the NA62 experiment at CERN. Journal of Instrumentation, 12(05):P05025–P05025, may 2017. URL: https://doi.org/10.1088%2F1748-0221%2F12%2F05%2Fp05025, doi:10.1088/1748-0221/12/05/p05025.">Gil <em>et al.</em>, 2017</a>]</span>.
@@ -455,24 +446,24 @@ title="Print to PDF"
 </ol>
 <p>Based on the experimental setup detailed above, two sets of features associated are derived for each event. The first set corresponds to the subatomic particle motion: the particle momentum and time spent in the detector (CHOD time). The second set of features are derived from the light emitted by the subatomic particle motion. Each photon detected by a PMT tube is recorded as a hit on the PMT grid with X and Y coordinates relative to this grid and the time of the hit. As an abstraction to the hit scatter, the ring radius and center that result from the MLE fit that TRIUMF currently employ are also included. All in all, there are a total of 5 features for each event.</p>
 <section id="data-volume">
-<h2><span class="section-number">2.1. </span>Data volume<a class="headerlink" href="#data-volume" title="Permalink to this headline">#</a></h2>
+<h2>Data volume<a class="headerlink" href="#data-volume" title="Permalink to this headline">#</a></h2>
 <p>The data was generated as part of the 2018 NA62 experiments performed at CERN.  There are a total of 11 million labeled decay events, each containing the features detailed above. However, there is a large class imbalance in the data set. Only 10% of the examples are of pions, the class of interest.</p>
 </section>
 <section id="preprocessing">
-<h2><span class="section-number">2.2. </span>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this headline">#</a></h2>
+<h2>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this headline">#</a></h2>
 <section id="subsampling-w-respect-to-momentum-bins">
-<h3><span class="section-number">2.2.1. </span>Subsampling w/ respect to momentum bins<a class="headerlink" href="#subsampling-w-respect-to-momentum-bins" title="Permalink to this headline">#</a></h3>
+<h3>Subsampling w/ respect to momentum bins<a class="headerlink" href="#subsampling-w-respect-to-momentum-bins" title="Permalink to this headline">#</a></h3>
 <p>The class imbalance will be detrimental to achieving a high pion efficiency as the pion is the minority class. Undersampling the muons to match the number of pions was a feasible solution to address this issue due to the large dataset. However, random sampling of muons examples cannot be used for this data. This is due to the systematic difference in the distribution of momentums between the two particles and is purely an artifact of the experimental setup as seen in Figure 3. This will bias the output as the objective of this project is to carry out the classification strictly based on differences in the ring size between the particles. The solution was to split the data into three equally sized bins by momentum in the range of 15-45 GeV/c2, count the number of pions in each bin, and sample an equal number of muons within that bin. The resulting synthetic dataset contained 2 million examples.
 There were enough examples to feed into the machine learning models, and momentum as a feature was controlled.</p>
 <p><img alt="p_dist" src="_images/momentum_distribution.png" /></p>
 </section>
 <section id="debiasing-w-respect-to-ring-center-bias">
-<h3><span class="section-number">2.2.2. </span>Debiasing w/ respect to ring center bias<a class="headerlink" href="#debiasing-w-respect-to-ring-center-bias" title="Permalink to this headline">#</a></h3>
+<h3>Debiasing w/ respect to ring center bias<a class="headerlink" href="#debiasing-w-respect-to-ring-center-bias" title="Permalink to this headline">#</a></h3>
 <p>Similarly, Figure 5 details the difference in the ring centers computed using the MLE between the two classes. As this feature is an abstraction of the scatter of X and Y coordinates, it can be inferred that the bias exists in the raw hits information which will be fed into the deep learning models. These models identify this spatial difference on the standardized PMT grid, and therefore bias the classification. Demeaning each of the hits data using the global X and Y positions of the ring centers, irrespective of class, will remove this bias.</p>
 <p><img alt="ring_center" src="_images/ring_cent_bias.png" /></p>
 </section>
 <section id="point-cloud-generation">
-<h3><span class="section-number">2.2.3. </span>Point cloud generation<a class="headerlink" href="#point-cloud-generation" title="Permalink to this headline">#</a></h3>
+<h3>Point cloud generation<a class="headerlink" href="#point-cloud-generation" title="Permalink to this headline">#</a></h3>
 <p>Naturally, the photon hits information for each event is a system of X and Y coordinates that exists in a 2D plane. As the number of hits for an event usually ranges from 15-30, and the PMT grid is of size 1952, the information is very sparse when treated as a standard image. Hence the photon hits information was converted to a point cloud by adding a third dimension of time: the absolute value of the difference between the photon hit time and the particle travel. This is an eloquent solution as noise hits will have a large value in this new dimension and therefore be separated from the ring produced by the genuine motion of the particle.</p>
 <p><img alt="point_cloud" src="_images/point_cloud.png" /></p>
 </section>
@@ -510,13 +501,13 @@ There were enough examples to feed into the machine learning models, and momentu
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">1. </span>Introduction</p>
+            <p class="prev-next-title">Introduction</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="data_science_methods.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>Data Science Methods</p>
+        <p class="prev-next-title">Data Science Methods</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
