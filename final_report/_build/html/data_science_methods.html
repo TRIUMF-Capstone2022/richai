@@ -127,17 +127,17 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data.html">
-   Data
+   Data Generation
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Data science methods
+   Data Science Methods
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_product.html">
-   Data product
+   Data Product
   </a>
  </li>
  <li class="toctree-l1">
@@ -152,10 +152,22 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Data_generation_process.html">
-   RICH AI Data Generation Process
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="appendix/supplementary_notebooks.html">
+   Supplementary Jupyter notebooks
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="appendix/notebooks/data_generation_process.html">
+     RICH AI Data Generation Process
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
@@ -233,19 +245,10 @@ title="Fullscreen mode"
   </span>
 
 </button>
-
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/TRIUMF-Capstone2022/richai"
+<a href="https://github.com/TRIUMF-Capstone2022/richai"
    class="headerbtn"
    data-toggle="tooltip"
-data-placement="left"
+data-placement="bottom"
 title="Source repository"
 >
   
@@ -253,31 +256,8 @@ title="Source repository"
 <span class="headerbtn__icon-container">
   <i class="fab fa-github"></i>
   </span>
-<span class="headerbtn__text-container">repository</span>
+
 </a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/TRIUMF-Capstone2022/richai/issues/new?title=Issue%20on%20page%20%2Fdata_science_methods.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
 
 <div class="menu-dropdown menu-dropdown-download-buttons">
   <button class="headerbtn menu-dropdown__trigger"
@@ -696,10 +676,10 @@ Further, different xgboost models were trained and tested on different momentum 
 <figure class="align-default" id="pointnet-roc">
 <img alt="_images/pointnet_roc.png" src="_images/pointnet_roc.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Pointnet ROC Curves</span><a class="headerlink" href="#pointnet-roc" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">Pointnet ROC Curves</span><a class="headerlink" href="#pointnet-roc" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As can be seen in the receiver operating characteristic curves (“ROC”) in <a class="reference internal" href="#pointnet-roc"><span class="std std-numref">Fig. 1</span></a>, our best PointNet model consisted of the following:</p>
+<p>As can be seen in the receiver operating characteristic curves (“ROC”) in <a class="reference internal" href="#pointnet-roc"><span class="std std-numref">Fig. 6</span></a>, our best PointNet model consisted of the following:</p>
 <ul class="simple">
 <li><p>All features: hits point cloud, momentum, and radius</p></li>
 <li><p>Time delta: 0.20ns</p></li>
@@ -729,10 +709,10 @@ Further, different xgboost models were trained and tested on different momentum 
 <figure class="align-default" id="dgcnn-roc">
 <img alt="_images/dgcnn_roc.png" src="_images/dgcnn_roc.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Dynamic Graph CNN ROC Curves</span><a class="headerlink" href="#dgcnn-roc" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Dynamic Graph CNN ROC Curves</span><a class="headerlink" href="#dgcnn-roc" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As can be seen in the receiver operating characteristic curves (“ROC”) in <a class="reference internal" href="#dgcnn-roc"><span class="std std-numref">Fig. 2</span></a>, our best Dynamic Graph CNN model consisted of the following:</p>
+<p>As can be seen in the receiver operating characteristic curves (“ROC”) in <a class="reference internal" href="#dgcnn-roc"><span class="std std-numref">Fig. 7</span></a>, our best Dynamic Graph CNN model consisted of the following:</p>
 <ul class="simple">
 <li><p>All features: hits point cloud, momentum, and radius</p></li>
 <li><p>Time delta: 0.30ns</p></li>
@@ -750,26 +730,26 @@ Further, different xgboost models were trained and tested on different momentum 
 <figure class="align-default" id="all-models-roc">
 <img alt="_images/all_models_roc.png" src="_images/all_models_roc.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3 </span><span class="caption-text">ROC Curves: All models</span><a class="headerlink" href="#all-models-roc" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">ROC Curves: All models</span><a class="headerlink" href="#all-models-roc" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>In selecting our overall best model, we used the ROC curve.  As can be seen in the <a class="reference internal" href="#all-models-roc"><span class="std std-numref">Fig. 3</span></a>, our overall best model was PointNet, following by Dynamic Graph CNN.  Both deep learning models were able to surpass our baseline XGBoost model.</p>
+<p>In selecting our overall best model, we used the ROC curve.  As can be seen in the <a class="reference internal" href="#all-models-roc"><span class="std std-numref">Fig. 8</span></a>, our overall best model was PointNet, following by Dynamic Graph CNN.  Both deep learning models were able to surpass our baseline XGBoost model.</p>
 </section>
 <section id="model-efficiencies">
 <h3>Model efficiencies<a class="headerlink" href="#model-efficiencies" title="Permalink to this headline">#</a></h3>
 <figure class="align-default" id="dgcnn-efficiency">
 <img alt="_images/dgcnn_efficiency.png" src="_images/dgcnn_efficiency.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Dynamic Graph CNN Model Efficiencies</span><a class="headerlink" href="#dgcnn-efficiency" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Dynamic Graph CNN Model Efficiencies</span><a class="headerlink" href="#dgcnn-efficiency" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <figure class="align-default" id="pointnet-efficiency">
 <img alt="_images/pointnet_efficiency.png" src="_images/pointnet_efficiency.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5 </span><span class="caption-text">PointNet Graph CNN Model Efficiencies</span><a class="headerlink" href="#pointnet-efficiency" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">PointNet Graph CNN Model Efficiencies</span><a class="headerlink" href="#pointnet-efficiency" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>In analyzing our final model performance in terms of pion and muon efficiency in <a class="reference internal" href="#dgcnn-efficiency"><span class="std std-numref">Fig. 4</span></a> and <a class="reference internal" href="#pointnet-efficiency"><span class="std std-numref">Fig. 5</span></a>, we note the following:</p>
+<p>In analyzing our final model performance in terms of pion and muon efficiency in <a class="reference internal" href="#dgcnn-efficiency"><span class="std std-numref">Fig. 9</span></a> and <a class="reference internal" href="#pointnet-efficiency"><span class="std std-numref">Fig. 10</span></a>, we note the following:</p>
 <ul class="simple">
 <li><p>Both the PointNet and Dynamic Graph CNN models were able to surpass the prior NA62 pion efficiency performance across all momentum bins.</p></li>
 <li><p>The Dynamic Graph CNN model was unable to achieve a similar muon efficiency to NA62 in any momentum bin.</p></li>

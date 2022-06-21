@@ -126,17 +126,17 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data.html">
-   Data
+   Data Generation
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_science_methods.html">
-   Data science methods
+   Data Science Methods
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_product.html">
-   Data product
+   Data Product
   </a>
  </li>
  <li class="toctree-l1">
@@ -151,10 +151,22 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Data_generation_process.html">
-   RICH AI Data Generation Process
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="appendix/supplementary_notebooks.html">
+   Supplementary Jupyter notebooks
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="appendix/notebooks/data_generation_process.html">
+     RICH AI Data Generation Process
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
@@ -232,19 +244,10 @@ title="Fullscreen mode"
   </span>
 
 </button>
-
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/TRIUMF-Capstone2022/richai"
+<a href="https://github.com/TRIUMF-Capstone2022/richai"
    class="headerbtn"
    data-toggle="tooltip"
-data-placement="left"
+data-placement="bottom"
 title="Source repository"
 >
   
@@ -252,31 +255,8 @@ title="Source repository"
 <span class="headerbtn__icon-container">
   <i class="fab fa-github"></i>
   </span>
-<span class="headerbtn__text-container">repository</span>
+
 </a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/TRIUMF-Capstone2022/richai/issues/new?title=Issue%20on%20page%20%2Fwelcome.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
 
 <div class="menu-dropdown menu-dropdown-download-buttons">
   <button class="headerbtn menu-dropdown__trigger"
@@ -416,7 +396,7 @@ title="Print to PDF"
 </section>
 <section id="executive-summary">
 <h2>Executive summary<a class="headerlink" href="#executive-summary" title="Permalink to this headline">#</a></h2>
-<p><em>To insert executive summary here once report is finalized</em></p>
+<p>The NA62 experiment at CERN (European organization for nuclear research) studies the rate of the ultra-rate meson decay into a pion to verify the Standard Model in physics. The aim of this project is to develop a binary classification model based on advanced Machine Learning (ML) to distinguish pion decays from muon decays using the output of the Ring Imaging Cherenkov (RICH). The challenge lies in concurrently increasing the pion efficiency and mion efficiency and surpassing the performance of the MLE algorithm. The data used to build the machine learning models had 2 million examples, controlled for momentum and converted to point cloud form by the addition of a time dimension. Two deep learning models were applied: PointNet and Dynamic Graph CNN (DGCNN). Both were built using the point clouds of hits, particle momentum and the ring radius computed using the MLE. The best performing PointNet model used all these features, with a time delta of 0.2 ns and 16 epochs of training. Likewise the best performing DGCNN used all the features, k = 8 nearest neighbors and a  time delta of 0.3. The overall best performing model was PointNet as it has the highest AUC ROC, exceeds the pion efficiency from the MLE estimate for all momentum bins, and maintains a low muon efficiency for momentums beyond 34 GeV/c. Meanwhile, the DGCNN is able to maintain a similar pion efficiency but fails to maintain an adequate muon efficiency to surpass the MLE estimate. The final data product is a machine learning pipeline that takes in the experiment data in a HDP5 format, pre-processes it, prepares training data, trains classifier models on the training data and evaluates model results on test data through modular scripts.</p>
 </section>
 <section id="table-of-contents">
 <h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">#</a></h2>
@@ -424,19 +404,16 @@ title="Print to PDF"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Analysis and results</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data.html">Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_science_methods.html">Data science methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_product.html">Data product</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_science_methods.html">Data Science Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_product.html">Data Product</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conclusions_and_recommendations.html">Conclusions and recommendations</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Data_generation_process.html">RICH AI Data Generation Process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data_generation_process.html#part-1-reading-in-the-data">Part 1: Reading in the data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data_generation_process.html#part-2-some-useful-plots">Part 2: Some useful plots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data_generation_process.html#part-3-looking-at-all-the-features">Part 3: Looking at all the features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/supplementary_notebooks.html">Supplementary Jupyter notebooks</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
