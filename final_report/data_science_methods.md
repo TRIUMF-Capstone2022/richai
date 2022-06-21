@@ -27,15 +27,14 @@ Cons:
 - low pion efficiency after limiting the muon efficiency
 
 ### Results
-<img src="images/xgb_results.png" alt="drawing" width="600" height = "600"/>
+![](images/xgb_results.png)
 
 As observed above, the pion efficiency drops sharply with increase in momentum beyond 35 GeV/C. Besides, muon efficiency is poor at the chosen operating point.
 Further, different xgboost models were trained and tested on different momentum bins. A Global xgboost model trained over 15-45 GeV/c momentum bin as well as local xgboost models were trained and evaluated. It was observed that the models performed poorly in higher momentum bins as shown below:
-<img src="images/ROC_xgboost.png" alt="drawing" width="600" height = "600"/>
+![](images/ROC_xgboost.png)
 
 The following ROC curves plot establishes that the models were actually leveraging discriminating power of input features and not biased by distributional issues in data.
-<img src="images/ROC_xgboost_3545.png" alt="drawing" width="600" height = "600"/>
-
+![](images/ROC_xgboost_3545.png)
 
 ### Justification for moving onto deep learning
  - Xgboost GBDT model did not use position data of the hits. Instead, it used the already engineered feature - ring_radius from the analytical MLE method leaving no scope for improving the results. 
