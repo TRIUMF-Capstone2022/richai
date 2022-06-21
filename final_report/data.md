@@ -2,11 +2,11 @@
 
 In order to generate the NA62 data, several experiment "runs" are performed.  For each run, the experiment configuration is fixed and the following steps are performed:
 
-1. A beam rich in kaon particles is delivered in “bursts” every four or five seconds into the detector. The set up as shown in Figure 1.
+1. A beam rich in kaon particles is delivered in “bursts” every four or five seconds into the detector. The set up as shown in Figure 1 {cite}`Gil_2017`.
 <img src="images/RICH_detector.png" alt="drawing" width="600" height = "450"/>
 
 2. During a burst, several particle decays occur.  Each particle decay has an individual “event” ID associated with it.
-3. The product of the decay is accelerated through a chamber of neon gas in the RICH detector and a cone of light is emitted.  The RICH detector is shown in Figure 2 [@anzivino2020light].
+3. The product of the decay is accelerated through a chamber of neon gas in the RICH detector and a cone of light is emitted.  The RICH detector is shown in Figure 2 {cite}`anzivino2020light`.
 
 <img src="images/NA62_beam_detector.png" alt="drawing" width="600" height = "350"/>
 
