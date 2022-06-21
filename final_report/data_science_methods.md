@@ -1,6 +1,48 @@
+<!-- #region -->
 # Data Science Methods
 
 ## Baseline model: Gradient boosted trees
+### Why GBT are a good baseline model?
+Gradient Boosted Decision Trees (GDBT) use ensemble of decision trees sequentially minimising a loss function and hence, are popular due their efficiency, accuracy and ability to avoid overfitting. Besides, the libraries associated offer flexibility in terms of parameters such as decision tree algorithm, loss function, regularization, GPU related parameters etc. which make them a popular first choice as baseline models. 
+
+There are several algorithm based GBDTs available on open source platforms such as Lightgbm, Catboost, Xgboost, Adaboost etc. They are mostly available in form of individual libraries with native implementations and with sklearn in some cases.
+
+### Why we used this model
+As the number of features were low in our case, the decision tree algorithms were not expected to vary considerably. Therefore, Xgboost (XGBClassifier) with sklearn API was chosen as our baseline GBDT for benchmarking purposes primarily due to its support in form of [parameters](https://xgboost.readthedocs.io/en/stable/gpu/index.html) enabling GPU accelaration for faster training.
+
+
+### Features that were used for GBT
+The following features were used for Xgboost:
+- ring_radius: radius of the the circle fitted by the MLE algorithm (provided by TRIUMF)
+- track_momentum: momentum data as provided along with data (provided by TRIUMF)
+- total_hits_filtered: an engineered feature on total number of hits per event/entry, filtered with a fixed value of delta (chod_time - hit_time)
+
+### Pros/Cons
+Pros: 
+- simple and intuitive, as the features used are physics informed properties of the particles (classes)
+- efficient in terms of low training time
+Cons:
+- does not capture the position data of the hits as it directly captures the MLE radius
+- takes a fixed value of delta (chod_time - hit_time) without any scope to learn how to eliminate noise in the data
+- low pion efficiency after limiting the muon efficiency
+
+### Results
+<img src="images/xgb_results.png" alt="drawing" width="600" height = "600"/>
+
+As observed above, the pion efficiency drops sharply with increase in momentum beyond 35 GeV/C. Besides, muon efficiency is poor at the chosen operating point.
+Further, different xgboost models were trained and tested on different momentum bins. A Global xgboost model trained over 15-45 GeV/c momentum bin as well as local xgboost models were trained and evaluated. It was observed that the models performed poorly in higher momentum bins as shown below:
+<img src="images/ROC_xgboost.png" alt="drawing" width="600" height = "600"/>
+
+The following ROC curves plot establishes that the models were actually leveraging discriminating power of input features and not biased by distributional issues in data.
+<img src="images/ROC_xgboost_3545.png" alt="drawing" width="600" height = "600"/>
+
+
+### Justification for moving onto deep learning
+ - Xgboost GBDT model did not use position data of the hits. Instead, it used the already engineered feature - ring_radius from the analytical MLE method leaving no scope for improving the results. 
+- Therefore, to improve results, more accurate models were required which could extract features directly and more precisely from the hits position data.
+
+Thus, deep learning models were which leverage feature extraction from position data in form of point clouds comprised the further steps in modeling approach beyond baseline GBDT model. 
+
 
 ## Deep learning
 
@@ -77,7 +119,7 @@ We selected an operating point of 0.96 on the ROC curve, as this allowed us to a
 ![all_models_roc](images/all_models_roc.png)
 
 In selecting our overall best model, we used the ROC curve.  As can be seen in the figure, our overall best model was PointNet, following by Dynamic Graph CNN.  Both deep learning models were able to surpass our baseline XGBoost model.
-
+<!-- #endregion -->
 
 ### Model efficiencies
 
@@ -91,4 +133,8 @@ In analyzing our final model performance in terms of pion and muon efficiency, w
 - The PointNet model was able to surpass NA62 muon efficiency in momentum bins > 34 GeV/c.
 
 ```{bibliography}
+```
+
+```python
+
 ```
