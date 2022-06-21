@@ -6,19 +6,17 @@ parts:
   - caption: Analysis and results
     chapters:
     - file: introduction.md
-      title: Introduction
     - file: data.md
-      title: Data
     - file: data_science_methods.md
-      title: Data science methods
     - file: data_product.md
-      title: Data product
     - file: conclusions_and_recommendations.md
-      title: Conclusions and recommendations
+  
   - caption: Appendix
     chapters:
-    - file: Data_generation_process.ipynb
-      title: Data generation process
+    - file: appendix/supplementary_notebooks
+      sections:
+        - file: appendix/notebooks/data_generation_process
+      
   - caption: References
     chapters:
     - file: references.md

@@ -8,11 +8,10 @@ bibtex_bibfiles:
 
 repository:
   url: https://github.com/TRIUMF-Capstone2022/richai
-#   path_to_book: docs  # Optional path to your book, relative to the repository root
-#   branch: master  # Which branch of the repository should be used when creating links (optional)
+  # TODO: update if we move all to docs folder
+  path_to_book: final_report
 
 html:
-  use_issues_button: true
   use_repository_button: true
   favicon: "assets/TRIUMF_Favicon.png"
 
