@@ -1,10 +1,32 @@
-# Table of contents
-# Learn more at https://jupyterbook.org/customize/toc.html
-
 # TODO: Update with final
 format: jb-book
-root: data_science_methods
-# chapters:
-# - file: markdown
-# - file: notebooks
-# - file: markdown-notebooks
+root: welcome
+parts:
+  - caption: Introduction
+    numbered: True
+    chapters:
+    - file: introduction.md
+      title: Introduction
+    - file: data.md
+      title: Data
+  - caption: Data science methods
+    numbered: True
+    chapters:
+    - file: data_science_methods.md
+      title: Data science methods
+  - caption: Data product and results
+    numbered: True
+    chapters:
+    - file: data_product.md
+      title: Data product
+  # - caption: Conclusions and recommendations
+  #   numbered: True
+  #   chapters:
+  - caption: Appendix
+    chapters:
+    - file: Data_generation_process.ipynb
+      title: Data generation process
+  - caption: References
+    chapters:
+    - file: references.md
+      title: References
