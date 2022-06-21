@@ -19,7 +19,7 @@ Cross section of the setup of the NA62 experiment
 ```{figure} images/RICH_detector.png
 ---
 height: 250px
-width: 550px
+width: 525px
 name: rich_detector
 ---
 
@@ -75,8 +75,8 @@ Similarly,  {numref}`ring_center` details the difference in the ring centers com
 
 ```{figure} images/point_cloud.png
 ---
-height: 300px
-width: 600px
+height: 325px
+width: 650px
 name: point_cloud
 ---
 
