@@ -12,6 +12,7 @@ This document (the README file) is a hub to give you some information about the 
   - [Report](#report)
   - [Project Structure](#project-structure)
   - [Dependencies](#dependencies)
+  - [Dataset](#dataset)
   - [Configuration file](#configuration-file)
   - [Model Training](#model-training)
   - [Model Evaluation and Scoring on new data](#model-evaluation-and-scoring-on-new-data)
@@ -47,6 +48,17 @@ Project was developed using `singularity` containers with the following package 
 - sklearn==0.24.0
 - jupyterlab
 - pyyaml==6.0
+
+## Dataset
+
+The data was generated as part of the 2018 NA62 experiments performed at CERN. There are a total of 11 million labeled decay events, each containing the features detailed above. However, there is a large class imbalance in the data set. Only 10% of the examples are of pions, the class of interest. More details can be [here](#report).
+
+Sub directory `dataset` has script for creating RICH daaset and train, validation and test loader.
+
+- `rich_dataset.py` processes raw HDF5 format and extracts events, hits and position data.
+- `dataloader.py` loads data (train/test/validation) in batches as feed into the neural networks.
+
+Dataset configuration can be controlled and customized using the `dataset` section of [configuration file](#configuration-file).
 
 ## Configuration file
 
