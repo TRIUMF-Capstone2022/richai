@@ -9,6 +9,7 @@ python src/train.py --model 'dgcnn'
 
 import time
 import os
+import argparse
 import torch
 import pandas as pd
 import torch.nn.functional as F
@@ -374,8 +375,6 @@ def train_combined(model, reload_model=True):
 
 
 if __name__ == '__main__':
-
-    import argparse
 
     # argument parser
     parser = argparse.ArgumentParser('Neural Network Training')
