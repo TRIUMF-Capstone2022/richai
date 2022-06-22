@@ -1,8 +1,8 @@
-# Data Generation #
+# Data Generation
 
 In order to generate the NA62 data, several experiment "runs" are performed.  For each run, the experiment configuration is fixed and the following steps are performed:
 
-```{figure} images/NA62_beam_detector.png
+```{figure} ../images/NA62_beam_detector.png
 ---
 height: 250px
 width: 1000px
@@ -16,7 +16,7 @@ Cross section of the setup of the NA62 experiment
 
 2. During a burst, several particle decays occur.  Each particle decay has an individual “event” ID associated with it.
 
-```{figure} images/RICH_detector.png
+```{figure} ../images/RICH_detector.png
 ---
 height: 250px
 width: 525px
@@ -35,15 +35,15 @@ Ring-imaging Cherenkov detector
 
 Based on the experimental setup detailed above, two sets of features associated are derived for each event. The first set corresponds to the subatomic particle motion: the particle momentum and time spent in the detector (CHOD time). The second set of features are derived from the light emitted by the subatomic particle motion. Each photon detected by a PMT tube is recorded as a hit on the PMT grid with X and Y coordinates relative to this grid and the time of the hit. As an abstraction to the hit scatter, the ring radius and center that result from the MLE fit that TRIUMF currently employ are also included. All in all, there are a total of 5 features for each event. 
 
-## Data volume ##
+## Data volume
 
 The data was generated as part of the 2018 NA62 experiments performed at CERN.  There are a total of 11 million labeled decay events, each containing the features detailed above. However, there is a large class imbalance in the data set. Only 10% of the examples are of pions, the class of interest.  
 
-## Preprocessing ##
+## Preprocessing
 
 ### Subsampling w/ respect to momentum bins ###
 
-```{figure} images/momentum_distribution.png
+```{figure} ../images/momentum_distribution.png
 ---
 height: 350px
 width: 550px
@@ -55,11 +55,9 @@ Distribution of momentum for all samples by class.
 
 The class imbalance will be detrimental to achieving a high pion efficiency as the pion is the minority class. Undersampling the muons to match the number of pions was a feasible solution to address this issue due to the large dataset. However, random sampling of muons examples cannot be used for this data. This is due to the systematic difference in the distribution of momentums between the two particles and is purely an artifact of the experimental setup as seen in {numref}`momentum_distribution`. This will bias the output as the objective of this project is to carry out the classification strictly based on differences in the ring size between the particles. The solution was to split the data into three equally sized bins by momentum in the range of 15-45 $GeV/c$, count the number of pions in each bin, and sample an equal number of muons within that bin. The resulting synthetic dataset contained 2 million examples. There were enough examples to feed into the machine learning models, and momentum as a feature was controlled. 
 
+### Debiasing w/ respect to ring center bias
 
-
-### Debiasing w/ respect to ring center bias ###
-
-```{figure} images/ring_cent_bias.png
+```{figure} ../images/ring_cent_bias.png
 ---
 height: 450px
 width: 500px
@@ -71,9 +69,9 @@ Distribution of ring center calcualted using the MLE algorithm for all samples b
 
 Similarly,  {numref}`ring_center` details the difference in the ring centers computed using the MLE between the two classes. As this feature is an abstraction of the scatter of X and Y coordinates, it can be inferred that the bias exists in the raw hits information which will be fed into the deep learning models. These models identify this spatial difference on the standardized PMT grid, and therefore bias the classification. Demeaning each of the hits data using the global X and Y positions of the ring centers, irrespective of class, will remove this bias. 
 
-### Point cloud generation ###
+### Point cloud generation
 
-```{figure} images/point_cloud.png
+```{figure} ../images/point_cloud.png
 ---
 height: 350px
 width: 1250px

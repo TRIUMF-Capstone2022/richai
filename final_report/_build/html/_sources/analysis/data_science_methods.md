@@ -1,4 +1,3 @@
-<!-- #region -->
 # Data Science Methods
 
 ## Baseline model: Gradient boosted trees
@@ -32,11 +31,11 @@ Cons:
 
 ### Results
 
-```{figure} images/xgb_results.png
+```{figure} ../images/xgb_results.png
 ---
-height: 200px
-width: 200px
-:name: xgb_results
+height: 500px
+width: 500px
+name: xgb_results
 ---
 
 xgboost results
@@ -45,11 +44,11 @@ xgboost results
 As observed above, the pion efficiency drops sharply with increase in momentum beyond 35 GeV/C. Besides, muon efficiency is poor at the chosen operating point.
 Further, different xgboost models were trained and tested on different momentum bins. A Global xgboost model trained over 15-45 GeV/c momentum bin as well as local xgboost models were trained and evaluated. It was observed that the models performed poorly in higher momentum bins as shown below:
 
-```{figure} images/ROC_xgboost.png
+```{figure} ../images/ROC_xgboost.png
 ---
-height: 200px
-width: 200px
-:name: ROC_xgboost
+height: 500px
+width: 500px
+name: ROC_xgboost
 ---
 
 ROC curves of xgboost models on different momentum bins
@@ -57,11 +56,11 @@ ROC curves of xgboost models on different momentum bins
 
 The following ROC curves plot establishes that the models were actually leveraging discriminating power of input features and not biased by distributional issues in data.
 
-```{figure} images/ROC_xgboost_3545.png
+```{figure} ../images/ROC_xgboost_3545.png
 ---
-height: 200px
-width: 200px
-:name: ROC_xgboost_3545
+height: 500px
+width: 500px
+name: ROC_xgboost_3545
 ---
 
 ROC curves of globally and locally trained xgboost models on 35-45 GeV/c momentum bin
@@ -74,7 +73,6 @@ ROC curves of globally and locally trained xgboost models on 35-45 GeV/c momentu
 - Therefore, to improve results, more accurate models were required which could extract features directly and more precisely from the hits position data.
 
 Thus, deep learning models were which leverage feature extraction from position data in form of point clouds comprised the further steps in modeling approach beyond baseline GBDT model. 
-<!-- #endregion -->
 
 ## Deep learning
 
@@ -109,7 +107,7 @@ The Dynamic Graph CNN had an additional hyperparameter, which was the value $k$ 
 
 #### Best performing model
 
-```{figure} images/pointnet_roc.png
+```{figure} ../images/pointnet_roc.png
 :name: pointnet_roc
 
 Pointnet ROC Curves
@@ -137,7 +135,7 @@ We selected an operating point of 0.93 on the ROC curve, as this allowed us to a
 
 #### Best performing model
 
-```{figure} images/dgcnn_roc.png
+```{figure} ../images/dgcnn_roc.png
 :name: dgcnn_roc
 
 Dynamic Graph CNN ROC Curves
@@ -156,7 +154,7 @@ We selected an operating point of 0.96 on the ROC curve, as this allowed us to a
 
 ### Selecting the overall best model
 
-```{figure} images/all_models_roc.png
+```{figure} ../images/all_models_roc.png
 :name: all_models_roc
 
 ROC Curves: All models
@@ -166,13 +164,13 @@ In selecting our overall best model, we used the ROC curve.  As can be seen in t
 
 ### Model efficiencies
 
-```{figure} images/dgcnn_efficiency.png
+```{figure} ../images/dgcnn_efficiency.png
 :name: dgcnn_efficiency
 
 Dynamic Graph CNN Model Efficiencies
 ```
 
-```{figure} images/pointnet_efficiency.png
+```{figure} ../images/pointnet_efficiency.png
 :name: pointnet_efficiency
 
 PointNet Graph CNN Model Efficiencies

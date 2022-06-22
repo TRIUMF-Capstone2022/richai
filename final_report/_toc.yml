@@ -5,11 +5,11 @@ root: welcome
 parts:
   - caption: Analysis and results
     chapters:
-    - file: introduction.md
-    - file: data.md
-    - file: data_science_methods.md
-    - file: data_product.md
-    - file: conclusions_and_recommendations.md
+    - file: analysis/introduction.md
+    - file: analysis/data.md
+    - file: analysis/data_science_methods.md
+    - file: analysis/data_product.md
+    - file: analysis/conclusions_and_recommendations.md
   
   - caption: Appendix
     chapters:
