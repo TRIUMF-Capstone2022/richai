@@ -51,7 +51,7 @@ Project was developed using `singularity` containers with the following package 
 ## Configuration file
 
 The configuration file contains all of the parameters for the dataset, filters, model training, and scoring.
-Use file `configs/config.yaml` can be used to control datset paths, filters, model parameters/hyperparameters, train/test/saved model paths, dataloader configurations such as batch size, number of workers, etc., number of training epochs, device id, and many more.
+File `configs/config.yaml` can be used to control datset paths, filters, model parameters/hyperparameters, train/test/saved model paths, dataloader configurations such as batch size, number of workers, etc., number of training epochs, device id, and many more.
 
 > Before beginning the training process, double-check that the configuration, such as datset and model paths, is correct.
 
@@ -69,6 +69,8 @@ To train `Dynamic Graph CNN` use the following command.
 python src/train.py --model dgcnn
 ```
 
+> The trained model object can be found in the path specified in `configs/config.yaml` as `model.model name>.saved_model`.
+
 ## Model Evaluation and Scoring on new data
 
 To evaluate `PointNet` on test data or to score on a new data, use the following command.
@@ -82,6 +84,8 @@ To evaluate `Dynamic Graph CNN` on test data or to score on a new data, use the 
 ```bash
 python src/evaluate.py --model dgcnn
 ```
+
+> Model scored csv data can be found in the path specified in `configs/config.yaml` as `model.model name>.saved_model`. It contains actual labels, predicted labels, and predicted probabilities.
 
 ## References
 
