@@ -8,11 +8,9 @@ python src/evaluate.py --model 'pointnet'
 python src/evaluate.py --model 'dgcnn'
 """
 
-from re import M
-import types
 import torch
 import pandas as pd
-
+import argparse
 from models.dgcnn import DGCNN
 from models.pointnet import PointNetFc
 from dataset.rich_dataset import RICHDataset
@@ -190,9 +188,6 @@ def evaluate(model, test_only=False):
 
 
 if __name__ == '__main__':
-    evaluate(model='pointnet', test_only=True)
-
-    import argparse
 
     # argument parser
     parser = argparse.ArgumentParser('Neural Network Training')
