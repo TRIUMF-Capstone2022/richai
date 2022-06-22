@@ -12,7 +12,7 @@ This document (the README file) is a hub to give you some information about the 
   - [Report](#report)
   - [Project Structure](#project-structure)
   - [Model Training](#model-training)
-  - [Model evaluation and scoring on new data](#model-evaluation-and-scoring-on-new-data)
+  - [Model Evaluation and Scoring on new data](#model-evaluation-and-scoring-on-new-data)
   - [Configuration file](#configuration-file)
 
 ## About this project
@@ -50,7 +50,7 @@ To train `Dynamic Graph CNN` use the following command.
 python src/train.py --model dgcnn
 ```
 
-## Model evaluation and scoring on new data
+## Model Evaluation and Scoring on new data
 
 To evaluate `PointNet` on test data or to score on a new data, use the following command.
 
