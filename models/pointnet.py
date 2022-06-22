@@ -5,6 +5,7 @@ import numpy as np
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+
 class STNkd(nn.Module):
     def __init__(self, k=64):
         super().__init__()
@@ -91,7 +92,7 @@ class PointNetFc(nn.Module):
         self.num_classes = num_classes
         self.momentum = momentum
         self.radius = radius
-        
+
         self.feat = Transform()
 
         # include radius and momentum

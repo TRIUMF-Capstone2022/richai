@@ -1,6 +1,14 @@
+"""Trainer for dynamic graph CNN or PointNet
+
+# pointnet
+python src/train.py --model 'pointnet'
+
+# dgcnn
+python src/train.py --model 'dgcnn'
+"""
+
 import time
 import os
-from webbrowser import get
 import torch
 import pandas as pd
 import torch.nn.functional as F
@@ -22,11 +30,39 @@ def trainer(
     epochs=5,
     scheduler=None,
     device='cuda',
-    results=False,
     operating_point=0.5,
     show_results=2500,
 ):
-    """Trainer for pointnet"""
+    """Trainer for binary deep learning classifier
+
+    Parameters
+    ----------
+    model :  PointNetFc or DGCNN object
+        Model object implemented in pytorch
+    optimizer :
+        An optimizer object from torch.optim
+    train_loader : torch.utils.data.DataLoader
+        Data loader for training
+    val_loader : torch.utils.data.DataLoader, optional
+        Data loader for validation
+    criterion : torch.nn.functional
+        Loss function to optimize
+    epochs : int, optional
+        Number of epochs for training, by default 5
+    scheduler : pytorch scheduler, optional
+        Learning rate scheduler, by default None
+    device : str, optional
+        GPU or CPU device, by default 'cuda'
+    operating_point : float, optional
+        Classification threshold, by default 0.5
+    show_results : int, optional
+        Verbosity level, by default 2500
+
+    Returns
+    -------
+    pd.DataFrame
+        Training results on train and validation set
+    """
 
     logger.info(f'Starting training...')
     training_start = time.time()
@@ -199,21 +235,33 @@ def trainer(
 
     logger.info(outstr)
 
-    if results:
-        data = {
-            'train_loss': train_losses,
-            'train_acc': train_accs,
-            'val_loss': valid_losses,
-            'val_acc': valid_accs,
-        }
-        results = pd.DataFrame(data)
+    # Training results
+    data = {
+        'train_loss': train_losses,
+        'train_acc': train_accs,
+        'val_loss': valid_losses,
+        'val_acc': valid_accs,
+    }
+    results = pd.DataFrame(data)
 
-    return model, results
+    return results
 
 
 def train_combined(model, reload_model=True):
-    """Combined training for all the files"""
+    """Combined training for all the files
 
+    Parameters
+    ----------
+    model : str
+        Model to train - pointnet or dgcnn
+    reload_model : bool, optional
+        Reload model and continue training if true, by default True
+
+    Raises
+    ------
+    ValueError
+        Raises error if model is not pointnet or dgcnn
+    """
     # model parameters
     k = None
     if model == 'dgcnn':
@@ -326,4 +374,27 @@ def train_combined(model, reload_model=True):
 
 
 if __name__ == '__main__':
-    train_combined()
+
+    import argparse
+
+    # argument parser
+    parser = argparse.ArgumentParser('Neural Network Training')
+    parser.add_argument(
+        '-m',
+        '--model',
+        type=str,
+        required=True,
+        help='Model name - pointnet or dgcnn',
+    )
+    parser.add_argument(
+        '-r',
+        '--reload_model',
+        type=str,
+        default=True,
+        help='Wether the restart the training',
+    )
+
+    args = parser.parse_args()
+
+    # train the model
+    train_combined(model=args.model, reload_model=args.reload_model)

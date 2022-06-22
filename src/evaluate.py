@@ -1,3 +1,15 @@
+"""Evaluate or score new data
+using dynamic graph CNN or PointNet
+
+# pointnet
+python src/evaluate.py --model 'pointnet'
+
+# dgcnn
+python src/evaluate.py --model 'dgcnn'
+"""
+
+from re import M
+import types
 import torch
 import pandas as pd
 
@@ -14,7 +26,26 @@ logger = get_logger()
 def get_predictions(
     model, dataloader, device, operating_point=0.5, unstandardize=True
 ):
-    """Evaluate the trained model on the test set."""
+    """Evaluate the trained model on the test set.
+
+    Parameters
+    ----------
+    model : PointNetFc or DGCNN object
+        Model object implemented in pytorch
+    dataloader :  torch.utils.data.DataLoader
+       DataLoader instance
+    device : str
+        GPU or CPU device
+    operating_point : float, optional
+        Classification threshold, by default 0.5
+    unstandardize : bool, optional
+        Convert momentum and radius to original scale, by default True
+
+    Returns
+    -------
+    pd.DataFrame
+        Returns evaluation results for the trained model on test set
+    """
 
     logger.info('Getting predictions...')
 
@@ -65,7 +96,20 @@ def get_predictions(
 
 
 def evaluate(model, test_only=False):
-    """Evaluate model"""
+    """Evaluate the model on the RICH dataset
+
+    Parameters
+    ----------
+    model : str
+        Model name - pointnet ot dgcnn
+    test_only : bool, optional
+        If the dataset is test only data, by default False
+
+    Raises
+    ------
+    ValueError
+        Raises error if unable to load model
+    """
 
     logger.info(f'{model} evaluation starting...')
 
@@ -147,3 +191,27 @@ def evaluate(model, test_only=False):
 
 if __name__ == '__main__':
     evaluate(model='pointnet', test_only=True)
+
+    import argparse
+
+    # argument parser
+    parser = argparse.ArgumentParser('Neural Network Training')
+    parser.add_argument(
+        '-m',
+        '--model',
+        type=str,
+        required=True,
+        help='Model name - pointnet or dgcnn',
+    )
+    parser.add_argument(
+        '-t',
+        '--test_only',
+        type=str,
+        default=True,
+        help='If the data is test only dataset',
+    )
+
+    args = parser.parse_args()
+
+    # evaluate the model
+    evaluate(model=args.model, test_only=args.test_only)

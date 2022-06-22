@@ -5,10 +5,21 @@ from utils.helpers import get_config
 
 
 def data_loader(dset):
-    """Create pytorch data loader"""
+    """Data loader for training and testing
+
+    Parameters
+    ----------
+    dset : RICHDataset
+            Input RICH dataset
+
+    Returns
+    -------
+    tuple
+            tuple with train, validation and test loader
+    """
     train_loader = DataLoader(
         dset,
-        batch_size=get_config("data_loader.batch_size"),
+        batch_size=get_config('data_loader.batch_size'),
         shuffle=False,
         sampler=SubsetRandomSampler(dset.train_indices),
         num_workers=get_config('data_loader.num_workers'),
@@ -17,7 +28,7 @@ def data_loader(dset):
 
     val_loader = DataLoader(
         dset,
-        batch_size=get_config("data_loader.batch_size"),
+        batch_size=get_config('data_loader.batch_size'),
         shuffle=False,
         sampler=SubsetRandomSampler(dset.val_indices),
         num_workers=get_config('data_loader.num_workers'),
@@ -25,10 +36,10 @@ def data_loader(dset):
     )
 
     test_loader = None
-    if hasattr(dset, "test_indices"):
+    if hasattr(dset, 'test_indices'):
         test_loader = DataLoader(
             dset,
-            batch_size=get_config("data_loader.batch_size"),
+            batch_size=get_config('data_loader.batch_size'),
             shuffle=False,
             sampler=SubsetRandomSampler(dset.test_indices),
             num_workers=get_config('data_loader.num_workers'),

@@ -7,7 +7,20 @@ import yaml
 
 
 def compute_seq_id(hit, or_id=0):
-    """Compute the RICH PMT sequence ID"""
+    """Compute the RICH PMT sequence ID
+
+    Parameters
+    ----------
+    hit : np.ndarray
+        Hit array corresponding to particle hits
+    or_id : int, optional
+        OR Id of the PMT disc, by default 0
+
+    Returns
+    -------
+    seq_id: int
+        Sequence ID of the PMT disc
+    """
     disk_id, pm_id, sc_id, up_dw_id, _ = hit
     if or_id < 1:
         seq_id = sc_id * 8 + pm_id + up_dw_id * 61 * 8 + disk_id * 61 * 8 * 2
@@ -16,16 +29,24 @@ def compute_seq_id(hit, or_id=0):
     return int(seq_id)
 
 
+# vectorize function
 compute_seq_id = np.vectorize(compute_seq_id, otypes=[int])
 
 
 def get_config(key=None, config_file='configs/config.yaml'):
-    """
-    Read the configuration file and return value of the key if present
-    Args:
-        key (str): Access specified key values (Format: "foo.bar.z")
-    Returns:
-        conf: Value for the specified key else dictionary of config_file contents
+    """Read the configuration file and return value of the key if present
+
+    Parameters
+    ----------
+    key : str, optional
+        Access specified key values (Format: "foo.bar.z")
+    config_file : str, optional
+        Project config file, by default 'configs/config.yaml'
+
+    Returns
+    -------
+    conf: Object
+        Value for the specified key else dictionary of config_file contents
     """
     global yaml
     with open(config_file, 'r') as conf:
@@ -39,15 +60,20 @@ def get_config(key=None, config_file='configs/config.yaml'):
 
 
 def get_logger(file_path=None, file_name=None):
-    """
-    This function initialize the log file
+    """This function initialize the logger
+
     Parameters
     ----------
-    file_path: path were the logs are stored
-    file_name: name of the log file
+    file_path : _type_, optional
+        path were the logs are stored, by default None
+    file_name : _type_, optional
+        name of the log file, by default None
+
     Returns
     -------
-    log: log configuration
+    log: logging
+        A logging object initialized with required configuration.
+
     """
 
     logging.getLogger('py4j').setLevel(logging.ERROR)

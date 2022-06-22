@@ -39,6 +39,10 @@ def plot_cm(
         Plot title.
     save: str or None, optional
         Path where to save figure, if desired.
+
+    Returns
+    -------
+    None
     """
     fig, ax = plt.subplots(figsize=(10, 10))
     cm = confusion_matrix(y_true=y_true, y_pred=y_pred, normalize=normalize)
@@ -154,6 +158,7 @@ def plot_roc_curves(models, title=None, op_point=None, save=None):
 
 def wrangle_predictions(path, width=1, op_point=None):
     """Wrangle model predictions in order to plot efficiency curves.
+
     Parameters
     ----------
     path : str
@@ -161,9 +166,10 @@ def wrangle_predictions(path, width=1, op_point=None):
         Columns must be: labels, predictions, probabilities, momentum.
     width : int, optional
         Width of momentum bins to add to data, by default 1
+
     Returns
     -------
-    wrangled_df
+    wrangled_df: pd.DataFrame
         Wrangled data for plotting.
     """
     df = pd.read_csv(path)
@@ -238,6 +244,7 @@ def plot_efficiencies(
     op_point=None,
 ):
     """Plot pion and muon efficiencies by momentum bin.
+
     Parameters
     ----------
     path : str
@@ -255,6 +262,10 @@ def plot_efficiencies(
         Tick locations for the muon y-axis given as: (major, minor).
     save: str or None, optional
         Path where to save figure, if desired.
+
+    Returns
+    -------
+    None
     """
     results_df = wrangle_predictions(path, op_point=op_point)
 

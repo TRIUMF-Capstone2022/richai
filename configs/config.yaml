@@ -14,6 +14,9 @@ dataset:
     sample_file: "/fast_scratch_1/capstone_2022/datasetC_combined.h5"
     val: 0.05
     test: 0.05
+  pointnet:
+    val: 0.05
+    test: 0.05  
   centre_bias:
     mean_x: -110.25
     mean_y: 1.14
@@ -36,18 +39,18 @@ data_loader:
 
 model:
   pointnet:
-    num_classes: 1
+    output_channels: 1 # same as num_classes
     epochs: 16
-    saved_model: "saved_models/pointnet_momentum_radius_delta_0.5_16e_0706.pt"
-    predictions: "saved_models/pointnet_momentum_radius_delta_0.5_16e_0706_unbalanced_p_15_45.csv"
+    saved_model: "saved_models/pointnet.pt"
+    predictions: "saved_models/pointnet_predictions.csv"
     train_result: "saved_models/train_result_pointnet.csv"
     momentum: True
     radius: True
     delta: 0.5
     seed: 2022
-    learning_rate: 0003
+    learning_rate: 0.0003
   dgcnn:
-    num_classes: 1
+    output_channels: 1 # same as num_classes
     epochs: 4
     k: 8
     saved_model: "saved_models/dgcnn.pt"
@@ -57,7 +60,7 @@ model:
     radius: True
     delta: 0.3
     seed: 42
-    learning_rate: 0003
+    learning_rate: 0.0003
 
 gpu:
   - 1

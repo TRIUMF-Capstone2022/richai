@@ -137,8 +137,8 @@ class DGCNN(nn.Module):
 
     def forward(self, x, p=None, radius=None):
         # X needs to be reshaped for knn calculation to work
-        x =  x.permute(0, 2, 1)
-        
+        x = x.permute(0, 2, 1)
+
         batch_size = x.size(0)
 
         # (batch_size, 3, num_points) -> (batch_size, 3*2, num_points, k)
