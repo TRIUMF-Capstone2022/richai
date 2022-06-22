@@ -69,7 +69,7 @@ To train `Dynamic Graph CNN` use the following command.
 python src/train.py --model dgcnn
 ```
 
-> The trained model object can be found in the path specified in `configs/config.yaml` as `model.model name>.saved_model`.
+> The trained model object can be found in the path specified in `configs/config.yaml` as `model.model_name>.saved_model`.
 
 ## Model Evaluation and Scoring on new data
 
@@ -85,7 +85,7 @@ To evaluate `Dynamic Graph CNN` on test data or to score on a new data, use the 
 python src/evaluate.py --model dgcnn
 ```
 
-> Model scored csv data can be found in the path specified in `configs/config.yaml` as `model.model name>.saved_model`. It contains actual labels, predicted labels, and predicted probabilities.
+> Model scored csv data can be found in the path specified in `configs/config.yaml` as `model.model_name>.saved_model`. It contains actual labels, predicted labels, and predicted probabilities.
 
 ## References
 
