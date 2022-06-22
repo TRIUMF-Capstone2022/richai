@@ -66,7 +66,28 @@ def get_graph_feature(x, k, idx=None):
 
 
 class DGCNN(nn.Module):
-    """Dynamic Graph CNN."""
+    """Dynamic Graph CNN
+
+    Attributes
+    ----------
+    input_channels : int
+       Default input features are 3 coordinates * 2 because of edge features
+    output_channels : int
+       Output channels
+    k : int
+        k neighbors
+    dropout : float
+        Regularization dropout parameters
+    momentum : bool
+        If true, include momentum as feature
+    radius : bool
+        If true, include radius as feature
+
+    Methods
+    -------
+    forward(x, p, radius)
+        Feed forward layer with input x, momentum and radius
+    """
 
     def __init__(
         self,
