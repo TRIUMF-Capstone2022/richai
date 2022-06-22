@@ -11,7 +11,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
 def knn(x, k):
@@ -34,7 +34,10 @@ def get_graph_feature(x, k, idx=None):
         idx = knn(x, k=k)
 
     # index for each point: (batch_size) -> view -> (batch_size, 1, 1)
-    idx_base = torch.arange(0, batch_size, device=x.device).view(-1, 1, 1) * num_points
+    idx_base = (
+        torch.arange(0, batch_size, device=x.device).view(-1, 1, 1)
+        * num_points
+    )
 
     # index + knn index: (batch_size, num_dims, num_points)
     idx = idx + idx_base
@@ -55,13 +58,36 @@ def get_graph_feature(x, k, idx=None):
     x = x.view(batch_size, num_points, 1, num_dims).repeat(1, 1, k, 1)
 
     # (batch_size, 2*num_dims, num_points, k)
-    feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
+    feature = (
+        torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
+    )
 
     return feature
 
 
 class DGCNN(nn.Module):
-    """Dynamic Graph CNN."""
+    """Dynamic Graph CNN
+
+    Attributes
+    ----------
+    input_channels : int
+       Default input features are 3 coordinates * 2 because of edge features
+    output_channels : int
+       Output channels
+    k : int
+        k neighbors
+    dropout : float
+        Regularization dropout parameters
+    momentum : bool
+        If true, include momentum as feature
+    radius : bool
+        If true, include radius as feature
+
+    Methods
+    -------
+    forward(x, p, radius)
+        Feed forward layer with input x, momentum and radius
+    """
 
     def __init__(
         self,
@@ -131,6 +157,9 @@ class DGCNN(nn.Module):
         self.linear3 = nn.Linear(256, self.output_channels)
 
     def forward(self, x, p=None, radius=None):
+        # X needs to be reshaped for knn calculation to work
+        x = x.permute(0, 2, 1)
+
         batch_size = x.size(0)
 
         # (batch_size, 3, num_points) -> (batch_size, 3*2, num_points, k)
