@@ -11,9 +11,11 @@ This document (the README file) is a hub to give you some information about the 
   - [Contributors](#contributors)
   - [Report](#report)
   - [Project Structure](#project-structure)
+  - [Dependencies](#dependencies)
+  - [Configuration file](#configuration-file)
   - [Model Training](#model-training)
   - [Model Evaluation and Scoring on new data](#model-evaluation-and-scoring-on-new-data)
-  - [Configuration file](#configuration-file)
+  - [References](#references)
 
 ## About this project
 
@@ -35,6 +37,23 @@ The final report can be accessed [here](https://github.com/TRIUMF-Capstone2022/r
 ## Project Structure
 
 ![Project Structure](docs/images/project_org.png)
+
+## Dependencies
+
+Project was developed using `singularity` containers with the following package dependencies.
+
+- pandas==1.3.5
+- torch==1.11.0
+- sklearn==0.24.0
+- jupyterlab
+- pyyaml==6.0
+
+## Configuration file
+
+The configuration file contains all of the parameters for the dataset, filters, model training, and scoring.
+Use file `configs/config.yaml` can be used to control datset paths, filters, model parameters/hyperparameters, train/test/saved model paths, dataloader configurations such as batch size, number of workers, etc., number of training epochs, device id, and many more.
+
+> Before beginning the training process, double-check that the configuration, such as datset and model paths, is correct.
 
 ## Model Training
 
@@ -64,6 +83,11 @@ To evaluate `Dynamic Graph CNN` on test data or to score on a new data, use the 
 python src/evaluate.py --model dgcnn
 ```
 
-## Configuration file
+## References
 
-All the parameters related to dataset, filters, model training and scoring are defined in the configuration file.
+- G Anzivino, M Barbanera, A Bizzeti, F Brizioli, F Bucci, A Cassese, P Cenci,R Ciaranfi, V Duk, J Engelfried, and others. Light detection system and time resolution of the na62 rich. Journal of Instrumentation, 15(10):P10025, 2020.
+- The beam and detector of the NA62 experiment at CERN. Journal of Instrumentation, 12(05):P05025–P05025, may2017. 
+  URL: https://doi.org/10.1088%2F1748-0221%2F12%2F05%2Fp05025, doi:10.1088/1748-0221/12/05/p05025.
+- Max Jaderberg, Karen Simonyan, Andrew Zisserman, and others. Spatial transformer networks. Advances in neural information processing systems, 2015.
+- Charles R Qi, Hao Su, Kaichun Mo, and Leonidas J Guibas. Pointnet: deep learning on point sets for 3d classification and segmentation. In Proceedings of the IEEE conference on computer vision and pattern recognition, 652–660. 2017.  
+- Yue Wang, Yongbin Sun, Ziwei Liu, Sanjay E Sarma, Michael M Bronstein, and Justin M Solomon. Dynamic graph cnn for learning on point clouds. Acm Transactions On Graphics (tog), 38(5):1–12, 2019.
