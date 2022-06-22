@@ -1,3 +1,4 @@
+<!-- #region -->
 # Data Science Methods
 
 ## Baseline model: Gradient boosted trees
@@ -31,14 +32,41 @@ Cons:
 
 ### Results
 
-![](images/xgb_results.png)
+```{figure} images/xgb_results.png
+---
+height: 200px
+width: 200px
+:name: xgb_results
+---
+
+xgboost results
+```
 
 As observed above, the pion efficiency drops sharply with increase in momentum beyond 35 GeV/C. Besides, muon efficiency is poor at the chosen operating point.
 Further, different xgboost models were trained and tested on different momentum bins. A Global xgboost model trained over 15-45 GeV/c momentum bin as well as local xgboost models were trained and evaluated. It was observed that the models performed poorly in higher momentum bins as shown below:
-![](images/ROC_xgboost.png)
+
+```{figure} images/ROC_xgboost.png
+---
+height: 200px
+width: 200px
+:name: ROC_xgboost
+---
+
+ROC curves of xgboost models on different momentum bins
+```
 
 The following ROC curves plot establishes that the models were actually leveraging discriminating power of input features and not biased by distributional issues in data.
-![](images/ROC_xgboost_3545.png)
+
+```{figure} images/ROC_xgboost_3545.png
+---
+height: 200px
+width: 200px
+:name: ROC_xgboost_3545
+---
+
+ROC curves of globally and locally trained xgboost models on 35-45 GeV/c momentum bin
+```
+
 
 ### Justification for moving onto deep learning
 
@@ -46,7 +74,7 @@ The following ROC curves plot establishes that the models were actually leveragi
 - Therefore, to improve results, more accurate models were required which could extract features directly and more precisely from the hits position data.
 
 Thus, deep learning models were which leverage feature extraction from position data in form of point clouds comprised the further steps in modeling approach beyond baseline GBDT model. 
-
+<!-- #endregion -->
 
 ## Deep learning
 
