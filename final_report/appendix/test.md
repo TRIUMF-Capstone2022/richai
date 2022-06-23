@@ -1,5 +1,6 @@
 # 2.1 Data Generation 
 
+(appendix:datagen:process)=
 ## Data Generation Process
 
 In order to generate the NA62 data, several experiment "runs" are performed.  For each run, the experiment configuration is fixed and the following steps are performed:
