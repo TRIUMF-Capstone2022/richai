@@ -1,4 +1,4 @@
-# Introduction
+# 1. Introduction
 
 The NA62 experiment at CERN (European organization for nuclear research) studies the rate of the ultra-rate meson decay into a pion to verify the Standard Model in physics. However, a muon and positron may be produced in the decay as noise events. The latter can be identified experimentally, however it is difficult to distinguish between the pion and muon. 
 
