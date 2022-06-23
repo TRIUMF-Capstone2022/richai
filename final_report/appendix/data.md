@@ -53,10 +53,8 @@ Distribution of ring center calcualted using the MLE algorithm for all samples b
 
 Similarly,  {numref}`ring_center` details the difference in the ring centers computed using the MLE between the two classes. As this feature is an abstraction of the scatter of X and Y coordinates, it can be inferred that the bias exists in the raw hits information which will be fed into the deep learning models. These models identify this spatial difference on the standardized PMT grid, and therefore bias the classification. Demeaning each of the hits data using the global X and Y positions of the ring centers, irrespective of class, will remove this bias. 
 
-## Appendix A.3 : Point Cloud Generation
-
 (appendix:datagen:cloud)=
-### Point cloud generation
+## Appendix A.3 : Point Cloud Generation
 
 ```{figure} ../images/point_cloud.png
 ---
