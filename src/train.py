@@ -248,12 +248,12 @@ def trainer(
     return results
 
 
-def train_combined(model, reload_model=True):
+def train_combined(model_name, reload_model=True):
     """Combined training for all the files
 
     Parameters
     ----------
-    model : str
+    model_name : str
         Model to train - pointnet or dgcnn
     reload_model : bool, optional
         Reload model and continue training if true, by default True
@@ -265,26 +265,26 @@ def train_combined(model, reload_model=True):
     """
     # model parameters
     k = None
-    if model == 'dgcnn':
-        k = get_config(f'model.{model}.k')
-    output_channels = get_config(f'model.{model}.output_channels')
-    momentum = get_config(f'model.{model}.momentum')
-    radius = get_config(f'model.{model}.radius')
-    model_path = get_config(f'model.{model}.saved_model')
-    epochs = get_config(f'model.{model}.epochs')
-    learning_rate = get_config(f'model.{model}.learning_rate')
+    if model_name == 'dgcnn':
+        k = get_config(f'model.{model_name}.k')
+    output_channels = get_config(f'model.{model_name}.output_channels')
+    momentum = get_config(f'model.{model_name}.momentum')
+    radius = get_config(f'model.{model_name}.radius')
+    model_path = get_config(f'model.{model_name}.saved_model')
+    epochs = get_config(f'model.{model_name}.epochs')
+    learning_rate = get_config(f'model.{model_name}.learning_rate')
 
     # dataset parameters
-    files = get_config(f'dataset.train')
-    val_split = get_config(f'dataset.{model}.val')
-    test_split = get_config(f'dataset.{model}.test')
-    seed = get_config(f'model.{model}.seed')
-    delta = get_config(f'model.{model}.delta')
+    files = get_config('dataset.train')
+    val_split = get_config(f'dataset.{model_name}.val')
+    test_split = get_config(f'dataset.{model_name}.test')
+    seed = get_config(f'model.{model_name}.seed')
+    delta = get_config(f'dataset.delta')
 
     # log training information
     logger.info(
         f"""
-    TRAINING SESSION INFORMATION FOR {model}
+    TRAINING SESSION INFORMATION FOR {model_name}
     Files: {files}
     Model save path: {model_path}
     Total epochs: {epochs}
@@ -299,13 +299,13 @@ def train_combined(model, reload_model=True):
     )
 
     # Define model
-    if model == 'pointnet':
+    if model_name == 'pointnet':
         model = PointNetFc(
             num_classes=output_channels,
             momentum=momentum,
             radius=radius,
         )
-    elif model == 'dgcnn':
+    elif model_name == 'dgcnn':
         model = DGCNN(
             k=k,
             output_channels=output_channels,
@@ -313,7 +313,7 @@ def train_combined(model, reload_model=True):
             radius=radius,
         )
     else:
-        raise ValueError(f'Model {model} not supported')
+        raise ValueError(f'Model {model_name} not supported')
 
     # enable multi GPUs
     if torch.cuda.device_count() > 1:
@@ -396,4 +396,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # train the model
-    train_combined(model=args.model, reload_model=args.reload_model)
+    train_combined(model_name=args.model, reload_model=args.reload_model)
