@@ -1,4 +1,4 @@
-# Data Science Methods
+# 3. Data Science Methods
 
 ## Baseline model: Gradient boosted trees
 
