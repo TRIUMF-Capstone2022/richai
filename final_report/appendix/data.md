@@ -1,7 +1,7 @@
-# Appendix 2.1 : Data 
+# Appendix A : Data 
 
 (appendix:datagen:process)=
-## 2.1.1 Data Generation Process ###
+## A.1 Data Generation Process ###
 
 In order to generate the NA62 data, several experiment "runs" are performed.  For each run, the experiment configuration is fixed and the following steps are performed:
 
@@ -36,7 +36,7 @@ Ring-imaging Cherenkov detector
 
 8. The hodoscope counters (CHOD) detector shown in Figure 2 records the time that the particle decay occurs.
 
-## Appendix 2.1.2 : Bias in Data
+## Appendix A.2 : Bias in Data
 
 (appendix:datagen:ringbias)=
 ### Ring center
@@ -53,7 +53,7 @@ Distribution of ring center calcualted using the MLE algorithm for all samples b
 
 Similarly,  {numref}`ring_center` details the difference in the ring centers computed using the MLE between the two classes. As this feature is an abstraction of the scatter of X and Y coordinates, it can be inferred that the bias exists in the raw hits information which will be fed into the deep learning models. These models identify this spatial difference on the standardized PMT grid, and therefore bias the classification. Demeaning each of the hits data using the global X and Y positions of the ring centers, irrespective of class, will remove this bias. 
 
-## Appendix 2.1.3 : Point Cloud Generation
+## Appendix A.3 : Point Cloud Generation
 
 (appendix:datagen:cloud)=
 ### Point cloud generation
