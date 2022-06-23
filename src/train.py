@@ -40,7 +40,7 @@ def trainer(
     ----------
     model :  PointNetFc or DGCNN object
         Model object implemented in pytorch
-    optimizer :
+    optimizer : torch.optim
         An optimizer object from torch.optim
     train_loader : torch.utils.data.DataLoader
         Data loader for training
@@ -236,8 +236,9 @@ def trainer(
 
     logger.info(outstr)
 
-    # Training results
+    # training results
     data = {
+        'epochs': range(epochs),
         'train_loss': train_losses,
         'train_acc': train_accs,
         'val_loss': valid_losses,
@@ -263,6 +264,8 @@ def train_combined(model_name, reload_model=True):
     ValueError
         Raises error if model is not pointnet or dgcnn
     """
+    result = pd.DataFrame()
+    
     # model parameters
     k = None
     if model_name == 'dgcnn':
@@ -355,7 +358,7 @@ def train_combined(model_name, reload_model=True):
         train_loader, val_loader, _ = data_loader(dataset)
 
         # train the model
-        trainer(
+        df = trainer(
             model=model,
             optimizer=optimizer,
             train_loader=train_loader,
@@ -365,6 +368,9 @@ def train_combined(model_name, reload_model=True):
             device=device,
             show_results=2500,
         )
+        # concat to the training results
+        result = pd.concat([result, df])
+        
         logger.info(
             f'Completed training on file {file_} samples with {sample_file}'
         )
@@ -372,6 +378,13 @@ def train_combined(model_name, reload_model=True):
 
         torch.save(model.state_dict(), model_path)
         logger.info(f'Model successfully saved to {model_path}')
+    
+    # save training results to disk
+    results_path = get_config(f'model.{model_name}.train_result')
+    result.to_csv(results_path, index=False)
+
+    logger.info(f'{model_name} training completed!')
+    logger.info(f'Results successfully saved to {results_path}')    
 
 
 if __name__ == '__main__':

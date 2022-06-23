@@ -29,7 +29,7 @@ dataset:
     radius_lower: -2500
     radius_upper: 2500
 data_loader:
-  batch_size: 32
+  batch_size: 64
   num_workers: 4
   drop_last: true
 model:
