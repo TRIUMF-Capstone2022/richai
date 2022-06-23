@@ -1,4 +1,4 @@
-# Data Product
+# 4. Data Product
 
 ## Product overview
 Our data product is a machine learning pipeline that takes in the experiment data in HDF5 format, pre-processes them, prepares training data, trains classifier models on the training data and evaluates model results on test data through modular scripts. 
