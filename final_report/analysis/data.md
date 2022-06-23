@@ -26,4 +26,4 @@ The class imbalance will be detrimental to achieving a high pion efficiency as t
 
 ### Additional Steps
 
-There were two additional preprocessing steps: removing the bias in the ring center and conversion of the hits data into a point cloud. The former was completed by subtracting the global mean X and Y positions from every photon hit, and is shown in `App. 2.1.2 <appendix:datagen:ringbias>`. The latter process, descibed in `App. 2.1.3 <appendix:datagen:cloud>` involved adding a third dimension of time to the photon hit scatters. 
+There were two additional preprocessing steps: removing the bias in the ring center and conversion of the hits data into a point cloud. The former was completed by subtracting the global mean X and Y positions from every photon hit, and is shown in {ref}`App. 2.1.2 <appendix:datagen:ringbias>`. The latter process, descibed in {ref}`App. 2.1.3 <appendix:datagen:cloud>` involved adding a third dimension of time to the photon hit scatters. 
