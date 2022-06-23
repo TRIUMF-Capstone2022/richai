@@ -93,12 +93,12 @@ def get_predictions(
     return df
 
 
-def evaluate(model, test_only=False):
+def evaluate(model_name, test_only=False):
     """Evaluate the model on the RICH dataset
 
     Parameters
     ----------
-    model : str
+    model_name : str
         Model name - pointnet ot dgcnn
     test_only : bool, optional
         If the dataset is test only data, by default False
@@ -109,33 +109,33 @@ def evaluate(model, test_only=False):
         Raises error if unable to load model
     """
 
-    logger.info(f'{model} evaluation starting...')
+    logger.info(f'{model_name} evaluation starting...')
 
     result = pd.DataFrame()
 
     # get config
-    output_channels = get_config(f'model.{model}.output_channels')
-    momentum = get_config(f'model.{model}.momentum')
-    radius = get_config(f'model.{model}.radius')
-    state_dict = get_config(f'model.{model}.saved_model')
+    output_channels = get_config(f'model.{model_name}.output_channels')
+    momentum = get_config(f'model.{model_name}.momentum')
+    radius = get_config(f'model.{model_name}.radius')
+    state_dict = get_config(f'model.{model_name}.saved_model')
     gpus = get_config('gpu')
 
     # define model
-    if model == 'pointnet':
+    if model_name == 'pointnet':
         model = PointNetFc(
             num_classes=output_channels,
             momentum=momentum,
             radius=radius,
         )
-    elif model == f'{model}':
+    elif model_name == f'{model_name}':
         model = DGCNN(
-            k=get_config(f'model.{model}.k'),
+            k=get_config(f'model.{model_name}.k'),
             output_channels=output_channels,
             momentum=momentum,
             radius=radius,
         )
     else:
-        raise ValueError(f'Model {model} not supported')
+        raise ValueError(f'Model {model_name} not supported')
 
     # run in parallel
     if torch.cuda.device_count() > 1:
@@ -163,8 +163,8 @@ def evaluate(model, test_only=False):
             dset_path=file_,
             val_split=None,
             test_split=None,
-            seed=get_config('seed'),
-            delta=get_config(f'model.{model}.delta'),
+            seed=get_config(f'model.{model_name}.seed'),
+            delta=get_config('dataset.delta'),
             test_only=test_only,
         )
 
@@ -180,10 +180,10 @@ def evaluate(model, test_only=False):
         df = get_predictions(model, data_loader, device)
         result = pd.concat([result, df])
 
-    results_path = get_config(f'model.{model}.predictions')
+    results_path = get_config(f'model.{model_name}.predictions')
     result.to_csv(results_path, index=False)
 
-    logger.info(f'{model} evaluation completed!')
+    logger.info(f'{model_name} evaluation completed!')
     logger.info(f'Results successfully saved to {results_path}')
 
 
@@ -209,4 +209,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # evaluate the model
-    evaluate(model=args.model, test_only=args.test_only)
+    evaluate(model_name=args.model, test_only=args.test_only)
