@@ -67,8 +67,6 @@ def trainer(
 
     logger.info(f'Starting training...')
     training_start = time.time()
-    
-    print("optimizer", type(optimizer))
 
     train_losses, train_accs = [], []
     valid_losses, valid_accs = [], []
