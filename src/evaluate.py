@@ -180,6 +180,7 @@ def evaluate(model_name, test_only=False):
         df = get_predictions(model, data_loader, device)
         result = pd.concat([result, df])
 
+    # writing the results to disk
     results_path = get_config(f'model.{model_name}.predictions')
     result.to_csv(results_path, index=False)
 
