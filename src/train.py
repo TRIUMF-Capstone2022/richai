@@ -238,7 +238,7 @@ def trainer(
 
     # training results
     data = {
-        'epochs': range(epochs),
+        'epochs': [i+1 for i in range(epochs)],
         'train_loss': train_losses,
         'train_acc': train_accs,
         'val_loss': valid_losses,
