@@ -1,4 +1,4 @@
-# Conclusions and recommendations
+# 5. Conclusions and recommendations
 
 The RICH AI project aimed to predict the particle in concern as pion or muon with given input features extracted from experiment data. This pertained to a binary classification problem. The goal was to create better and more accurate models using deep learning based classification models in comparison to the existing analytical methods. 
 
