@@ -1,10 +1,10 @@
 (appendix:deeplearning:dgcnn)=
 # Appendix D: Dynamic Convolutional Neural Network (Deep Learning)
 
-(appendix:deeplearning:dgcnn:arch)
+(appendix:deeplearning:dgcnn:arch)=
 ## Appendix D.1: Model architecture 
 
-(appendix:deeplearning:dgcnn:hyp)
+(appendix:deeplearning:dgcnn:hyp)=
 ## Appendix D.2: Model hyperparamters 
 
 The hyperparameters that were tuned were:
