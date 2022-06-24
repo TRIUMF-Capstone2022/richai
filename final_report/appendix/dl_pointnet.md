@@ -1,11 +1,11 @@
 (appendix:deeplearning:pointnet)=
 # Appendix C: PointNet (Deep Learning)
 
-(appendix:deeplearning:pointnet:arch)
+(appendix:deeplearning:pointnet:arch)=
 ## Appendix C.1: Model architecture 
 
 
-(appendix:deeplearning:pointnet:hyp)
+(appendix:deeplearning:pointnet:hyp)=
 ## Appendix C.2: Model hyperparamters 
 
 The hyperparameters that were tuned were:
