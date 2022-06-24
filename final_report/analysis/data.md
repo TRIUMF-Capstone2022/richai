@@ -12,6 +12,8 @@ The data was generated as part of the 2018 NA62 experiments performed at CERN.  
 
 ### Subsampling w/ respect to momentum bins ###
 
+The class imbalance will be detrimental to achieving a high pion efficiency as the pion is the minority class. Undersampling the muons to match the number of pions was a feasible solution to address this issue due to the large dataset. However, random sampling of muons examples cannot be used for this data. This is due to the systematic difference in the distribution of momentums between the two particles and is purely an artifact of the experimental setup as seen in {numref}`momentum_distribution`. This will bias the output as the objective of this project is to carry out the classification strictly based on differences in the ring size between the particles. 
+
 ```{figure} ../images/momentum_distribution.png
 ---
 height: 350px
@@ -22,7 +24,7 @@ name: momentum_distribution
 Distribution of momentum for all samples by class. 
 ```
 
-The class imbalance will be detrimental to achieving a high pion efficiency as the pion is the minority class. Undersampling the muons to match the number of pions was a feasible solution to address this issue due to the large dataset. However, random sampling of muons examples cannot be used for this data. This is due to the systematic difference in the distribution of momentums between the two particles and is purely an artifact of the experimental setup as seen in {numref}`momentum_distribution`. This will bias the output as the objective of this project is to carry out the classification strictly based on differences in the ring size between the particles. The solution was to split the data into three equally sized bins by momentum in the range of 15-45 $GeV/c$, count the number of pions in each bin, and sample an equal number of muons within that bin. The resulting synthetic dataset contained 2 million examples. There were enough examples to feed into the machine learning models, and momentum as a feature was controlled. 
+The solution was to split the data into three equally sized bins by momentum in the range of 15-45 $GeV/c$, count the number of pions in each bin, and sample an equal number of muons within that bin. The resulting synthetic dataset contained 2 million examples. There were enough examples to feed into the machine learning models, and momentum as a feature was controlled. 
 
 ### Additional Steps
 
