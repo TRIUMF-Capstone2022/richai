@@ -37,7 +37,7 @@ xgboost results
 
 As observed above in {numref}`xgb_results`, the pion efficiency drops sharply with increase in momentum beyond 35 GeV/C. Besides, muon efficiency is poor at the chosen operating point.
 
-Further, different xgboost models were trained and tested on different momentum bins. A Global xgboost model trained over 15-45 GeV/c momentum bin as well as local xgboost models were trained and evaluated. It was observed that the models performed poorly in higher momentum bins as shown above in {numref}`ROC_xgboost`.
+Further, different xgboost models were trained and tested on different momentum bins. A Global xgboost model trained over 15-45 GeV/c momentum bin as well as local xgboost models were trained and evaluated. It was observed that the models performed poorly in higher momentum bins as shown below in {numref}`ROC_xgboost`.
 
 ```{figure} ../images/ROC_xgboost.png
 ---
