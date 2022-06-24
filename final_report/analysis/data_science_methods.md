@@ -2,15 +2,9 @@
 
 ## Baseline model: Gradient boosted trees
 
-### Why GBT are a good baseline model?
-
-Gradient Boosted Decision Trees (GDBT) use ensemble of decision trees sequentially minimising a loss function and hence, are popular due their efficiency, accuracy and ability to avoid overfitting. Besides, the libraries associated offer flexibility in terms of parameters such as decision tree algorithm, loss function, regularization, GPU related parameters etc. which make them a popular first choice as baseline models. 
-
-There are several algorithm based GBDTs available on open source platforms such as Lightgbm, Catboost, Xgboost, Adaboost etc. They are mostly available in form of individual libraries with native implementations and with sklearn in some cases.
-
 ### Why we used this model
 
-As the number of features were low in our case, the decision tree algorithms were not expected to vary considerably. Therefore, Xgboost (XGBClassifier) with sklearn API was chosen as our baseline GBDT for benchmarking purposes primarily due to its support in form of [parameters](https://xgboost.readthedocs.io/en/stable/gpu/index.html) enabling GPU accelaration for faster training.
+As the number of features were low in our case, the decision tree algorithms were not expected to vary considerably. Therefore, Xgboost (XGBClassifier) with sklearn API was chosen as our baseline GBDT for benchmarking purposes primarily due to its support in form of [parameters](https://xgboost.readthedocs.io/en/stable/gpu/index.html) enabling GPU accelaration for faster training. In general, the benefits of usign decision trees as the baseline model are discussed in {ref}`App. B.1 <appendix:ml_gbm:intro>`. 
 
 ### Features that were used for GBT
 
@@ -41,8 +35,9 @@ name: xgb_results
 xgboost results
 ```
 
-As observed above, the pion efficiency drops sharply with increase in momentum beyond 35 GeV/C. Besides, muon efficiency is poor at the chosen operating point.
-Further, different xgboost models were trained and tested on different momentum bins. A Global xgboost model trained over 15-45 GeV/c momentum bin as well as local xgboost models were trained and evaluated. It was observed that the models performed poorly in higher momentum bins as shown below:
+As observed above in {numref}`xgb_results`, the pion efficiency drops sharply with increase in momentum beyond 35 GeV/C. Besides, muon efficiency is poor at the chosen operating point.
+
+Further, different xgboost models were trained and tested on different momentum bins. A Global xgboost model trained over 15-45 GeV/c momentum bin as well as local xgboost models were trained and evaluated. It was observed that the models performed poorly in higher momentum bins as shown above in {numref}`ROC_xgboost`.
 
 ```{figure} ../images/ROC_xgboost.png
 ---
@@ -54,7 +49,7 @@ name: ROC_xgboost
 ROC curves of xgboost models on different momentum bins
 ```
 
-The following ROC curves plot establishes that the models were actually leveraging discriminating power of input features and not biased by distributional issues in data.
+{numref}`ROC_xgboost_3545` establishes that the models were actually leveraging discriminating power of input features and not biased by distributional issues in data.
 
 ```{figure} ../images/ROC_xgboost_3545.png
 ---
