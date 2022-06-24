@@ -8,7 +8,7 @@
 
 The PointNet architecture has two key features which allow it to handle pointcloud data effectively: 
 
-1. Spatial transformation network (T-Net) {numref}`https://doi.org/10.48550/arxiv.1506.02025` 
+1. Spatial transformation network (T-Net) {cite}`https://doi.org/10.48550/arxiv.1506.02025` 
 2. Maxpooling
 
 The overall architecture can be seen in {numref}`pointnetarch` {cite}`qi2017pointnet`. The spatial transformer is the first part of the model, and makes the model invariant to rotations in the point cloud. The parameters for the matrix learnt by this network are data driven and therefore robust. The second application of T-Net acts on the features extracted from various point clouds and orient them in a latent feature space. This matrix learnt for this step is more complex. 
