@@ -17,6 +17,7 @@ parts:
     - file: appendix/baseline_gbm
     - file: appendix/dl_pointnet
     - file: appendix/dl_dgcnn
+    - file: appendix/supplementary_notebooks
       sections:
         - file: appendix/notebooks/data_generation_process
         - file: appendix/notebooks/global_values
