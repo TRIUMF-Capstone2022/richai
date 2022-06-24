@@ -1,5 +1,5 @@
 dataset:
-  delta: 0.5
+  delta: 0.5 #pointnet: 0.5, dgcnn: 0.3
   train:
     /data/bvelghe/capstone2022/B/2018B.Sample.EOSlist.CTRL.p.v2.0.4_f.v2.0.4_patched.h5: /fast_scratch_1/capstone_2022/combined_datasets/B.2018B.h5
     /data/bvelghe/capstone2022/C/2018E.EOSlist.CTRL_patched.h5: /fast_scratch_1/capstone_2022/datasetC_combined.h5
@@ -39,19 +39,19 @@ model:
     saved_model: saved_models/pointnet.pt
     predictions: saved_models/pointnet_predictions.csv
     train_result: saved_models/train_result_pointnet.csv
-    momentum: true
-    radius: true
+    momentum: True
+    radius: True
     seed: 2022
     learning_rate: 0.0003
   dgcnn:
     output_channels: 1
-    epochs: 4
+    epochs: 8
     k: 8
     saved_model: saved_models/dgcnn.pt
     predictions: saved_models/dgcnn_predictions.csv
     train_result: saved_models/train_result_dgcnn.csv
-    momentum: true
-    radius: true
+    momentum: True
+    radius: True
     seed: 42
     learning_rate: 0.0003
 gpu:
