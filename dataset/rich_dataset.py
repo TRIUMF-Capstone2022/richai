@@ -163,7 +163,7 @@ class RICHDataset(Dataset):
                 get_config('dataset.standardize.mean_momentum'),
                 get_config('dataset.standardize.std_momentum'),
                 get_config('dataset.standardize.mean_radius'),
-                get_config('dataset.standardize.std_momentum'),
+                get_config('dataset.standardize.std_radius'),
             )
 
             logger.info(
