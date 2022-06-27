@@ -1,0 +1,31 @@
+# TODO: Update with final
+# TODO: Follow https://github.com/executablebooks/jupyter-book/blob/master/docs/_toc.yml
+format: jb-book
+root: welcome
+parts:
+  - caption: Analysis and results
+    chapters:
+    - file: analysis/introduction.md
+    - file: analysis/data.md
+    - file: analysis/data_science_methods.md
+    - file: analysis/data_product.md
+    - file: analysis/conclusions_and_recommendations.md
+  
+  - caption: Appendix
+    chapters:
+    - file: appendix/introduction
+    - file: appendix/data
+    - file: appendix/ml_gbm
+    - file: appendix/dl_pointnet
+    - file: appendix/dl_dgcnn
+    - file: appendix/supplementary_notebooks
+      sections:
+        - file: appendix/notebooks/data_generation_process
+        - file: appendix/notebooks/global_values
+        - file: appendix/notebooks/DGCNN_operating_point
+        - file: appendix/notebooks/presentation_plots
+      
+  - caption: References
+    chapters:
+    - file: references.md
+      title: References

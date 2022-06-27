@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>References &#8212; RICH AI Final Report</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="_static/TRIUMF_Favicon.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Presentation plots" href="appendix/notebooks/presentation_plots.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/TRIUMF_Logo_Blue.jpeg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">RICH AI Final Report</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="welcome.html">
+                    Welcome!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Analysis and results
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="analysis/introduction.html">
+   1. Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="analysis/data.html">
+   2. Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="analysis/data_science_methods.html">
+   3. Data Science Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="analysis/data_product.html">
+   4. Data Product
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="analysis/conclusions_and_recommendations.html">
+   5. Conclusions and recommendations
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Appendix
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="appendix/introduction.html">
+   Appendix A: Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="appendix/data.html">
+   Appendix B: Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="appendix/ml_gbm.html">
+   Appendix C: Gradient Boosted Tree (ML Baseline)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="appendix/dl_pointnet.html">
+   Appendix D: PointNet (Deep Learning)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="appendix/dl_dgcnn.html">
+   Appendix E: Dynamic Convolutional Neural Network (Deep Learning)
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="appendix/supplementary_notebooks.html">
+   Supplementary Jupyter notebooks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="appendix/notebooks/data_generation_process.html">
+     RICH AI Data Generation Process
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="appendix/notebooks/global_values.html">
+     Global values for debiasing and standardization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="appendix/notebooks/DGCNN_operating_point.html">
+     Dynamic Graph CNN Operating Point
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="appendix/notebooks/presentation_plots.html">
+     Presentation plots
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  References
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   References
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/TRIUMF-Capstone2022/richai"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/references.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>References</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="references">
+<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h1>
+<div class="docutils container" id="id1">
+<dl class="citation">
+<dt class="label" id="id5"><span class="brackets">ABB+20</span></dt>
+<dd><p>G Anzivino, M Barbanera, A Bizzeti, F Brizioli, F Bucci, A Cassese, P Cenci, R Ciaranfi, V Duk, J Engelfried, and others. Light detection system and time resolution of the na62 rich. <em>Journal of Instrumentation</em>, 15(10):P10025, 2020.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets">Biz17</span></dt>
+<dd><p>Andrea Bizzeti. The na62 rich detector. 2017. URL: <a class="reference external" href="https://arxiv.org/abs/1706.08496">https://arxiv.org/abs/1706.08496</a>, <a class="reference external" href="https://doi.org/10.48550/ARXIV.1706.08496">doi:10.48550/ARXIV.1706.08496</a>.</p>
+</dd>
+<dt class="label" id="id9"><span class="brackets">CA19</span></dt>
+<dd><p>Patrizia Cenci and et.al Anzivino. Status of the na62 ring imaging cherenkov detector. <em>Nuclear Instruments and Methods in Physics Research Section A: Accelerators, Spectrometers, Detectors and Associated Equipment</em>, 952:, 04 2019. <a class="reference external" href="https://doi.org/10.1016/j.nima.2019.03.060">doi:10.1016/j.nima.2019.03.060</a>.</p>
+</dd>
+<dt class="label" id="id11"><span class="brackets">CHB+15</span></dt>
+<dd><p>Tianqi Chen, Tong He, Michael Benesty, Vadim Khotilovich, Yuan Tang, Hyunsu Cho, Kailong Chen, and others. Xgboost: extreme gradient boosting. <em>R package version 0.4-2</em>, 1(4):1–4, 2015.</p>
+</dd>
+<dt class="label" id="id10"><span class="brackets">C+20</span></dt>
+<dd><p>NA62 Collaboration and others. An investigation of the very rare $ kˆ+\rightarrow\piˆ+\nu\bar $\$$\backslash $nu$\$ $ decay. <em>arXiv preprint arXiv:2007.08218</em>, 2020.</p>
+</dd>
+<dt class="label" id="id6"><span class="brackets">etal17</span></dt>
+<dd><p>E. Cortina Gil et.al. The beam and detector of the NA62 experiment at CERN. <em>Journal of Instrumentation</em>, 12(05):P05025–P05025, may 2017. URL: <a class="reference external" href="https://doi.org/10.1088%2F1748-0221%2F12%2F05%2Fp05025">https://doi.org/10.1088%2F1748-0221%2F12%2F05%2Fp05025</a>, <a class="reference external" href="https://doi.org/10.1088/1748-0221/12/05/p05025">doi:10.1088/1748-0221/12/05/p05025</a>.</p>
+</dd>
+<dt class="label" id="id7"><span class="brackets">JSZK15</span></dt>
+<dd><p>Max Jaderberg, Karen Simonyan, Andrew Zisserman, and Koray Kavukcuoglu. Spatial transformer networks. 2015. URL: <a class="reference external" href="https://arxiv.org/abs/1506.02025">https://arxiv.org/abs/1506.02025</a>, <a class="reference external" href="https://doi.org/10.48550/ARXIV.1506.02025">doi:10.48550/ARXIV.1506.02025</a>.</p>
+</dd>
+<dt class="label" id="id4"><span class="brackets">JSZ+15</span></dt>
+<dd><p>Max Jaderberg, Karen Simonyan, Andrew Zisserman, and others. Spatial transformer networks. <em>Advances in neural information processing systems</em>, 2015.</p>
+</dd>
+<dt class="label" id="id2"><span class="brackets">QSMG17</span></dt>
+<dd><p>Charles R Qi, Hao Su, Kaichun Mo, and Leonidas J Guibas. Pointnet: deep learning on point sets for 3d classification and segmentation. In <em>Proceedings of the IEEE conference on computer vision and pattern recognition</em>, 652–660. 2017.</p>
+</dd>
+<dt class="label" id="id12"><span class="brackets">QYSG17</span></dt>
+<dd><p>Charles Ruizhongtai Qi, Li Yi, Hao Su, and Leonidas J Guibas. Pointnet++: deep hierarchical feature learning on point sets in a metric space. <em>Advances in neural information processing systems</em>, 2017.</p>
+</dd>
+<dt class="label" id="id3"><span class="brackets">WSL+19</span></dt>
+<dd><p>Yue Wang, Yongbin Sun, Ziwei Liu, Sanjay E Sarma, Michael M Bronstein, and Justin M Solomon. Dynamic graph cnn for learning on point clouds. <em>Acm Transactions On Graphics (tog)</em>, 38(5):1–12, 2019.</p>
+</dd>
+</dl>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="appendix/notebooks/presentation_plots.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Presentation plots</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Nico Van den Hooff, Rakesh Pandey, Mukund Iyer, Shiva Jena<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,27 @@
+title: RICH AI Final Report
+author: Nico Van den Hooff, Rakesh Pandey, Mukund Iyer, Shiva Jena
+copyright: "2022"
+logo: assets/TRIUMF_Logo_Blue.jpeg
+
+bibtex_bibfiles:
+  - references.bib
+
+repository:
+  url: https://github.com/TRIUMF-Capstone2022/richai
+  # TODO: update if we move all to docs folder
+  path_to_book: final_report
+
+html:
+  use_repository_button: true
+  favicon: "assets/TRIUMF_Favicon.png"
+
+sphinx:
+  config:
+    bibtex_reference_style: author_year
+
+parse:
+  myst_enable_extensions:
+    - html_image
+
+execute:
+  execute_notebooks: 'off'
