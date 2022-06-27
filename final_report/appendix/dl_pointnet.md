@@ -2,7 +2,7 @@
 # Appendix D: PointNet (Deep Learning)
 
 (appendix:deeplearning:pointnet:arch)=
-## D.1 : Model architecture 
+## D.1: Model architecture 
 
 ### Base Architecture
 
@@ -31,7 +31,7 @@ To this base architecture, two features specific to our problem, the ring radius
 
 
 (appendix:deeplearning:pointnet:hyp)=
-## D.2 : Model hyperparamters 
+## D.2: Model hyperparamters 
 
 The hyperparameters that were tuned were:
 
