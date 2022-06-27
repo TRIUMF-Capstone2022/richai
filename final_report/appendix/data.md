@@ -1,7 +1,7 @@
 # Appendix B : Data 
 
 (appendix:datagen:process)=
-## B.1: Data Generation Process ###
+## B.1 : Data Generation Process ###
 
 In order to generate the NA62 data, several experiment "runs" are performed.  For each run, the experiment configuration is fixed and the following steps are performed:
 
