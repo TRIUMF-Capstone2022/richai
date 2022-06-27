@@ -1,4 +1,6 @@
 """
+Dynamic Graph CNN implementation for the RICH AI project.
+
 Adapted from:
 https://github.com/WangYueFt/dgcnn (Author implementation)
 https://github.com/AnTao97/dgcnn.pytorch (Author suggested alternative implementation)
@@ -11,11 +13,24 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
 def knn(x, k):
-    """KNN implementation for finding graph neighbors."""
+    """KNN implementation for finding graph neighbors.
+
+    Parameters
+    ----------
+    x : torch.Tensor
+        Point coud datapoints to find KNN for.
+    k : int
+        The number of k nearest neighbors to find for each point.
+
+    Returns
+    -------
+    torch.Tensor
+        k nearest neightbors for points.
+    """
     inner = -2 * torch.matmul(x.transpose(2, 1), x)
     xx = torch.sum(x**2, dim=1, keepdim=True)
     pairwise_distance = -xx - inner - xx.transpose(2, 1)
@@ -26,15 +41,30 @@ def knn(x, k):
 
 
 def get_graph_feature(x, k, idx=None):
-    """Dynamically calculate graph edge features."""
+    """Dynamically calculate graph edge features.
+
+    Parameters
+    ----------
+    x : torch.Tensor
+        Point cloud data to calculate graph edge features for.
+    k : int
+        The number of k nearest neighbors to find for each point.
+
+    Returns
+    -------
+    torch.Tensor
+        Dynamically calculated edge features.
+    """
     batch_size, num_dims, num_points = x.size()
 
     # find knn
-    if idx is None:
-        idx = knn(x, k=k)
+    idx = knn(x, k=k)
 
     # index for each point: (batch_size) -> view -> (batch_size, 1, 1)
-    idx_base = torch.arange(0, batch_size, device=x.device).view(-1, 1, 1) * num_points
+    idx_base = (
+        torch.arange(0, batch_size, device=x.device).view(-1, 1, 1)
+        * num_points
+    )
 
     # index + knn index: (batch_size, num_dims, num_points)
     idx = idx + idx_base
@@ -55,13 +85,36 @@ def get_graph_feature(x, k, idx=None):
     x = x.view(batch_size, num_points, 1, num_dims).repeat(1, 1, k, 1)
 
     # (batch_size, 2*num_dims, num_points, k)
-    feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
+    feature = (
+        torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
+    )
 
     return feature
 
 
 class DGCNN(nn.Module):
-    """Dynamic Graph CNN."""
+    """Dynamic Graph CNN
+
+    Attributes
+    ----------
+    input_channels : int
+        Number of input_channels.
+    output_channels : int
+        Number of output channels.
+    k : int
+        The number of k nearest neighbors for the KNN graph.
+    dropout : float
+        Dropout probabilility.
+    momentum : bool
+        If True, include momentum as feature.
+    radius : bool
+        If True, include radius as feature.
+
+    Methods
+    -------
+    forward(x, p, radius)
+        Feed forward layer with input x, momentum and radius.
+    """
 
     def __init__(
         self,
@@ -131,6 +184,9 @@ class DGCNN(nn.Module):
         self.linear3 = nn.Linear(256, self.output_channels)
 
     def forward(self, x, p=None, radius=None):
+        # X needs to be reshaped for knn calculation to work
+        x = x.permute(0, 2, 1)
+
         batch_size = x.size(0)
 
         # (batch_size, 3, num_points) -> (batch_size, 3*2, num_points, k)

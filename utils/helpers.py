@@ -1,13 +1,30 @@
+"""
+Helper functions for the RICH AI project.
+"""
+
+import os
+import yaml
+import logging
 import numpy as np
 import pandas as pd
-import os
-import logging
 from functools import reduce
-import yaml
 
 
 def compute_seq_id(hit, or_id=0):
-    """Compute the RICH PMT sequence ID"""
+    """Compute the RICH PMT sequence ID.
+
+    Parameters
+    ----------
+    hit : np.ndarray
+        Hit array corresponding to particle hits.
+    or_id : int, optional
+        OR Id of the PMT disc, by default 0.
+
+    Returns
+    -------
+    seq_id: int
+        Sequence ID of the PMT disc.
+    """
     disk_id, pm_id, sc_id, up_dw_id, _ = hit
     if or_id < 1:
         seq_id = sc_id * 8 + pm_id + up_dw_id * 61 * 8 + disk_id * 61 * 8 * 2
@@ -16,60 +33,73 @@ def compute_seq_id(hit, or_id=0):
     return int(seq_id)
 
 
+# vectorize function
 compute_seq_id = np.vectorize(compute_seq_id, otypes=[int])
 
 
-def get_config(key=None, config_file="configs/config.yaml"):
-    """
-    Read the configuration file and return value of the key if present
-    Args:
-        key (str): Access specified key values (Format: "foo.bar.z")
-    Returns:
-        conf: Value for the specified key else dictionary of config_file contents
+def get_config(key=None, config_file='configs/config.yaml'):
+    """Read the configuration file and return value of the key if present.
+
+    Parameters
+    ----------
+    key : str, optional
+        Access specified key values (Format: "foo.bar.z").
+    config_file : str, optional
+        Project config file, by default 'configs/config.yaml'.
+
+    Returns
+    -------
+    conf: Object
+        Value for the specified key else dictionary of config_file contents.
     """
     global yaml
-    with open(config_file, "r") as conf:
+    with open(config_file, 'r') as conf:
         try:
             conf = yaml.safe_load(conf)
         except yaml.YAMLError as err:
-            print("Error reading config file: {}".format(err))
+            print('Error reading config file: {}'.format(err))
     if key:
-        conf = reduce(lambda c, k: c[k], key.split("."), conf)
+        conf = reduce(lambda c, k: c[k], key.split('.'), conf)
     return conf
 
 
 def get_logger(file_path=None, file_name=None):
-    """
-    This function initialize the log file
+    """Function to initialize a logger.
+
     Parameters
     ----------
-    file_path: path were the logs are stored
-    file_name: name of the log file
+    file_path : _type_, optional
+        path were the logs are stored, by default None.
+    file_name : _type_, optional
+        name of the log file, by default None.
+
     Returns
     -------
-    log: log configuration
+    log: logging
+        A logging object initialized with required configuration..
     """
 
-    logging.getLogger("py4j").setLevel(logging.ERROR)
-    log = logging.getLogger("main_logger")
-    log.setLevel("INFO")
+    logging.getLogger('py4j').setLevel(logging.ERROR)
+    log = logging.getLogger('main_logger')
+    log.setLevel('INFO')
 
     if not log.handlers:
-
-        formatter = logging.Formatter("%(asctime)s  %(levelname)-8s  %(message)s")
+        formatter = logging.Formatter(
+            '%(asctime)s  %(levelname)-8s  %(message)s'
+        )
 
         # Create file handler
         if file_path:
             logger_filepath = os.path.join(file_path, file_name)
             os.makedirs(file_path, exist_ok=True)  # create folder if needed
             fh = logging.FileHandler(logger_filepath)
-            fh.setLevel("INFO")
+            fh.setLevel('INFO')
             fh.setFormatter(formatter)
             log.addHandler(fh)
 
         # Create console handler
         ch = logging.StreamHandler()
-        ch.setLevel("INFO")
+        ch.setLevel('INFO')
         ch.setFormatter(formatter)
         log.addHandler(ch)
 
@@ -77,7 +107,7 @@ def get_logger(file_path=None, file_name=None):
 
 
 def events_to_pandas(dfile):
-    """Convert HDF5 events data to Pandas
+    """Convert events data from HDF5 to Pandas DataFrame.
 
     Parameters
     ----------
@@ -87,41 +117,41 @@ def events_to_pandas(dfile):
     Returns
     -------
     df : pd.DataFrame
-        pandas DataFrame with Events data
+        pandas DataFrame with Events data.
     """
 
     df = pd.DataFrame()
 
     # event features
-    df["run_id"] = dfile["Events"]["run_id"]
-    df["burst_id"] = dfile["Events"]["burst_id"]
-    df["event_id"] = dfile["Events"]["event_id"]
-    df["track_id"] = dfile["Events"]["track_id"]
-    df["track_momentum"] = dfile["Events"]["track_momentum"]
-    df["chod_time"] = dfile["Events"]["chod_time"]
-    df["ring_radius"] = dfile["Events"]["ring_radius"]
-    df["ring_centre_pos_x"] = dfile["Events"]["ring_centre_pos"][:, 0]
-    df["ring_centre_pos_y"] = dfile["Events"]["ring_centre_pos"][:, 1]
-    df["ring_likelihood_pion"] = dfile["Events"]["ring_likelihood"][:, 0]
-    df["ring_likelihood_muon"] = dfile["Events"]["ring_likelihood"][:, 1]
-    df["ring_likelihood_positron"] = dfile["Events"]["ring_likelihood"][:, 2]
+    df['run_id'] = dfile['Events']['run_id']
+    df['burst_id'] = dfile['Events']['burst_id']
+    df['event_id'] = dfile['Events']['event_id']
+    df['track_id'] = dfile['Events']['track_id']
+    df['track_momentum'] = dfile['Events']['track_momentum']
+    df['chod_time'] = dfile['Events']['chod_time']
+    df['ring_radius'] = dfile['Events']['ring_radius']
+    df['ring_centre_pos_x'] = dfile['Events']['ring_centre_pos'][:, 0]
+    df['ring_centre_pos_y'] = dfile['Events']['ring_centre_pos'][:, 1]
+    df['ring_likelihood_pion'] = dfile['Events']['ring_likelihood'][:, 0]
+    df['ring_likelihood_muon'] = dfile['Events']['ring_likelihood'][:, 1]
+    df['ring_likelihood_positron'] = dfile['Events']['ring_likelihood'][:, 2]
 
     # labels
-    mu_off = dfile.attrs["muon_offset"]
-    pi_off = dfile.attrs["pion_offset"]
-    pos_off = dfile.attrs["positron_offset"]
-    entries = dfile.attrs["entries"]
+    mu_off = dfile.attrs['muon_offset']
+    pi_off = dfile.attrs['pion_offset']
+    pos_off = dfile.attrs['positron_offset']
+    entries = dfile.attrs['entries']
 
     labels = np.zeros(entries, dtype=np.int32)
     labels[mu_off:pi_off] = 0
     labels[pi_off:pos_off] = 1
     labels[pos_off:] = 2
 
-    df["label"] = labels
+    df['label'] = labels
 
     # hit mapping values
-    df["first_hit"] = np.array(dfile["HitMapping"])[:-1]  # hit n
-    df["last_hit"] = np.array(dfile["HitMapping"])[1:]  # hit n + 1
-    df["total_hits"] = df["last_hit"] - df["first_hit"]
+    df['first_hit'] = np.array(dfile['HitMapping'])[:-1]  # hit n
+    df['last_hit'] = np.array(dfile['HitMapping'])[1:]  # hit n + 1
+    df['total_hits'] = df['last_hit'] - df['first_hit']
 
     return df
