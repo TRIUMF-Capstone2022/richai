@@ -1,5 +1,4 @@
-"""Evaluate or score new data
-using dynamic graph CNN or PointNet
+"""Evaluate or score new data using either Dynamic Graph CNN or PointNet.
 
 # pointnet
 python src/evaluate.py --model 'pointnet'
@@ -29,20 +28,20 @@ def get_predictions(
     Parameters
     ----------
     model : PointNetFc or DGCNN object
-        Model object implemented in pytorch
+        Model object implemented in PyTorch.
     dataloader :  torch.utils.data.DataLoader
-       DataLoader instance
+       DataLoader instance with RICHDataset data.
     device : str
-        GPU or CPU device
+        Device to use, either "cuda", "cuda:#", or "cpu".
     operating_point : float, optional
-        Classification threshold, by default 0.5
+        Classification threshold, by default 0.5.
     unstandardize : bool, optional
-        Convert momentum and radius to original scale, by default True
+        Within results, convert momentum and radius to original scale, by default True.
 
     Returns
     -------
     pd.DataFrame
-        Returns evaluation results for the trained model on test set
+        Returns evaluation results for the trained model on test set.
     """
 
     logger.info('Getting predictions...')
@@ -94,19 +93,19 @@ def get_predictions(
 
 
 def evaluate(model_name, test_only=False):
-    """Evaluate the model on the RICH dataset
+    """Evaluate the model on the RICH dataset.
 
     Parameters
     ----------
     model_name : str
-        Model name - pointnet ot dgcnn
+        Model name - "pointnet" or "dgcnn".
     test_only : bool, optional
-        If the dataset is test only data, by default False
+        If the dataset contains only the test data, by default False.
 
     Raises
     ------
     ValueError
-        Raises error if unable to load model
+        Raises error if unable to load model.
     """
 
     logger.info(f'{model_name} evaluation starting...')

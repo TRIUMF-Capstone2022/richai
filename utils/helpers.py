@@ -1,25 +1,29 @@
+"""
+Helper functions for the RICH AI project.
+"""
+
+import os
+import yaml
+import logging
 import numpy as np
 import pandas as pd
-import os
-import logging
 from functools import reduce
-import yaml
 
 
 def compute_seq_id(hit, or_id=0):
-    """Compute the RICH PMT sequence ID
+    """Compute the RICH PMT sequence ID.
 
     Parameters
     ----------
     hit : np.ndarray
-        Hit array corresponding to particle hits
+        Hit array corresponding to particle hits.
     or_id : int, optional
-        OR Id of the PMT disc, by default 0
+        OR Id of the PMT disc, by default 0.
 
     Returns
     -------
     seq_id: int
-        Sequence ID of the PMT disc
+        Sequence ID of the PMT disc.
     """
     disk_id, pm_id, sc_id, up_dw_id, _ = hit
     if or_id < 1:
@@ -34,19 +38,19 @@ compute_seq_id = np.vectorize(compute_seq_id, otypes=[int])
 
 
 def get_config(key=None, config_file='configs/config.yaml'):
-    """Read the configuration file and return value of the key if present
+    """Read the configuration file and return value of the key if present.
 
     Parameters
     ----------
     key : str, optional
-        Access specified key values (Format: "foo.bar.z")
+        Access specified key values (Format: "foo.bar.z").
     config_file : str, optional
-        Project config file, by default 'configs/config.yaml'
+        Project config file, by default 'configs/config.yaml'.
 
     Returns
     -------
     conf: Object
-        Value for the specified key else dictionary of config_file contents
+        Value for the specified key else dictionary of config_file contents.
     """
     global yaml
     with open(config_file, 'r') as conf:
@@ -60,20 +64,19 @@ def get_config(key=None, config_file='configs/config.yaml'):
 
 
 def get_logger(file_path=None, file_name=None):
-    """This function initialize the logger
+    """Function to initialize a logger.
 
     Parameters
     ----------
     file_path : _type_, optional
-        path were the logs are stored, by default None
+        path were the logs are stored, by default None.
     file_name : _type_, optional
-        name of the log file, by default None
+        name of the log file, by default None.
 
     Returns
     -------
     log: logging
-        A logging object initialized with required configuration.
-
+        A logging object initialized with required configuration..
     """
 
     logging.getLogger('py4j').setLevel(logging.ERROR)
@@ -81,7 +84,6 @@ def get_logger(file_path=None, file_name=None):
     log.setLevel('INFO')
 
     if not log.handlers:
-
         formatter = logging.Formatter(
             '%(asctime)s  %(levelname)-8s  %(message)s'
         )
@@ -105,7 +107,7 @@ def get_logger(file_path=None, file_name=None):
 
 
 def events_to_pandas(dfile):
-    """Convert HDF5 events data to Pandas
+    """Convert events data from HDF5 to Pandas DataFrame.
 
     Parameters
     ----------
@@ -115,7 +117,7 @@ def events_to_pandas(dfile):
     Returns
     -------
     df : pd.DataFrame
-        pandas DataFrame with Events data
+        pandas DataFrame with Events data.
     """
 
     df = pd.DataFrame()

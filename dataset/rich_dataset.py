@@ -1,4 +1,7 @@
-from curses import mousemask
+"""
+PyTorch custom DataSet for the RICH AI project.
+"""
+import os
 import mmap
 import h5py
 import torch
@@ -16,35 +19,35 @@ logger = get_logger()
 
 
 class RICHDataset(Dataset):
-    """Create dataset for the project
+    """Create custom PyTorch Dataset for the RICH AI project.
 
     Attributes
     -----------
     dset_path: str
-        Path to the dataset
+        Path to the dataset.
     sample_file: str or None
-        Path to synthetic sample
+        Path to synthetic sample dataset.
     val_split: float, optional
-        Validation split proportion
+        Validation split proportion,
     test_split: float, optional
-        Test split proportion
+        Test split proportion.
     delta: float, optional
-        Time delta cutoff between chod time and hit time
+        Time delta cutoff between chod time and hit time.
     data_augmentation: bool, optional
-        Rotate data randomly if true
+        Rotate data randomly if True.
     test_only: bool, optional
-        Use dataset as test only dataset
+        Only use test portion of dataset if True.
     seed: int, optional
-        Numpy seed for reproducibility
+        Seed for reproducibility.
 
     Methods
     -------
     augment_data(data)
-        Rotate point cloud data randomly
+        Rotate point cloud data randomly.
     get_position_data(idx)
-        Get hit position data for a given event index idx
+        Get hit position data for a given event index idx.
     filter_events_delta(event, delta)
-        Filter an event with time delta
+        Filter an event with time delta.
     """
 
     def __init__(
@@ -128,14 +131,14 @@ class RICHDataset(Dataset):
                 logger.info(f'Total samples: {df.shape[0]}')
 
                 # filter ring centre outliers (some very small or large values in data)
-                radius_lower, radius_upper = get_config(
-                    'dataset.filters.radius_lower'
-                ), get_config('dataset.filters.radius_upper')
+                ring_center_pos_lower, ring_center_pos_upper = get_config(
+                    'dataset.filters.ring_center_pos_lower'
+                ), get_config('dataset.filters.ring_center_pos_upper')
                 df = df.query(
-                    f'ring_centre_pos_x < {radius_upper} and ring_centre_pos_y < {radius_upper}'
+                    f'ring_centre_pos_x < {ring_center_pos_upper} and ring_centre_pos_y < {ring_center_pos_upper}'
                 )
                 df = df.query(
-                    f'ring_centre_pos_x > {radius_lower} and ring_centre_pos_y > {radius_lower}'
+                    f'ring_centre_pos_x > {ring_center_pos_lower} and ring_centre_pos_y > {ring_center_pos_lower}'
                 )
 
                 logger.info(f'Total samples with no outliers: {df.shape[0]}')
@@ -219,17 +222,17 @@ class RICHDataset(Dataset):
                 )
 
                 # filter ring centre outliers (some very small or large values in data)
-                radius_lower, radius_upper = get_config(
-                    'dataset.filters.radius_lower'
-                ), get_config('dataset.filters.radius_upper')
+                ring_center_pos_lower, ring_center_pos_upper = get_config(
+                    'dataset.filters.ring_center_pos_lower'
+                ), get_config('dataset.filters.ring_center_pos_upper')
                 df = df.query(
-                    f'ring_centre_pos_x < {radius_upper} and ring_centre_pos_y < {radius_upper}'
+                    f'ring_centre_pos_x < {ring_center_pos_upper} and ring_centre_pos_y < {ring_center_pos_upper}'
                 )
                 df = df.query(
-                    f'ring_centre_pos_x > {radius_lower} and ring_centre_pos_y > {radius_lower}'
+                    f'ring_centre_pos_x > {ring_center_pos_lower} and ring_centre_pos_y > {ring_center_pos_lower}'
                 )
                 logger.info(
-                    f'Total events with no outliers (radius between {radius_lower} and {radius_upper})): {df.shape[0]}'
+                    f'Total events with no outliers (radius between {ring_center_pos_lower} and {ring_center_pos_upper})): {df.shape[0]}'
                 )
 
                 indices = df.index.to_numpy()
@@ -269,17 +272,17 @@ class RICHDataset(Dataset):
             )
 
     def augment_data(self, data):
-        """Rotate data array randomly
+        """Rotate data array randomly.
 
         Parameters
         ----------
         data : np.ndarray
-            An event data array
+            An event data array for a single event.
 
         Returns
         -------
         np.ndarray
-            Randomly rotated event data
+            Randomly rotated event data.
         """
         theta = np.random.uniform(0, np.pi * 2)
         rot_mat = np.array(
@@ -292,14 +295,14 @@ class RICHDataset(Dataset):
         return data
 
     def get_position_data(self):
-        """Read position data from the data file
+        """Read position data from the data file.
 
         Returns
         -------
         np.ndarray
-            Position data
+            Position data.
         """
-        return np.load('rich_pmt_positions.npy')
+        return np.load(os.path.join('dataset', 'rich_pmt_positions.npy'))
 
     def get_event_pos(self, idx):
         """Get the hits data for a single event.
@@ -312,7 +315,7 @@ class RICHDataset(Dataset):
         Returns
         -------
         np.ndarray
-            Numpy array of positions corresponding to the event
+            Numpy array of positions corresponding to the event.
         """
         # get hits
         idx_from = self.hit_mapping[idx]
@@ -354,45 +357,45 @@ class RICHDataset(Dataset):
         return data
 
     def filter_events_delta(self, event, delta):
-        """Filter hits data based on a delta = hit time - chod time
+        """Filter hits data based on a delta = abs(hit time - chod time).
 
         Parameters
         ----------
         event : np.ndarray
-            Event Array
+            Event Array.
         delta : float
-            Time delta cutoff for filtering outliers
+            Time delta cutoff for filtering outliers.
 
         Returns
         -------
         np.ndarray
-            Event data after removing outliers
+            Event data after removing outlier hits outside of delta.
         """
         mask = (np.abs(event[:, 2:3]) < delta).flatten()
         return event[mask]
 
     def __len__(self):
-        """Returns the number of events in the dataset
+        """Returns the number of events in the dataset.
 
         Returns
         -------
         int
-            Number of events returned
+            Number of events returned.
         """
         return self.N
 
     def __getitem__(self, idx):
-        """Input to the dataloader, process an event at a time
+        """Input to the DataLoader, process a single event at a time.
 
         Parameters
         ----------
         idx : int
-            Index of an event
+            Index of an event.
 
         Returns
         -------
         tuple
-            A tuple containing event, label, momentum and radius tensors
+            A tuple containing event, label, momentum and radius tensors.
         """
         idx_from = self.hit_mapping[idx]
         idx_to = self.hit_mapping[idx + 1]

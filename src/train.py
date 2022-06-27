@@ -1,4 +1,4 @@
-"""Trainer for dynamic graph CNN or PointNet
+"""Trainer for Dynamic Graph CNN or PointNet models.
 
 # pointnet
 python src/train.py --model 'pointnet'
@@ -9,15 +9,14 @@ python src/train.py --model 'dgcnn'
 
 import time
 import os
-import argparse
 import torch
+import argparse
 import pandas as pd
-import torch.nn.functional as F
-from utils.helpers import get_config, get_logger
 from models.pointnet import PointNetFc
 from models.dgcnn import DGCNN
 from dataset.rich_dataset import RICHDataset
 from dataset.data_loader import data_loader
+from utils.helpers import get_config, get_logger
 
 logger = get_logger()
 
@@ -34,35 +33,35 @@ def trainer(
     operating_point=0.5,
     show_results=2500,
 ):
-    """Trainer for binary deep learning classifier
+    """General trainer for a binary deep learning classifier.
 
     Parameters
     ----------
     model :  PointNetFc or DGCNN object
-        Model object implemented in pytorch
+        Model object implemented in PyTorch.
     optimizer : torch.optim
         An optimizer object from torch.optim
     train_loader : torch.utils.data.DataLoader
-        Data loader for training
+        PyTorch DataLoader with training portion of RICHDataset.
     val_loader : torch.utils.data.DataLoader, optional
-        Data loader for validation
+        PyTorch DataLoader with validation portion of RICHDataset.
     criterion : torch.nn.functional
-        Loss function to optimize
+        The PyTorch loss function to optimize.
     epochs : int, optional
-        Number of epochs for training, by default 5
+        Number of epochs for training, by default 5.
     scheduler : pytorch scheduler, optional
-        Learning rate scheduler, by default None
+        Learning rate scheduler, by default None.
     device : str, optional
-        GPU or CPU device, by default 'cuda'
+        GPU or CPU device, by default "cuda".
     operating_point : float, optional
-        Classification threshold, by default 0.5
+        Classification threshold (operating point), by default 0.5.
     show_results : int, optional
-        Verbosity level, by default 2500
+        Verbosity level, by default 2500.
 
     Returns
     -------
     pd.DataFrame
-        Training results on train and validation set
+        Training results on train and validation set.
     """
 
     logger.info(f'Starting training...')
@@ -238,7 +237,7 @@ def trainer(
 
     # training results
     data = {
-        'epochs': [i+1 for i in range(epochs)],
+        'epochs': [i + 1 for i in range(epochs)],
         'train_loss': train_losses,
         'train_acc': train_accs,
         'val_loss': valid_losses,
@@ -250,22 +249,22 @@ def trainer(
 
 
 def train_combined(model_name, reload_model=True):
-    """Combined training for all the files
+    """Combined training for all of the data files ("A", "B", "C").
 
     Parameters
     ----------
     model_name : str
-        Model to train - pointnet or dgcnn
+        Model to train - "pointnet" or "dgcnn"
     reload_model : bool, optional
         Reload model and continue training if true, by default True
 
     Raises
     ------
     ValueError
-        Raises error if model is not pointnet or dgcnn
+        Raises error if model is not "pointnet" or "dgcnn".
     """
     result = pd.DataFrame()
-    
+
     # model parameters
     k = None
     if model_name == 'dgcnn':
@@ -370,7 +369,7 @@ def train_combined(model_name, reload_model=True):
         )
         # concat to the training results
         result = pd.concat([result, df])
-        
+
         logger.info(
             f'Completed training on file {file_} samples with {sample_file}'
         )
@@ -378,13 +377,13 @@ def train_combined(model_name, reload_model=True):
 
         torch.save(model.state_dict(), model_path)
         logger.info(f'Model successfully saved to {model_path}')
-    
+
     # save training results to disk
     results_path = get_config(f'model.{model_name}.train_result')
     result.to_csv(results_path, index=False)
 
     logger.info(f'{model_name} training completed!')
-    logger.info(f'Results successfully saved to {results_path}')    
+    logger.info(f'Results successfully saved to {results_path}')
 
 
 if __name__ == '__main__':

@@ -1,6 +1,9 @@
 """
-PointNet Implementation in PyTorch
-Reference: http://stanford.edu/~rqi/pointnet/
+PointNet implementation for the RICH AI project.
+
+Adapted from:
+https://github.com/charlesq34/pointnet (Author implementation)
+http://stanford.edu/~rqi/pointnet/ (Original paper)
 """
 
 import torch
@@ -12,8 +15,8 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
 class STNkd(nn.Module):
-    """TNet Implementation in PyTorch
-    k x k transformation matrix predicted by T-Net to coordinates of input points
+    """TNet Implementation in PyTorch.
+    k x k transformation matrix predicted by T-Net to coordinates of input points.
     """
 
     def __init__(self, k=64):
@@ -56,7 +59,7 @@ class STNkd(nn.Module):
 
 
 class Transform(nn.Module):
-    """Input and Feature Transform module"""
+    """Input and Feature Transform module."""
 
     def __init__(self):
         super().__init__()
@@ -93,21 +96,21 @@ class Transform(nn.Module):
 
 
 class PointNetFc(nn.Module):
-    """PointNet fully connected network
+    """PointNet fully connected network.
 
     Attributes
     ----------
     num_classes : int
-        Number of classes in the classification network
+        Number of classes in the classification network.
     momentum : bool
-        If true, include momentum as feature
+        If True, include momentum as feature.
     radius : bool
-        If true, include radius as feature
+        If True, include radius as feature.
 
     Methods
     -------
     forward(x, momentum, radius)
-        Feed forward nn layer with input x, momentum and radius
+        Feed forward nn layer with input x, momentum and radius.
     """
 
     def __init__(

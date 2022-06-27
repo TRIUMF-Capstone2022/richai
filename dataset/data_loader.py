@@ -1,21 +1,24 @@
-# train validation and test
+"""
+PyTorch DataLoaders for the RICH AI project.
+"""
+
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
 from utils.helpers import get_config
 
 
 def data_loader(dset):
-    """Data loader for training and testing
+    """Returns PyTorch DataLoader for training, validation, and testing.
 
     Parameters
     ----------
     dset : RICHDataset
-            Input RICH dataset
+        Input RICHDataset from `rich_dataset.py`.
 
     Returns
     -------
     tuple
-            tuple with train, validation and test loader
+        tuple with train, validation and test DataLoaders.
     """
     train_loader = DataLoader(
         dset,

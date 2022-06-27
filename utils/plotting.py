@@ -1,3 +1,7 @@
+"""
+Plotting functions for the RICH AI project.
+"""
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -70,12 +74,17 @@ def plot_cm(
 
 def show_results(path, title=None):
     """Show the classification report and confusion matrix for a classifier.
+
     Parameters
     ----------
     path : str
         The path to the model results .csv file.
     title : str or None
         The title for the confusion matrix.
+
+    Returns
+    -------
+    None
     """
     results = pd.read_csv(path)
     target_names = ['muon', 'pion']
@@ -100,6 +109,7 @@ def show_results(path, title=None):
 
 def plot_roc_curves(models, title=None, op_point=None, save=None):
     """Plot ROC curves for multiple models.
+
     Parameters
     ----------
     models : dict
@@ -112,6 +122,10 @@ def plot_roc_curves(models, title=None, op_point=None, save=None):
         The operating point to plot on the ROC curve, by default None.
     save: str or None, optional
         Path where to save figure, if desired.
+
+    Returns
+    -------
+    None
     """
     fig, ax = plt.subplots(figsize=(8, 8))
 
