@@ -19,9 +19,9 @@ from sklearn.metrics import (
 def plot_cm(
     y_true,
     y_pred,
-    target_names=["muon", "pion"],
-    normalize="true",
-    cmap="cividis",
+    target_names=['muon', 'pion'],
+    normalize='true',
+    cmap='cividis',
     title=None,
     save=None,
 ):
@@ -51,10 +51,10 @@ def plot_cm(
     fig, ax = plt.subplots(figsize=(10, 10))
     cm = confusion_matrix(y_true=y_true, y_pred=y_pred, normalize=normalize)
     disp = ConfusionMatrixDisplay(cm, display_labels=target_names)
-    disp.plot(ax=ax, cmap=cmap, values_format=".4f")
+    disp.plot(ax=ax, cmap=cmap, values_format='.4f')
 
-    ax.set_ylabel("Actual class", fontsize=18)
-    ax.set_xlabel("Predicted class", fontsize=18)
+    ax.set_ylabel('Actual class', fontsize=18)
+    ax.set_xlabel('Predicted class', fontsize=18)
     plt.setp(ax.get_xticklabels(), fontsize=15)
     plt.setp(ax.get_yticklabels(), fontsize=15)
 
@@ -87,21 +87,21 @@ def show_results(path, title=None):
     None
     """
     results = pd.read_csv(path)
-    target_names = ["muon", "pion"]
+    target_names = ['muon', 'pion']
 
     # classification report
     print(
         classification_report(
-            y_true=results["labels"],
-            y_pred=results["predictions"],
+            y_true=results['labels'],
+            y_pred=results['predictions'],
             target_names=target_names,
         )
     )
 
     # confusion matrix
     plot_cm(
-        y_true=results["labels"],
-        y_pred=results["predictions"],
+        y_true=results['labels'],
+        y_pred=results['predictions'],
         target_names=target_names,
         title=title,
     )
@@ -133,8 +133,8 @@ def plot_roc_curves(models, title=None, op_point=None, save=None):
         df = pd.read_csv(path)
 
         fpr, tpr, thresholds = roc_curve(
-            y_true=df["labels"],
-            y_score=df["probabilities"],
+            y_true=df['labels'],
+            y_score=df['probabilities'],
         )
 
         if op_point is not None:
@@ -142,16 +142,18 @@ def plot_roc_curves(models, title=None, op_point=None, save=None):
             op_point_loc = np.argmin(np.abs(thresholds - op_point))
 
             # plot operating point
-            ax.plot(fpr[op_point_loc], tpr[op_point_loc], "o", markersize=8, c="r")
+            ax.plot(
+                fpr[op_point_loc], tpr[op_point_loc], 'o', markersize=8, c='r'
+            )
 
         # plot roc curve
         disp = RocCurveDisplay(fpr=fpr, tpr=tpr, estimator_name=name)
         disp.plot(ax=ax)
 
     # 45 degree line is equivalent of a random classifier
-    ax.plot([0, 1], [0, 1], color="black", linestyle="--")
-    ax.set_xlabel("False Positive Rate (Muon/Pion)", fontsize=20)
-    ax.set_ylabel("True Positive Rate (Pion/Pion)", fontsize=20)
+    ax.plot([0, 1], [0, 1], color='black', linestyle='--')
+    ax.set_xlabel('False Positive Rate (Muon/Pion)', fontsize=20)
+    ax.set_ylabel('True Positive Rate (Pion/Pion)', fontsize=20)
 
     for label in ax.get_xticklabels() + ax.get_yticklabels():
         label.set_fontsize(18)
@@ -189,32 +191,32 @@ def wrangle_predictions(path, width=1, op_point=None):
     bin_labels = []
 
     if op_point is not None:
-        df["predictions"] = np.where(df["probabilities"] > op_point, 1, 0)
+        df['predictions'] = np.where(df['probabilities'] > op_point, 1, 0)
 
     # generate bins and bin labels for momentum
     for i in range(0, 40 + width, width):
         bins.append(i)
-        bin_labels.append(f"({i}, {i+width}]")
+        bin_labels.append(f'({i}, {i+width}]')
 
     bins.append(np.inf)
     bin_labels.pop()
-    bin_labels.append("40+")
+    bin_labels.append('40+')
 
     # add momentum bins to results
-    df["momentum_bin"] = pd.cut(x=df["momentum"], bins=bins, labels=bin_labels)
+    df['momentum_bin'] = pd.cut(x=df['momentum'], bins=bins, labels=bin_labels)
 
     # pion efficiency by momentum bin (pion recall)
-    pion_effciency = df.groupby("momentum_bin").apply(
+    pion_effciency = df.groupby('momentum_bin').apply(
         lambda x: recall_score(
-            x["labels"], x["predictions"], zero_division=0, pos_label=1
+            x['labels'], x['predictions'], zero_division=0, pos_label=1
         )
     )
 
     # muon efficiency by momentum bin (1 - muon recall)
     muon_efficiency = 1 - (
-        df.groupby("momentum_bin").apply(
+        df.groupby('momentum_bin').apply(
             lambda x: recall_score(
-                x["labels"], x["predictions"], zero_division=0, pos_label=0
+                x['labels'], x['predictions'], zero_division=0, pos_label=0
             )
         )
     )
@@ -222,20 +224,24 @@ def wrangle_predictions(path, width=1, op_point=None):
     # combine pion/muon efficiency into one df
     efficiency_df = pd.concat([pion_effciency, muon_efficiency], axis=1)
 
-    efficiency_df.columns = ["pion_efficiency", "muon_efficiency"]
+    efficiency_df.columns = ['pion_efficiency', 'muon_efficiency']
 
     # counts of actual/predicted muons/pions by momentum bin
-    labels_df = df.groupby(["momentum_bin", "labels"]).size().unstack(fill_value=0)
+    labels_df = (
+        df.groupby(['momentum_bin', 'labels']).size().unstack(fill_value=0)
+    )
     predictions_df = (
-        df.groupby(["momentum_bin", "predictions"]).size().unstack(fill_value=0)
+        df.groupby(['momentum_bin', 'predictions'])
+        .size()
+        .unstack(fill_value=0)
     )
 
-    labels_df.columns = ["actual_muons", "actual_pions"]
-    predictions_df.columns = ["predicted_muons", "predicted_pions"]
+    labels_df.columns = ['actual_muons', 'actual_pions']
+    predictions_df.columns = ['predicted_muons', 'predicted_pions']
 
     # combine efficiency df with counts dfs
     wrangled_df = pd.concat([efficiency_df, labels_df, predictions_df], axis=1)
-    wrangled_df = wrangled_df.query("actual_muons + actual_pions != 0")
+    wrangled_df = wrangled_df.query('actual_muons + actual_pions != 0')
 
     return wrangled_df
 
@@ -280,8 +286,8 @@ def plot_efficiencies(
     fig, ax1 = plt.subplots(figsize=(9, 7))
 
     # global plot variables
-    pion_color = "black"  # pion plotting color
-    muon_color = "blue"  # muon plotting color
+    pion_color = 'black'  # pion plotting color
+    muon_color = 'blue'  # muon plotting color
     label_fs = 17  # axis label font size
     tick_fs = 13  # axis tick font size
     major_length, major_width = 7, 2  # major axis tick sizes
@@ -290,99 +296,99 @@ def plot_efficiencies(
     labelpad = 10  # padding for axis labels
 
     # plot pion efficiency as circles with horizontal lines
-    results_df["pion_efficiency"].plot(
-        ax=ax1, color=pion_color, style="o", markersize=main_ms
+    results_df['pion_efficiency'].plot(
+        ax=ax1, color=pion_color, style='o', markersize=main_ms
     )
-    results_df["pion_efficiency"].plot(
-        ax=ax1, marker=0, linestyle="", markersize=line_ms, color=pion_color
+    results_df['pion_efficiency'].plot(
+        ax=ax1, marker=0, linestyle='', markersize=line_ms, color=pion_color
     )
-    results_df["pion_efficiency"].plot(
-        ax=ax1, marker=1, linestyle="", markersize=line_ms, color=pion_color
+    results_df['pion_efficiency'].plot(
+        ax=ax1, marker=1, linestyle='', markersize=line_ms, color=pion_color
     )
 
     # momentum x-axis customization (shared axis)
     ax1.set_xlabel(
-        "Particle momentum [GeV/c]",
+        'Particle momentum [GeV/c]',
         fontsize=label_fs,
-        fontweight="bold",
+        fontweight='bold',
         labelpad=labelpad,
     )
     ax1.xaxis.set_major_locator(ticker.MultipleLocator(5))
     ax1.xaxis.set_minor_locator(ticker.MultipleLocator(1))
-    ax1.grid(True, linestyle="--")
+    ax1.grid(True, linestyle='--')
 
     for label in ax1.get_xticklabels():
-        label.set_fontweight("bold")
+        label.set_fontweight('bold')
 
     # pion y-axis customization
     ax1.set_ylim(pion_axlims[0], pion_axlims[1])
     ax1.set_ylabel(
-        "Pion efficiency (recall)",
+        'Pion efficiency (recall)',
         color=pion_color,
         fontsize=label_fs,
-        fontweight="bold",
+        fontweight='bold',
         labelpad=labelpad,
     )
     ax1.yaxis.set_major_locator(ticker.MultipleLocator(pion_axticks[0]))
     ax1.yaxis.set_minor_locator(ticker.MultipleLocator(pion_axticks[1]))
     ax1.tick_params(
-        which="major",
+        which='major',
         length=major_length,
         width=major_width,
         labelsize=tick_fs,
     )
-    ax1.tick_params(which="minor", length=minor_length, width=minor_width)
+    ax1.tick_params(which='minor', length=minor_length, width=minor_width)
 
     for label in ax1.get_yticklabels():
-        label.set_fontweight("bold")
+        label.set_fontweight('bold')
 
     # second x-axis for muon
     ax2 = ax1.twinx()
 
     # whether or not to match muon scale to original NA62 CERN plot (10^-3)
     if cern_scale:
-        results_df["muon_efficiency"] *= 10 ** 3
+        results_df['muon_efficiency'] *= 10**3
         ax2.text(
             28.5,
             muon_axlims[1],
-            r"x$10^{-3}$",
+            r'x$10^{-3}$',
             fontsize=label_fs,
             color=muon_color,
         )
 
     # plot muon efficiency as squares with horizontal lines
-    results_df["muon_efficiency"].plot(
-        ax=ax2, color=muon_color, style="s", markersize=main_ms
+    results_df['muon_efficiency'].plot(
+        ax=ax2, color=muon_color, style='s', markersize=main_ms
     )
-    results_df["muon_efficiency"].plot(
-        ax=ax2, marker=0, linestyle="", markersize=line_ms, color=muon_color
+    results_df['muon_efficiency'].plot(
+        ax=ax2, marker=0, linestyle='', markersize=line_ms, color=muon_color
     )
-    results_df["muon_efficiency"].plot(
-        ax=ax2, marker=1, linestyle="", markersize=line_ms, color=muon_color
+    results_df['muon_efficiency'].plot(
+        ax=ax2, marker=1, linestyle='', markersize=line_ms, color=muon_color
     )
 
     # muon x-axis customization
     ax2.set_ylim(muon_axlims[0], muon_axlims[1])
     ax2.set_ylabel(
-        "Muon Efficiency (1 - recall)",
+        'Muon Efficiency (1 - recall)',
         color=muon_color,
         fontsize=label_fs,
-        fontweight="bold",
+        fontweight='bold',
         labelpad=labelpad,
     )
     ax2.yaxis.set_major_locator(ticker.MultipleLocator(muon_axticks[0]))
     ax2.yaxis.set_minor_locator(ticker.MultipleLocator(muon_axticks[1]))
     ax2.tick_params(
-        which="major",
+        which='major',
         length=major_length,
         width=major_width,
         labelsize=tick_fs,
     )
-    ax2.tick_params(which="minor", length=minor_length, width=minor_width)
-    ax2.tick_params(which="both", color=muon_color, labelcolor=muon_color)
+    ax2.tick_params(which='minor', length=minor_length, width=minor_width)
+    ax2.tick_params(which='both', color=muon_color, labelcolor=muon_color)
 
     for label in ax2.get_yticklabels():
-        label.set_fontweight("bold")
+        label.set_fontweight('bold')
 
     if title:
         plt.title(title, fontsize=20)
