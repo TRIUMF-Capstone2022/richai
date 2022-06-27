@@ -1,5 +1,5 @@
 dataset:
-  delta: 0.5 #pointnet: 0.5, dgcnn: 0.3
+  delta: 0.2 #pointnet: 0.2, dgcnn: 0.3
   train:
     /data/bvelghe/capstone2022/B/2018B.Sample.EOSlist.CTRL.p.v2.0.4_f.v2.0.4_patched.h5: /fast_scratch_1/capstone_2022/combined_datasets/B.2018B.h5
     /data/bvelghe/capstone2022/C/2018E.EOSlist.CTRL_patched.h5: /fast_scratch_1/capstone_2022/datasetC_combined.h5
@@ -26,8 +26,8 @@ dataset:
   filters:
     momentum_lower: 15
     momentum_upper: 45
-    radius_lower: -2500
-    radius_upper: 2500
+    ring_center_pos_lower: -2500
+    ring_center_pos_upper: 2500
 data_loader:
   batch_size: 64
   num_workers: 4
