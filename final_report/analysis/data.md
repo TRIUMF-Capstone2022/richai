@@ -2,7 +2,7 @@
 
 ## Features
 
-Based on the experimental setup detailed in {ref}`App. A.1 <appendix:datagen:process>`, two sets of features associated are derived for each event. The first set corresponds to the subatomic particle motion: the particle momentum and time spent in the detector (CHOD time). The second set of features are derived from the light emitted by the subatomic particle motion. Each photon detected by a PMT tube is recorded as a hit on the PMT grid with X and Y coordinates relative to this grid and the time of the hit. As an abstraction to the hit scatter, the ring radius and center that result from the MLE fit that TRIUMF currently employ are also included. All in all, there are a total of 5 features for each event. 
+Based on the experimental setup detailed in {ref}`App. B.1 <appendix:datagen:process>`, two sets of features associated are derived for each event. The first set corresponds to the subatomic particle motion: the particle momentum and time spent in the detector (CHOD time). The second set of features are derived from the light emitted by the subatomic particle motion. Each photon detected by a PMT tube is recorded as a hit on the PMT grid with X and Y coordinates relative to this grid and the time of the hit. As an abstraction to the hit scatter, the ring radius and center that result from the MLE fit that TRIUMF currently employ are also included. All in all, there are a total of 5 features for each event. 
 
 ## Volume
 
@@ -28,4 +28,4 @@ The solution was to split the data into three equally sized bins by momentum in 
 
 ### Additional Steps
 
-There were two additional preprocessing steps: removing the bias in the ring center and conversion of the hits data into a point cloud. The former was completed by subtracting the global mean X and Y positions from every photon hit, and is shown in {ref}`App. A.2 <appendix:datagen:ringbias>`. The latter process, descibed in {ref}`App. A.3 <appendix:datagen:cloud>` involved adding a third dimension of time to the photon hit scatters. 
+There were two additional preprocessing steps: removing the bias in the ring center and conversion of the hits data into a point cloud. The former was completed by subtracting the global mean X and Y positions from every photon hit, and is shown in {ref}`App. B.2 <appendix:datagen:ringbias>`. The latter process, descibed in {ref}`App. B.3 <appendix:datagen:cloud>` involved adding a third dimension of time to the photon hit scatters. 
