@@ -1,8 +1,8 @@
 (appendix:deeplearning:pointnet)=
-# Appendix C: PointNet (Deep Learning)
+# Appendix D: PointNet (Deep Learning)
 
 (appendix:deeplearning:pointnet:arch)=
-## Appendix C.1: Model architecture 
+## D.1 : Model architecture 
 
 ### Base Architecture
 
@@ -30,9 +30,8 @@ The architecture of the base PointNet model.
 To this base architecture, two features specific to our problem, the ring radius corresponding to the point cloud generated using the MLE and the momentum of the particle, were concatenated to the fully connected layer. Both features were normalized batchwise to ensure stability of the network. 
 
 
-
 (appendix:deeplearning:pointnet:hyp)=
-## Appendix C.2: Model hyperparamters 
+## D.2 : Model hyperparamters 
 
 The hyperparameters that were tuned were:
 
