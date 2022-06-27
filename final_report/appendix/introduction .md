@@ -16,7 +16,7 @@ name: p_vs_rr
 Distribution of ring radius over different values of momentum. 
 ``` 
 
-(appendix:intro:MLE)
+(appendix:intro:MLE)= 
  ## A.2: Prior performance using Maximum Likelihood Estimate Algorithm 
 
 The current method utilized at the NA62 experiment is based on a maximum likelihood fit to determine the identity of a particle based on the scatter of photon hits generated from the RICH detector {numref}`prior_performance` {cite}`article`. The pion efficiency decreases significantly for a momentum range past 30 $GeV/c$, and the muon efficiency increases sharply. This is as expected due to the smaller differene in the ring radii as discussed above. Hence there is a scope to imporve the overall efficiencies, with a special focus on the higher momentum bins. 
@@ -31,9 +31,6 @@ The pion and muon efficiency calculated at different values of momentum.
 ```
 
 
-
-
-(appendix:intro:MLE)=
 ## A.3: Verification of Maximum Likelihood Esitmate Ring Radius 
 
 - current performance and objective
