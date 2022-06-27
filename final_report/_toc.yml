@@ -13,6 +13,7 @@ parts:
   
   - caption: Appendix
     chapters:
+    - file: appendix/introduction
     - file: appendix/data
     - file: appendix/ml_gbm
     - file: appendix/dl_pointnet
