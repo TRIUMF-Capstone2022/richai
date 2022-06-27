@@ -14,7 +14,7 @@ The data was generated as part of the 2018 NA62 experiments performed at CERN.  
 
 The class imbalance will be detrimental to achieving a high pion efficiency as the pion is the minority class. Undersampling the muons to match the number of pions was a feasible solution to address this issue due to the large dataset. However, random sampling of muons examples cannot be used for this data. This is due to the systematic difference in the distribution of momentums between the two particles and is purely an artifact of the experimental setup as seen in {numref}`momentum_distribution`. This will bias the output as the objective of this project is to carry out the classification strictly based on differences in the ring size between the particles. 
 
-```{figure} ../images/momentum_dist.svg
+```{figure} ../images/momentum_dist.pdf
 ---
 height: 500px
 width: 750px
