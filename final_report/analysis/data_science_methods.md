@@ -4,7 +4,7 @@
 
 ### Why we used this model
 
-As the number of features were low in our case, the decision tree algorithms were not expected to vary considerably. Therefore, Xgboost (XGBClassifier) with sklearn API was chosen as our baseline GBDT for benchmarking purposes primarily due to its support in form of [parameters](https://xgboost.readthedocs.io/en/stable/gpu/index.html) enabling GPU accelaration for faster training. In general, the benefits of usign decision trees as the baseline model are discussed in {ref}`App. B.1 <appendix:ml_gbm:intro>`. 
+As the number of features were low in our case, the decision tree algorithms were not expected to vary considerably. Therefore, Xgboost (XGBClassifier) with sklearn API was chosen as our baseline GBDT for benchmarking purposes primarily due to its support in form of [parameters](https://xgboost.readthedocs.io/en/stable/gpu/index.html) enabling GPU accelaration for faster training. In general, the benefits of usign decision trees as the baseline model are discussed in {ref}`App. C.1 <appendix:ml_gbm:intro>`. 
 
 ### Features that were used for GBT
 
@@ -78,13 +78,13 @@ In selecting our deep learning models, we searched for models that were specific
 
 Two separate feature combinations were tested when tuning both PointNet and the Dynamic Graph CNN model.  The first feature combination included the hits point cloud, momentum, and radius data generated from the MLE algorithm as input.  The second feature combination was a simpler model that did not take the radius as input, but still received the hits point cloud and momentum data. Comparing the results from both feeds will reveal how effectively the deep learning architecture extracts the radius information from the point clouds alone, and if the abstraction of this data (ring radius value) is required at all. 
 
-{ref}`App. C.2 <appendix:deeplearning:pointnet:hyp>` and {ref}`App. D.2 <appendix:deeplearning:dgcnn:hyp>` detail the hyperparameters tuned for PointNet and Dynamic Graph CNN respectively. 
+{ref}`App. D.2 <appendix:deeplearning:pointnet:hyp>` and {ref}`App. E.2 <appendix:deeplearning:dgcnn:hyp>` detail the hyperparameters tuned for PointNet and Dynamic Graph CNN respectively. 
 
 ### PointNet
 
 #### Model architecture 
 
-The overall architecture for the model used in this analysis, including the modifiactions made to the base implemetnation, is  detailed in {ref}`App. C.1 <appendix:deeplearning:pointnet:arch>`. 
+The overall architecture for the model used in this analysis, including the modifiactions made to the base implemetnation, is  detailed in {ref}`App. D.1 <appendix:deeplearning:pointnet:arch>`. 
 
 #### Model benefits
 
@@ -117,7 +117,7 @@ We selected an operating point of 0.93 on the ROC curve, as this allowed us to a
 
 #### Model architecture 
 
-The overall architecture for the model used in this analysis, including the modifiactions made to the base implemetnation, is  detailed in {ref}`App. C.1 <appendix:deeplearning:dgcnn:arch>`. 
+The overall architecture for the model used in this analysis, including the modifiactions made to the base implemetnation, is  detailed in {ref}`App. E.1 <appendix:deeplearning:dgcnn:arch>`. 
 
 #### Model benefits
 
