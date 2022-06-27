@@ -1,89 +1,52 @@
 # 4. Data Product
 
 ## Product overview
-Our data product is a machine learning pipeline that takes in the experiment data in HDF5 format, pre-processes them, prepares training data, trains classifier models on the training data and evaluates model results on test data through modular scripts. 
-An overview of the product along with key library dependencies is shown in the image below:
+
+Our final data product is a modularized machine learning pipeline that ultimately can classify a particle decay with either PointNet or a Dynamic Graph CNN.  As input, the pipeline takes in raw experiement data in HDF5 file format.  The data is then preprocessed, and the models are trained and tested(alternatively, pre-trained models can also be loaded to skip the training process here).  Finally, the models can then be evaluated in order to classify a particle decay.  From a birds eye view, our pipeline works as shown in {numref}`product_overview`
 
 ```{figure} ../images/product_overview.png
 ---
-height: 500px
-width: 750px
 name: product_overview
 ---
 
-Product Overview
+Machine learning pipeline
 ```
 
-## Modules and usage of the product
-The product has one script to run all the models and generate results. All the codes are built into modules. The modules and a snapshot of the associated scripts or sub-modules are shown in the following sections.
+## How the product works
 
-### `config`
-The product has all the controls built in the `config` module. It has the control parameters wherein the user can control model parameters/ hyperparameters such as train/test/saved model paths, dataloader configurations such as batch size, number of workers, etc., number of epochs for training, device id, and many more. 
+We have designed our data product to be designed by a master configuration file.  This configuration file is set before the scripts are run, and allows a user to set all of the desired parameters or hyperparameters related to a single experiment run.  At a high level, our modularized code has been structured into the following directories:
 
-```{figure} ../images/product_modules_config.png
----
-height: 500px
-width: 750px
-name: config
----
-
-config module
 ```
+├── configs
+├── src/
+│   ├── dataset/
+│   ├── models/
+│   ├── train_evaluate/
+│   └── utils/
+```
+
+This report will only include a very brief overview of each directory above, for full details please see the `README.md` file on our [GitHub repository](https://github.com/TRIUMF-Capstone2022/richai).
+
+### `configs`
+
+The configs directory cotains the master configuration file that allows the user to control all parameters and hyperparameters related to the data set, data loader, deep learning models, and selection of which GPUs to train on.  Please note that the master configuration file is the only file that has been designed to be edited by a user, and the changes in this file will flow down programatically to the python scripts that are described in the directories below.
 
 ### `dataset`
-`dataset` has two sub-modules:
-- `rich_dataset.py` processes raw HDF5 format and extracts events, hits and position data.
-- `dataloader.py` loads data in batches as feed into the models
 
-```{figure} ../images/product_modules_dataset.png
----
-height: 500px
-width: 750px
-name: dataset
----
-
-dataset module
-```
+The dataset directory contains the source code that builds a custom PyTorch data set, as well as PyTorch data loaders that are used in model tranining, validation, and evaluation.
 
 ### `models`
-`models` has the architecture built in for the two deep learning models PointNet and DGCNN.
 
-```{figure} ../images/product_modules_models.png
----
-height: 500px
-width: 750px
-name: models
----
+The models directory contains the source code for our implementation of both PointNet and Dynamic Graph CNN.
 
-models module
-```
+### `train_evaluate`
 
+The train_evaluate directory cotains the source code for our model training and evaluation scripts.
 
-### `train`
-`train` has modules for training and evaluating the model results.
+### `utils`
 
-```{figure} ../images/product_modules_train.png
----
-height: 500px
-width: 750px
-name: train
----
+The utils directory contains other various functions related to our project, such as plotting functions or other functions that did not fit into one of the previous directories explained.
 
-train module
-```
+## Future improvements
 
-### Others
-`utils` has helper functions to generate some plots for usage by user.
-`docs` has proposal and final reports.
-
-## Pros and Cons
-
-Pros:
-- PointNet and DGCNN have high pion efficiency at higher operating points
-- Easy to configure using the config module
-- Modular codes allow flexibility in tweaking the architecture in future, if needed.
-
-Cons:
-- Models require long training time and high computing power with multiple GPUs due to their inherent architecture. 
-
-Hence, further optimization may be tried by hyperparameter tuning and/or experimenting with the architectures of the two models. Due to time constraints and limitations of producing a working product, further improvements could not be built in. Although there may not be huge scope for improvement in these model results in terms of pion and muon efficiences, hyperparameter tuning or experimenting with the model architectures may be tried as future course of action in improving the product performance.
+We note that our final data product has room for improvement, and due to the time constraints of the capstone project, we did not implement everything that we would have liked to.  We leave the following suggestions to the TRIUMF team as potential future improvements.  The deep learning models could continue to be optimized, through a method such as Bayesian optimization.  Further, more muons could be added to the data set, while respecting the particle momentum bins, which may help the in generalizing better to muon decays and potentially improve muon efficiency.  Finally, once the models have been completely finalized and the scientists at TRIUMF decide that no further tuning is required, the models could be deployed.  Another more drastic suggestion would be to try other model architectures, such as PointNet++ {cite}`qi2017pointnet++`.

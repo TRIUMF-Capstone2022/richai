@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Conclusions and recommendations &#8212; RICH AI Final Report</title>
+    <title>5. Conclusions and recommendations &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/TRIUMF_Favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Supplementary Jupyter notebooks" href="../appendix/supplementary_notebooks.html" />
-    <link rel="prev" title="Data Product" href="data_product.html" />
+    <link rel="next" title="Appendix A: Introduction" href="../appendix/introduction.html" />
+    <link rel="prev" title="4. Data Product" href="data_product.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -122,27 +122,27 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="introduction.html">
-   Introduction
+   1. Introduction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data.html">
-   Data Generation
+   2. Data
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_science_methods.html">
-   Data Science Methods
+   3. Data Science Methods
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_product.html">
-   Data Product
+   4. Data Product
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Conclusions and recommendations
+   5. Conclusions and recommendations
   </a>
  </li>
 </ul>
@@ -152,6 +152,31 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/introduction.html">
+   Appendix A: Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/data.html">
+   Appendix B: Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/ml_gbm.html">
+   Appendix C: Gradient Boosted Tree (ML Baseline)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/dl_pointnet.html">
+   Appendix D: PointNet (Deep Learning)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/dl_dgcnn.html">
+   Appendix E: Dynamic Convolutional Neural Network (Deep Learning)
+  </a>
+ </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../appendix/supplementary_notebooks.html">
    Supplementary Jupyter notebooks
@@ -331,7 +356,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Conclusions and recommendations</h1>
+                <h1>5. Conclusions and recommendations</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -344,10 +369,9 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="conclusions-and-recommendations">
-<h1>Conclusions and recommendations<a class="headerlink" href="#conclusions-and-recommendations" title="Permalink to this headline">#</a></h1>
-<p>The RICH AI project aimed to predict the particle in concern as pion or muon with given input features extracted from experiment data. This pertained to a binary classification problem. The goal was to create better and more accurate models using deep learning based classification models in comparison to the existing analytical methods.</p>
-<p>The data product designed in this capstone project by building two deep learning based classifiers addresses this problem by accurate extracting features from the data. The product successfully addresses the classification problem and achieves the goals with much more accurate results than the analytical method in terms of the evaluation metrics. The models may perform better with more training data while due consideration to the momentum distributions.</p>
-<p>The above models were an attempt to implement point clouds based deep learning models at a level pertaining mostly to the vanilla architectures. Going forward, more customizations and hyperparameter tunings as well as complex models such as PointNet++ could be tried to experiment further and see if the results improve.</p>
+<h1>5. Conclusions and recommendations<a class="headerlink" href="#conclusions-and-recommendations" title="Permalink to this headline">#</a></h1>
+<p>The goal of the RICH AI project was to build a deep learning classifier that was able to accurately classify a meson decay into either a pion or muon particle.  The main challenge of the project was in surpassing the prior performance of CERN’s NA62 partice classification project, as it relates to pion efficiency (pion recall) and muon efficiency (1 - mun recall).</p>
+<p>We note that our final data product consisted of a machine learning pipeline that automates the model training, validation, testing, and prediction for raw input data.  Further, our final best model (PointNet), was able to surpass the prior CERN NA62 project in terms of pion efficiency, however, was unfortunately unable to achieve the same muon efficiency performance.  We note that the models may performance better with further tuning and/or additional training data.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -381,13 +405,13 @@ title="Print to PDF"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Data Product</p>
+            <p class="prev-next-title">4. Data Product</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../appendix/supplementary_notebooks.html" title="next page">
+    <a class='right-next' id="next-link" href="../appendix/introduction.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Supplementary Jupyter notebooks</p>
+        <p class="prev-next-title">Appendix A: Introduction</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

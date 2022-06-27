@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Data Science Methods &#8212; RICH AI Final Report</title>
+    <title>3. Data Science Methods &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/TRIUMF_Favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Data Product" href="data_product.html" />
-    <link rel="prev" title="Data Generation" href="data.html" />
+    <link rel="next" title="4. Data Product" href="data_product.html" />
+    <link rel="prev" title="2. Data" href="data.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -122,27 +122,27 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="introduction.html">
-   Introduction
+   1. Introduction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data.html">
-   Data Generation
+   2. Data
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Data Science Methods
+   3. Data Science Methods
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_product.html">
-   Data Product
+   4. Data Product
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="conclusions_and_recommendations.html">
-   Conclusions and recommendations
+   5. Conclusions and recommendations
   </a>
  </li>
 </ul>
@@ -152,6 +152,31 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/introduction.html">
+   Appendix A: Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/data.html">
+   Appendix B: Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/ml_gbm.html">
+   Appendix C: Gradient Boosted Tree (ML Baseline)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/dl_pointnet.html">
+   Appendix D: PointNet (Deep Learning)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/dl_dgcnn.html">
+   Appendix E: Dynamic Convolutional Neural Network (Deep Learning)
+  </a>
+ </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../appendix/supplementary_notebooks.html">
    Supplementary Jupyter notebooks
@@ -347,23 +372,18 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#why-gbt-are-a-good-baseline-model">
-     Why GBT are a good baseline model?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#why-we-used-this-model">
      Why we used this model
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#features-that-were-used-for-gbt">
-     Features that were used for GBT
+    <a class="reference internal nav-link" href="#features">
+     Features
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pros-cons">
-     Pros/Cons
+    <a class="reference internal nav-link" href="#model-benefits-and-shortcomings">
+     Model benefits and shortcomings
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -389,8 +409,8 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#tuning-models">
-     Tuning models
+    <a class="reference internal nav-link" href="#id4">
+     Features
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -399,13 +419,13 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#model-benefits">
-       Model benefits
+      <a class="reference internal nav-link" href="#model-architecture">
+       Model architecture
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#model-shortcomings">
-       Model shortcomings
+      <a class="reference internal nav-link" href="#id5">
+       Model benefits and shortcomings
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -421,17 +441,17 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id4">
-       Model benefits
+      <a class="reference internal nav-link" href="#id7">
+       Model architecture
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id5">
-       Model shortcomings
+      <a class="reference internal nav-link" href="#id8">
+       Model benefits and shortcomings
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id6">
+      <a class="reference internal nav-link" href="#id10">
        Best performing model
       </a>
      </li>
@@ -465,7 +485,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Data Science Methods</h1>
+                <h1>3. Data Science Methods</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -481,23 +501,18 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#why-gbt-are-a-good-baseline-model">
-     Why GBT are a good baseline model?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#why-we-used-this-model">
      Why we used this model
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#features-that-were-used-for-gbt">
-     Features that were used for GBT
+    <a class="reference internal nav-link" href="#features">
+     Features
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pros-cons">
-     Pros/Cons
+    <a class="reference internal nav-link" href="#model-benefits-and-shortcomings">
+     Model benefits and shortcomings
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -523,8 +538,8 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#tuning-models">
-     Tuning models
+    <a class="reference internal nav-link" href="#id4">
+     Features
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -533,13 +548,13 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#model-benefits">
-       Model benefits
+      <a class="reference internal nav-link" href="#model-architecture">
+       Model architecture
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#model-shortcomings">
-       Model shortcomings
+      <a class="reference internal nav-link" href="#id5">
+       Model benefits and shortcomings
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -555,17 +570,17 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id4">
-       Model benefits
+      <a class="reference internal nav-link" href="#id7">
+       Model architecture
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id5">
-       Model shortcomings
+      <a class="reference internal nav-link" href="#id8">
+       Model benefits and shortcomings
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id6">
+      <a class="reference internal nav-link" href="#id10">
        Best performing model
       </a>
      </li>
@@ -601,154 +616,103 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="data-science-methods">
-<h1>Data Science Methods<a class="headerlink" href="#data-science-methods" title="Permalink to this headline">#</a></h1>
+<h1>3. Data Science Methods<a class="headerlink" href="#data-science-methods" title="Permalink to this headline">#</a></h1>
 <section id="baseline-model-gradient-boosted-trees">
 <h2>Baseline model: Gradient boosted trees<a class="headerlink" href="#baseline-model-gradient-boosted-trees" title="Permalink to this headline">#</a></h2>
-<section id="why-gbt-are-a-good-baseline-model">
-<h3>Why GBT are a good baseline model?<a class="headerlink" href="#why-gbt-are-a-good-baseline-model" title="Permalink to this headline">#</a></h3>
-<p>Gradient Boosted Decision Trees (GDBT) use ensemble of decision trees sequentially minimising a loss function and hence, are popular due their efficiency, accuracy and ability to avoid overfitting. Besides, the libraries associated offer flexibility in terms of parameters such as decision tree algorithm, loss function, regularization, GPU related parameters etc. which make them a popular first choice as baseline models.</p>
-<p>There are several algorithm based GBDTs available on open source platforms such as Lightgbm, Catboost, Xgboost, Adaboost etc. They are mostly available in form of individual libraries with native implementations and with sklearn in some cases.</p>
-</section>
 <section id="why-we-used-this-model">
 <h3>Why we used this model<a class="headerlink" href="#why-we-used-this-model" title="Permalink to this headline">#</a></h3>
-<p>As the number of features were low in our case, the decision tree algorithms were not expected to vary considerably. Therefore, Xgboost (XGBClassifier) with sklearn API was chosen as our baseline GBDT for benchmarking purposes primarily due to its support in form of <a class="reference external" href="https://xgboost.readthedocs.io/en/stable/gpu/index.html">parameters</a> enabling GPU accelaration for faster training.</p>
+<p>XGBoost <span id="id1">[<a class="reference internal" href="../references.html#id11" title="Tianqi Chen, Tong He, Michael Benesty, Vadim Khotilovich, Yuan Tang, Hyunsu Cho, Kailong Chen, and others. Xgboost: extreme gradient boosting. R package version 0.4-2, 1(4):1–4, 2015.">Chen <em>et al.</em>, 2015</a>]</span> was chosen as our baseline machine learning model due to it’s scalability and ease of use with tabluar data.  In addition, XGBoost offers support for GPU acceleration, which was ideal in our scenario of working with a large dataset.  In general, the benefits of using XGBoost as our baseline model are discussed in <a class="reference internal" href="../appendix/ml_gbm.html#appendix-ml-gbm-intro"><span class="std std-ref">App. C.1</span></a>.</p>
 </section>
-<section id="features-that-were-used-for-gbt">
-<h3>Features that were used for GBT<a class="headerlink" href="#features-that-were-used-for-gbt" title="Permalink to this headline">#</a></h3>
-<p>The following features were used for Xgboost:</p>
+<section id="features">
+<h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">#</a></h3>
+<p>We used the following features in training our XGBoost models:</p>
 <ul class="simple">
-<li><p>ring_radius: radius of the the circle fitted by the MLE algorithm (provided by TRIUMF)</p></li>
-<li><p>track_momentum: momentum data as provided along with data (provided by TRIUMF)</p></li>
-<li><p>total_hits_filtered: an engineered feature on total number of hits per event/entry, filtered with a fixed value of delta (chod_time - hit_time)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Ring</span> <span class="pre">radius</span></code>: Radius of the the circle fitted by TRIUMF’s prior algorithm to the photon light hits of the particle decay.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Momentum</span></code>: Particle momentum information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Total</span> <span class="pre">hits</span></code>: An engineered feature on total number of photon hits per decay event.  The “hits” were filtered to keep only those close in time, where “closeness” was determined based on a delta between the photon hit time and the CHOD detector time.</p></li>
 </ul>
 </section>
-<section id="pros-cons">
-<h3>Pros/Cons<a class="headerlink" href="#pros-cons" title="Permalink to this headline">#</a></h3>
-<p>Pros:</p>
-<ul class="simple">
-<li><p>simple and intuitive, as the features used are physics informed properties of the particles (classes)</p></li>
-<li><p>efficient in terms of low training time
-Cons:</p></li>
-<li><p>does not capture the position data of the hits as it directly captures the MLE radius</p></li>
-<li><p>takes a fixed value of delta (chod_time - hit_time) without any scope to learn how to eliminate noise in the data</p></li>
-<li><p>low pion efficiency after limiting the muon efficiency</p></li>
-</ul>
+<section id="model-benefits-and-shortcomings">
+<h3>Model benefits and shortcomings<a class="headerlink" href="#model-benefits-and-shortcomings" title="Permalink to this headline">#</a></h3>
+<p>In terms of benefits, XGBoost is easy, simple and intuitive to use  XGBoost is efficient in terms of low training time via GPU acceleration.</p>
+<p>In terms of shortcomings, our XGBoost model does not capture the coordinate position data of the photon hits, as this is a variable length feature and XGBoost cannot support this without significant feature engineering.  Further, XGBoost did not perform well for pion or muon efficiency.</p>
 </section>
 <section id="results">
 <h3>Results<a class="headerlink" href="#results" title="Permalink to this headline">#</a></h3>
 <figure class="align-default" id="xgb-results">
 <a class="reference internal image-reference" href="../_images/xgb_results.png"><img alt="../_images/xgb_results.png" src="../_images/xgb_results.png" style="width: 500px; height: 500px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 6 </span><span class="caption-text">xgboost results</span><a class="headerlink" href="#xgb-results" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">XGBoost results</span><a class="headerlink" href="#xgb-results" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As observed above, the pion efficiency drops sharply with increase in momentum beyond 35 GeV/C. Besides, muon efficiency is poor at the chosen operating point.
-Further, different xgboost models were trained and tested on different momentum bins. A Global xgboost model trained over 15-45 GeV/c momentum bin as well as local xgboost models were trained and evaluated. It was observed that the models performed poorly in higher momentum bins as shown below:</p>
+<p>As observed above in <a class="reference internal" href="#xgb-results"><span class="std std-numref">Fig. 2</span></a>, pion efficiency drops sharply with increase in momentum beyond 35 GeV/C. In addition, muon efficiency is also poor.</p>
+<p>Further, different XGBoost models were trained and tested on different momentum bins. A Global XGBoost model trained over the 15-45 GeV/c momentum bin, as well as local xgboost models were trained and evaluated. It was observed that the models performed poorly in higher momentum bins as shown below in <a class="reference internal" href="#roc-xgboost"><span class="std std-numref">Fig. 3</span></a>.</p>
 <figure class="align-default" id="roc-xgboost">
 <a class="reference internal image-reference" href="../_images/ROC_xgboost.png"><img alt="../_images/ROC_xgboost.png" src="../_images/ROC_xgboost.png" style="width: 500px; height: 500px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 7 </span><span class="caption-text">ROC curves of xgboost models on different momentum bins</span><a class="headerlink" href="#roc-xgboost" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>The following ROC curves plot establishes that the models were actually leveraging discriminating power of input features and not biased by distributional issues in data.</p>
-<figure class="align-default" id="roc-xgboost-3545">
-<a class="reference internal image-reference" href="../_images/ROC_xgboost_3545.png"><img alt="../_images/ROC_xgboost_3545.png" src="../_images/ROC_xgboost_3545.png" style="width: 500px; height: 500px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 8 </span><span class="caption-text">ROC curves of globally and locally trained xgboost models on 35-45 GeV/c momentum bin</span><a class="headerlink" href="#roc-xgboost-3545" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">ROC curves of XGBoost models on different momentum bins</span><a class="headerlink" href="#roc-xgboost" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="justification-for-moving-onto-deep-learning">
 <h3>Justification for moving onto deep learning<a class="headerlink" href="#justification-for-moving-onto-deep-learning" title="Permalink to this headline">#</a></h3>
-<ul class="simple">
-<li><p>Xgboost GBDT model did not use position data of the hits. Instead, it used the already engineered feature - ring_radius from the analytical MLE method leaving no scope for improving the results.</p></li>
-<li><p>Therefore, to improve results, more accurate models were required which could extract features directly and more precisely from the hits position data.</p></li>
-</ul>
-<p>Thus, deep learning models were which leverage feature extraction from position data in form of point clouds comprised the further steps in modeling approach beyond baseline GBDT model.</p>
+<p>The main factor that drove our decision to apply deep learning models was the poor performance of XGBoost on particles with high momentum.  Further, XGBoost could not handle variable length photon hit data, whereas deep learning models can.  Ultimately, to improve our results from the baseline, we needed a more complex model that could extract features directly and more precisely from the photon hit position data, in addition to also identifying non-linear relationships between these features with particle momentum and ring radius.  Deep learning models were a good fit for this, and hence our decision to pursue these more complex models.</p>
 </section>
 </section>
 <section id="deep-learning">
 <h2>Deep learning<a class="headerlink" href="#deep-learning" title="Permalink to this headline">#</a></h2>
 <section id="selecting-models">
 <h3>Selecting models<a class="headerlink" href="#selecting-models" title="Permalink to this headline">#</a></h3>
-<p>In selecting our deep learning models, we searched for models that were specifically designed to work well with point cloud coordinate data.  Based on this research, we identified two models with architectures that appeared to fit our problem scope well.  The first model that we identified was called <a class="reference external" href="https://arxiv.org/abs/1612.00593">PointNet</a> <span id="id1">[<a class="reference internal" href="../references.html#id2" title="Charles R Qi, Hao Su, Kaichun Mo, and Leonidas J Guibas. Pointnet: deep learning on point sets for 3d classification and segmentation. In Proceedings of the IEEE conference on computer vision and pattern recognition, 652–660. 2017.">Qi <em>et al.</em>, 2017</a>]</span>, which was developed by researchers at Stanford University.  The second model that we identified was called <a class="reference external" href="https://arxiv.org/abs/1801.07829">Dynamic Graph CNN</a> <span id="id2">[<a class="reference internal" href="../references.html#id3" title="Yue Wang, Yongbin Sun, Ziwei Liu, Sanjay E Sarma, Michael M Bronstein, and Justin M Solomon. Dynamic graph cnn for learning on point clouds. Acm Transactions On Graphics (tog), 38(5):1–12, 2019.">Wang <em>et al.</em>, 2019</a>]</span>, which was developed by researchers at Massachusetts Institute of Technology, UC Berkely, and Imperial College London.  We also note that traditional convolutional neural networks would not work well for our data due to its sparsity.</p>
+<p>In selecting our deep learning models, we searched for models that were specifically designed to work well with point cloud coordinate data.  Based on this research, we identified two models with architectures that appeared to fit our problem scope well.  The first model that we identified was called <a class="reference external" href="https://arxiv.org/abs/1612.00593">PointNet</a> <span id="id2">[<a class="reference internal" href="../references.html#id2" title="Charles R Qi, Hao Su, Kaichun Mo, and Leonidas J Guibas. Pointnet: deep learning on point sets for 3d classification and segmentation. In Proceedings of the IEEE conference on computer vision and pattern recognition, 652–660. 2017.">Qi <em>et al.</em>, 2017</a>]</span>, which was developed by researchers at Stanford University.  The second model that we identified was called <a class="reference external" href="https://arxiv.org/abs/1801.07829">Dynamic Graph CNN</a> <span id="id3">[<a class="reference internal" href="../references.html#id3" title="Yue Wang, Yongbin Sun, Ziwei Liu, Sanjay E Sarma, Michael M Bronstein, and Justin M Solomon. Dynamic graph cnn for learning on point clouds. Acm Transactions On Graphics (tog), 38(5):1–12, 2019.">Wang <em>et al.</em>, 2019</a>]</span>, which was developed by researchers at Massachusetts Institute of Technology, UC Berkely, and Imperial College London.  We also note that traditional convolutional neural networks would not work well for our data due to its sparsity.</p>
 </section>
-<section id="tuning-models">
-<h3>Tuning models<a class="headerlink" href="#tuning-models" title="Permalink to this headline">#</a></h3>
-<p>We tried out two separate feature combinations when tuning both PointNet and the Dynamic Graph CNN models.  The first feature combination was a model that took the hits point cloud, momentum, and radius data as input to the neural networks.  The second feature combination was a simpler model that did not take the radius as input, but still received the hits point cloud and momentum data.</p>
-<p>In terms of hyperparameters, the common hyperparameters that were tuned were the:</p>
-<ul class="simple">
-<li><p>Time delta between the hit time and the CHOD time, for which values of 0.20ns to 0.50ns were used</p></li>
-<li><p>Learning rate, for which a constant learning rate and a learning rate scheduler were used</p></li>
-<li><p>Number of epochs, for which a maximum of 24 epochs were used</p></li>
-</ul>
-<p>The Dynamic Graph CNN had an additional hyperparameter, which was the value $k$ for the K-nearest neighbours graph that is dynamically generated by the models architecture.  We tried values between 8 and 20 nearest neighbors.</p>
+<section id="id4">
+<h3>Features<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<p>Two separate feature combinations were tested when tuning both PointNet and the Dynamic Graph CNN model.  The first feature combination included the photon hit coordinates point cloud, momentum, and radius data generated from the MLE algorithm as input.  The second feature combination was a simpler model that did not take the radius as input, but still received the hits point cloud and momentum data. Comparing the results from both these models will reveal how effectively the deep learning architecture extracts the radius information from the point clouds alone, and if the abstraction of this data (ring radius value) is required at all.</p>
+<p><a class="reference internal" href="../appendix/dl_pointnet.html#appendix-deeplearning-pointnet-hyp"><span class="std std-ref">App. D.2</span></a> and <a class="reference internal" href="../appendix/dl_dgcnn.html#appendix-deeplearning-dgcnn-hyp"><span class="std std-ref">App. E.2</span></a> detail the hyperparameters tuned for PointNet and Dynamic Graph CNN respectively.</p>
 </section>
 <section id="pointnet">
 <h3>PointNet<a class="headerlink" href="#pointnet" title="Permalink to this headline">#</a></h3>
-<section id="model-benefits">
-<h4>Model benefits<a class="headerlink" href="#model-benefits" title="Permalink to this headline">#</a></h4>
-<ul class="simple">
-<li><p>PointNet achieves a strong pion efficiency accross all momentum bins, while maintaining similar muon efficiency to prior NA62 performance</p></li>
-<li><p>PointNet uses a symmetric function (max pooling) to make it robust to any change in the order of the coordinates that make up the input point cloud data</p></li>
-<li><p>PointNet uses a Spatial Transformer Network <span id="id3">[<a class="reference internal" href="../references.html#id4" title="Max Jaderberg, Karen Simonyan, Andrew Zisserman, and others. Spatial transformer networks. Advances in neural information processing systems, 2015.">Jaderberg <em>et al.</em>, 2015</a>]</span> to make it robust to any spatial variability within the input point cloud data</p></li>
-</ul>
+<section id="model-architecture">
+<h4>Model architecture<a class="headerlink" href="#model-architecture" title="Permalink to this headline">#</a></h4>
+<p>The overall architecture for the model used in this analysis, including the modifiactions made to the base implementation, is  detailed in <a class="reference internal" href="../appendix/dl_pointnet.html#appendix-deeplearning-pointnet-arch"><span class="std std-ref">App. D.1</span></a>.</p>
 </section>
-<section id="model-shortcomings">
-<h4>Model shortcomings<a class="headerlink" href="#model-shortcomings" title="Permalink to this headline">#</a></h4>
-<ul class="simple">
-<li><p>PointNet requires the longest training time of all the models we tested (~24 hours on three GPUs)</p></li>
-<li><p>By it’s design, PointNet is not able to capture local information within the point cloud</p></li>
-</ul>
+<section id="id5">
+<h4>Model benefits and shortcomings<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h4>
+<p>In terms of benefits, Pointnet was able to achieve a strong pion efficiency accross all momentum bins, while maintaining similar muon efficiency to prior NA62 performance.  Further,  PointNet uses a symmetric function (max pooling) to make it robust to any change in the order of the coordinates that make up the input point cloud data.  Also, PointNet uses a Spatial Transformer Network <span id="id6">[<a class="reference internal" href="../references.html#id4" title="Max Jaderberg, Karen Simonyan, Andrew Zisserman, and others. Spatial transformer networks. Advances in neural information processing systems, 2015.">Jaderberg <em>et al.</em>, 2015</a>]</span> to make it robust to any spatial variability within the input point cloud data</p>
+<p>In terms of shortcomings, PointNet required the longest training time of all the models we tested (~24 hours on three GPUs), and, by it’s design, PointNet does not capture local information from within the coordainte point cloud input data.</p>
 </section>
 <section id="best-performing-model">
 <h4>Best performing model<a class="headerlink" href="#best-performing-model" title="Permalink to this headline">#</a></h4>
 <figure class="align-default" id="pointnet-roc">
 <img alt="../_images/pointnet_roc.png" src="../_images/pointnet_roc.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Pointnet ROC Curves</span><a class="headerlink" href="#pointnet-roc" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Pointnet ROC Curves</span><a class="headerlink" href="#pointnet-roc" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As can be seen in the receiver operating characteristic curves (“ROC”) in <a class="reference internal" href="#pointnet-roc"><span class="std std-numref">Fig. 9</span></a>, our best PointNet model consisted of the following:</p>
-<ul class="simple">
-<li><p>All features: hits point cloud, momentum, and radius</p></li>
-<li><p>Time delta: 0.20ns</p></li>
-<li><p>Learning rate: Linear annealing scheduler.  Initial learning rate of 0.0003 that increases to 0.003 in the first half of training, before decreasing back to the original learning rate in the second half of training</p></li>
-<li><p>Epochs: 16 epochs of training</p></li>
-</ul>
-<p>We selected an operating point of 0.93 on the ROC curve, as this allowed us to achieve a strong pion efficiency while maintaining good muon efficiency relative to the NA62 results.</p>
+<p>As can be seen in the receiver operating characteristic curves (“ROC”) in <a class="reference internal" href="#pointnet-roc"><span class="std std-numref">Fig. 4</span></a>, our best PointNet model used all of the available features (hits coordinate point cloud, momentum, and radius).  Further, in order to filter photon hits based on a time delta of hit time - CHOD time, we found that 0.20ns worked best for our model.  The learning rate that we used was a linear annealing scheduler, which starts with an initial learning rate of 0.0003 and increases to 0.003 in the first half of training, before decreasing back to the original learning rate in the second half of training.  The total number of epochs trained for were 16.</p>
+<p>Finally, we selected an operating point of 0.93 on the ROC curve, as this allowed us to achieve a strong pion efficiency while maintaining good muon efficiency relative to the NA62 results.</p>
 </section>
 </section>
 <section id="dynamic-graph-cnn">
 <h3>Dynamic Graph CNN<a class="headerlink" href="#dynamic-graph-cnn" title="Permalink to this headline">#</a></h3>
-<section id="id4">
-<h4>Model benefits<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
-<ul class="simple">
-<li><p>Dynamic Graph CNN is designed to capture local information within the point cloud data</p></li>
-<li><p>Dynamic Graph CNN training time is almost two times faster than PointNet</p></li>
-</ul>
+<section id="id7">
+<h4>Model architecture<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h4>
+<p>The overall architecture for the model used in this analysis, including the modifiactions made to the base implementation, is  detailed in <a class="reference internal" href="../appendix/dl_dgcnn.html#appendix-deeplearning-dgcnn-arch"><span class="std std-ref">App. E.1</span></a>.</p>
 </section>
-<section id="id5">
-<h4>Model shortcomings<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h4>
-<ul class="simple">
-<li><p>Although Dynamic Graph CNN can maintain a similar pion efficiency to PointNet, it stuggles with muon efficiency.</p></li>
-</ul>
+<section id="id8">
+<h4>Model benefits and shortcomings<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h4>
+<p>In terms of benefits, Dynamic Graph CNN is designed to capture local information within the point cloud data <span id="id9">[<a class="reference internal" href="../references.html#id3" title="Yue Wang, Yongbin Sun, Ziwei Liu, Sanjay E Sarma, Michael M Bronstein, and Justin M Solomon. Dynamic graph cnn for learning on point clouds. Acm Transactions On Graphics (tog), 38(5):1–12, 2019.">Wang <em>et al.</em>, 2019</a>]</span>, which is something that our other model (PointNet) cannot do.  Further, Dynamic Graph CNN total training time was almost two times faster than PointNet, as the number of model parameters was less.</p>
+<p>In terms of shortcomings, our best Dynamic Graph CNN can maintain a similar pion efficiency to PointNet, however, it stuggles with muon efficiency.  We also note that Dynamic Graph CNN does not make use of a spatial transformer network, and therefore is not resistant to rotations of the input point cloud data.</p>
 </section>
-<section id="id6">
-<h4>Best performing model<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h4>
+<section id="id10">
+<h4>Best performing model<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h4>
 <figure class="align-default" id="dgcnn-roc">
 <img alt="../_images/dgcnn_roc.png" src="../_images/dgcnn_roc.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Dynamic Graph CNN ROC Curves</span><a class="headerlink" href="#dgcnn-roc" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Dynamic Graph CNN ROC Curves</span><a class="headerlink" href="#dgcnn-roc" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As can be seen in the receiver operating characteristic curves (“ROC”) in <a class="reference internal" href="#dgcnn-roc"><span class="std std-numref">Fig. 10</span></a>, our best Dynamic Graph CNN model consisted of the following:</p>
-<ul class="simple">
-<li><p>All features: hits point cloud, momentum, and radius</p></li>
-<li><p>Time delta: 0.30ns</p></li>
-<li><p>Learning rate: Linear annealing scheduler.  Initial learning rate of 0.0003 that increases to 0.003 in the first half of training, before decreasing back to the original learning rate in the second half of training.</p></li>
-<li><p>Epochs: 8 epochs of training</p></li>
-</ul>
+<p>As can be seen in the receiver operating characteristic curves (“ROC”) in <a class="reference internal" href="#dgcnn-roc"><span class="std std-numref">Fig. 5</span></a>, our best Dynamic Graph CNN model also used all of the features.  The time delta that worked best for filtering our hits was 0.30ns.  The learing rate used was the same as PointNet.  The total number of epochs trained for was 8.</p>
 <p>We selected an operating point of 0.96 on the ROC curve, as this allowed us to achieve a strong pion efficiency.  We were unable to select an operating point that achieved both a good pion efficiency and a good muon efficiency.</p>
 </section>
 </section>
@@ -760,31 +724,26 @@ Further, different xgboost models were trained and tested on different momentum 
 <figure class="align-default" id="all-models-roc">
 <img alt="../_images/all_models_roc.png" src="../_images/all_models_roc.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 11 </span><span class="caption-text">ROC Curves: All models</span><a class="headerlink" href="#all-models-roc" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">ROC Curves: All models</span><a class="headerlink" href="#all-models-roc" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>In selecting our overall best model, we used the ROC curve.  As can be seen in the <a class="reference internal" href="#all-models-roc"><span class="std std-numref">Fig. 11</span></a>, our overall best model was PointNet, following by Dynamic Graph CNN.  Both deep learning models were able to surpass our baseline XGBoost model.</p>
+<p>In selecting our overall best model, we used the ROC curve.  As can be seen in the <a class="reference internal" href="#all-models-roc"><span class="std std-numref">Fig. 6</span></a>, our overall best model was PointNet, following by Dynamic Graph CNN.  Both deep learning models were able to surpass our baseline XGBoost model.</p>
 </section>
 <section id="model-efficiencies">
 <h3>Model efficiencies<a class="headerlink" href="#model-efficiencies" title="Permalink to this headline">#</a></h3>
 <figure class="align-default" id="dgcnn-efficiency">
 <img alt="../_images/dgcnn_efficiency.png" src="../_images/dgcnn_efficiency.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Dynamic Graph CNN Model Efficiencies</span><a class="headerlink" href="#dgcnn-efficiency" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Dynamic Graph CNN Model Efficiencies</span><a class="headerlink" href="#dgcnn-efficiency" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <figure class="align-default" id="pointnet-efficiency">
 <img alt="../_images/pointnet_efficiency.png" src="../_images/pointnet_efficiency.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 13 </span><span class="caption-text">PointNet Graph CNN Model Efficiencies</span><a class="headerlink" href="#pointnet-efficiency" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">PointNet Graph CNN Model Efficiencies</span><a class="headerlink" href="#pointnet-efficiency" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>In analyzing our final model performance in terms of pion and muon efficiency in <a class="reference internal" href="#dgcnn-efficiency"><span class="std std-numref">Fig. 12</span></a> and <a class="reference internal" href="#pointnet-efficiency"><span class="std std-numref">Fig. 13</span></a>, we note the following:</p>
-<ul class="simple">
-<li><p>Both the PointNet and Dynamic Graph CNN models were able to surpass the prior NA62 pion efficiency performance across all momentum bins.</p></li>
-<li><p>The Dynamic Graph CNN model was unable to achieve a similar muon efficiency to NA62 in any momentum bin.</p></li>
-<li><p>The PointNet model was able to surpass NA62 muon efficiency in momentum bins &gt; 34 GeV/c.</p></li>
-</ul>
+<p>In analyzing our final model performance in terms of pion and muon efficiency in <a class="reference internal" href="#dgcnn-efficiency"><span class="std std-numref">Fig. 7</span></a> and <a class="reference internal" href="#pointnet-efficiency"><span class="std std-numref">Fig. 8</span></a>, we note that both the PointNet and Dynamic Graph CNN models were able to surpass the prior NA62 pion efficiency performance across all momentum bins.  Unfortunately, the Dynamic Graph CNN model was unable to achieve a similar muon efficiency to NA62 in any momentum bin.  Finally, the PointNet model was able to surpass NA62 muon efficiency in momentum bins &gt; 34 GeV/c.</p>
 </section>
 </section>
 </section>
@@ -820,13 +779,13 @@ Further, different xgboost models were trained and tested on different momentum 
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Data Generation</p>
+            <p class="prev-next-title">2. Data</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="data_product.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Data Product</p>
+        <p class="prev-next-title">4. Data Product</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
