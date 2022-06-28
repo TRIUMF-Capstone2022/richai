@@ -3,7 +3,7 @@ name: deploy-book
 on:
   push:
     branches:
-    - master
+    - main
     paths:
     - ./docs/final_report/
   workflow_dispatch:
