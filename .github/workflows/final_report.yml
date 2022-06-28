@@ -6,11 +6,6 @@ on:
     - main
     paths:
     - 'docs/final_report/**'
-  pull_request:
-    branches:
-    - main
-    paths:
-    - 'docs/final_report/**'
   workflow_dispatch:
 
 jobs:
