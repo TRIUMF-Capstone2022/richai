@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # RICH AI Data Generation Process
+# # Data generation process
 
-# **Purpose**: The purpose of this notebook is to demonstrate the data generation process for a single particle decay event as recorded by the RICH detector.
-# **Author**: Nico Van den Hooff
+# - **Purpose**: The purpose of this notebook is to demonstrate the data generation process for a single particle decay event as recorded by the RICH detector.
+# - **Author**: Nico Van den Hooff
 
 # In[1]:
 

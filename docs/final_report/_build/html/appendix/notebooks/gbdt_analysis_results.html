@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Gradient Boosted Decision Tree (GBDT) models &#8212; RICH AI Final Report</title>
+    <title>Gradient boosted decision tree analysis &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/TRIUMF_Favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Dynamic Graph CNN Operating Point" href="DGCNN_operating_point.html" />
-    <link rel="prev" title="Global values for debiasing and standardization" href="global_values.html" />
+    <link rel="next" title="Global values for debiasing and standardization" href="global_values.html" />
+    <link rel="prev" title="Creating balanced data" href="balance_data.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -189,12 +189,27 @@ const thebe_selector_output = ".output, .cell_output"
   <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="data_generation_process.html">
-     RICH AI Data Generation Process
+     Data generation process
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="Exploratory_data_analysis-final.html">
-     RICH AI Exploratory Data Analysis
+    <a class="reference internal" href="exploratory_data_analysis.html">
+     Exploratory data analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plotting_NA62_rings.html">
+     Plotting NA62 Rings
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="balance_data.html">
+     Creating balanced data
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Gradient boosted decision tree analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -202,24 +217,19 @@ const thebe_selector_output = ".output, .cell_output"
      Global values for debiasing and standardization
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     Gradient Boosted Decision Tree (GBDT) models
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="DGCNN_operating_point.html">
-     Dynamic Graph CNN Operating Point
-    </a>
-   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="pointnet_model_runs.html">
-     PointNet Model Runs
+     PointNet model runs
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="pointnet_operating_point.html">
-     PointNet Operating point
+     PointNet operating point
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="DGCNN_operating_point.html">
+     Dynamic graph CNN operating point
     </a>
    </li>
    <li class="toctree-l2">
@@ -300,7 +310,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/TRIUMF-Capstone2022/richai/master?urlpath=tree/final_report/appendix/notebooks/gbdt_analysis_results.ipynb"
+        <a href="https://mybinder.org/v2/gh/TRIUMF-Capstone2022/richai/master?urlpath=tree/docs/final_report/appendix/notebooks/gbdt_analysis_results.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -552,7 +562,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Gradient Boosted Decision Tree (GBDT) models</h1>
+                <h1>Gradient boosted decision tree analysis</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -700,8 +710,12 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="gradient-boosted-decision-tree-gbdt-models">
-<h1>Gradient Boosted Decision Tree (GBDT) models<a class="headerlink" href="#gradient-boosted-decision-tree-gbdt-models" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="gradient-boosted-decision-tree-analysis">
+<h1>Gradient boosted decision tree analysis<a class="headerlink" href="#gradient-boosted-decision-tree-analysis" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p><strong>Purpose</strong>: The purpose of this notebook is to show the gradient boosted tree model results.</p></li>
+<li><p><strong>Author</strong>: Shiv Jena</p></li>
+</ul>
 <section id="key-considerations">
 <h2>Key considerations<a class="headerlink" href="#key-considerations" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
@@ -1449,7 +1463,7 @@ Wall time: 1.39 s
 weighted avg       0.94      0.94      0.94    120252
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_17_1.png" src="../../_images/gbdt_analysis_results_17_1.png" />
+<img alt="../../_images/gbdt_analysis_results_18_1.png" src="../../_images/gbdt_analysis_results_18_1.png" />
 </div>
 </div>
 </section>
@@ -1524,7 +1538,7 @@ Wall time: 23.5 ms
 weighted avg       0.94      0.94      0.94    120252
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_21_1.png" src="../../_images/gbdt_analysis_results_21_1.png" />
+<img alt="../../_images/gbdt_analysis_results_22_1.png" src="../../_images/gbdt_analysis_results_22_1.png" />
 </div>
 </div>
 </section>
@@ -1577,7 +1591,7 @@ Wall time: 1min 55s
 weighted avg       0.92      0.92      0.92    120252
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_25_1.png" src="../../_images/gbdt_analysis_results_25_1.png" />
+<img alt="../../_images/gbdt_analysis_results_26_1.png" src="../../_images/gbdt_analysis_results_26_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2249,7 +2263,7 @@ weighted avg       0.92      0.92      0.92    120252
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/gbdt_analysis_results_35_0.png" src="../../_images/gbdt_analysis_results_35_0.png" />
+<img alt="../../_images/gbdt_analysis_results_36_0.png" src="../../_images/gbdt_analysis_results_36_0.png" />
 </div>
 </div>
 </section>
@@ -2310,92 +2324,92 @@ weighted avg       0.92      0.92      0.92    120252
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_1.png" src="../../_images/gbdt_analysis_results_37_1.png" />
-<img alt="../../_images/gbdt_analysis_results_37_2.png" src="../../_images/gbdt_analysis_results_37_2.png" />
+<img alt="../../_images/gbdt_analysis_results_38_1.png" src="../../_images/gbdt_analysis_results_38_1.png" />
+<img alt="../../_images/gbdt_analysis_results_38_2.png" src="../../_images/gbdt_analysis_results_38_2.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.6</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_4.png" src="../../_images/gbdt_analysis_results_37_4.png" />
-<img alt="../../_images/gbdt_analysis_results_37_5.png" src="../../_images/gbdt_analysis_results_37_5.png" />
+<img alt="../../_images/gbdt_analysis_results_38_4.png" src="../../_images/gbdt_analysis_results_38_4.png" />
+<img alt="../../_images/gbdt_analysis_results_38_5.png" src="../../_images/gbdt_analysis_results_38_5.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.7</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_7.png" src="../../_images/gbdt_analysis_results_37_7.png" />
-<img alt="../../_images/gbdt_analysis_results_37_8.png" src="../../_images/gbdt_analysis_results_37_8.png" />
+<img alt="../../_images/gbdt_analysis_results_38_7.png" src="../../_images/gbdt_analysis_results_38_7.png" />
+<img alt="../../_images/gbdt_analysis_results_38_8.png" src="../../_images/gbdt_analysis_results_38_8.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.8</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_10.png" src="../../_images/gbdt_analysis_results_37_10.png" />
-<img alt="../../_images/gbdt_analysis_results_37_11.png" src="../../_images/gbdt_analysis_results_37_11.png" />
+<img alt="../../_images/gbdt_analysis_results_38_10.png" src="../../_images/gbdt_analysis_results_38_10.png" />
+<img alt="../../_images/gbdt_analysis_results_38_11.png" src="../../_images/gbdt_analysis_results_38_11.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.85</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_13.png" src="../../_images/gbdt_analysis_results_37_13.png" />
-<img alt="../../_images/gbdt_analysis_results_37_14.png" src="../../_images/gbdt_analysis_results_37_14.png" />
+<img alt="../../_images/gbdt_analysis_results_38_13.png" src="../../_images/gbdt_analysis_results_38_13.png" />
+<img alt="../../_images/gbdt_analysis_results_38_14.png" src="../../_images/gbdt_analysis_results_38_14.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.9</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_16.png" src="../../_images/gbdt_analysis_results_37_16.png" />
-<img alt="../../_images/gbdt_analysis_results_37_17.png" src="../../_images/gbdt_analysis_results_37_17.png" />
+<img alt="../../_images/gbdt_analysis_results_38_16.png" src="../../_images/gbdt_analysis_results_38_16.png" />
+<img alt="../../_images/gbdt_analysis_results_38_17.png" src="../../_images/gbdt_analysis_results_38_17.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.91</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_19.png" src="../../_images/gbdt_analysis_results_37_19.png" />
-<img alt="../../_images/gbdt_analysis_results_37_20.png" src="../../_images/gbdt_analysis_results_37_20.png" />
+<img alt="../../_images/gbdt_analysis_results_38_19.png" src="../../_images/gbdt_analysis_results_38_19.png" />
+<img alt="../../_images/gbdt_analysis_results_38_20.png" src="../../_images/gbdt_analysis_results_38_20.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.92</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_22.png" src="../../_images/gbdt_analysis_results_37_22.png" />
-<img alt="../../_images/gbdt_analysis_results_37_23.png" src="../../_images/gbdt_analysis_results_37_23.png" />
+<img alt="../../_images/gbdt_analysis_results_38_22.png" src="../../_images/gbdt_analysis_results_38_22.png" />
+<img alt="../../_images/gbdt_analysis_results_38_23.png" src="../../_images/gbdt_analysis_results_38_23.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.93</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_25.png" src="../../_images/gbdt_analysis_results_37_25.png" />
-<img alt="../../_images/gbdt_analysis_results_37_26.png" src="../../_images/gbdt_analysis_results_37_26.png" />
+<img alt="../../_images/gbdt_analysis_results_38_25.png" src="../../_images/gbdt_analysis_results_38_25.png" />
+<img alt="../../_images/gbdt_analysis_results_38_26.png" src="../../_images/gbdt_analysis_results_38_26.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.94</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_28.png" src="../../_images/gbdt_analysis_results_37_28.png" />
-<img alt="../../_images/gbdt_analysis_results_37_29.png" src="../../_images/gbdt_analysis_results_37_29.png" />
+<img alt="../../_images/gbdt_analysis_results_38_28.png" src="../../_images/gbdt_analysis_results_38_28.png" />
+<img alt="../../_images/gbdt_analysis_results_38_29.png" src="../../_images/gbdt_analysis_results_38_29.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.95</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_31.png" src="../../_images/gbdt_analysis_results_37_31.png" />
-<img alt="../../_images/gbdt_analysis_results_37_32.png" src="../../_images/gbdt_analysis_results_37_32.png" />
+<img alt="../../_images/gbdt_analysis_results_38_31.png" src="../../_images/gbdt_analysis_results_38_31.png" />
+<img alt="../../_images/gbdt_analysis_results_38_32.png" src="../../_images/gbdt_analysis_results_38_32.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.96</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_34.png" src="../../_images/gbdt_analysis_results_37_34.png" />
-<img alt="../../_images/gbdt_analysis_results_37_35.png" src="../../_images/gbdt_analysis_results_37_35.png" />
+<img alt="../../_images/gbdt_analysis_results_38_34.png" src="../../_images/gbdt_analysis_results_38_34.png" />
+<img alt="../../_images/gbdt_analysis_results_38_35.png" src="../../_images/gbdt_analysis_results_38_35.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.97</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_37.png" src="../../_images/gbdt_analysis_results_37_37.png" />
-<img alt="../../_images/gbdt_analysis_results_37_38.png" src="../../_images/gbdt_analysis_results_37_38.png" />
+<img alt="../../_images/gbdt_analysis_results_38_37.png" src="../../_images/gbdt_analysis_results_38_37.png" />
+<img alt="../../_images/gbdt_analysis_results_38_38.png" src="../../_images/gbdt_analysis_results_38_38.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.98</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_40.png" src="../../_images/gbdt_analysis_results_37_40.png" />
-<img alt="../../_images/gbdt_analysis_results_37_41.png" src="../../_images/gbdt_analysis_results_37_41.png" />
+<img alt="../../_images/gbdt_analysis_results_38_40.png" src="../../_images/gbdt_analysis_results_38_40.png" />
+<img alt="../../_images/gbdt_analysis_results_38_41.png" src="../../_images/gbdt_analysis_results_38_41.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.99</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_37_43.png" src="../../_images/gbdt_analysis_results_37_43.png" />
-<img alt="../../_images/gbdt_analysis_results_37_44.png" src="../../_images/gbdt_analysis_results_37_44.png" />
+<img alt="../../_images/gbdt_analysis_results_38_43.png" src="../../_images/gbdt_analysis_results_38_43.png" />
+<img alt="../../_images/gbdt_analysis_results_38_44.png" src="../../_images/gbdt_analysis_results_38_44.png" />
 </div>
 </div>
 </section>
@@ -2439,7 +2453,7 @@ weighted avg       0.92      0.92      0.92    120252
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_40_1.png" src="../../_images/gbdt_analysis_results_40_1.png" />
+<img alt="../../_images/gbdt_analysis_results_41_1.png" src="../../_images/gbdt_analysis_results_41_1.png" />
 </div>
 </div>
 </section>
@@ -2503,7 +2517,7 @@ Wall time: 401 ms
 weighted avg       0.99      0.99      0.99    107687
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_44_1.png" src="../../_images/gbdt_analysis_results_44_1.png" />
+<img alt="../../_images/gbdt_analysis_results_45_1.png" src="../../_images/gbdt_analysis_results_45_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2558,7 +2572,7 @@ Wall time: 513 ms
 weighted avg       0.96      0.96      0.96    209123
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_46_1.png" src="../../_images/gbdt_analysis_results_46_1.png" />
+<img alt="../../_images/gbdt_analysis_results_47_1.png" src="../../_images/gbdt_analysis_results_47_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2613,7 +2627,7 @@ Wall time: 453 ms
 weighted avg       0.87      0.87      0.87    163355
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_48_1.png" src="../../_images/gbdt_analysis_results_48_1.png" />
+<img alt="../../_images/gbdt_analysis_results_49_1.png" src="../../_images/gbdt_analysis_results_49_1.png" />
 </div>
 </div>
 <section id="roc-curves">
@@ -2633,7 +2647,7 @@ weighted avg       0.87      0.87      0.87    163355
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/gbdt_analysis_results_50_0.png" src="../../_images/gbdt_analysis_results_50_0.png" />
+<img alt="../../_images/gbdt_analysis_results_51_0.png" src="../../_images/gbdt_analysis_results_51_0.png" />
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
 </pre></div>
 </div>
@@ -2660,7 +2674,7 @@ weighted avg       0.87      0.87      0.87    163355
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/gbdt_analysis_results_52_0.png" src="../../_images/gbdt_analysis_results_52_0.png" />
+<img alt="../../_images/gbdt_analysis_results_53_0.png" src="../../_images/gbdt_analysis_results_53_0.png" />
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
 </pre></div>
 </div>
@@ -2890,7 +2904,7 @@ weighted avg       0.87      0.87      0.87    163355
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/gbdt_analysis_results_60_0.png" src="../../_images/gbdt_analysis_results_60_0.png" />
+<img alt="../../_images/gbdt_analysis_results_61_0.png" src="../../_images/gbdt_analysis_results_61_0.png" />
 </div>
 </div>
 </section>
@@ -2951,92 +2965,92 @@ weighted avg       0.87      0.87      0.87    163355
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_1.png" src="../../_images/gbdt_analysis_results_62_1.png" />
-<img alt="../../_images/gbdt_analysis_results_62_2.png" src="../../_images/gbdt_analysis_results_62_2.png" />
+<img alt="../../_images/gbdt_analysis_results_63_1.png" src="../../_images/gbdt_analysis_results_63_1.png" />
+<img alt="../../_images/gbdt_analysis_results_63_2.png" src="../../_images/gbdt_analysis_results_63_2.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.6</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_4.png" src="../../_images/gbdt_analysis_results_62_4.png" />
-<img alt="../../_images/gbdt_analysis_results_62_5.png" src="../../_images/gbdt_analysis_results_62_5.png" />
+<img alt="../../_images/gbdt_analysis_results_63_4.png" src="../../_images/gbdt_analysis_results_63_4.png" />
+<img alt="../../_images/gbdt_analysis_results_63_5.png" src="../../_images/gbdt_analysis_results_63_5.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.7</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_7.png" src="../../_images/gbdt_analysis_results_62_7.png" />
-<img alt="../../_images/gbdt_analysis_results_62_8.png" src="../../_images/gbdt_analysis_results_62_8.png" />
+<img alt="../../_images/gbdt_analysis_results_63_7.png" src="../../_images/gbdt_analysis_results_63_7.png" />
+<img alt="../../_images/gbdt_analysis_results_63_8.png" src="../../_images/gbdt_analysis_results_63_8.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.8</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_10.png" src="../../_images/gbdt_analysis_results_62_10.png" />
-<img alt="../../_images/gbdt_analysis_results_62_11.png" src="../../_images/gbdt_analysis_results_62_11.png" />
+<img alt="../../_images/gbdt_analysis_results_63_10.png" src="../../_images/gbdt_analysis_results_63_10.png" />
+<img alt="../../_images/gbdt_analysis_results_63_11.png" src="../../_images/gbdt_analysis_results_63_11.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.85</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_13.png" src="../../_images/gbdt_analysis_results_62_13.png" />
-<img alt="../../_images/gbdt_analysis_results_62_14.png" src="../../_images/gbdt_analysis_results_62_14.png" />
+<img alt="../../_images/gbdt_analysis_results_63_13.png" src="../../_images/gbdt_analysis_results_63_13.png" />
+<img alt="../../_images/gbdt_analysis_results_63_14.png" src="../../_images/gbdt_analysis_results_63_14.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.9</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_16.png" src="../../_images/gbdt_analysis_results_62_16.png" />
-<img alt="../../_images/gbdt_analysis_results_62_17.png" src="../../_images/gbdt_analysis_results_62_17.png" />
+<img alt="../../_images/gbdt_analysis_results_63_16.png" src="../../_images/gbdt_analysis_results_63_16.png" />
+<img alt="../../_images/gbdt_analysis_results_63_17.png" src="../../_images/gbdt_analysis_results_63_17.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.91</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_19.png" src="../../_images/gbdt_analysis_results_62_19.png" />
-<img alt="../../_images/gbdt_analysis_results_62_20.png" src="../../_images/gbdt_analysis_results_62_20.png" />
+<img alt="../../_images/gbdt_analysis_results_63_19.png" src="../../_images/gbdt_analysis_results_63_19.png" />
+<img alt="../../_images/gbdt_analysis_results_63_20.png" src="../../_images/gbdt_analysis_results_63_20.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.92</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_22.png" src="../../_images/gbdt_analysis_results_62_22.png" />
-<img alt="../../_images/gbdt_analysis_results_62_23.png" src="../../_images/gbdt_analysis_results_62_23.png" />
+<img alt="../../_images/gbdt_analysis_results_63_22.png" src="../../_images/gbdt_analysis_results_63_22.png" />
+<img alt="../../_images/gbdt_analysis_results_63_23.png" src="../../_images/gbdt_analysis_results_63_23.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.93</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_25.png" src="../../_images/gbdt_analysis_results_62_25.png" />
-<img alt="../../_images/gbdt_analysis_results_62_26.png" src="../../_images/gbdt_analysis_results_62_26.png" />
+<img alt="../../_images/gbdt_analysis_results_63_25.png" src="../../_images/gbdt_analysis_results_63_25.png" />
+<img alt="../../_images/gbdt_analysis_results_63_26.png" src="../../_images/gbdt_analysis_results_63_26.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.94</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_28.png" src="../../_images/gbdt_analysis_results_62_28.png" />
-<img alt="../../_images/gbdt_analysis_results_62_29.png" src="../../_images/gbdt_analysis_results_62_29.png" />
+<img alt="../../_images/gbdt_analysis_results_63_28.png" src="../../_images/gbdt_analysis_results_63_28.png" />
+<img alt="../../_images/gbdt_analysis_results_63_29.png" src="../../_images/gbdt_analysis_results_63_29.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.95</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_31.png" src="../../_images/gbdt_analysis_results_62_31.png" />
-<img alt="../../_images/gbdt_analysis_results_62_32.png" src="../../_images/gbdt_analysis_results_62_32.png" />
+<img alt="../../_images/gbdt_analysis_results_63_31.png" src="../../_images/gbdt_analysis_results_63_31.png" />
+<img alt="../../_images/gbdt_analysis_results_63_32.png" src="../../_images/gbdt_analysis_results_63_32.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.96</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_34.png" src="../../_images/gbdt_analysis_results_62_34.png" />
-<img alt="../../_images/gbdt_analysis_results_62_35.png" src="../../_images/gbdt_analysis_results_62_35.png" />
+<img alt="../../_images/gbdt_analysis_results_63_34.png" src="../../_images/gbdt_analysis_results_63_34.png" />
+<img alt="../../_images/gbdt_analysis_results_63_35.png" src="../../_images/gbdt_analysis_results_63_35.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.97</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_37.png" src="../../_images/gbdt_analysis_results_62_37.png" />
-<img alt="../../_images/gbdt_analysis_results_62_38.png" src="../../_images/gbdt_analysis_results_62_38.png" />
+<img alt="../../_images/gbdt_analysis_results_63_37.png" src="../../_images/gbdt_analysis_results_63_37.png" />
+<img alt="../../_images/gbdt_analysis_results_63_38.png" src="../../_images/gbdt_analysis_results_63_38.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.98</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_40.png" src="../../_images/gbdt_analysis_results_62_40.png" />
-<img alt="../../_images/gbdt_analysis_results_62_41.png" src="../../_images/gbdt_analysis_results_62_41.png" />
+<img alt="../../_images/gbdt_analysis_results_63_40.png" src="../../_images/gbdt_analysis_results_63_40.png" />
+<img alt="../../_images/gbdt_analysis_results_63_41.png" src="../../_images/gbdt_analysis_results_63_41.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.99</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/gbdt_analysis_results_62_43.png" src="../../_images/gbdt_analysis_results_62_43.png" />
-<img alt="../../_images/gbdt_analysis_results_62_44.png" src="../../_images/gbdt_analysis_results_62_44.png" />
+<img alt="../../_images/gbdt_analysis_results_63_43.png" src="../../_images/gbdt_analysis_results_63_43.png" />
+<img alt="../../_images/gbdt_analysis_results_63_44.png" src="../../_images/gbdt_analysis_results_63_44.png" />
 </div>
 </div>
 </section>
@@ -3074,17 +3088,17 @@ weighted avg       0.87      0.87      0.87    163355
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="global_values.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="balance_data.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Global values for debiasing and standardization</p>
+            <p class="prev-next-title">Creating balanced data</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="DGCNN_operating_point.html" title="next page">
+    <a class='right-next' id="next-link" href="global_values.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Dynamic Graph CNN Operating Point</p>
+        <p class="prev-next-title">Global values for debiasing and standardization</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Dynamic Graph CNN Operating Point
+# # Dynamic graph CNN operating point
 
 # - **Purpose**: The purpose of this notebook is to select an operating point for the Dynamic Graph CNN model.
 # - **Author**: Nico Van den Hooff
@@ -9,16 +9,10 @@
 # In[1]:
 
 
-# TODO: change this to be reproducible
+cd ../
 
 
 # In[2]:
-
-
-cd /home/nico/richai/
-
-
-# In[3]:
 
 
 import pandas as pd
@@ -29,7 +23,7 @@ from utils.helpers import get_config
 
 # # Results for operating points
 
-# In[4]:
+# In[3]:
 
 
 path = "/fast_scratch_1/capstone_2022/models/dgcnn/dgcnn_predictions.csv"

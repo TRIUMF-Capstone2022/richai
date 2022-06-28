@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Gradient Boosted Decision Tree (GBDT) models
+# # Gradient boosted decision tree analysis
+
+# - **Purpose**: The purpose of this notebook is to show the gradient boosted tree model results.
+# - **Author**: Shiv Jena
 
 # ## Key considerations
 # 

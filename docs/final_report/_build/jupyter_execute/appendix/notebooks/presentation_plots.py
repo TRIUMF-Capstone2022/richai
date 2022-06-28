@@ -9,16 +9,10 @@
 # In[1]:
 
 
-# TODO: change this to be reproducible
+cd ../
 
 
 # In[2]:
-
-
-cd /home/nico/richai/
-
-
-# In[3]:
 
 
 import os
@@ -31,56 +25,44 @@ from utils.plotting import plot_efficiencies, plot_cm, wrangle_predictions, plot
 
 # # Read in model results
 
-# In[4]:
+# In[3]:
 
 
 # where all model results are saved
 base_path = "/fast_scratch_1/capstone_2022/models/"
 
-# path to pointnet results
+# paths results
 pointnet_path = os.path.join(
     base_path,
     "pointnet/saved_models/pointnet_momentum_radius_delta_0.5_16e_0706_unbalanced_p_15_45.csv"
 )
 
-# path to dgcnn results
 dgcnn_path = os.path.join(base_path, "dgcnn/dgcnn_predictions.csv")
-
-# path to xgboost results
 xgboost_path = os.path.join(base_path, "xgboost/saved_models/xgb_balanced.csv")
+
+
+# In[4]:
+
+
+# dgcnn and xgboost are already OK for momentum values
+pointnet_results = pd.read_csv(pointnet_path)
+dgcnn_results = pd.read_csv(dgcnn_path) 
+xgboost_results = pd.read_csv(xgboost_path)
 
 
 # In[5]:
 
 
-# pointnet results need to be "unstandardized" for momentum
-mean_momentum = 31.338661
-std_momentum = 7.523443
-pointnet_results = pd.read_csv(pointnet_path)
-pointnet_results["momentum"] = pointnet_results["momentum"] * std_momentum + mean_momentum
+pointnet_results.head()
 
 
 # In[6]:
 
 
-# dgcnn and xgboost are already OK for momentum values
-dgcnn_results = pd.read_csv(dgcnn_path) 
-xgboost_results = pd.read_csv(xgboost_path)
-
-
-# In[7]:
-
-
-pointnet_results.head()
-
-
-# In[8]:
-
-
 dgcnn_results.head()
 
 
-# In[9]:
+# In[7]:
 
 
 xgboost_results.head()
@@ -88,15 +70,15 @@ xgboost_results.head()
 
 # # ROC Curves: PointNet and DGCNN
 
-# In[10]:
+# In[8]:
 
 
 best_pointnet_models = {
-    "Hits, momentum and radius, delta = 0.20": os.path.join(
+    "Hits, momentum and radius, delta = 0.50": os.path.join(
         base_path,
         "pointnet/saved_models/pointnet_momentum_radius_delta_0.5_16e_0706_unbalanced_p_15_45.csv",
     ),
-    "Hits and momentum, delta = 0.20": os.path.join(
+    "Hits and momentum, delta = 0.50": os.path.join(
         base_path,
         "pointnet/saved_models/pointnet_momentum_only_0506_24epochs_unbalanced_p_15_45.csv"
     )
@@ -114,7 +96,7 @@ best_dgcnn_models = {
 }
 
 
-# In[11]:
+# In[9]:
 
 
 plot_roc_curves(
@@ -123,7 +105,7 @@ plot_roc_curves(
 )
 
 
-# In[12]:
+# In[10]:
 
 
 plot_roc_curves(
@@ -134,7 +116,7 @@ plot_roc_curves(
 
 # # ROC Curves: All Models
 
-# In[13]:
+# In[11]:
 
 
 results = {
@@ -144,7 +126,7 @@ results = {
 }
 
 
-# In[14]:
+# In[12]:
 
 
 plot_roc_curves(
@@ -157,19 +139,11 @@ plot_roc_curves(
 
 # ## PointNet
 
-# In[15]:
-
-
-# we need to do this due to how `plot_efficiencies` works
-temp_pointnet = "saved_models/pointnet_results.csv"
-pointnet_results.to_csv(temp_pointnet)
-
-
-# In[16]:
+# In[13]:
 
 
 plot_efficiencies(
-    path=temp_pointnet,
+    path=pointnet_path,
     title="PointNet: Operating Point 0.93",
     cern_scale=True,
     pion_axlims=(0, 1),
@@ -182,7 +156,7 @@ plot_efficiencies(
 
 # ## Dynamic Graph CNN
 
-# In[17]:
+# In[14]:
 
 
 plot_efficiencies(
@@ -199,7 +173,7 @@ plot_efficiencies(
 
 # ## XGBoost
 
-# In[18]:
+# In[15]:
 
 
 plot_efficiencies(
@@ -218,11 +192,11 @@ plot_efficiencies(
 
 # Note: This was not presented, but was just in the appendix in case people asked what the base operating point looked like.
 
-# In[19]:
+# In[16]:
 
 
 plot_efficiencies(
-    path=temp_pointnet,
+    path=pointnet_path,
     title="PointNet: Operating Point 0.50",
     cern_scale=True,
     pion_axlims=(0, 1),
@@ -233,7 +207,7 @@ plot_efficiencies(
 )
 
 
-# In[20]:
+# In[17]:
 
 
 plot_cm(
@@ -243,7 +217,7 @@ plot_cm(
 )
 
 
-# In[21]:
+# In[18]:
 
 
 plot_efficiencies(
@@ -258,7 +232,7 @@ plot_efficiencies(
 )
 
 
-# In[22]:
+# In[19]:
 
 
 plot_cm(
@@ -268,7 +242,7 @@ plot_cm(
 )
 
 
-# In[23]:
+# In[20]:
 
 
 plot_efficiencies(
@@ -283,7 +257,7 @@ plot_efficiencies(
 )
 
 
-# In[24]:
+# In[21]:
 
 
 plot_cm(

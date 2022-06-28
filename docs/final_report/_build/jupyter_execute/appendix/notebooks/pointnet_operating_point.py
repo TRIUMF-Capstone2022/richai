@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # PointNet Operating point 
+# # PointNet operating point 
 
 # - **Purpose**: The purpose of this notebook is to select an operating point for the PointNet model.
+# - **Author**: Rakesh Pandey
 # - **Model Used**: `/fast_scratch_1/capstone_2022/models/pointnet/saved_models/pointnet_momentum_radius_delta_0.5_16e_0706.pt` 
 # - **Features**: Event POS, momentum and radius
 # - **Epochs**: 16

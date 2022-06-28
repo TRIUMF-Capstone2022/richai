@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # PointNet Model Runs
+# # PointNet model runs
 
 # - **Purpose**: The purpose of this notebook is to analyze models trained with different configurations.
+# - **Author**: Rakesh Pandey
 
 # In[1]:
 
