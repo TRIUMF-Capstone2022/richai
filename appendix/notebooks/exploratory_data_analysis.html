@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>RICH AI Exploratory Data Analysis &#8212; RICH AI Final Report</title>
+    <title>Exploratory data analysis &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/TRIUMF_Favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Global values for debiasing and standardization" href="global_values.html" />
-    <link rel="prev" title="RICH AI Data Generation Process" href="data_generation_process.html" />
+    <link rel="next" title="Plotting NA62 Rings" href="plotting_NA62_rings.html" />
+    <link rel="prev" title="Data generation process" href="data_generation_process.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -189,12 +189,27 @@ const thebe_selector_output = ".output, .cell_output"
   <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="data_generation_process.html">
-     RICH AI Data Generation Process
+     Data generation process
     </a>
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     RICH AI Exploratory Data Analysis
+     Exploratory data analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plotting_NA62_rings.html">
+     Plotting NA62 Rings
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="balance_data.html">
+     Creating balanced data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="gbdt_analysis_results.html">
+     Gradient boosted decision tree analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -203,23 +218,18 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="gbdt_analysis_results.html">
-     Gradient Boosted Decision Tree (GBDT) models
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="DGCNN_operating_point.html">
-     Dynamic Graph CNN Operating Point
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="pointnet_model_runs.html">
-     PointNet Model Runs
+     PointNet model runs
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="pointnet_operating_point.html">
-     PointNet Operating point
+     PointNet operating point
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="DGCNN_operating_point.html">
+     Dynamic graph CNN operating point
     </a>
    </li>
    <li class="toctree-l2">
@@ -300,7 +310,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/TRIUMF-Capstone2022/richai/master?urlpath=tree/final_report/appendix/notebooks/Exploratory_data_analysis-final.ipynb"
+        <a href="https://mybinder.org/v2/gh/TRIUMF-Capstone2022/richai/master?urlpath=tree/docs/final_report/appendix/notebooks/exploratory_data_analysis.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -356,7 +366,7 @@ title="Source repository"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../_sources/appendix/notebooks/Exploratory_data_analysis-final.ipynb"
+        <a href="../../_sources/appendix/notebooks/exploratory_data_analysis.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -417,20 +427,8 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   RICH AI Exploratory Data Analysis
+   Exploratory data analysis
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#notes">
-     Notes
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#todo">
-     TODO
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#helper-functions">
@@ -587,7 +585,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>RICH AI Exploratory Data Analysis</h1>
+                <h1>Exploratory data analysis</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -599,20 +597,8 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   RICH AI Exploratory Data Analysis
+   Exploratory data analysis
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#notes">
-     Notes
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#todo">
-     TODO
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#helper-functions">
@@ -770,20 +756,17 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="rich-ai-exploratory-data-analysis">
-<h1>RICH AI Exploratory Data Analysis<a class="headerlink" href="#rich-ai-exploratory-data-analysis" title="Permalink to this headline">#</a></h1>
-<section id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="exploratory-data-analysis">
+<h1>Exploratory data analysis<a class="headerlink" href="#exploratory-data-analysis" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
+<li><p><strong>Purpose</strong>: The purpose of this notebook is to perform exploratory data analysis on the RICH AI Dataset.</p></li>
+<li><p><strong>Authors</strong>: Mukund Iyer, Nico Van den Hooff, Shiv Jena</p></li>
+<li><p><strong>Notes</strong>:</p>
+<ul>
 <li><p>Labels are 0: Muon, 1: Pion, 2: Positron</p></li>
 <li><p>Likelihood labels are different [Pion, Muon, Positron]</p></li>
 </ul>
-</section>
-<section id="todo">
-<h2>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">#</a></h2>
-<ul class="simple">
-<li><p>Add more data</p></li>
-<li><p>Ring centre alignment still off</p></li>
+</li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -811,7 +794,6 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="helper-functions">
 <h1>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">#</a></h1>
@@ -1530,7 +1512,7 @@ Name: class, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Exploratory_data_analysis-final_35_0.png" src="../../_images/Exploratory_data_analysis-final_35_0.png" />
+<img alt="../../_images/exploratory_data_analysis_35_0.png" src="../../_images/exploratory_data_analysis_35_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1567,23 +1549,23 @@ Name: class, dtype: int64
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/Exploratory_data_analysis-final_36_1.png" src="../../_images/Exploratory_data_analysis-final_36_1.png" />
+<img alt="../../_images/exploratory_data_analysis_36_1.png" src="../../_images/exploratory_data_analysis_36_1.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/Exploratory_data_analysis-final_36_3.png" src="../../_images/Exploratory_data_analysis-final_36_3.png" />
+<img alt="../../_images/exploratory_data_analysis_36_3.png" src="../../_images/exploratory_data_analysis_36_3.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/Exploratory_data_analysis-final_36_5.png" src="../../_images/Exploratory_data_analysis-final_36_5.png" />
+<img alt="../../_images/exploratory_data_analysis_36_5.png" src="../../_images/exploratory_data_analysis_36_5.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/Exploratory_data_analysis-final_36_7.png" src="../../_images/Exploratory_data_analysis-final_36_7.png" />
+<img alt="../../_images/exploratory_data_analysis_36_7.png" src="../../_images/exploratory_data_analysis_36_7.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/Exploratory_data_analysis-final_36_9.png" src="../../_images/Exploratory_data_analysis-final_36_9.png" />
+<img alt="../../_images/exploratory_data_analysis_36_9.png" src="../../_images/exploratory_data_analysis_36_9.png" />
 </div>
 </div>
 </section>
@@ -1611,7 +1593,7 @@ Name: class, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Exploratory_data_analysis-final_38_0.png" src="../../_images/Exploratory_data_analysis-final_38_0.png" />
+<img alt="../../_images/exploratory_data_analysis_38_0.png" src="../../_images/exploratory_data_analysis_38_0.png" />
 </div>
 </div>
 </section>
@@ -1631,7 +1613,7 @@ Name: class, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Exploratory_data_analysis-final_40_0.png" src="../../_images/Exploratory_data_analysis-final_40_0.png" />
+<img alt="../../_images/exploratory_data_analysis_40_0.png" src="../../_images/exploratory_data_analysis_40_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1650,11 +1632,11 @@ Name: class, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Exploratory_data_analysis-final_41_0.png" src="../../_images/Exploratory_data_analysis-final_41_0.png" />
-<img alt="../../_images/Exploratory_data_analysis-final_41_1.png" src="../../_images/Exploratory_data_analysis-final_41_1.png" />
-<img alt="../../_images/Exploratory_data_analysis-final_41_2.png" src="../../_images/Exploratory_data_analysis-final_41_2.png" />
-<img alt="../../_images/Exploratory_data_analysis-final_41_3.png" src="../../_images/Exploratory_data_analysis-final_41_3.png" />
-<img alt="../../_images/Exploratory_data_analysis-final_41_4.png" src="../../_images/Exploratory_data_analysis-final_41_4.png" />
+<img alt="../../_images/exploratory_data_analysis_41_0.png" src="../../_images/exploratory_data_analysis_41_0.png" />
+<img alt="../../_images/exploratory_data_analysis_41_1.png" src="../../_images/exploratory_data_analysis_41_1.png" />
+<img alt="../../_images/exploratory_data_analysis_41_2.png" src="../../_images/exploratory_data_analysis_41_2.png" />
+<img alt="../../_images/exploratory_data_analysis_41_3.png" src="../../_images/exploratory_data_analysis_41_3.png" />
+<img alt="../../_images/exploratory_data_analysis_41_4.png" src="../../_images/exploratory_data_analysis_41_4.png" />
 </div>
 </div>
 </section>
@@ -1728,7 +1710,7 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Exploratory_data_analysis-final_48_0.png" src="../../_images/Exploratory_data_analysis-final_48_0.png" />
+<img alt="../../_images/exploratory_data_analysis_48_0.png" src="../../_images/exploratory_data_analysis_48_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1787,7 +1769,7 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Exploratory_data_analysis-final_52_0.png" src="../../_images/Exploratory_data_analysis-final_52_0.png" />
+<img alt="../../_images/exploratory_data_analysis_52_0.png" src="../../_images/exploratory_data_analysis_52_0.png" />
 </div>
 </div>
 </section>
@@ -1820,7 +1802,7 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Exploratory_data_analysis-final_54_0.png" src="../../_images/Exploratory_data_analysis-final_54_0.png" />
+<img alt="../../_images/exploratory_data_analysis_54_0.png" src="../../_images/exploratory_data_analysis_54_0.png" />
 </div>
 </div>
 <!-- ## Location of Ring Centres for Each Particle --></section>
@@ -1857,7 +1839,7 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Exploratory_data_analysis-final_58_0.png" src="../../_images/Exploratory_data_analysis-final_58_0.png" />
+<img alt="../../_images/exploratory_data_analysis_58_0.png" src="../../_images/exploratory_data_analysis_58_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1890,23 +1872,23 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/Exploratory_data_analysis-final_59_1.png" src="../../_images/Exploratory_data_analysis-final_59_1.png" />
+<img alt="../../_images/exploratory_data_analysis_59_1.png" src="../../_images/exploratory_data_analysis_59_1.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/Exploratory_data_analysis-final_59_3.png" src="../../_images/Exploratory_data_analysis-final_59_3.png" />
+<img alt="../../_images/exploratory_data_analysis_59_3.png" src="../../_images/exploratory_data_analysis_59_3.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/Exploratory_data_analysis-final_59_5.png" src="../../_images/Exploratory_data_analysis-final_59_5.png" />
+<img alt="../../_images/exploratory_data_analysis_59_5.png" src="../../_images/exploratory_data_analysis_59_5.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/Exploratory_data_analysis-final_59_7.png" src="../../_images/Exploratory_data_analysis-final_59_7.png" />
+<img alt="../../_images/exploratory_data_analysis_59_7.png" src="../../_images/exploratory_data_analysis_59_7.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/Exploratory_data_analysis-final_59_9.png" src="../../_images/Exploratory_data_analysis-final_59_9.png" />
+<img alt="../../_images/exploratory_data_analysis_59_9.png" src="../../_images/exploratory_data_analysis_59_9.png" />
 </div>
 </div>
 </section>
@@ -1950,7 +1932,7 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7f94f663a1c0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/Exploratory_data_analysis-final_62_1.png" src="../../_images/Exploratory_data_analysis-final_62_1.png" />
+<img alt="../../_images/exploratory_data_analysis_62_1.png" src="../../_images/exploratory_data_analysis_62_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2043,7 +2025,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Exploratory_data_analysis-final_64_0.png" src="../../_images/Exploratory_data_analysis-final_64_0.png" />
+<img alt="../../_images/exploratory_data_analysis_64_0.png" src="../../_images/exploratory_data_analysis_64_0.png" />
 </div>
 </div>
 </section>
@@ -2327,13 +2309,13 @@ Confirmed w/ TRIUMF that sometimes there may be no hits for an event.
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">RICH AI Data Generation Process</p>
+            <p class="prev-next-title">Data generation process</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="global_values.html" title="next page">
+    <a class='right-next' id="next-link" href="plotting_NA62_rings.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Global values for debiasing and standardization</p>
+        <p class="prev-next-title">Plotting NA62 Rings</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>PointNet Model Runs &#8212; RICH AI Final Report</title>
+    <title>PointNet model runs &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/TRIUMF_Favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="PointNet Operating point" href="pointnet_operating_point.html" />
-    <link rel="prev" title="Dynamic Graph CNN Operating Point" href="DGCNN_operating_point.html" />
+    <link rel="next" title="PointNet operating point" href="pointnet_operating_point.html" />
+    <link rel="prev" title="Global values for debiasing and standardization" href="global_values.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -189,12 +189,27 @@ const thebe_selector_output = ".output, .cell_output"
   <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="data_generation_process.html">
-     RICH AI Data Generation Process
+     Data generation process
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="Exploratory_data_analysis-final.html">
-     RICH AI Exploratory Data Analysis
+    <a class="reference internal" href="exploratory_data_analysis.html">
+     Exploratory data analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plotting_NA62_rings.html">
+     Plotting NA62 Rings
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="balance_data.html">
+     Creating balanced data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="gbdt_analysis_results.html">
+     Gradient boosted decision tree analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -202,24 +217,19 @@ const thebe_selector_output = ".output, .cell_output"
      Global values for debiasing and standardization
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="gbdt_analysis_results.html">
-     Gradient Boosted Decision Tree (GBDT) models
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="DGCNN_operating_point.html">
-     Dynamic Graph CNN Operating Point
-    </a>
-   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     PointNet Model Runs
+     PointNet model runs
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="pointnet_operating_point.html">
-     PointNet Operating point
+     PointNet operating point
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="DGCNN_operating_point.html">
+     Dynamic graph CNN operating point
     </a>
    </li>
    <li class="toctree-l2">
@@ -300,7 +310,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/TRIUMF-Capstone2022/richai/master?urlpath=tree/final_report/appendix/notebooks/pointnet_model_runs.ipynb"
+        <a href="https://mybinder.org/v2/gh/TRIUMF-Capstone2022/richai/master?urlpath=tree/docs/final_report/appendix/notebooks/pointnet_model_runs.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -417,7 +427,7 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   PointNet Model Runs
+   PointNet model runs
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -461,7 +471,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>PointNet Model Runs</h1>
+                <h1>PointNet model runs</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -473,7 +483,7 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   PointNet Model Runs
+   PointNet model runs
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -519,9 +529,10 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="pointnet-model-runs">
-<h1>PointNet Model Runs<a class="headerlink" href="#pointnet-model-runs" title="Permalink to this headline">#</a></h1>
+<h1>PointNet model runs<a class="headerlink" href="#pointnet-model-runs" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
 <li><p><strong>Purpose</strong>: The purpose of this notebook is to analyze models trained with different configurations.</p></li>
+<li><p><strong>Author</strong>: Rakesh Pandey</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -736,17 +747,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="DGCNN_operating_point.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="global_values.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Dynamic Graph CNN Operating Point</p>
+            <p class="prev-next-title">Global values for debiasing and standardization</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="pointnet_operating_point.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">PointNet Operating point</p>
+        <p class="prev-next-title">PointNet operating point</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
