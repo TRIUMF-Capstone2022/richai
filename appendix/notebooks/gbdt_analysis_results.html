@@ -1,0 +1,3116 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Gradient Boosted Decision Tree (GBDT) models &#8212; RICH AI Final Report</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../../_static/TRIUMF_Favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Dynamic Graph CNN Operating Point" href="DGCNN_operating_point.html" />
+    <link rel="prev" title="Global values for debiasing and standardization" href="global_values.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/TRIUMF_Logo_Blue.jpeg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">RICH AI Final Report</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../welcome.html">
+                    Welcome!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Analysis and results
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../analysis/introduction.html">
+   1. Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../analysis/data.html">
+   2. Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../analysis/data_science_methods.html">
+   3. Data Science Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../analysis/data_product.html">
+   4. Data Product
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../analysis/conclusions_and_recommendations.html">
+   5. Conclusions and recommendations
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Appendix
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../introduction.html">
+   Appendix A: Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../data.html">
+   Appendix B: Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_gbm.html">
+   Appendix C: Gradient Boosted Tree (ML Baseline)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../dl_pointnet.html">
+   Appendix D: PointNet (Deep Learning)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../dl_dgcnn.html">
+   Appendix E: Dynamic Convolutional Neural Network (Deep Learning)
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../supplementary_notebooks.html">
+   Supplementary Jupyter notebooks
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="data_generation_process.html">
+     RICH AI Data Generation Process
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Exploratory_data_analysis-final.html">
+     RICH AI Exploratory Data Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="global_values.html">
+     Global values for debiasing and standardization
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Gradient Boosted Decision Tree (GBDT) models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="DGCNN_operating_point.html">
+     Dynamic Graph CNN Operating Point
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pointnet_model_runs.html">
+     PointNet Model Runs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pointnet_operating_point.html">
+     PointNet Operating point
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="presentation_plots.html">
+     Presentation plots
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  References
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../references.html">
+   References
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/TRIUMF-Capstone2022/richai/master?urlpath=tree/final_report/appendix/notebooks/gbdt_analysis_results.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/TRIUMF-Capstone2022/richai"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/appendix/notebooks/gbdt_analysis_results.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-considerations">
+   Key considerations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-preparation">
+   Data preparation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#train-dataset-momentum-balanced">
+     Train dataset (momentum balanced):
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-datasets">
+     Test datasets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#checking-gpu-status">
+     Checking GPU status
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-and-evaluation-on-balanced-data">
+   Training and evaluation on balanced data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#default-lightgbm-classifier-training-and-results">
+     Default LightGBM classifier training and results
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#xgboost-classifier-training-and-results">
+     XGBoost Classifier training and results
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adaboost-classifier-training-and-results">
+     AdaBoost Classifier training and results
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis-of-different-gbdt-model-predictions">
+   Analysis of different GBDT model predictions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#best-performing-model-overall-and-selecting-one-model-going-forward">
+     Best performing model overall, and selecting one model going forward
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#saving-results-df">
+     Saving results df
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plotting-roc-curve">
+     Plotting ROC curve
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plotting-efficiency-curves-at-different-operating-points">
+     Plotting Efficiency curves at different operating points
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#choosing-best-operating-point">
+     Choosing best operating point
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#efficiency-plot-of-the-best-performing-xgb-model-with-operating-point-0-92">
+     Efficiency plot of the best performing XGB model with operating point= 0.92
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#momentum-bias-analysis-comparing-models-trained-globally-15-45-gev-c-and-locally-15-25-25-35-35-45-gev-c">
+   <em>
+    Momentum Bias analysis
+   </em>
+   : Comparing models trained globally (15-45 GeV/c) and locally (15-25, 25-35 &amp; 35-45 GeV/c)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#roc-curves">
+     ROC Curves
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluating-results-on-35-45-momentum-bins-with-two-different-models-globally-and-locally-trained-xgboost-models">
+   Evaluating results on 35-45 momentum bins with two different models: globally and locally trained xgboost models
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluating-model-on-unbalanced-test-data">
+   Evaluating model on unbalanced test data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Saving results df
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Plotting Efficiency curves at different operating points
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#observations-on-unbalanced-test-set-performance">
+   Observations on unbalanced test set performance
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Gradient Boosted Decision Tree (GBDT) models</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#key-considerations">
+   Key considerations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-preparation">
+   Data preparation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#train-dataset-momentum-balanced">
+     Train dataset (momentum balanced):
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-datasets">
+     Test datasets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#checking-gpu-status">
+     Checking GPU status
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-and-evaluation-on-balanced-data">
+   Training and evaluation on balanced data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#default-lightgbm-classifier-training-and-results">
+     Default LightGBM classifier training and results
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#xgboost-classifier-training-and-results">
+     XGBoost Classifier training and results
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adaboost-classifier-training-and-results">
+     AdaBoost Classifier training and results
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#analysis-of-different-gbdt-model-predictions">
+   Analysis of different GBDT model predictions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#best-performing-model-overall-and-selecting-one-model-going-forward">
+     Best performing model overall, and selecting one model going forward
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#saving-results-df">
+     Saving results df
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plotting-roc-curve">
+     Plotting ROC curve
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plotting-efficiency-curves-at-different-operating-points">
+     Plotting Efficiency curves at different operating points
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#choosing-best-operating-point">
+     Choosing best operating point
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#efficiency-plot-of-the-best-performing-xgb-model-with-operating-point-0-92">
+     Efficiency plot of the best performing XGB model with operating point= 0.92
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#momentum-bias-analysis-comparing-models-trained-globally-15-45-gev-c-and-locally-15-25-25-35-35-45-gev-c">
+   <em>
+    Momentum Bias analysis
+   </em>
+   : Comparing models trained globally (15-45 GeV/c) and locally (15-25, 25-35 &amp; 35-45 GeV/c)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#roc-curves">
+     ROC Curves
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluating-results-on-35-45-momentum-bins-with-two-different-models-globally-and-locally-trained-xgboost-models">
+   Evaluating results on 35-45 momentum bins with two different models: globally and locally trained xgboost models
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluating-model-on-unbalanced-test-data">
+   Evaluating model on unbalanced test data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Saving results df
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Plotting Efficiency curves at different operating points
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#observations-on-unbalanced-test-set-performance">
+   Observations on unbalanced test set performance
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="gradient-boosted-decision-tree-gbdt-models">
+<h1>Gradient Boosted Decision Tree (GBDT) models<a class="headerlink" href="#gradient-boosted-decision-tree-gbdt-models" title="Permalink to this headline">#</a></h1>
+<section id="key-considerations">
+<h2>Key considerations<a class="headerlink" href="#key-considerations" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><strong>Data</strong>:</p>
+<ul>
+<li><p>Balanced dataset (B &amp; C), containing data for muons(label = 0) and pions (label=1) with equal number of entries each.</p></li>
+<li><p>Unbalanced dataset (A)</p></li>
+</ul>
+</li>
+<li><p><strong>Classifier type</strong>: Binary</p></li>
+<li><p><strong>Features (3 Nos.)</strong>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">track_momentum</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ring_radius</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">total_hits_filtered</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Preprocessing</strong>:</p>
+<ul>
+<li><p>Filtering noise in hits using delta = 0.3</p></li>
+<li><p>Preparing features and removing outlier or anomalous entries</p></li>
+</ul>
+</li>
+<li><p><strong>Training</strong></p>
+<ul>
+<li><p>Lightgbm, Xgboost, Adaboost for training with default values</p></li>
+<li><p>Final training and results on XGBoost on GPU</p></li>
+</ul>
+</li>
+<li><p><strong>Analysis and Results</strong></p>
+<ul>
+<li><p>Analysis of model performance with respect to momentum bins</p></li>
+<li><p>Comparative ROC curves of XGBoost model on global and local momentum bins to assess potential bias</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="data-preparation">
+<h2>Data preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">#</a></h2>
+<section id="train-dataset-momentum-balanced">
+<h3>Train dataset (momentum balanced):<a class="headerlink" href="#train-dataset-momentum-balanced" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Balanced data set binned on 3 momentum bins:</p>
+<ul>
+<li><p>15-25 GeV/C</p></li>
+<li><p>25-35 GeV/C</p></li>
+<li><p>35-45 GeV/C</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="test-datasets">
+<h3>Test datasets<a class="headerlink" href="#test-datasets" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>balanced test set</p></li>
+<li><p>unbalanced test set</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">../</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/shiv/richai
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
+
+<span class="c1"># system libraries</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="c1"># modeling libraries</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cudf</span>
+<span class="kn">import</span> <span class="nn">cupy</span>
+<span class="kn">from</span> <span class="nn">lightgbm.sklearn</span> <span class="kn">import</span> <span class="n">LGBMClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span>
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">plot_roc_curve</span><span class="p">,</span>    
+    <span class="n">auc</span><span class="p">,</span> 
+    <span class="n">accuracy_score</span><span class="p">,</span>
+    <span class="n">confusion_matrix</span><span class="p">,</span> 
+    <span class="n">classification_report</span><span class="p">,</span>
+    <span class="n">precision_recall_curve</span>  
+<span class="p">)</span>
+<span class="kn">import</span> <span class="nn">optuna</span>
+
+<span class="c1"># visualization libraries</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
+<span class="kn">import</span> <span class="nn">h5py</span> 
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="c1"># utils</span>
+<span class="kn">from</span> <span class="nn">utils.helpers</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">utils.gbt_dataset</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">utils.plotting</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="checking-gpu-status">
+<h3>Checking GPU status<a class="headerlink" href="#checking-gpu-status" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>nvidia-smi
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mon Jun 27 20:53:37 2022       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 510.47.03    Driver Version: 510.47.03    CUDA Version: 11.6     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  NVIDIA GeForce ...  Off  | 00000000:1A:00.0 Off |                  N/A |
+| 30%   32C    P8     6W / 250W |   9395MiB / 11264MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   1  NVIDIA GeForce ...  Off  | 00000000:1B:00.0 Off |                  N/A |
+| 30%   32C    P8    18W / 250W |    730MiB / 11264MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   2  NVIDIA GeForce ...  Off  | 00000000:3D:00.0 Off |                  N/A |
+| 30%   29C    P8    20W / 250W |      3MiB / 11264MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   3  NVIDIA GeForce ...  Off  | 00000000:3E:00.0 Off |                  N/A |
+| 30%   32C    P8     1W / 250W |      3MiB / 11264MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   4  NVIDIA GeForce ...  Off  | 00000000:88:00.0 Off |                  N/A |
+| 30%   29C    P8     6W / 250W |      3MiB / 11264MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   5  NVIDIA GeForce ...  Off  | 00000000:89:00.0 Off |                  N/A |
+| 30%   31C    P8    21W / 250W |      3MiB / 11264MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   6  NVIDIA GeForce ...  Off  | 00000000:B1:00.0 Off |                  N/A |
+| 30%   31C    P8     4W / 250W |      3MiB / 11264MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+|   7  NVIDIA GeForce ...  Off  | 00000000:B2:00.0 Off |                  N/A |
+| 22%   30C    P8    23W / 250W |   9592MiB / 11264MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|    0   N/A  N/A     39246      C   /usr/bin/python3                 8687MiB |
+|    0   N/A  N/A     60661      C   /opt/conda/bin/python3.8          705MiB |
+|    1   N/A  N/A     60661      C   /opt/conda/bin/python3.8          727MiB |
+|    7   N/A  N/A     54261      C   /usr/bin/python3                 9589MiB |
++-----------------------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Global objects</span>
+<span class="n">random_state</span><span class="o">=</span><span class="mi">123</span>
+<span class="n">gpu_id</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">(</span><span class="s2">&quot;gpu&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">cupy</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">Device</span><span class="p">(</span><span class="n">gpu_id</span><span class="p">)</span><span class="o">.</span><span class="n">use</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;gpu_id in use: </span><span class="si">{</span><span class="n">gpu_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gpu_id in use: 1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="c1"># Creating train dataset using gbt_df() util function</span>
+<span class="n">df_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">files_</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">(</span><span class="s2">&quot;dataset.train&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">dset_path_raw</span><span class="p">,</span> <span class="n">dset_path_bal</span> <span class="ow">in</span> <span class="n">files_</span><span class="p">:</span>
+    <span class="n">df_</span> <span class="o">=</span> <span class="n">gbt_df</span><span class="p">(</span><span class="n">dset_path_raw</span><span class="p">,</span> <span class="n">dset_path_bal</span><span class="p">,</span> <span class="n">gpu_id</span><span class="o">=</span><span class="n">gpu_id</span><span class="p">)</span>
+    <span class="n">df_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_</span><span class="p">])</span>
+<span class="n">df_train</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reading data...
+Filtering hits...
+Removing outliers or anomalous entries
+Dataset preparation complete
+Reading data...
+Filtering hits...
+Removing outliers or anomalous entries
+Dataset preparation complete
+CPU times: user 25 s, sys: 5.99 s, total: 31 s
+Wall time: 31 s
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>track_momentum</th>
+      <th>ring_radius</th>
+      <th>total_hits_filtered</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>313820</th>
+      <td>20.545891</td>
+      <td>172.459305</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>346918</th>
+      <td>18.684219</td>
+      <td>166.742630</td>
+      <td>11</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>647962</th>
+      <td>19.536823</td>
+      <td>166.987915</td>
+      <td>16</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>862768</th>
+      <td>19.072475</td>
+      <td>165.470795</td>
+      <td>16</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>228333</th>
+      <td>17.260925</td>
+      <td>162.446198</td>
+      <td>18</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>9567636</th>
+      <td>35.011139</td>
+      <td>177.854492</td>
+      <td>19</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9567637</th>
+      <td>38.958267</td>
+      <td>182.430420</td>
+      <td>17</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9567638</th>
+      <td>38.474777</td>
+      <td>176.691132</td>
+      <td>12</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9567646</th>
+      <td>36.989967</td>
+      <td>180.464676</td>
+      <td>32</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9567649</th>
+      <td>37.186985</td>
+      <td>179.594803</td>
+      <td>14</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>1920653 rows × 4 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="c1"># Creating test dataset - balanced using gbt_df() util function</span>
+<span class="n">df_test_bal</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">files_</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">(</span><span class="s2">&quot;dataset.test&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">dset_path_raw</span><span class="p">,</span> <span class="n">dset_path_bal</span> <span class="ow">in</span> <span class="n">files_</span><span class="p">:</span>
+    <span class="n">df_</span> <span class="o">=</span> <span class="n">gbt_df</span><span class="p">(</span><span class="n">dset_path_raw</span><span class="p">,</span> <span class="n">dset_path_bal</span><span class="p">,</span> <span class="n">gpu_id</span><span class="o">=</span><span class="n">gpu_id</span><span class="p">)</span>
+    <span class="n">df_test_bal</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_test_bal</span><span class="p">,</span> <span class="n">df_</span><span class="p">])</span>
+<span class="n">df_test_bal</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reading data...
+Filtering hits...
+Removing outliers or anomalous entries
+Dataset preparation complete
+Reading data...
+Filtering hits...
+Removing outliers or anomalous entries
+Dataset preparation complete
+Reading data...
+Filtering hits...
+Removing outliers or anomalous entries
+Dataset preparation complete
+Reading data...
+Filtering hits...
+Removing outliers or anomalous entries
+Dataset preparation complete
+Reading data...
+Filtering hits...
+Removing outliers or anomalous entries
+Dataset preparation complete
+CPU times: user 1.77 s, sys: 206 ms, total: 1.97 s
+Wall time: 1.96 s
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>track_momentum</th>
+      <th>ring_radius</th>
+      <th>total_hits_filtered</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>74161</th>
+      <td>24.321434</td>
+      <td>175.323746</td>
+      <td>22</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>107861</th>
+      <td>20.784155</td>
+      <td>169.408127</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>51081</th>
+      <td>22.166454</td>
+      <td>171.159927</td>
+      <td>11</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>25856</th>
+      <td>24.523874</td>
+      <td>170.851730</td>
+      <td>10</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>66792</th>
+      <td>18.591120</td>
+      <td>165.436035</td>
+      <td>15</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>103572</th>
+      <td>38.928314</td>
+      <td>178.491653</td>
+      <td>19</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>103577</th>
+      <td>35.705940</td>
+      <td>178.665436</td>
+      <td>12</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>103581</th>
+      <td>44.021793</td>
+      <td>184.784882</td>
+      <td>14</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>103588</th>
+      <td>36.271393</td>
+      <td>178.187836</td>
+      <td>15</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>103593</th>
+      <td>42.269211</td>
+      <td>179.087311</td>
+      <td>15</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>120252 rows × 4 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test dataset - unbalanced</span>
+<span class="n">df_test_unbal</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">files_</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">(</span><span class="s2">&quot;dataset.test&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">dset_path_raw</span><span class="p">,</span> <span class="n">dset_path_bal</span> <span class="ow">in</span> <span class="n">files_</span><span class="p">:</span>
+    <span class="n">df_</span> <span class="o">=</span> <span class="n">gbt_df</span><span class="p">(</span><span class="n">dset_path_raw</span><span class="p">,</span> <span class="n">dset_path_bal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gpu_id</span><span class="o">=</span><span class="n">gpu_id</span><span class="p">)</span>
+    <span class="n">df_test_unbal</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_test_unbal</span><span class="p">,</span> <span class="n">df_</span><span class="p">])</span>
+<span class="n">df_test_unbal</span> <span class="o">=</span> <span class="n">df_test_unbal</span><span class="p">[</span><span class="n">df_test_unbal</span><span class="o">.</span><span class="n">label</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">]</span> <span class="c1"># Remove positrons</span>
+<span class="n">df_test_unbal</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reading data...
+Filtering hits...
+Removing outliers or anomalous entries
+Dataset preparation complete
+Reading data...
+Filtering hits...
+Removing outliers or anomalous entries
+Dataset preparation complete
+Reading data...
+Filtering hits...
+Removing outliers or anomalous entries
+Dataset preparation complete
+Reading data...
+Filtering hits...
+Removing outliers or anomalous entries
+Dataset preparation complete
+Reading data...
+Filtering hits...
+Removing outliers or anomalous entries
+Dataset preparation complete
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>track_momentum</th>
+      <th>ring_radius</th>
+      <th>total_hits_filtered</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>39.102062</td>
+      <td>184.681473</td>
+      <td>13</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>43.845306</td>
+      <td>184.932297</td>
+      <td>14</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>49.434795</td>
+      <td>189.741135</td>
+      <td>10</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>36.152966</td>
+      <td>184.276459</td>
+      <td>14</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>65.520844</td>
+      <td>187.563675</td>
+      <td>9</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>103591</th>
+      <td>29.149534</td>
+      <td>170.303223</td>
+      <td>14</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>103592</th>
+      <td>30.451511</td>
+      <td>172.364502</td>
+      <td>12</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>103593</th>
+      <td>42.269211</td>
+      <td>179.087311</td>
+      <td>15</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>103594</th>
+      <td>55.185467</td>
+      <td>185.471069</td>
+      <td>20</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>103595</th>
+      <td>28.764696</td>
+      <td>172.252792</td>
+      <td>13</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>695080 rows × 4 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Summary of train test datasets</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;df_train&quot;</span><span class="p">:</span> <span class="n">df_train</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(),</span>
+        <span class="s2">&quot;df_test_bal&quot;</span><span class="p">:</span> <span class="n">df_test_bal</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(),</span>
+        <span class="s2">&quot;df_test_unbal&quot;</span><span class="p">:</span> <span class="n">df_test_unbal</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+    <span class="p">},</span>    
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>df_train</th>
+      <th>df_test_bal</th>
+      <th>df_test_unbal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>962982</td>
+      <td>60279</td>
+      <td>627355</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>957671</td>
+      <td>59973</td>
+      <td>67725</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="training-and-evaluation-on-balanced-data">
+<h2>Training and evaluation on balanced data<a class="headerlink" href="#training-and-evaluation-on-balanced-data" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># X, y</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span>
+    <span class="s1">&#39;track_momentum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ring_radius&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;total_hits_filtered&#39;</span>
+<span class="p">]]</span>
+
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+
+<span class="n">X_test_bal</span> <span class="o">=</span> <span class="n">df_test_bal</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span>
+    <span class="s1">&#39;track_momentum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ring_radius&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;total_hits_filtered&#39;</span>
+<span class="p">]]</span>
+<span class="n">y_test_bal</span> <span class="o">=</span> <span class="n">df_test_bal</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="default-lightgbm-classifier-training-and-results">
+<h3>Default LightGBM classifier training and results<a class="headerlink" href="#default-lightgbm-classifier-training-and-results" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="n">lgbm_c</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+<span class="n">lgbm_c</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 39 s, sys: 325 ms, total: 39.4 s
+Wall time: 1.39 s
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LGBMClassifier(random_state=123)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_lgb</span> <span class="o">=</span> <span class="n">lgbm_c</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_bal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_results</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">lgbm_c</span><span class="p">,</span> <span class="n">X_test</span><span class="o">=</span><span class="n">X_test_bal</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y_test_bal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Classification Report
+
+              precision    recall  f1-score   support
+
+       Muons       0.94      0.93      0.94     60279
+       Pions       0.93      0.94      0.94     59973
+
+    accuracy                           0.94    120252
+   macro avg       0.94      0.94      0.94    120252
+weighted avg       0.94      0.94      0.94    120252
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_17_1.png" src="../../_images/gbdt_analysis_results_17_1.png" />
+</div>
+</div>
+</section>
+<section id="xgboost-classifier-training-and-results">
+<h3>XGBoost Classifier training and results<a class="headerlink" href="#xgboost-classifier-training-and-results" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="n">xgb_cl</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+    <span class="n">tree_method</span><span class="o">=</span><span class="s2">&quot;gpu_hist&quot;</span><span class="p">,</span>
+    <span class="n">gpu_id</span><span class="o">=</span><span class="n">gpu_id</span><span class="p">,</span>
+    <span class="n">predictor</span><span class="o">=</span><span class="s2">&quot;gpu_predictor&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">xgb_cl</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/xgboost/sklearn.py:1224: UserWarning: The use of label encoder in XGBClassifier is deprecated and will be removed in a future release. To remove this warning, do the following: 1) Pass option use_label_encoder=False when constructing XGBClassifier object; and 2) Encode your labels (y) as integers starting with 0, i.e. 0, 1, 2, ..., [num_class - 1].
+  warnings.warn(label_encoder_deprecation_msg, UserWarning)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[20:54:20] WARNING: ../src/learner.cc:1115: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+CPU times: user 8.21 s, sys: 358 ms, total: 8.57 s
+Wall time: 1.12 s
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>XGBClassifier(base_score=0.5, booster=&#39;gbtree&#39;, colsample_bylevel=1,
+              colsample_bynode=1, colsample_bytree=1, enable_categorical=False,
+              gamma=0, gpu_id=1, importance_type=None,
+              interaction_constraints=&#39;&#39;, learning_rate=0.300000012,
+              max_delta_step=0, max_depth=6, min_child_weight=1, missing=nan,
+              monotone_constraints=&#39;()&#39;, n_estimators=100, n_jobs=64,
+              num_parallel_tree=1, predictor=&#39;gpu_predictor&#39;, random_state=123,
+              reg_alpha=0, reg_lambda=1, scale_pos_weight=1, subsample=1,
+              tree_method=&#39;gpu_hist&#39;, validate_parameters=1, verbosity=None)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="n">y_pred_xgb</span> <span class="o">=</span> <span class="n">xgb_cl</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_bal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.09 s, sys: 4.56 ms, total: 1.09 s
+Wall time: 23.5 ms
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_results</span><span class="p">(</span><span class="n">xgb_cl</span><span class="p">,</span> <span class="n">X_test_bal</span><span class="p">,</span> <span class="n">y_test_bal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Classification Report
+
+              precision    recall  f1-score   support
+
+       Muons       0.94      0.93      0.94     60279
+       Pions       0.93      0.94      0.94     59973
+
+    accuracy                           0.94    120252
+   macro avg       0.94      0.94      0.94    120252
+weighted avg       0.94      0.94      0.94    120252
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_21_1.png" src="../../_images/gbdt_analysis_results_21_1.png" />
+</div>
+</div>
+</section>
+<section id="adaboost-classifier-training-and-results">
+<h3>AdaBoost Classifier training and results<a class="headerlink" href="#adaboost-classifier-training-and-results" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="n">ab_cl</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span>
+<span class="p">)</span>
+<span class="n">ab_cl</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1min 51s, sys: 3.65 s, total: 1min 55s
+Wall time: 1min 55s
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AdaBoostClassifier(n_estimators=100, random_state=123)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_adb</span> <span class="o">=</span> <span class="n">ab_cl</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_bal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_results</span><span class="p">(</span><span class="n">ab_cl</span><span class="p">,</span> <span class="n">X_test_bal</span><span class="p">,</span> <span class="n">y_test_bal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Classification Report
+
+              precision    recall  f1-score   support
+
+       Muons       0.91      0.93      0.92     60279
+       Pions       0.93      0.91      0.92     59973
+
+    accuracy                           0.92    120252
+   macro avg       0.92      0.92      0.92    120252
+weighted avg       0.92      0.92      0.92    120252
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_25_1.png" src="../../_images/gbdt_analysis_results_25_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Comparing GBDT model performances on balanced test data across LGBM, XGBoost and AdaBoost</span>
+<span class="n">results_gbm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;track_momentum&quot;</span><span class="p">:</span> <span class="n">X_test_bal</span><span class="o">.</span><span class="n">track_momentum</span><span class="p">,</span>
+    <span class="s2">&quot;ring_radius&quot;</span><span class="p">:</span> <span class="n">X_test_bal</span><span class="o">.</span><span class="n">ring_radius</span><span class="p">,</span>
+    <span class="s2">&quot;total_hits_filtered&quot;</span><span class="p">:</span> <span class="n">X_test_bal</span><span class="o">.</span><span class="n">total_hits_filtered</span><span class="p">,</span>
+    <span class="s2">&quot;y_test&quot;</span><span class="p">:</span> <span class="n">y_test_bal</span><span class="p">,</span>
+    <span class="s2">&quot;y_pred_lgb&quot;</span><span class="p">:</span> <span class="n">y_pred_lgb</span><span class="p">,</span>
+    <span class="s2">&quot;y_pred_xgb&quot;</span><span class="p">:</span> <span class="n">y_pred_xgb</span><span class="p">,</span>
+    <span class="s2">&quot;y_pred_adb&quot;</span><span class="p">:</span> <span class="n">y_pred_adb</span><span class="p">,</span>
+    <span class="s2">&quot;compare_xgb_lgb&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">y_pred_lgb</span> <span class="o">==</span> <span class="n">y_pred_xgb</span><span class="p">)</span> 
+    
+<span class="p">})</span>
+<span class="n">results_gbm</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>track_momentum</th>
+      <th>ring_radius</th>
+      <th>total_hits_filtered</th>
+      <th>y_test</th>
+      <th>y_pred_lgb</th>
+      <th>y_pred_xgb</th>
+      <th>y_pred_adb</th>
+      <th>compare_xgb_lgb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>74161</th>
+      <td>24.321434</td>
+      <td>175.323746</td>
+      <td>22</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>107861</th>
+      <td>20.784155</td>
+      <td>169.408127</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>51081</th>
+      <td>22.166454</td>
+      <td>171.159927</td>
+      <td>11</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>25856</th>
+      <td>24.523874</td>
+      <td>170.851730</td>
+      <td>10</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>66792</th>
+      <td>18.591120</td>
+      <td>165.436035</td>
+      <td>15</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>103572</th>
+      <td>38.928314</td>
+      <td>178.491653</td>
+      <td>19</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>103577</th>
+      <td>35.705940</td>
+      <td>178.665436</td>
+      <td>12</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>103581</th>
+      <td>44.021793</td>
+      <td>184.784882</td>
+      <td>14</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>103588</th>
+      <td>36.271393</td>
+      <td>178.187836</td>
+      <td>15</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>103593</th>
+      <td>42.269211</td>
+      <td>179.087311</td>
+      <td>15</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+<p>120252 rows × 8 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="analysis-of-different-gbdt-model-predictions">
+<h2>Analysis of different GBDT model predictions<a class="headerlink" href="#analysis-of-different-gbdt-model-predictions" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mismatch between lgbm and xgb predictions</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total mismatch between LBGM and XGB: </span><span class="si">{</span><span class="n">results_gbm</span><span class="p">[</span><span class="n">results_gbm</span><span class="o">.</span><span class="n">compare_xgb_lgb</span><span class="o">==</span><span class="kc">False</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">results_gbm</span><span class="p">[</span><span class="n">results_gbm</span><span class="o">.</span><span class="n">compare_xgb_lgb</span><span class="o">==</span><span class="kc">False</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total mismatch between LBGM and XGB: 718
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>track_momentum</th>
+      <th>ring_radius</th>
+      <th>total_hits_filtered</th>
+      <th>y_test</th>
+      <th>y_pred_lgb</th>
+      <th>y_pred_xgb</th>
+      <th>y_pred_adb</th>
+      <th>compare_xgb_lgb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11468</th>
+      <td>15.241979</td>
+      <td>133.349411</td>
+      <td>7</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>116170</th>
+      <td>20.094755</td>
+      <td>167.074280</td>
+      <td>38</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>119246</th>
+      <td>19.823019</td>
+      <td>84.123199</td>
+      <td>5</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>121948</th>
+      <td>24.847961</td>
+      <td>170.266617</td>
+      <td>9</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>127154</th>
+      <td>23.325472</td>
+      <td>167.271591</td>
+      <td>11</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>102141</th>
+      <td>43.599106</td>
+      <td>184.328522</td>
+      <td>17</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>102359</th>
+      <td>39.024002</td>
+      <td>182.702621</td>
+      <td>10</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>102530</th>
+      <td>37.762753</td>
+      <td>181.884323</td>
+      <td>9</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>102593</th>
+      <td>39.863125</td>
+      <td>182.899414</td>
+      <td>11</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>103375</th>
+      <td>35.489830</td>
+      <td>181.081833</td>
+      <td>9</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+<p>718 rows × 8 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Comparing xgboost predictions with actual labels</span>
+<span class="n">mis_preds</span> <span class="o">=</span> <span class="n">results_gbm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;y_test != y_pred_xgb&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total mis-predictions: </span><span class="si">{</span><span class="n">mis_preds</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">mis_preds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total mis-predictions: 7642
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>track_momentum</th>
+      <th>ring_radius</th>
+      <th>total_hits_filtered</th>
+      <th>y_test</th>
+      <th>y_pred_lgb</th>
+      <th>y_pred_xgb</th>
+      <th>y_pred_adb</th>
+      <th>compare_xgb_lgb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>37431</th>
+      <td>22.952774</td>
+      <td>165.764618</td>
+      <td>4</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>45453</th>
+      <td>22.831854</td>
+      <td>163.029800</td>
+      <td>10</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>74731</th>
+      <td>18.101425</td>
+      <td>148.652878</td>
+      <td>5</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>91616</th>
+      <td>22.583714</td>
+      <td>123.278931</td>
+      <td>10</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>18582</th>
+      <td>23.139898</td>
+      <td>155.129761</td>
+      <td>5</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>103500</th>
+      <td>38.797981</td>
+      <td>183.389221</td>
+      <td>14</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>103517</th>
+      <td>35.021149</td>
+      <td>182.015976</td>
+      <td>12</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>103527</th>
+      <td>40.636719</td>
+      <td>184.285721</td>
+      <td>11</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>103566</th>
+      <td>38.314316</td>
+      <td>184.706406</td>
+      <td>19</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>103581</th>
+      <td>44.021793</td>
+      <td>184.784882</td>
+      <td>14</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+<p>7642 rows × 8 columns</p>
+</div></div></div>
+</div>
+<section id="best-performing-model-overall-and-selecting-one-model-going-forward">
+<h3>Best performing model overall, and selecting one model going forward<a class="headerlink" href="#best-performing-model-overall-and-selecting-one-model-going-forward" title="Permalink to this headline">#</a></h3>
+<p>Although, models performed similarly on the test data, XGBoost performance is better than the rest in terms of speed due to GPU accelaration support. Therefore, going forward, the GBDT model will be XGBClassifier with Sklearn API (native implementation is dmlc XGBoost)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># XGBoost evaluation results on balanced test set for plotting function</span>
+
+<span class="n">y_probs_xgb</span> <span class="o">=</span> <span class="n">xgb_cl</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_bal</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">df_gbm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">y_test_bal</span><span class="p">,</span>
+    <span class="s2">&quot;predictions&quot;</span><span class="p">:</span> <span class="n">y_pred_xgb</span><span class="p">,</span>
+    <span class="s2">&quot;probabilities&quot;</span><span class="p">:</span> <span class="n">y_probs_xgb</span><span class="p">,</span>
+    <span class="s2">&quot;momentum&quot;</span><span class="p">:</span> <span class="n">X_test_bal</span><span class="o">.</span><span class="n">track_momentum</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">df_gbm</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>labels</th>
+      <th>predictions</th>
+      <th>probabilities</th>
+      <th>momentum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>74161</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0.001645</td>
+      <td>24.321434</td>
+    </tr>
+    <tr>
+      <th>107861</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0.002966</td>
+      <td>20.784155</td>
+    </tr>
+    <tr>
+      <th>51081</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0.001681</td>
+      <td>22.166454</td>
+    </tr>
+    <tr>
+      <th>25856</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0.220906</td>
+      <td>24.523874</td>
+    </tr>
+    <tr>
+      <th>66792</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0.000125</td>
+      <td>18.591120</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>103572</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0.995130</td>
+      <td>38.928314</td>
+    </tr>
+    <tr>
+      <th>103577</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0.947483</td>
+      <td>35.705940</td>
+    </tr>
+    <tr>
+      <th>103581</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0.392458</td>
+      <td>44.021793</td>
+    </tr>
+    <tr>
+      <th>103588</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0.975933</td>
+      <td>36.271393</td>
+    </tr>
+    <tr>
+      <th>103593</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0.935501</td>
+      <td>42.269211</td>
+    </tr>
+  </tbody>
+</table>
+<p>120252 rows × 4 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="saving-results-df">
+<h3>Saving results df<a class="headerlink" href="#saving-results-df" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Saving XGBoost results on balanced test set</span>
+<span class="n">path_preds_bal</span> <span class="o">=</span> <span class="s1">&#39;/fast_scratch_1/capstone_2022/models/xgboost/saved_models/xgb_balanced.csv&#39;</span>
+<span class="n">df_gbm</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_preds_bal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="plotting-roc-curve">
+<h3>Plotting ROC curve<a class="headerlink" href="#plotting-roc-curve" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ROC curve at default (0.5) operating point</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;XGBoost_balanced_op_0.5&quot;</span><span class="p">:</span> <span class="n">path_preds_bal</span>
+<span class="p">}</span>
+<span class="n">plot_roc_curves</span><span class="p">(</span>
+    <span class="n">results</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;ROC Curves: XGBoost models&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/gbdt_analysis_results_35_0.png" src="../../_images/gbdt_analysis_results_35_0.png" />
+</div>
+</div>
+</section>
+<section id="plotting-efficiency-curves-at-different-operating-points">
+<h3>Plotting Efficiency curves at different operating points<a class="headerlink" href="#plotting-efficiency-curves-at-different-operating-points" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;/fast_scratch_1/capstone_2022/models/xgboost/saved_models/xgb_balanced.csv&#39;</span>
+
+<span class="n">operating_point</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">0.50</span><span class="p">,</span>
+    <span class="mf">0.60</span><span class="p">,</span>
+    <span class="mf">0.70</span><span class="p">,</span>
+    <span class="mf">0.80</span><span class="p">,</span>
+    <span class="mf">0.85</span><span class="p">,</span>
+    <span class="mf">0.90</span><span class="p">,</span>
+    <span class="mf">0.91</span><span class="p">,</span>
+    <span class="mf">0.92</span><span class="p">,</span>
+    <span class="mf">0.93</span><span class="p">,</span>
+    <span class="mf">0.94</span><span class="p">,</span>
+    <span class="mf">0.95</span><span class="p">,</span>
+    <span class="mf">0.96</span><span class="p">,</span>
+    <span class="mf">0.97</span><span class="p">,</span>
+    <span class="mf">0.98</span><span class="p">,</span>
+    <span class="mf">0.99</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">operating_point</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33m&quot;</span> <span class="o">+</span> <span class="s2">&quot;Operating point: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">op</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33m&quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot;Operating point: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">op</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+    
+    <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;XGBoost with Operating Point: </span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s2">&quot;</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;probabilities&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">op</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="n">plot_cm</span><span class="p">(</span>
+        <span class="n">y_true</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">],</span>
+        <span class="n">y_pred</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">],</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span>
+    <span class="p">)</span>
+    
+    <span class="n">plot_efficiencies</span><span class="p">(</span>
+        <span class="n">path</span><span class="o">=</span><span class="n">file_path</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">cern_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">pion_axlims</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">muon_axlims</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">45</span><span class="p">),</span>
+        <span class="n">pion_axticks</span><span class="o">=</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+        <span class="n">muon_axticks</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">op_point</span><span class="o">=</span><span class="n">op</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.5</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_1.png" src="../../_images/gbdt_analysis_results_37_1.png" />
+<img alt="../../_images/gbdt_analysis_results_37_2.png" src="../../_images/gbdt_analysis_results_37_2.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.6</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_4.png" src="../../_images/gbdt_analysis_results_37_4.png" />
+<img alt="../../_images/gbdt_analysis_results_37_5.png" src="../../_images/gbdt_analysis_results_37_5.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.7</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_7.png" src="../../_images/gbdt_analysis_results_37_7.png" />
+<img alt="../../_images/gbdt_analysis_results_37_8.png" src="../../_images/gbdt_analysis_results_37_8.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.8</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_10.png" src="../../_images/gbdt_analysis_results_37_10.png" />
+<img alt="../../_images/gbdt_analysis_results_37_11.png" src="../../_images/gbdt_analysis_results_37_11.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.85</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_13.png" src="../../_images/gbdt_analysis_results_37_13.png" />
+<img alt="../../_images/gbdt_analysis_results_37_14.png" src="../../_images/gbdt_analysis_results_37_14.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.9</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_16.png" src="../../_images/gbdt_analysis_results_37_16.png" />
+<img alt="../../_images/gbdt_analysis_results_37_17.png" src="../../_images/gbdt_analysis_results_37_17.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.91</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_19.png" src="../../_images/gbdt_analysis_results_37_19.png" />
+<img alt="../../_images/gbdt_analysis_results_37_20.png" src="../../_images/gbdt_analysis_results_37_20.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.92</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_22.png" src="../../_images/gbdt_analysis_results_37_22.png" />
+<img alt="../../_images/gbdt_analysis_results_37_23.png" src="../../_images/gbdt_analysis_results_37_23.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.93</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_25.png" src="../../_images/gbdt_analysis_results_37_25.png" />
+<img alt="../../_images/gbdt_analysis_results_37_26.png" src="../../_images/gbdt_analysis_results_37_26.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.94</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_28.png" src="../../_images/gbdt_analysis_results_37_28.png" />
+<img alt="../../_images/gbdt_analysis_results_37_29.png" src="../../_images/gbdt_analysis_results_37_29.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.95</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_31.png" src="../../_images/gbdt_analysis_results_37_31.png" />
+<img alt="../../_images/gbdt_analysis_results_37_32.png" src="../../_images/gbdt_analysis_results_37_32.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.96</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_34.png" src="../../_images/gbdt_analysis_results_37_34.png" />
+<img alt="../../_images/gbdt_analysis_results_37_35.png" src="../../_images/gbdt_analysis_results_37_35.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.97</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_37.png" src="../../_images/gbdt_analysis_results_37_37.png" />
+<img alt="../../_images/gbdt_analysis_results_37_38.png" src="../../_images/gbdt_analysis_results_37_38.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.98</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_40.png" src="../../_images/gbdt_analysis_results_37_40.png" />
+<img alt="../../_images/gbdt_analysis_results_37_41.png" src="../../_images/gbdt_analysis_results_37_41.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.99</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_37_43.png" src="../../_images/gbdt_analysis_results_37_43.png" />
+<img alt="../../_images/gbdt_analysis_results_37_44.png" src="../../_images/gbdt_analysis_results_37_44.png" />
+</div>
+</div>
+</section>
+<section id="choosing-best-operating-point">
+<h3>Choosing best operating point<a class="headerlink" href="#choosing-best-operating-point" title="Permalink to this headline">#</a></h3>
+<p>In order to balance the trade off between pion efficiencies (&gt;0.75) and muon efficiencies(~ 0.01), 0.92 seems to be the best operating point for balanced test set.</p>
+</section>
+<section id="efficiency-plot-of-the-best-performing-xgb-model-with-operating-point-0-92">
+<h3>Efficiency plot of the best performing XGB model with operating point= 0.92<a class="headerlink" href="#efficiency-plot-of-the-best-performing-xgb-model-with-operating-point-0-92" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;/fast_scratch_1/capstone_2022/models/xgboost/saved_models/xgb_balanced.csv&#39;</span>
+
+<span class="n">operating_point</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.92</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">operating_point</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33m&quot;</span> <span class="o">+</span> <span class="s2">&quot;Operating point: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">op</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33m&quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot;Operating point: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">op</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+    
+    <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;XGBoost with Operating Point: </span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s2">&quot;</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;probabilities&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">op</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">plot_efficiencies</span><span class="p">(</span>
+        <span class="n">path</span><span class="o">=</span><span class="n">file_path</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">cern_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">pion_axlims</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">muon_axlims</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">45</span><span class="p">),</span>
+        <span class="n">pion_axticks</span><span class="o">=</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+        <span class="n">muon_axticks</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">save</span><span class="o">=</span><span class="s2">&quot;docs/final_report/images/xgb_results_bal_0.92.svg&quot;</span><span class="p">,</span>
+        <span class="n">op_point</span><span class="o">=</span><span class="n">op</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.92</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_40_1.png" src="../../_images/gbdt_analysis_results_40_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="momentum-bias-analysis-comparing-models-trained-globally-15-45-gev-c-and-locally-15-25-25-35-35-45-gev-c">
+<h2><em>Momentum Bias analysis</em>: Comparing models trained globally (15-45 GeV/c) and locally (15-25, 25-35 &amp; 35-45 GeV/c)<a class="headerlink" href="#momentum-bias-analysis-comparing-models-trained-globally-15-45-gev-c-and-locally-15-25-25-35-35-45-gev-c" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Model: XGBClassifier</p></li>
+<li><p>Train data: 0.75 split of balanced data (B and C)</p></li>
+<li><p>Test data: 0.25 split of balanced data (B and C)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="c1"># Creating XGBoost model instance</span>
+<span class="n">xgb_cl_</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+    <span class="n">tree_method</span><span class="o">=</span><span class="s2">&quot;gpu_hist&quot;</span><span class="p">,</span>
+    <span class="n">gpu_id</span><span class="o">=</span><span class="n">gpu_id</span><span class="p">,</span>
+    <span class="n">predictor</span><span class="o">=</span><span class="s2">&quot;gpu_predictor&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Creating train test sets at 0.25 % split</span>
+<span class="n">xgb_cl_15_25</span><span class="p">,</span> <span class="n">X_train_1525</span><span class="p">,</span> <span class="n">X_test_1525</span><span class="p">,</span> <span class="n">y_train_1525</span><span class="p">,</span> <span class="n">y_test_1525</span> <span class="o">=</span> <span class="n">gbt_binwise</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">xgb_cl_</span><span class="p">,</span>
+    <span class="n">df_bal</span><span class="o">=</span><span class="n">df_train</span><span class="p">,</span> 
+    <span class="n">bin_low</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> 
+    <span class="n">bin_high</span><span class="o">=</span><span class="mi">25</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/xgboost/sklearn.py:1224: UserWarning: The use of label encoder in XGBClassifier is deprecated and will be removed in a future release. To remove this warning, do the following: 1) Pass option use_label_encoder=False when constructing XGBClassifier object; and 2) Encode your labels (y) as integers starting with 0, i.e. 0, 1, 2, ..., [num_class - 1].
+  warnings.warn(label_encoder_deprecation_msg, UserWarning)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[20:56:34] WARNING: ../src/learner.cc:1115: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+CPU times: user 11.2 s, sys: 344 ms, total: 11.5 s
+Wall time: 401 ms
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_results</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">xgb_cl_15_25</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test_1525</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test_1525</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Classification Report
+
+              precision    recall  f1-score   support
+
+       Muons       0.99      0.99      0.99     54173
+       Pions       0.99      0.99      0.99     53514
+
+    accuracy                           0.99    107687
+   macro avg       0.99      0.99      0.99    107687
+weighted avg       0.99      0.99      0.99    107687
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_44_1.png" src="../../_images/gbdt_analysis_results_44_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="c1"># Creating XGBoost model instance</span>
+<span class="n">xgb_cl_</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+    <span class="n">tree_method</span><span class="o">=</span><span class="s2">&quot;gpu_hist&quot;</span><span class="p">,</span>
+    <span class="n">gpu_id</span><span class="o">=</span><span class="n">gpu_id</span><span class="p">,</span>
+    <span class="n">predictor</span><span class="o">=</span><span class="s2">&quot;gpu_predictor&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">xgb_cl_25_35</span><span class="p">,</span> <span class="n">X_train_2535</span><span class="p">,</span> <span class="n">X_test_2535</span><span class="p">,</span> <span class="n">y_train_2535</span><span class="p">,</span> <span class="n">y_test_2535</span> <span class="o">=</span> <span class="n">gbt_binwise</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">xgb_cl_</span><span class="p">,</span>
+    <span class="n">df_bal</span><span class="o">=</span><span class="n">df_train</span><span class="p">,</span> 
+    <span class="n">bin_low</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> 
+    <span class="n">bin_high</span><span class="o">=</span><span class="mi">35</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/xgboost/sklearn.py:1224: UserWarning: The use of label encoder in XGBClassifier is deprecated and will be removed in a future release. To remove this warning, do the following: 1) Pass option use_label_encoder=False when constructing XGBClassifier object; and 2) Encode your labels (y) as integers starting with 0, i.e. 0, 1, 2, ..., [num_class - 1].
+  warnings.warn(label_encoder_deprecation_msg, UserWarning)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[20:56:35] WARNING: ../src/learner.cc:1115: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+CPU times: user 12.6 s, sys: 402 ms, total: 13 s
+Wall time: 513 ms
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_results</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">xgb_cl_25_35</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test_2535</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test_2535</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Classification Report
+
+              precision    recall  f1-score   support
+
+       Muons       0.96      0.96      0.96    104618
+       Pions       0.96      0.96      0.96    104505
+
+    accuracy                           0.96    209123
+   macro avg       0.96      0.96      0.96    209123
+weighted avg       0.96      0.96      0.96    209123
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_46_1.png" src="../../_images/gbdt_analysis_results_46_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="c1"># Creating XGBoost model instance</span>
+<span class="n">xgb_cl_</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+    <span class="n">tree_method</span><span class="o">=</span><span class="s2">&quot;gpu_hist&quot;</span><span class="p">,</span>
+    <span class="n">gpu_id</span><span class="o">=</span><span class="n">gpu_id</span><span class="p">,</span>
+    <span class="n">predictor</span><span class="o">=</span><span class="s2">&quot;gpu_predictor&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">xgb_cl_35_45</span><span class="p">,</span> <span class="n">X_train_3545</span><span class="p">,</span> <span class="n">X_test_3545</span><span class="p">,</span> <span class="n">y_train_3545</span><span class="p">,</span> <span class="n">y_test_3545</span> <span class="o">=</span> <span class="n">gbt_binwise</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">xgb_cl_</span><span class="p">,</span>
+    <span class="n">df_bal</span><span class="o">=</span><span class="n">df_train</span><span class="p">,</span> 
+    <span class="n">bin_low</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> 
+    <span class="n">bin_high</span><span class="o">=</span><span class="mi">45</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/xgboost/sklearn.py:1224: UserWarning: The use of label encoder in XGBClassifier is deprecated and will be removed in a future release. To remove this warning, do the following: 1) Pass option use_label_encoder=False when constructing XGBClassifier object; and 2) Encode your labels (y) as integers starting with 0, i.e. 0, 1, 2, ..., [num_class - 1].
+  warnings.warn(label_encoder_deprecation_msg, UserWarning)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[20:56:37] WARNING: ../src/learner.cc:1115: Starting in XGBoost 1.3.0, the default evaluation metric used with the objective &#39;binary:logistic&#39; was changed from &#39;error&#39; to &#39;logloss&#39;. Explicitly set eval_metric if you&#39;d like to restore the old behavior.
+CPU times: user 12.1 s, sys: 439 ms, total: 12.6 s
+Wall time: 453 ms
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_results</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="n">xgb_cl_35_45</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test_3545</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test_3545</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Classification Report
+
+              precision    recall  f1-score   support
+
+       Muons       0.87      0.87      0.87     81803
+       Pions       0.87      0.87      0.87     81552
+
+    accuracy                           0.87    163355
+   macro avg       0.87      0.87      0.87    163355
+weighted avg       0.87      0.87      0.87    163355
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_48_1.png" src="../../_images/gbdt_analysis_results_48_1.png" />
+</div>
+</div>
+<section id="roc-curves">
+<h3>ROC Curves<a class="headerlink" href="#roc-curves" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ROC Curves</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_roc_curve</span><span class="p">(</span><span class="n">xgb_cl</span><span class="p">,</span> <span class="n">X_test_bal</span><span class="p">,</span> <span class="n">y_test_bal</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;XGBCl: 15-45&quot;</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_roc_curve</span><span class="p">(</span><span class="n">xgb_cl_15_25</span><span class="p">,</span> <span class="n">X_test_1525</span><span class="p">,</span> <span class="n">y_test_1525</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">ax_</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;XGBCl: 15-25&quot;</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_roc_curve</span><span class="p">(</span><span class="n">xgb_cl_25_35</span><span class="p">,</span> <span class="n">X_test_2535</span><span class="p">,</span> <span class="n">y_test_2535</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">ax_</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;XGBCl: 25-35&quot;</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_roc_curve</span><span class="p">(</span><span class="n">xgb_cl_35_45</span><span class="p">,</span> <span class="n">X_test_3545</span><span class="p">,</span> <span class="n">y_test_3545</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">ax_</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;XGBCl: 35-45&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;ROC Curves for pions in different momentum bins&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;docs/final_report/images/xgb_results_pbins.svg&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/gbdt_analysis_results_50_0.png" src="../../_images/gbdt_analysis_results_50_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="evaluating-results-on-35-45-momentum-bins-with-two-different-models-globally-and-locally-trained-xgboost-models">
+<h2>Evaluating results on 35-45 momentum bins with two different models: globally and locally trained xgboost models<a class="headerlink" href="#evaluating-results-on-35-45-momentum-bins-with-two-different-models-globally-and-locally-trained-xgboost-models" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ROC Curves</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="c1"># Globally trained model performance on 35-45 momentum bin</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_roc_curve</span><span class="p">(</span><span class="n">xgb_cl</span><span class="p">,</span> <span class="n">X_test_3545</span><span class="p">,</span> <span class="n">y_test_3545</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;XGBCl: 15-45 (global)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Locally trained model performance on 35-45 momentum bin</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_roc_curve</span><span class="p">(</span><span class="n">xgb_cl_35_45</span><span class="p">,</span> <span class="n">X_test_3545</span><span class="p">,</span> <span class="n">y_test_3545</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">ax_</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;XGBCl: 35-45 (local)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ROC Curves for pions in 35-45 momentum bins for sample size </span><span class="si">{</span><span class="n">X_test_3545</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;docs/final_report/images/xgb_results_pbias_35_45.svg&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/gbdt_analysis_results_52_0.png" src="../../_images/gbdt_analysis_results_52_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluating-model-on-unbalanced-test-data">
+<h2>Evaluating model on unbalanced test data<a class="headerlink" href="#evaluating-model-on-unbalanced-test-data" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># X, y</span>
+<span class="n">X_test_unbal</span> <span class="o">=</span> <span class="n">df_test_unbal</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span>
+    <span class="s1">&#39;track_momentum&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ring_radius&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;total_hits_filtered&#39;</span>
+<span class="p">]]</span>
+<span class="n">y_test_unbal</span> <span class="o">=</span> <span class="n">df_test_unbal</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Summary of test data</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;df_train&quot;</span><span class="p">:</span> <span class="n">df_train</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(),</span>
+        <span class="s2">&quot;df_test_bal&quot;</span><span class="p">:</span> <span class="n">df_test_bal</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(),</span>
+        <span class="s2">&quot;df_test_unbal&quot;</span><span class="p">:</span> <span class="n">df_test_unbal</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+    <span class="p">},</span>    
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>df_train</th>
+      <th>df_test_bal</th>
+      <th>df_test_unbal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>962982</td>
+      <td>60279</td>
+      <td>627355</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>957671</td>
+      <td>59973</td>
+      <td>67725</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># preds</span>
+<span class="n">y_pred_xgb_unbal</span> <span class="o">=</span> <span class="n">xgb_cl</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_unbal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># XGBoost evaluation results on balanced test set for plotting function</span>
+<span class="n">y_probs_xgb_unbal</span> <span class="o">=</span> <span class="n">xgb_cl</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_unbal</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">df_gbm_unbal</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">y_test_unbal</span><span class="p">,</span>
+    <span class="s2">&quot;predictions&quot;</span><span class="p">:</span> <span class="n">y_pred_xgb_unbal</span><span class="p">,</span>
+    <span class="s2">&quot;probabilities&quot;</span><span class="p">:</span> <span class="n">y_probs_xgb_unbal</span><span class="p">,</span>
+    <span class="s2">&quot;momentum&quot;</span><span class="p">:</span> <span class="n">X_test_unbal</span><span class="o">.</span><span class="n">track_momentum</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+<span class="n">df_gbm_unbal</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>labels</th>
+      <th>predictions</th>
+      <th>probabilities</th>
+      <th>momentum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0.088996</td>
+      <td>39.102062</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0.305765</td>
+      <td>43.845306</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0.089208</td>
+      <td>49.434795</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0.028063</td>
+      <td>36.152966</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0.175092</td>
+      <td>65.520844</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>103591</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0.995828</td>
+      <td>29.149534</td>
+    </tr>
+    <tr>
+      <th>103592</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0.988218</td>
+      <td>30.451511</td>
+    </tr>
+    <tr>
+      <th>103593</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0.935501</td>
+      <td>42.269211</td>
+    </tr>
+    <tr>
+      <th>103594</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0.222953</td>
+      <td>55.185467</td>
+    </tr>
+    <tr>
+      <th>103595</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0.988113</td>
+      <td>28.764696</td>
+    </tr>
+  </tbody>
+</table>
+<p>695080 rows × 4 columns</p>
+</div></div></div>
+</div>
+<section id="id1">
+<h3>Saving results df<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Saving XGBoost results on balanced test set</span>
+<span class="n">path_preds_unbal</span> <span class="o">=</span> <span class="s1">&#39;/fast_scratch_1/capstone_2022/models/xgboost/saved_models/xgb_unbalanced.csv&#39;</span>
+<span class="n">df_gbm_unbal</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_preds_unbal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ROC curve at default (0.5) operating point</span>
+<span class="n">results</span><span class="p">[</span><span class="s2">&quot;XGBoost_unbalanced_op_0.5&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path_preds_unbal</span>
+<span class="n">plot_roc_curves</span><span class="p">(</span>
+    <span class="n">results</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;ROC Curves: XGBoost models&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/gbdt_analysis_results_60_0.png" src="../../_images/gbdt_analysis_results_60_0.png" />
+</div>
+</div>
+</section>
+<section id="id2">
+<h3>Plotting Efficiency curves at different operating points<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;/fast_scratch_1/capstone_2022/models/xgboost/saved_models/xgb_unbalanced.csv&#39;</span>
+
+<span class="n">operating_point</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">0.50</span><span class="p">,</span>
+    <span class="mf">0.60</span><span class="p">,</span>
+    <span class="mf">0.70</span><span class="p">,</span>
+    <span class="mf">0.80</span><span class="p">,</span>
+    <span class="mf">0.85</span><span class="p">,</span>
+    <span class="mf">0.90</span><span class="p">,</span>
+    <span class="mf">0.91</span><span class="p">,</span>
+    <span class="mf">0.92</span><span class="p">,</span>
+    <span class="mf">0.93</span><span class="p">,</span>
+    <span class="mf">0.94</span><span class="p">,</span>
+    <span class="mf">0.95</span><span class="p">,</span>
+    <span class="mf">0.96</span><span class="p">,</span>
+    <span class="mf">0.97</span><span class="p">,</span>
+    <span class="mf">0.98</span><span class="p">,</span>
+    <span class="mf">0.99</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">operating_point</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33m&quot;</span> <span class="o">+</span> <span class="s2">&quot;Operating point: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">op</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33m&quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot;Operating point: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">op</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+    
+    <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;XGBoost with Operating Point: </span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s2">&quot;</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;probabilities&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">op</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="n">plot_cm</span><span class="p">(</span>
+        <span class="n">y_true</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">],</span>
+        <span class="n">y_pred</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">],</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span>
+    <span class="p">)</span>
+    
+    <span class="n">plot_efficiencies</span><span class="p">(</span>
+        <span class="n">path</span><span class="o">=</span><span class="n">file_path</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">cern_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">pion_axlims</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">muon_axlims</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">45</span><span class="p">),</span>
+        <span class="n">pion_axticks</span><span class="o">=</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+        <span class="n">muon_axticks</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">op_point</span><span class="o">=</span><span class="n">op</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.5</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_1.png" src="../../_images/gbdt_analysis_results_62_1.png" />
+<img alt="../../_images/gbdt_analysis_results_62_2.png" src="../../_images/gbdt_analysis_results_62_2.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.6</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_4.png" src="../../_images/gbdt_analysis_results_62_4.png" />
+<img alt="../../_images/gbdt_analysis_results_62_5.png" src="../../_images/gbdt_analysis_results_62_5.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.7</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_7.png" src="../../_images/gbdt_analysis_results_62_7.png" />
+<img alt="../../_images/gbdt_analysis_results_62_8.png" src="../../_images/gbdt_analysis_results_62_8.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.8</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_10.png" src="../../_images/gbdt_analysis_results_62_10.png" />
+<img alt="../../_images/gbdt_analysis_results_62_11.png" src="../../_images/gbdt_analysis_results_62_11.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.85</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_13.png" src="../../_images/gbdt_analysis_results_62_13.png" />
+<img alt="../../_images/gbdt_analysis_results_62_14.png" src="../../_images/gbdt_analysis_results_62_14.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.9</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_16.png" src="../../_images/gbdt_analysis_results_62_16.png" />
+<img alt="../../_images/gbdt_analysis_results_62_17.png" src="../../_images/gbdt_analysis_results_62_17.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.91</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_19.png" src="../../_images/gbdt_analysis_results_62_19.png" />
+<img alt="../../_images/gbdt_analysis_results_62_20.png" src="../../_images/gbdt_analysis_results_62_20.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.92</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_22.png" src="../../_images/gbdt_analysis_results_62_22.png" />
+<img alt="../../_images/gbdt_analysis_results_62_23.png" src="../../_images/gbdt_analysis_results_62_23.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.93</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_25.png" src="../../_images/gbdt_analysis_results_62_25.png" />
+<img alt="../../_images/gbdt_analysis_results_62_26.png" src="../../_images/gbdt_analysis_results_62_26.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.94</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_28.png" src="../../_images/gbdt_analysis_results_62_28.png" />
+<img alt="../../_images/gbdt_analysis_results_62_29.png" src="../../_images/gbdt_analysis_results_62_29.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.95</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_31.png" src="../../_images/gbdt_analysis_results_62_31.png" />
+<img alt="../../_images/gbdt_analysis_results_62_32.png" src="../../_images/gbdt_analysis_results_62_32.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.96</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_34.png" src="../../_images/gbdt_analysis_results_62_34.png" />
+<img alt="../../_images/gbdt_analysis_results_62_35.png" src="../../_images/gbdt_analysis_results_62_35.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.97</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_37.png" src="../../_images/gbdt_analysis_results_62_37.png" />
+<img alt="../../_images/gbdt_analysis_results_62_38.png" src="../../_images/gbdt_analysis_results_62_38.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.98</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_40.png" src="../../_images/gbdt_analysis_results_62_40.png" />
+<img alt="../../_images/gbdt_analysis_results_62_41.png" src="../../_images/gbdt_analysis_results_62_41.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.99</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/gbdt_analysis_results_62_43.png" src="../../_images/gbdt_analysis_results_62_43.png" />
+<img alt="../../_images/gbdt_analysis_results_62_44.png" src="../../_images/gbdt_analysis_results_62_44.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="observations-on-unbalanced-test-set-performance">
+<h2>Observations on unbalanced test set performance<a class="headerlink" href="#observations-on-unbalanced-test-set-performance" title="Permalink to this headline">#</a></h2>
+<p>As observed, XGBoost Classifier trained on balanced data and tested on unbalanced data is not performing well. Therefore, further analysis on XGBoost is not being carried out</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./appendix/notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="global_values.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Global values for debiasing and standardization</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="DGCNN_operating_point.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Dynamic Graph CNN Operating Point</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Nico Van den Hooff, Rakesh Pandey, Mukund Iyer, Shiva Jena<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
