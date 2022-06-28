@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Dynamic Graph CNN Operating Point &#8212; RICH AI Final Report</title>
+    <title>PointNet Operating point &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/TRIUMF_Favicon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="PointNet Model Runs" href="pointnet_model_runs.html" />
-    <link rel="prev" title="Global values for debiasing and standardization" href="global_values.html" />
+    <link rel="next" title="Presentation plots" href="presentation_plots.html" />
+    <link rel="prev" title="PointNet Model Runs" href="pointnet_model_runs.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -197,8 +197,8 @@ const thebe_selector_output = ".output, .cell_output"
      Global values for debiasing and standardization
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="DGCNN_operating_point.html">
      Dynamic Graph CNN Operating Point
     </a>
    </li>
@@ -207,8 +207,8 @@ const thebe_selector_output = ".output, .cell_output"
      PointNet Model Runs
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="pointnet_operating_point.html">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      PointNet Operating point
     </a>
    </li>
@@ -290,7 +290,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/TRIUMF-Capstone2022/richai/master?urlpath=tree/final_report/appendix/notebooks/DGCNN_operating_point.ipynb"
+        <a href="https://mybinder.org/v2/gh/TRIUMF-Capstone2022/richai/master?urlpath=tree/final_report/appendix/notebooks/pointnet_operating_point.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -346,7 +346,7 @@ title="Source repository"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../_sources/appendix/notebooks/DGCNN_operating_point.ipynb"
+        <a href="../../_sources/appendix/notebooks/pointnet_operating_point.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -407,7 +407,12 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   Dynamic Graph CNN Operating Point
+   PointNet Operating point
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -424,7 +429,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Dynamic Graph CNN Operating Point</h1>
+                <h1>PointNet Operating point</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -436,7 +441,12 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   Dynamic Graph CNN Operating Point
+   PointNet Operating point
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -454,31 +464,38 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="dynamic-graph-cnn-operating-point">
-<h1>Dynamic Graph CNN Operating Point<a class="headerlink" href="#dynamic-graph-cnn-operating-point" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="pointnet-operating-point">
+<h1>PointNet Operating point<a class="headerlink" href="#pointnet-operating-point" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
-<li><p><strong>Purpose</strong>: The purpose of this notebook is to select an operating point for the Dynamic Graph CNN model.</p></li>
-<li><p><strong>Author</strong>: Nico Van den Hooff</p></li>
+<li><p><strong>Purpose</strong>: The purpose of this notebook is to select an operating point for the PointNet model.</p></li>
+<li><p><strong>Model Used</strong>: <code class="docutils literal notranslate"><span class="pre">/fast_scratch_1/capstone_2022/models/pointnet/saved_models/pointnet_momentum_radius_delta_0.5_16e_0706.pt</span></code></p></li>
+<li><p><strong>Features</strong>: Event POS, momentum and radius</p></li>
+<li><p><strong>Epochs</strong>: 16</p></li>
+<li><p><strong>Time delta</strong>: 0.5ns</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: change this to be reproducible</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># model path</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;/fast_scratch_1/capstone_2022/models/pointnet/saved_models/pointnet_momentum_radius_delta_0.5_16e_0706_unbalanced_p_15_45.csv&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">nico</span><span class="o">/</span><span class="n">richai</span><span class="o">/</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">../</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/nico/richai
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/rakesh/refactor
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="imports">
+<h1>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -494,9 +511,15 @@ title="Print to PDF"
 <h1>Results for operating points<a class="headerlink" href="#results-for-operating-points" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;/fast_scratch_1/capstone_2022/models/dgcnn/dgcnn_predictions.csv&quot;</span>
-
-<span class="n">operating_point</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">operating_point</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mf">0.5</span><span class="p">,</span>
+    <span class="mf">0.6</span><span class="p">,</span>
+    <span class="mf">0.7</span><span class="p">,</span>
+    <span class="mf">0.8</span><span class="p">,</span>
+    <span class="mf">0.85</span><span class="p">,</span>
+    <span class="mf">0.9</span><span class="p">,</span>
+    <span class="mf">0.91</span><span class="p">,</span>
+    <span class="mf">0.92</span><span class="p">,</span>
     <span class="mf">0.93</span><span class="p">,</span>
     <span class="mf">0.94</span><span class="p">,</span>
     <span class="mf">0.95</span><span class="p">,</span>
@@ -509,18 +532,14 @@ title="Print to PDF"
 <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">operating_point</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33m&quot;</span> <span class="o">+</span> <span class="s2">&quot;Operating point: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">op</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33m&quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot;Operating point: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">op</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
-    
-    <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;DGCNN with Operating Point: </span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s2">&quot;</span>
-    
+
+    <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;PointNet with Operating Point: </span><span class="si">{</span><span class="n">op</span><span class="si">}</span><span class="s2">&quot;</span>
+
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;probabilities&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">op</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    
-    <span class="n">plot_cm</span><span class="p">(</span>
-        <span class="n">y_true</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">],</span>
-        <span class="n">y_pred</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">],</span>
-        <span class="n">title</span><span class="o">=</span><span class="n">title</span>
-    <span class="p">)</span>
-    
+
+    <span class="n">plot_cm</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
+
     <span class="n">plot_efficiencies</span><span class="p">(</span>
         <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
         <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
@@ -529,54 +548,102 @@ title="Print to PDF"
         <span class="n">muon_axlims</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">45</span><span class="p">),</span>
         <span class="n">pion_axticks</span><span class="o">=</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
         <span class="n">muon_axticks</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-        <span class="n">op_point</span><span class="o">=</span><span class="n">op</span>
-<span class="p">)</span>
+        <span class="n">op_point</span><span class="o">=</span><span class="n">op</span><span class="p">,</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.5</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/pointnet_operating_point_7_1.png" src="../../_images/pointnet_operating_point_7_1.png" />
+<img alt="../../_images/pointnet_operating_point_7_2.png" src="../../_images/pointnet_operating_point_7_2.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.6</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/pointnet_operating_point_7_4.png" src="../../_images/pointnet_operating_point_7_4.png" />
+<img alt="../../_images/pointnet_operating_point_7_5.png" src="../../_images/pointnet_operating_point_7_5.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.7</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/pointnet_operating_point_7_7.png" src="../../_images/pointnet_operating_point_7_7.png" />
+<img alt="../../_images/pointnet_operating_point_7_8.png" src="../../_images/pointnet_operating_point_7_8.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.8</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/pointnet_operating_point_7_10.png" src="../../_images/pointnet_operating_point_7_10.png" />
+<img alt="../../_images/pointnet_operating_point_7_11.png" src="../../_images/pointnet_operating_point_7_11.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.85</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/pointnet_operating_point_7_13.png" src="../../_images/pointnet_operating_point_7_13.png" />
+<img alt="../../_images/pointnet_operating_point_7_14.png" src="../../_images/pointnet_operating_point_7_14.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.9</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">--------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/pointnet_operating_point_7_16.png" src="../../_images/pointnet_operating_point_7_16.png" />
+<img alt="../../_images/pointnet_operating_point_7_17.png" src="../../_images/pointnet_operating_point_7_17.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.91</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/pointnet_operating_point_7_19.png" src="../../_images/pointnet_operating_point_7_19.png" />
+<img alt="../../_images/pointnet_operating_point_7_20.png" src="../../_images/pointnet_operating_point_7_20.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.92</span>
+<span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
+</pre></div>
+</div>
+<img alt="../../_images/pointnet_operating_point_7_22.png" src="../../_images/pointnet_operating_point_7_22.png" />
+<img alt="../../_images/pointnet_operating_point_7_23.png" src="../../_images/pointnet_operating_point_7_23.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.93</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/DGCNN_operating_point_6_1.png" src="../../_images/DGCNN_operating_point_6_1.png" />
-<img alt="../../_images/DGCNN_operating_point_6_2.png" src="../../_images/DGCNN_operating_point_6_2.png" />
+<img alt="../../_images/pointnet_operating_point_7_25.png" src="../../_images/pointnet_operating_point_7_25.png" />
+<img alt="../../_images/pointnet_operating_point_7_26.png" src="../../_images/pointnet_operating_point_7_26.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.94</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/DGCNN_operating_point_6_4.png" src="../../_images/DGCNN_operating_point_6_4.png" />
-<img alt="../../_images/DGCNN_operating_point_6_5.png" src="../../_images/DGCNN_operating_point_6_5.png" />
+<img alt="../../_images/pointnet_operating_point_7_28.png" src="../../_images/pointnet_operating_point_7_28.png" />
+<img alt="../../_images/pointnet_operating_point_7_29.png" src="../../_images/pointnet_operating_point_7_29.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.95</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/DGCNN_operating_point_6_7.png" src="../../_images/DGCNN_operating_point_6_7.png" />
-<img alt="../../_images/DGCNN_operating_point_6_8.png" src="../../_images/DGCNN_operating_point_6_8.png" />
+<img alt="../../_images/pointnet_operating_point_7_31.png" src="../../_images/pointnet_operating_point_7_31.png" />
+<img alt="../../_images/pointnet_operating_point_7_32.png" src="../../_images/pointnet_operating_point_7_32.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.96</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/DGCNN_operating_point_6_10.png" src="../../_images/DGCNN_operating_point_6_10.png" />
-<img alt="../../_images/DGCNN_operating_point_6_11.png" src="../../_images/DGCNN_operating_point_6_11.png" />
+<img alt="../../_images/pointnet_operating_point_7_34.png" src="../../_images/pointnet_operating_point_7_34.png" />
+<img alt="../../_images/pointnet_operating_point_7_35.png" src="../../_images/pointnet_operating_point_7_35.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.97</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/DGCNN_operating_point_6_13.png" src="../../_images/DGCNN_operating_point_6_13.png" />
-<img alt="../../_images/DGCNN_operating_point_6_14.png" src="../../_images/DGCNN_operating_point_6_14.png" />
+<img alt="../../_images/pointnet_operating_point_7_37.png" src="../../_images/pointnet_operating_point_7_37.png" />
+<img alt="../../_images/pointnet_operating_point_7_38.png" src="../../_images/pointnet_operating_point_7_38.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.98</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/DGCNN_operating_point_6_16.png" src="../../_images/DGCNN_operating_point_6_16.png" />
-<img alt="../../_images/DGCNN_operating_point_6_17.png" src="../../_images/DGCNN_operating_point_6_17.png" />
+<img alt="../../_images/pointnet_operating_point_7_40.png" src="../../_images/pointnet_operating_point_7_40.png" />
+<img alt="../../_images/pointnet_operating_point_7_41.png" src="../../_images/pointnet_operating_point_7_41.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Yellow">Operating point: 0.99</span>
 <span class=" -Color -Color-Bold -Color-Bold-Yellow">---------------------</span>
 </pre></div>
 </div>
-<img alt="../../_images/DGCNN_operating_point_6_19.png" src="../../_images/DGCNN_operating_point_6_19.png" />
-<img alt="../../_images/DGCNN_operating_point_6_20.png" src="../../_images/DGCNN_operating_point_6_20.png" />
+<img alt="../../_images/pointnet_operating_point_7_43.png" src="../../_images/pointnet_operating_point_7_43.png" />
+<img alt="../../_images/pointnet_operating_point_7_44.png" src="../../_images/pointnet_operating_point_7_44.png" />
 </div>
 </div>
 </section>
@@ -608,17 +675,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="global_values.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="pointnet_model_runs.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Global values for debiasing and standardization</p>
+            <p class="prev-next-title">PointNet Model Runs</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="pointnet_model_runs.html" title="next page">
+    <a class='right-next' id="next-link" href="presentation_plots.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">PointNet Model Runs</p>
+        <p class="prev-next-title">Presentation plots</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
