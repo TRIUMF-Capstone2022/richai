@@ -1,5 +1,11 @@
 # TRIUMF RICH AI
 
+<!-- Badges start -->
+
+[![final_report](https://github.com/TRIUMF-Capstone2022/richai/actions/workflows/final_report.yml/badge.svg)](https://github.com/TRIUMF-Capstone2022/richai/actions/workflows/final_report.yml) [![GitHub deployments](https://img.shields.io/github/deployments/TRIUMF-Capstone2022/richai/github-pages?label=gh-pages)](https://github.com/TRIUMF-Capstone2022/richai/deployments/activity_log?environment=github-pages) [![License](https://img.shields.io/github/license/TRIUMF-Capstone2022/richai)](https://github.com/TRIUMF-Capstone2022/richai/blob/main/LICENSE) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/TRIUMF-Capstone2022/richai)](https://github.com/TRIUMF-Capstone2022/richai/releases)
+
+<!-- Badges end -->
+
 First and foremost, a big warm welcome! :balloon::tada: :confetti_ball: :balloon::balloon:
 
 The 2022 RICH AI Capstone Project was completed as part of the University of British Columbia Master of Data Science program in collaboration with [TRIUMF](https://www.triumf.ca/), Canada's particle accelerator centre and one of the world's leading subatomic physics research institutions.
@@ -16,21 +22,20 @@ This document (the `README.md` file) is a hub to give you some general informati
   - [Dataset](#dataset)
   - [Model training](#model-training)
   - [Model evaluation and scoring on new data](#model-evaluation-and-scoring-on-new-data)
+  - [Utility scripts](#utility-scripts)
+  - [Jupyter notebooks](#jupyter-notebooks)
+  - [Code of conduct](#code-of-conduct)
+  - [Contributing](#contributing)
+  - [License](#license)
   - [References](#references)
 
 ## About this project
 
-The [NA62 experiment](https://home.cern/science/experiments/na62) at [CERN](https://www.home.cern/) (European organization for nuclear research) studies the rate of the ultra-rate meson decay into a pion to verify the [Standard Model](https://en.wikipedia.org/wiki/Standard_Model) in physics. The aim of the RICH AI project is to develop a binary classification model with advanced Machine Learning (ML) to distinguish pion particle decays from muon particle decays using the output of the Ring Imaging Cherenkov (RICH) detector employed in CERN's NA62 project. The challenge lies in concurrently increasing the pion efficiency (rate at which pion are correctly classified) and decreasing the mion efficiency (rate at which muons are incorrectly classified as a pion) and as a result surpassing the performance of the CERN's current algorithm (simple maximum likelihood algorithm).
+The [NA62 experiment](https://home.cern/science/experiments/na62) at [CERN](https://www.home.cern/) (European organization for nuclear research) studies the rate of the ultra-rate meson decay into a pion to verify the [Standard Model](https://en.wikipedia.org/wiki/Standard_Model) in physics. The aim of the RICH AI project is to develop a binary classification model that utilizes advanced Machine Learning (ML) techniques to distinguish a pion particle decay from a muon particle decay, using the output data of a Ring Imaging Cherenkov (RICH) detector employed in CERN's NA62 project. The challenge of the project lies in concurrently *increasing* the "pion efficiency" (the rate at which pions are correctly classified) while *decreasing* the muon efficiency (the rate at which muons are incorrectly classified as pions), in order to surpass the performance of CERN's current algorithm that is employed (i.e. a simple maximum likelihood algorithm that fits a circle to the light image emitted by a particle decay, and classifies the particle based on an expected radius size).
 
 The full dataset available for use in the project consisted of 11 million examples.  However, the initial data was highly unbalanced, so an under sampled balanced dataset was used in building the models. This balanced data set contained 2 million examples, and was controlled for particle momentums via under sampling.
 
-Two deep learning model architectures were built were applied: [PointNet](https://arxiv.org/abs/1612.00593) and [Dynamic Graph CNN](https://arxiv.org/abs/1801.07829) (DGCNN). Both were built using a:
-
-- Point cloud representation $(x, y, z)$ of particle hits $(x, y)$ locations with a $z$ dimension equal to hit time - chod time
-- Particle momentum; and
-- Ring radius computed using CERN's prior algorithm.
-
-The best performing PointNet model filtered for hits with a time delta of 0.5 ns and employed 16 epochs of training. Likewise the best performing DGCNN used k = 8 nearest neighbors and a time delta of 0.3 ns. The overall best performing model was PointNet as it has the exceeds the pion efficiency from the MLE estimate for all momentum bins, and maintains a low muon efficiency for momentums beyond 34 GeV/c and has the highest AUC under the ROC curve. Meanwhile, the DGCNN is able to maintain a similar pion efficiency but fails to maintain an adequate muon efficiency to surpass the MLE estimate.
+Two deep learning model architectures were built were applied: [PointNet](https://arxiv.org/abs/1612.00593) and [Dynamic Graph CNN](https://arxiv.org/abs/1801.07829) (DGCNN).
 
 ## Contributors
 
@@ -41,7 +46,19 @@ The best performing PointNet model filtered for hits with a time delta of 0.5 ns
 
 ## Report
 
-The final RICH AI project report can be accessed [here](https://triumf-capstone2022.github.io/richai/welcome.html).
+The final report of the project, which contains much greater detail about the data and modelling processes can be accessed [here](https://triumf-capstone2022.github.io/richai/welcome.html).
+
+### Jupyter book
+
+The report is hosted as a [Jupyter Book](https://jupyterbook.org/en/stable/intro.html) on GitHub pages, and the underlying files that are used to build the Jupyter Book can be accessed [here](https://github.com/TRIUMF-Capstone2022/richai/tree/main/docs/final_report).  The Jupyter Book itself is built automatically via a [GitHub Actions workflow](https://github.com/TRIUMF-Capstone2022/richai/blob/main/.github/workflows/final_report.yml), which triggers if there is a push to the `main` branch of this repository that changes a file within the `richai/docs/final_report/` directory.
+
+### Final presentation slides
+
+The corresponding slides for the final presentation that was given to the UBC Master of Data Science faculty and cohort can be accessed [here](https://github.com/TRIUMF-Capstone2022/richai/tree/main/docs/final_presentation).
+
+### Project proposal
+
+Finally, the original project proposal and corresponding presentation slides can be accessed [here](https://github.com/TRIUMF-Capstone2022/richai/tree/main/docs/proposal).
 
 ## Project structure
 
@@ -49,72 +66,90 @@ The final RICH AI project report can be accessed [here](https://triumf-capstone2
 
 ## Dependencies
 
-The RICH AI project was developed using `singularity` containers with the following package dependencies.
+The RICH AI project was developed using [`singularity`](https://docs.sylabs.io/guides/3.0/user-guide/index.html) containers with the following package dependencies.
 
 - pandas==1.3.5
 - torch==1.11.0
 - sklearn==0.24.0
-- jupyterlab
 - pyyaml==6.0
+- jupyterlab
 
 ## Configuration file
 
 The configuration file contains all of the parameters for the dataset, filters, model training, and scoring.
-File `configs/config.yaml` can be used to control data set paths, filters, model parameters/hyperparameters, train/test/saved model paths, PyTorch `Dataloader` configurations such as batch size, number of workers, etc., number of training epochs, device id, and many more.
+File [`configs/config.yaml`](https://github.com/TRIUMF-Capstone2022/richai/tree/main/configs) can be used to control data set paths, filters, model parameters/hyperparameters, train/test/saved model paths, PyTorch `Dataloader` configurations such as batch size, number of workers, etc., number of training epochs, device id, and many more.
 
-> Before beginning the training process, double-check that the configuration, such as datset and model paths, is correct.
+> Before beginning the training process, it is recommended that you double-check that the configuration parameters, such as datset and model paths, are correct.
 
 ## Dataset
 
-The data was generated as part of the 2018 NA62 experiments performed at CERN. There are a total of 11 million labeled decay events, each containing the features detailed above. However, there is a large class imbalance in the data set. Only 10% of the examples are of pions, the class of interest. More details can be [here](#report).
+The data was generated as part of the 2018 [NA62 experiments](https://home.cern/science/experiments/na62) performed at CERN. There are a total of 11 million labeled decay events, each containing the features detailed above. However, there was a large class imbalance in the data set as only 10% of the decay examples were pion decays (the class of interest). More details can be [here](https://triumf-capstone2022.github.io/richai/analysis/data.html).
 
-The sub directory `dataset` has scripts for creating a custom PyTorch `Dataset` and `DataLoader` for deep learning models, along with a `balance_data` to create balanced dataset by undersampling the higher sized class.
+The sub directory [`dataset`](https://github.com/TRIUMF-Capstone2022/richai/tree/main/dataset) contains scripts for creating a custom PyTorch `Dataset` and `DataLoader` for deep learning models, along with a `balance_data` to create balanced dataset by undersampling the higher sized class.
 
-- `rich_dataset.py` processes the raw data from HDF5 format and extracts events, hits and position data in a custom PyTorch `Dataset`.
-- `dataloader.py` creates PyTorch `DataLoader`s used to load data (train/test/validation) in batches as feed into the neural network models.
-- `balance_data.py` reads HDF5 files from the provided source file paths, creates balanced data by undersampling the higher sized class, and saves the HDF5 file to the specified path. Usage details can be found in the notebooks.
+- [`rich_dataset.py`](https://github.com/TRIUMF-Capstone2022/richai/blob/main/dataset/rich_dataset.py) processes the raw project data from HDF5 format and extracts events, hits and position data into a custom PyTorch `Dataset`.
+- [`dataloader.py`](https://github.com/TRIUMF-Capstone2022/richai/blob/main/dataset/data_loader.py) creates PyTorch `DataLoader`s used to load data (train/test/validation) in batches as feed into the neural network models.
+- [`balance_data.py`](https://github.com/TRIUMF-Capstone2022/richai/blob/main/dataset/balance_data.py) reads HDF5 files from the provided source file paths, creates balanced data by undersampling the higher sized class, and saves the HDF5 file to the specified path. Usage details can be found in the notebooks.
 
 The data set configuration can be controlled and customized using the `dataset` section of [configuration file](#configuration-file).
 
 ## Model training
 
-To train `PointNet` use the following command.
+To train `PointNet` use the following command at the root directory.
 
 ```bash
 python src/train.py --model pointnet
 ```
 
-To train `Dynamic Graph CNN` use the following command.
+To train `Dynamic Graph CNN` use the following command at the root directory.
 
 ```bash
 python src/train.py --model dgcnn
 ```
 
-> The trained model object can be found in the path specified in `configs/config.yaml` as `model.model_name>.saved_model`.
+> The trained model object can be found at the path specified in `configs/config.yaml` as `model.<model_name>.saved_model`.
 
 ## Model evaluation and scoring on new data
 
-To evaluate `PointNet` on test data or to score on a new data, use the following command.
+To evaluate `PointNet` on test data or to score on a new data, use the following command at the root directory.
 
 ```bash
 python src/evaluate.py --model pointnet
 ```
 
-To evaluate `Dynamic Graph CNN` on test data or to score on a new data, use the following command.
+To evaluate `Dynamic Graph CNN` on test data or to score on a new data, use the following command at the root directory.
 
 ```bash
 python src/evaluate.py --model dgcnn
 ```
 
-> Model scored csv data can be found in the path specified in `configs/config.yaml` as `model.model_name>.saved_model`. It contains actual labels, predicted labels, and predicted probabilities.
+> Model scored `.csv` data can be found in the path specified in `configs/config.yaml` as `model.<model_name>.predictions`. It contains actual labels, predicted labels, and predicted probabilities.
 
-> Models trained with different configurations and corresponding results as csv files can be found in the path `/fast_scratch_1/capstone_2022/models/`. Please refer [appendix in the final report](https://triumf-capstone2022.github.io/richai/appendix/supplementary_notebooks.html) to learn more about the different model runs. 
+> Saved models trained with different configurations and corresponding results as `.csv` files can be found on the `triumf-ml1` server at the path `/fast_scratch_1/capstone_2022/models/`. Please refer [appendix in the final report](https://triumf-capstone2022.github.io/richai/appendix/supplementary_notebooks.html) to learn more about the different model runs. 
+
+## Utility scripts
+
+The `richai/utils` directory contains the following scripts:
+
+- `helpers.py` which contains code for useful helper functions that were used throughout the project.
+- `plotting.py` which contains code for useful plotting functions that were used throughout the project.
+
+## Jupyter Notebooks
+
+A number of Jupyter Notebooks were written during the course of the project to support the project analysis and to perform procedures such as Exploratory Data Analysis.  The actual Jupyter Notebooks are saved [here](https://github.com/TRIUMF-Capstone2022/richai/tree/main/notebooks).  Alternatively, they are also included in the final project report within the [supplementary Jupyter Notebooks section](https://triumf-capstone2022.github.io/richai/appendix/supplementary_notebooks.html) of the report appendix (it is easier to view them here, rather than on the GitHub website).
+
+## Code of conduct
+
+The project code of conduct can be found [here](https://github.com/TRIUMF-Capstone2022/richai/blob/main/CODE_OF_CONDUCT.md).
+
+## Contributing
+
+The project contributing file can be found [here](https://github.com/TRIUMF-Capstone2022/richai/blob/main/CONTRIBUTING.md).
+
+## License
+
+All work for the RICH AI capstone project is performed under an MIT license, which can be found [here](https://github.com/TRIUMF-Capstone2022/richai/blob/main/LICENSE).
 
 ## References
 
-- G Anzivino, M Barbanera, A Bizzeti, F Brizioli, F Bucci, A Cassese, P Cenci,R Ciaranfi, V Duk, J Engelfried, and others. Light detection system and time resolution of the na62 rich. Journal of Instrumentation, 15(10):P10025, 2020.
-- The beam and detector of the NA62 experiment at CERN. Journal of Instrumentation, 12(05):P05025–P05025, may2017.
-  URL: <https://doi.org/10.1088%2F1748-0221%2F12%2F05%2Fp05025>, doi:10.1088/1748-0221/12/05/p05025.
-- Max Jaderberg, Karen Simonyan, Andrew Zisserman, and others. Spatial transformer networks. Advances in neural information processing systems, 2015.
-- Charles R Qi, Hao Su, Kaichun Mo, and Leonidas J Guibas. Pointnet: deep learning on point sets for 3d classification and segmentation. In Proceedings of the IEEE conference on computer vision and pattern recognition, 652–660. 2017.  
-- Yue Wang, Yongbin Sun, Ziwei Liu, Sanjay E Sarma, Michael M Bronstein, and Justin M Solomon. Dynamic graph cnn for learning on point clouds. Acm Transactions On Graphics (tog), 38(5):1–12, 2019.
+For a full list of project references, please see the [references](https://triumf-capstone2022.github.io/richai/references.html) section of the final report.
