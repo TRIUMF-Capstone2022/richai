@@ -1,5 +1,3 @@
-# TODO: Update with final
-# TODO: Follow https://github.com/executablebooks/jupyter-book/blob/master/docs/_toc.yml
 format: jb-book
 root: welcome
 parts:
@@ -21,12 +19,14 @@ parts:
     - file: appendix/supplementary_notebooks
       sections:
         - file: appendix/notebooks/data_generation_process
-        - file: appendix/notebooks/Exploratory_data_analysis-final
-        - file: appendix/notebooks/global_values
+        - file: appendix/notebooks/exploratory_data_analysis
+        - file: appendix/notebooks/plotting_NA62_rings
+        - file: appendix/notebooks/balance_data
         - file: appendix/notebooks/gbdt_analysis_results
-        - file: appendix/notebooks/DGCNN_operating_point
+        - file: appendix/notebooks/global_values
         - file: appendix/notebooks/pointnet_model_runs
         - file: appendix/notebooks/pointnet_operating_point
+        - file: appendix/notebooks/DGCNN_operating_point
         - file: appendix/notebooks/presentation_plots
       
   - caption: References
