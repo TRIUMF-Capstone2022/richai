@@ -23,6 +23,8 @@ parts:
         - file: appendix/notebooks/data_generation_process
         - file: appendix/notebooks/global_values
         - file: appendix/notebooks/DGCNN_operating_point
+        - file: appendix/notebooks/pointnet_model_runs
+        - file: appendix/notebooks/pointnet_operating_point
         - file: appendix/notebooks/presentation_plots
       
   - caption: References
