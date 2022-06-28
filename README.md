@@ -10,12 +10,12 @@ This document (the `README.md` file) is a hub to give you some general informati
   - [About this project](#about-this-project)
   - [Contributors](#contributors)
   - [Report](#report)
-  - [Project Structure](#project-structure)
+  - [Project structure](#project-structure)
   - [Dependencies](#dependencies)
-  - [Dataset](#dataset)
   - [Configuration file](#configuration-file)
-  - [Model Training](#model-training)
-  - [Model Evaluation and Scoring on new data](#model-evaluation-and-scoring-on-new-data)
+  - [Dataset](#dataset)
+  - [Model training](#model-training)
+  - [Model evaluation and scoring on new data](#model-evaluation-and-scoring-on-new-data)
   - [References](#references)
 
 ## About this project
@@ -30,7 +30,7 @@ Two deep learning model architectures were built were applied: [PointNet](https:
 - Particle momentum; and
 - Ring radius computed using CERN's prior algorithm.
 
-The best performing PointNet model filtered for hits with a time delta of 0.2 ns and employed 16 epochs of training. Likewise the best performing DGCNN used k = 8 nearest neighbors and a time delta of 0.3 ns. The overall best performing model was PointNet as it has the exceeds the pion efficiency from the MLE estimate for all momentum bins, and maintains a low muon efficiency for momentums beyond 34 GeV/c and has the highest AUC under the ROC curve. Meanwhile, the DGCNN is able to maintain a similar pion efficiency but fails to maintain an adequate muon efficiency to surpass the MLE estimate.
+The best performing PointNet model filtered for hits with a time delta of 0.5 ns and employed 16 epochs of training. Likewise the best performing DGCNN used k = 8 nearest neighbors and a time delta of 0.3 ns. The overall best performing model was PointNet as it has the exceeds the pion efficiency from the MLE estimate for all momentum bins, and maintains a low muon efficiency for momentums beyond 34 GeV/c and has the highest AUC under the ROC curve. Meanwhile, the DGCNN is able to maintain a similar pion efficiency but fails to maintain an adequate muon efficiency to surpass the MLE estimate.
 
 ## Contributors
 
@@ -41,8 +41,7 @@ The best performing PointNet model filtered for hits with a time delta of 0.2 ns
 
 ## Report
 
-NOTE: UPDATE THIS WITH THE JUPYTER BOOK HOSTED REFERENCE
-The final RICH AI project report can be accessed [here](https://github.com/TRIUMF-Capstone2022/richai/jupyter-book/final_report/).
+The final RICH AI project report can be accessed [here](https://triumf-capstone2022.github.io/richai/welcome.html).
 
 ## Project structure
 
@@ -69,10 +68,11 @@ File `configs/config.yaml` can be used to control data set paths, filters, model
 
 The data was generated as part of the 2018 NA62 experiments performed at CERN. There are a total of 11 million labeled decay events, each containing the features detailed above. However, there is a large class imbalance in the data set. Only 10% of the examples are of pions, the class of interest. More details can be [here](#report).
 
-The sub directory `dataset` has script for creating a custom PyTorch `Dataset` and `DataLoader`s.
+The sub directory `dataset` has scripts for creating a custom PyTorch `Dataset` and `DataLoader` for deep learning models, along with a `balance_data` to create balanced dataset by undersampling the higher sized class.
 
 - `rich_dataset.py` processes the raw data from HDF5 format and extracts events, hits and position data in a custom PyTorch `Dataset`.
 - `dataloader.py` creates PyTorch `DataLoader`s used to load data (train/test/validation) in batches as feed into the neural network models.
+- `balance_data.py` reads HDF5 files from the provided source file paths, creates balanced data by undersampling the higher sized class, and saves the HDF5 file to the specified path. Usage details can be found in the notebooks.
 
 The data set configuration can be controlled and customized using the `dataset` section of [configuration file](#configuration-file).
 
@@ -107,6 +107,8 @@ python src/evaluate.py --model dgcnn
 ```
 
 > Model scored csv data can be found in the path specified in `configs/config.yaml` as `model.model_name>.saved_model`. It contains actual labels, predicted labels, and predicted probabilities.
+
+> Models trained with different configurations and corresponding results as csv files can be found in the path `/fast_scratch_1/capstone_2022/models/`. Please refer [appendix in the final report](https://triumf-capstone2022.github.io/richai/appendix/supplementary_notebooks.html) to learn more about the different model runs. 
 
 ## References
 
