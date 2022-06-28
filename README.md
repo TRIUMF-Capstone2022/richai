@@ -68,10 +68,11 @@ File `configs/config.yaml` can be used to control data set paths, filters, model
 
 The data was generated as part of the 2018 NA62 experiments performed at CERN. There are a total of 11 million labeled decay events, each containing the features detailed above. However, there is a large class imbalance in the data set. Only 10% of the examples are of pions, the class of interest. More details can be [here](#report).
 
-The sub directory `dataset` has script for creating a custom PyTorch `Dataset` and `DataLoader`s.
+The sub directory `dataset` has scripts for creating a custom PyTorch `Dataset` and `DataLoader` for deep learning models, along with a `balance_data` to create balanced dataset by undersampling the higher sized class.
 
 - `rich_dataset.py` processes the raw data from HDF5 format and extracts events, hits and position data in a custom PyTorch `Dataset`.
 - `dataloader.py` creates PyTorch `DataLoader`s used to load data (train/test/validation) in batches as feed into the neural network models.
+- `balance_data.py` reads HDF5 files from the provided source file paths, creates balanced data by undersampling the higher sized class, and saves the HDF5 file to the specified path. Usage details can be found in the notebooks.
 
 The data set configuration can be controlled and customized using the `dataset` section of [configuration file](#configuration-file).
 
