@@ -193,8 +193,18 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../appendix/notebooks/Exploratory_data_analysis-final.html">
+     RICH AI Exploratory Data Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../appendix/notebooks/global_values.html">
      Global values for debiasing and standardization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../appendix/notebooks/gbdt_analysis_results.html">
+     Gradient Boosted Decision Tree (GBDT) models
     </a>
    </li>
    <li class="toctree-l2">
@@ -644,22 +654,20 @@ title="Print to PDF"
 </section>
 <section id="model-benefits-and-shortcomings">
 <h3>Model benefits and shortcomings<a class="headerlink" href="#model-benefits-and-shortcomings" title="Permalink to this headline">#</a></h3>
-<p>In terms of benefits, XGBoost is easy, simple and intuitive to use  XGBoost is efficient in terms of low training time via GPU acceleration.</p>
+<p>In terms of benefits, XGBoost is easy, simple and intuitive to use.  XGBoost is efficient in terms of low training time via GPU acceleration.</p>
 <p>In terms of shortcomings, our XGBoost model does not capture the coordinate position data of the photon hits, as this is a variable length feature and XGBoost cannot support this without significant feature engineering.  Further, XGBoost did not perform well for pion or muon efficiency.</p>
 </section>
 <section id="results">
 <h3>Results<a class="headerlink" href="#results" title="Permalink to this headline">#</a></h3>
 <figure class="align-default" id="xgb-results">
-<a class="reference internal image-reference" href="../_images/xgb_results.png"><img alt="../_images/xgb_results.png" src="../_images/xgb_results.png" style="width: 500px; height: 500px;" /></a>
-<figcaption>
+<img alt="../_images/xgb_results_bal_0.92.svg" src="../_images/xgb_results_bal_0.92.svg" /><figcaption>
 <p><span class="caption-number">Fig. 2 </span><span class="caption-text">XGBoost results</span><a class="headerlink" href="#xgb-results" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>As observed above in <a class="reference internal" href="#xgb-results"><span class="std std-numref">Fig. 2</span></a>, pion efficiency drops sharply with increase in momentum beyond 35 GeV/C. In addition, muon efficiency is also poor.</p>
 <p>Further, different XGBoost models were trained and tested on different momentum bins. A Global XGBoost model trained over the 15-45 GeV/c momentum bin, as well as local xgboost models were trained and evaluated. It was observed that the models performed poorly in higher momentum bins as shown below in <a class="reference internal" href="#roc-xgboost"><span class="std std-numref">Fig. 3</span></a>.</p>
 <figure class="align-default" id="roc-xgboost">
-<a class="reference internal image-reference" href="../_images/ROC_xgboost.png"><img alt="../_images/ROC_xgboost.png" src="../_images/ROC_xgboost.png" style="width: 500px; height: 500px;" /></a>
-<figcaption>
+<img alt="../_images/xgb_results_pbins.svg" src="../_images/xgb_results_pbins.svg" /><figcaption>
 <p><span class="caption-number">Fig. 3 </span><span class="caption-text">ROC curves of XGBoost models on different momentum bins</span><a class="headerlink" href="#roc-xgboost" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>

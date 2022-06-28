@@ -15,16 +15,14 @@ We used the following features in training our XGBoost models:
 
 ### Model benefits and shortcomings
 
-In terms of benefits, XGBoost is easy, simple and intuitive to use  XGBoost is efficient in terms of low training time via GPU acceleration.
+In terms of benefits, XGBoost is easy, simple and intuitive to use.  XGBoost is efficient in terms of low training time via GPU acceleration.
 
 In terms of shortcomings, our XGBoost model does not capture the coordinate position data of the photon hits, as this is a variable length feature and XGBoost cannot support this without significant feature engineering.  Further, XGBoost did not perform well for pion or muon efficiency.
 
 ### Results
 
-```{figure} ../images/xgb_results.png
+```{figure} ../images/xgb_results_bal_0.92.svg
 ---
-height: 500px
-width: 500px
 name: xgb_results
 ---
 
@@ -35,10 +33,8 @@ As observed above in {numref}`xgb_results`, pion efficiency drops sharply with i
 
 Further, different XGBoost models were trained and tested on different momentum bins. A Global XGBoost model trained over the 15-45 GeV/c momentum bin, as well as local xgboost models were trained and evaluated. It was observed that the models performed poorly in higher momentum bins as shown below in {numref}`ROC_xgboost`.
 
-```{figure} ../images/ROC_xgboost.png
+```{figure} ../images/xgb_results_pbins.svg
 ---
-height: 500px
-width: 500px
 name: ROC_xgboost
 ---
 

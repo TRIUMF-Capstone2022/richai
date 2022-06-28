@@ -23,6 +23,7 @@ parts:
         - file: appendix/notebooks/data_generation_process
         - file: appendix/notebooks/Exploratory_data_analysis-final
         - file: appendix/notebooks/global_values
+        - file: appendix/notebooks/gbdt_analysis_results
         - file: appendix/notebooks/DGCNN_operating_point
         - file: appendix/notebooks/pointnet_model_runs
         - file: appendix/notebooks/pointnet_operating_point
