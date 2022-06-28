@@ -5,7 +5,7 @@ on:
     branches:
     - main
     paths:
-    - ./docs/final_report/
+    - 'docs/final_report/**'
   workflow_dispatch:
 
 jobs:
@@ -21,6 +21,11 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -U jupyter-book
+        
+    - name: Copy Jupyter notebooks
+      run: |
+        mkdir docs/final_report/appendix/notebooks
+        cp -r notebooks/** docs/final_report/appendix/notebooks
 
     - name: Build the book
       run: |

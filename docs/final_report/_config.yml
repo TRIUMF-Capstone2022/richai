@@ -8,8 +8,7 @@ bibtex_bibfiles:
 
 repository:
   url: https://github.com/TRIUMF-Capstone2022/richai
-  # TODO: update if we move all to docs folder
-  path_to_book: final_report
+  path_to_book: docs/final_report/
 
 html:
   use_repository_button: true
