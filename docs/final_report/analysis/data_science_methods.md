@@ -4,7 +4,7 @@
 
 ### 3.1.1: Why we used this model
 
-XGBoost {cite}`chen2015xgboost` was chosen as our baseline machine learning model due to it's scalability and ease of use with tabular data.  In addition, XGBoost offers support for GPU acceleration, which was ideal in our scenario of working with a large dataset.  In general, the benefits of using XGBoost as our baseline model are discussed in {ref}`App. C.1 <appendix:ml_gbm:intro>`. 
+XGBoost {cite}`Chen_2016` was chosen as our baseline machine learning model due to it's scalability and ease of use with tabular data.  In addition, XGBoost offers support for GPU acceleration, which was ideal in our scenario of working with a large dataset.  In general, the benefits of using XGBoost as our baseline model are discussed in {ref}`App. C.1 <appendix:ml_gbm:intro>`. 
 
 ### 3.1.2: Features
 
