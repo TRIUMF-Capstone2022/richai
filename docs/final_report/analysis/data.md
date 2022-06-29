@@ -34,6 +34,5 @@ Additionally, the scatter of points was convereted to a point cloud form by addi
 
 ### 2.3.4: Filtering noise hits 
 
-The data for photon hits corresponding to each event is noisy and may contain hits from a prior or subsequent event. Therefore this data needs to be cleaned. {ref}`App. B.4 <appendix:datagen:delta>` discusses this treatment. 
-
+The data for photon hits corresponding to each event was noisy and contained hits from a prior or subsequent event. Therefore this data was cleaned as diiscussed in  {ref}`App. B.4 <appendix:datagen:delta>`. 
 
