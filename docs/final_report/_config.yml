@@ -24,3 +24,7 @@ parse:
 
 execute:
   execute_notebooks: 'off'
+  
+parse:
+  myst_enable_extensions:
+    - amsmath

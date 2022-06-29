@@ -1,25 +1,25 @@
 # 3. Data Science Methods
 
-## Baseline model: Gradient boosted trees
+## 3.1: Baseline model: Gradient boosted trees
 
-### Why we used this model
+### 3.1.1: Why we used this model
 
-XGBoost {cite}`chen2015xgboost` was chosen as our baseline machine learning model due to it's scalability and ease of use with tabluar data.  In addition, XGBoost offers support for GPU acceleration, which was ideal in our scenario of working with a large dataset.  In general, the benefits of using XGBoost as our baseline model are discussed in {ref}`App. C.1 <appendix:ml_gbm:intro>`. 
+XGBoost {cite}`Chen_2016` was chosen as our baseline machine learning model due to it's scalability and ease of use with tabular data.  In addition, XGBoost offers support for GPU acceleration, which was ideal in our scenario of working with a large dataset.  In general, the benefits of using XGBoost as our baseline model are discussed in {ref}`App. C.1 <appendix:ml_gbm:intro>`. 
 
-### Features
+### 3.1.2: Features
 
 We used the following features in training our XGBoost models:
 - `Ring radius`: Radius of the the circle fitted by TRIUMF's prior algorithm to the photon light hits of the particle decay.
 - `Momentum`: Particle momentum information.
 - `Total hits`: An engineered feature on total number of photon hits per decay event.  The "hits" were filtered to keep only those close in time, where "closeness" was determined based on a delta between the photon hit time and the CHOD detector time.
 
-### Model benefits and shortcomings
+### 3.1.3: Model benefits and shortcomings
 
 In terms of benefits, XGBoost is easy, simple and intuitive to use.  XGBoost is efficient in terms of low training time via GPU acceleration.
 
 In terms of shortcomings, our XGBoost model does not capture the coordinate position data of the photon hits, as this is a variable length feature and XGBoost cannot support this without significant feature engineering.  Further, XGBoost did not perform well for pion or muon efficiency.
 
-### Results
+### 3.1.4: Results
 
 ```{figure} ../images/xgb_results_bal_0.92.svg
 ---
@@ -41,23 +41,23 @@ name: ROC_xgboost
 ROC curves of XGBoost models on different momentum bins
 ```
 
-### Justification for moving onto deep learning
+### 3.1.4: Justification for moving onto deep learning
 
 The main factor that drove our decision to apply deep learning models was the poor performance of XGBoost on particles with high momentum.  Further, XGBoost could not handle variable length photon hit data, whereas deep learning models can.  Ultimately, to improve our results from the baseline, we needed a more complex model that could extract features directly and more precisely from the photon hit position data, in addition to also identifying non-linear relationships between these features with particle momentum and ring radius.  Deep learning models were a good fit for this, and hence our decision to pursue these more complex models.
 
-## Deep learning
+## 3.2: Deep learning
 
-### Selecting models
+### 3.2.1: Selecting models
 
-In selecting our deep learning models, we searched for models that were specifically designed to work well with point cloud coordinate data.  Based on this research, we identified two models with architectures that appeared to fit our problem scope well.  The first model that we identified was called [PointNet](https://arxiv.org/abs/1612.00593) {cite}`qi2017pointnet`, which was developed by researchers at Stanford University.  The second model that we identified was called [Dynamic Graph CNN](https://arxiv.org/abs/1801.07829) {cite}`wang2019dynamic`, which was developed by researchers at Massachusetts Institute of Technology, UC Berkely, and Imperial College London.  We also note that traditional convolutional neural networks would not work well for our data due to its sparsity.
+In selecting our deep learning models, we searched for models that were specifically designed to work well with point cloud coordinate data.  Based on this research, we identified two models with architectures that appeared to fit our problem scope well.  The first model that we identified was called [PointNet](https://arxiv.org/abs/1612.00593) {cite}`qi2017pointnet`, which was developed by researchers at Stanford University.  The second model that we identified was called [Dynamic Graph CNN](https://arxiv.org/abs/1801.07829) {cite}`wang2019dynamic`, which was developed by researchers at Massachusetts Institute of Technology, UC Berkeley, and Imperial College London.  We also note that traditional convolutional neural networks would not work well for our data due to its sparsity.
 
-### Features 
+### 3.2.2: Features 
 
 Two separate feature combinations were tested when tuning both PointNet and the Dynamic Graph CNN model.  The first feature combination included the photon hit coordinates point cloud, momentum, and radius data generated from the MLE algorithm as input.  The second feature combination was a simpler model that did not take the radius as input, but still received the hits point cloud and momentum data. Comparing the results from both these models will reveal how effectively the deep learning architecture extracts the radius information from the point clouds alone, and if the abstraction of this data (ring radius value) is required at all.
 
 {ref}`App. D.2 <appendix:deeplearning:pointnet:hyp>` and {ref}`App. E.2 <appendix:deeplearning:dgcnn:hyp>` detail the hyperparameters tuned for PointNet and Dynamic Graph CNN respectively. 
 
-### PointNet
+### 3.2.3: PointNet
 
 #### Model architecture 
 
@@ -65,22 +65,22 @@ The overall architecture for the model used in this analysis, including the modi
 
 #### Model benefits and shortcomings
 
-In terms of benefits, Pointnet was able to achieve a strong pion efficiency accross all momentum bins, while maintaining similar muon efficiency to prior NA62 performance.  Further,  PointNet uses a symmetric function (max pooling) to make it robust to any change in the order of the coordinates that make up the input point cloud data.  Also, PointNet uses a Spatial Transformer Network {cite}`jaderberg2015spatial` to make it robust to any spatial variability within the input point cloud data
+In terms of benefits, PointNet was able to achieve a strong pion efficiency across all momentum bins, while maintaining similar muon efficiency to prior NA62 performance.  Further,  PointNet uses a symmetric function (max pooling) to make it robust to any change in the order of the coordinates that make up the input point cloud data.  Also, PointNet uses a Spatial Transformer Network {cite}`jaderberg2015spatial` to make it robust to any spatial variability within the input point cloud data
 
-In terms of shortcomings, PointNet required the longest training time of all the models we tested (~24 hours on three GPUs), and, by it's design, PointNet does not capture local information from within the coordainte point cloud input data.
+In terms of shortcomings, PointNet required the longest training time of all the models we tested (~24 hours on three GPUs), and, by it's design, PointNet does not capture local information from within the coordinate point cloud input data.
 
 #### Best performing model
 
 ```{figure} ../images/pointnet_roc.png
 :name: pointnet_roc
 
-Pointnet ROC Curves
+PointNet ROC Curves
 ```
 As can be seen in the receiver operating characteristic curves ("ROC") in {numref}`pointnet_roc`, our best PointNet model used all of the available features (hits coordinate point cloud, momentum, and radius).  Further, in order to filter photon hits based on a time delta of hit time - CHOD time, we found that 0.20ns worked best for our model.  The learning rate that we used was a linear annealing scheduler, which starts with an initial learning rate of 0.0003 and increases to 0.003 in the first half of training, before decreasing back to the original learning rate in the second half of training.  The total number of epochs trained for were 16.
 
 Finally, we selected an operating point of 0.93 on the ROC curve, as this allowed us to achieve a strong pion efficiency while maintaining good muon efficiency relative to the NA62 results.
 
-### Dynamic Graph CNN
+### 3.2.4: Dynamic Graph CNN
 
 #### Model architecture 
 
@@ -90,7 +90,7 @@ The overall architecture for the model used in this analysis, including the modi
 
 In terms of benefits, Dynamic Graph CNN is designed to capture local information within the point cloud data {cite}`wang2019dynamic`, which is something that our other model (PointNet) cannot do.  Further, Dynamic Graph CNN total training time was almost two times faster than PointNet, as the number of model parameters was less.
 
-In terms of shortcomings, our best Dynamic Graph CNN can maintain a similar pion efficiency to PointNet, however, it stuggles with muon efficiency.  We also note that Dynamic Graph CNN does not make use of a spatial transformer network, and therefore is not resistant to rotations of the input point cloud data.
+In terms of shortcomings, our best Dynamic Graph CNN can maintain a similar pion efficiency to PointNet, however, it struggles with muon efficiency.  We also note that Dynamic Graph CNN does not make use of a spatial transformer network, and therefore is not resistant to rotations of the input point cloud data.
 
 #### Best performing model
 
@@ -104,9 +104,9 @@ As can be seen in the receiver operating characteristic curves ("ROC") in {numre
 
 We selected an operating point of 0.96 on the ROC curve, as this allowed us to achieve a strong pion efficiency.  We were unable to select an operating point that achieved both a good pion efficiency and a good muon efficiency.
 
-## Overall model results
+## 3.3: Overall model results
 
-### Selecting the overall best model
+### 3.3.1: Selecting the overall best model
 
 ```{figure} ../images/all_models_roc.png
 :name: all_models_roc
@@ -116,7 +116,7 @@ ROC Curves: All models
 
 In selecting our overall best model, we used the ROC curve.  As can be seen in the {numref}`all_models_roc`, our overall best model was PointNet, following by Dynamic Graph CNN.  Both deep learning models were able to surpass our baseline XGBoost model.
 
-### Model efficiencies
+### 3.3.2: Model efficiencies
 
 ```{figure} ../images/dgcnn_efficiency.png
 :name: dgcnn_efficiency

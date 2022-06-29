@@ -19,7 +19,7 @@ parts:
     - file: appendix/supplementary_notebooks
       sections:
         - file: appendix/notebooks/data_generation_process
-        - file: appendix/notebooks/exploratory_data_analysis
+        - file: appendix/notebooks/EDA
         - file: appendix/notebooks/plotting_NA62_rings
         - file: appendix/notebooks/balance_data
         - file: appendix/notebooks/gbdt_analysis_results
