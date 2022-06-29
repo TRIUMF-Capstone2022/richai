@@ -11,7 +11,7 @@ import torch.nn as nn
 from torch.autograd import Variable
 import numpy as np
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 class STNkd(nn.Module):
@@ -77,16 +77,14 @@ class Transform(nn.Module):
 
         # batch matrix multiplication
         # input transform
-        x = torch.bmm(
-            torch.transpose(x, 1, 2), self.input_transform(x)
-        ).transpose(1, 2)
+        x = torch.bmm(torch.transpose(x, 1, 2), self.input_transform(x)).transpose(1, 2)
 
         x = self.relu(self.bn1(self.conv1(x)))
 
         # Feature transform
-        x = torch.bmm(
-            torch.transpose(x, 1, 2), self.feature_transform(x)
-        ).transpose(1, 2)
+        x = torch.bmm(torch.transpose(x, 1, 2), self.feature_transform(x)).transpose(
+            1, 2
+        )
 
         x = self.relu(self.bn2(self.conv2(x)))
         x = self.bn3(self.conv3(x))
