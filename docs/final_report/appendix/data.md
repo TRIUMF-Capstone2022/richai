@@ -56,16 +56,6 @@ Similarly,  {numref}`ring_center` details the difference in the ring centers, co
 (appendix:datagen:cloud)=
 ## B.3: Point Cloud Generation
 
-```{figure} ../images/point_cloud.png
----
-height: 350px
-width: 1250px
-name: point_cloud
----
-
-The generation of the point cloud from the 2D scatter through the addtion of a time dimension. 
-```
-
 ```{figure} ../images/eda_ring_plot.svg
 ---
 name: ring_plot
@@ -74,4 +64,25 @@ name: ring_plot
 Origial 2D structure of scatter of hits.
 ```
 
-Naturally, the photon hits information for each event is a system of X and Y coordinates that exists in a 2D plane {numref}`ring_plot`. As the number of hits for an event usually ranges from 15-30, and the PMT grid is of size 1952, the information is very sparse when treated as a standard image. Furthermore, implementations of PointNet {ref}`App D.1 <appendix:deeplearning:pointnet:arch>` and the Dynamic Graph CNN{ref}`App E.1 <appendix:deeplearning:dgcnn:arch>` require the feed to be three dimensional. Hence the photon hits information was converted to a point cloud by adding a third dimension of time. Specifically, this was the absolute value of the difference between the photon hit time and the particle travel. This is an eloquent solution as noise hits will have a large value in this new dimension and therefore be separated from the ring produced by the genuine motion of the particle. This is detailed in {numref}`point_cloud`.
+Naturally, the photon hits information for each event is a system of X and Y coordinates that exists in a 2D plane {numref}`ring_plot`. As the number of hits for an event usually ranges from 15-30, and the PMT grid is of size 1952, the information is very sparse when treated as a standard image. Furthermore, implementations of PointNet {ref}`App D.1 <appendix:deeplearning:pointnet:arch>` and the Dynamic Graph CNN{ref}`App E.1 <appendix:deeplearning:dgcnn:arch>` require the feed to be three dimensional. Hence the photon hits information was converted to a point cloud by adding a third dimension of time. Specifically, this was the absolute value of the difference between the photon hit time and the particle travel. This is an eloquent solution as noise hits will have a large value in this new dimension and therefore be separated from the ring produced by the genuine motion of the particle.
+
+(appendix:datagen:delta)=
+## B.4: Delta to filter noise hits
+
+```{figure} ../images/photon_hits.svg
+---
+name: photon_hits
+---
+
+Time difference between the photon hit time and CHOD time for 1 event. The CHOD time is the moment at which the particle travels through the RICH detector and the photons of light are emitted.
+```
+
+The photon hits recorded for a particular event are noisy due to the limited instrument precision {numref}`photon_hits`. For an event, the data for photon hits may contain hits from a previous or subsequent event in addition to those from the current event {numref}. To correctly filter these, the hit times need to match closely with the CHOD time, which is the measure of the time at which the particle passes the RICH detector. As the photons are emitted in this exact process, the time difference between the two should be zero (or very close to that value). Therefore by filtering the hits using a thredhold, the hits information for every event follows a gausian distribution centered at zero, indicating that the hits only have statistical variance {numref}`delta_time`. This filtering parameter is referred to as *delta* in this study.
+
+```{figure} ../images/eda_delta_time.svg
+---
+name: delta_time
+---
+
+Distribution of the difference between the photon hit times and CHOD time for a specific event.
+```

@@ -14,8 +14,8 @@ The class imbalance will be detrimental to achieving a high pion efficiency as t
 
 ```{figure} ../images/eda_p_dist.svg
 ---
-height: 700px
-width: 950px
+height: 405px
+width: 550px
 name: momentum_distribution
 ---
 
@@ -26,8 +26,14 @@ The solution was to split the data into three equally sized bins by momentum in 
 
 ### 2.3.2: Additional Bias in ring center locations 
 
-There exists a bias in the ring center locations for either particle as an artifact of the experiment, which is discussed in {ref}`App. B.2 <appendix:datagen:ringbias>`. Though there was an attempt to remove this bias through demeaning, it the bias still exists as a translation is inadequate and needs to be resolved in further studies. 
+There exists a bias in the ring center locations for either particle as an artifact of the experiment, which is discussed in {ref}`App. B.2 <appendix:datagen:ringbias>`.
 
 ### 2.3.3: Conversion to point cloud data 
 
-Additionally, the scatter of points was convereted to a point cloud form by adding a thrid dimension of tume to the photon hit scatters. The process is detailed in {ref}`App. B.3 <appendix:datagen:cloud>`. The appendix also details why the conversion was necessary. 
+Additionally, the scatter of points was convereted to a point cloud form by adding a thrid dimension of tume to the photon hit scatters. The process is detailed in {ref}`App. B.3 <appendix:datagen:cloud>`. The appendix also details why the conversion was necessary.
+
+### 2.3.4: Filtering noise hits 
+
+The data for photon hits corresponding to each event is noisy and may contain hits from a prior or subsequent event. Therefore this data needs to be cleaned. {ref}`App. B.4 <appendix:datagen:delta>` discusses this treatment. 
+
+
