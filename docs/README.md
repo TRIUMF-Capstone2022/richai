@@ -1,6 +1,6 @@
 # Project reports
 
-This directory contains the files related to the project proposal and project final report, as well as images that are used in the root directory README file.
+This directory contains the files related to the project proposal and project final report.
 
 ## Project proposal
 

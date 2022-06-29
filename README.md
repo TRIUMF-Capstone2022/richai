@@ -62,7 +62,53 @@ Finally, the original project proposal and corresponding presentation slides can
 
 ## Project structure
 
-![Project Structure](docs/images/project_org.png)
+At a high level, the overall project structure is as follows:
+
+```
+.
+├── configs/
+│   ├── README.md
+│   └── config.yaml
+├── dataset/
+│   ├── balance_data.py
+│   ├── data_loader.py
+│   ├── rich_dataset.py
+│   └── rich_pmt_positions.npy
+├── docs/
+│   ├── final_presentation/
+│   ├── final_report/
+│   ├── images/
+│   ├── proposal/
+│   └── README.md
+├── models/
+│   ├── dgcnn.py
+│   └── pointnet.py
+├── notebooks/
+│   ├── DGCNN_operating_point.ipynb
+│   ├── EDA.ipynb
+│   ├── README.md
+│   ├── balance_data.ipynb
+│   ├── data_generation_process.ipynb
+│   ├── gbdt_analysis_results.ipynb
+│   ├── global_values.ipynb
+│   ├── plotting_NA62_rings.ipynb
+│   ├── pointnet_model_runs.ipynb
+│   ├── pointnet_operating_point.ipynb
+│   └── presentation_plots.ipynb
+├── saved_models/
+│   └── README.md
+├── src/
+│   ├── evaluate.py
+│   └── train.py
+├── utils/
+│   ├── gbt_dataset.py
+│   ├── helpers.py
+│   └── plotting.py
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── LICENSE
+└── README.me
+```
 
 ## Dependencies
 
