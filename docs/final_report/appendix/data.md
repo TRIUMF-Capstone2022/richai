@@ -41,10 +41,10 @@ Ring-imaging Cherenkov detector
 (appendix:datagen:ringbias)=
 ### Ring center
 
-```{figure} ../images/ring_cent_bias.png
+```{figure} ../images/eda_ring_center_loc.png
 ---
-height: 450px
-width: 500px
+height: 479px
+width: 650px
 name: ring_center
 ---
 
@@ -56,7 +56,7 @@ Similarly,  {numref}`ring_center` details the difference in the ring centers, co
 (appendix:datagen:cloud)=
 ## B.3: Point Cloud Generation
 
-```{figure} ../images/eda_ring_plot.svg
+```{figure} ../images/ring_plots.svg
 ---
 name: ring_plot
 ---
