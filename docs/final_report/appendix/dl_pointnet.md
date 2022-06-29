@@ -4,7 +4,7 @@
 (appendix:deeplearning:pointnet:arch)=
 ## D.1: Model architecture 
 
-### D.1.1 Base Architecture
+### D.1.1: Base Architecture
 
 The PointNet architecture has two key features which allow it to handle pointcloud data effectively: 
 
@@ -26,7 +26,7 @@ name: pointnetarch
 The architecture of the base PointNet model. 
 ```
 
-### D.1.2 Additional features 
+### D.1.2: Additional features 
 
 The particle momentum and ring radius were added to this architecture by concatenating them to the fully connected layer. Both features were standardized and normalized batchwise to ensure stability of the network. 
 

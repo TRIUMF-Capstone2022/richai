@@ -40,7 +40,7 @@ Ring-imaging Cherenkov detector
 ## B.2: Bias in Data
 
 (appendix:datagen:ringbias)=
-### Ring center
+### B.2.1: Ring center
 
 ```{figure} ../images/eda_ring_center_loc.png
 ---

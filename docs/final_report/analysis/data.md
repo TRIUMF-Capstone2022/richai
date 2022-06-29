@@ -38,7 +38,7 @@ Before the PMT light hit coordinates were utilized as features in the deep learn
 
 Due to the sensitivity of the detectors, the data recorded for photon hits corresponding to each event was noisy and contained hits from a prior or subsequent event(s). Therefore further data cleaning was performed as discussed in {ref}`App. B.4 <appendix:datagen:delta>`. 
 
-## Summary of features
+## 2.4 Summary of features
 
 Ultimately, the following features were available for our machine learning models:
 

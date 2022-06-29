@@ -56,17 +56,17 @@ Two separate feature combinations were tested when tuning both PointNet and the 
 
 ### 3.2.3: PointNet
 
-#### Model architecture 
+#### 3.2.3.1: Model architecture 
 
 The overall architecture for the model used in this analysis is detailed in {ref}`App. D.1 <appendix:deeplearning:pointnet:arch>`.
 
-#### Model benefits and shortcomings
+#### 3.2.3.2: Model benefits and shortcomings
 
 In terms of benefits, PointNet was able to achieve a strong pion efficiency across all momentum bins, while maintaining similar muon efficiency to prior NA62 performance.  Further,  PointNet uses a symmetric function (max pooling) to make it robust to any change in the order of the coordinates that make up the input point cloud data.  Also, PointNet uses a Spatial Transformer Network {cite}`jaderberg2015spatial` to make it robust to any spatial variability within the input point cloud data
 
 In terms of shortcomings, PointNet required the longest training time of all the models we tested (~24 hours on three GPUs), and, by it's design, PointNet does not capture local information from within the coordinate point cloud input data.
 
-#### Best performing model
+#### 3.2.3.3: Best performing model
 
 ```{figure} ../images/pointnet_roc.png
 :name: pointnet_roc
@@ -80,17 +80,17 @@ Finally, an operating point of 0.93 was selected on the ROC curve, as this allow
 
 ### 3.2.4: Dynamic Graph CNN
 
-#### Model architecture 
+#### 3.2.4.1: Model architecture 
 
 The overall architecture for the model used in this analysis is  detailed in {ref}`App. E.1 <appendix:deeplearning:dgcnn:arch>`. 
 
-#### Model benefits and shortcomings
+#### 3.2.4.2: Model benefits and shortcomings
 
 In terms of benefits, Dynamic Graph CNN is designed to capture local information within the point cloud data {cite}`wang2019dynamic`, which is something that PointNet cannot do.  Further, Dynamic Graph CNN total training time was almost two times faster than PointNet, as the number of model parameters was less.
 
 In terms of shortcomings, our best Dynamic Graph CNN can maintain a similar pion efficiency to PointNet, however, it struggles with muon efficiency.  Dynamic Graph CNN does not make use of a spatial transformer network, and therefore is not resistant to rotations of the input point cloud data.
 
-#### Best performing model
+#### 3.2.4.3: Best performing model
 
 ```{figure} ../images/dgcnn_roc.png
 :name: dgcnn_roc

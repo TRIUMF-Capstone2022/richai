@@ -22,7 +22,7 @@ The architecture of the base dynamic graph CNN model.
 ---
 height: 300px
 width: 700px
-name: dgcnnedgeconv
+name: dgcnnedgeconv1
 ---
 First three steps of an EdgeConv layer.
 ```
@@ -31,7 +31,7 @@ First three steps of an EdgeConv layer.
 ---
 height: 300px
 width: 700px
-name: dgcnnedgeconv
+name: dgcnnedgeconv2
 ---
 Steps three to five of an EdgeConv layer.
 ```
