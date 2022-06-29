@@ -65,4 +65,13 @@ name: point_cloud
 
 The generation of the point cloud from the 2D scatter through the addtion of a time dimension. 
 ```
-Naturally, the photon hits information for each event is a system of X and Y coordinates that exists in a 2D plane. As the number of hits for an event usually ranges from 15-30, and the PMT grid is of size 1952, the information is very sparse when treated as a standard image. Hence the photon hits information was converted to a point cloud by adding a third dimension of time: the absolute value of the difference between the photon hit time and the particle travel. This is an eloquent solution as noise hits will have a large value in this new dimension and therefore be separated from the ring produced by the genuine motion of the particle. This is detailed in {numref}`point_cloud`.
+
+```{figure} ../images/eda_ring_plot.svg
+---
+name: ring_plot
+---
+
+Origial 2D structure of scatter of hits.
+```
+
+Naturally, the photon hits information for each event is a system of X and Y coordinates that exists in a 2D plane {numref}`ring_plot`. As the number of hits for an event usually ranges from 15-30, and the PMT grid is of size 1952, the information is very sparse when treated as a standard image. Furthermore, implementations of PointNet {ref}`App D.1 <appendix:deeplearning:pointnet:arch>` and the Dynamic Graph CNN{ref}`App E.1 <appendix:deeplearning:dgcnn:arch>` require the feed to be three dimensional. Hence the photon hits information was converted to a point cloud by adding a third dimension of time. Specifically, this was the absolute value of the difference between the photon hit time and the particle travel. This is an eloquent solution as noise hits will have a large value in this new dimension and therefore be separated from the ring produced by the genuine motion of the particle. This is detailed in {numref}`point_cloud`.
