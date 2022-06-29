@@ -2,7 +2,7 @@
 
 <!-- Badges start -->
 
-[![final_report](https://github.com/TRIUMF-Capstone2022/richai/actions/workflows/final_report.yml/badge.svg)](https://github.com/TRIUMF-Capstone2022/richai/actions/workflows/final_report.yml) [![GitHub deployments](https://img.shields.io/github/deployments/TRIUMF-Capstone2022/richai/github-pages?label=gh-pages)](https://github.com/TRIUMF-Capstone2022/richai/deployments/activity_log?environment=github-pages) [![License](https://img.shields.io/github/license/TRIUMF-Capstone2022/richai)](https://github.com/TRIUMF-Capstone2022/richai/blob/main/LICENSE) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/TRIUMF-Capstone2022/richai)](https://github.com/TRIUMF-Capstone2022/richai/releases)
+[![final_report](https://github.com/TRIUMF-Capstone2022/richai/actions/workflows/final_report.yml/badge.svg)](https://github.com/TRIUMF-Capstone2022/richai/actions/workflows/final_report.yml) [![GitHub deployments](https://img.shields.io/github/deployments/TRIUMF-Capstone2022/richai/github-pages?label=gh-pages)](https://github.com/TRIUMF-Capstone2022/richai/deployments/activity_log?environment=github-pages) [![License](https://img.shields.io/github/license/TRIUMF-Capstone2022/richai)](https://github.com/TRIUMF-Capstone2022/richai/blob/main/LICENSE)
 
 <!-- Badges end -->
 
