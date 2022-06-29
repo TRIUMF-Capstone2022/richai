@@ -193,8 +193,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../appendix/notebooks/exploratory_data_analysis.html">
-     Exploratory data analysis
+    <a class="reference internal" href="../appendix/notebooks/EDA.html">
+     RICH AI Exploratory Data Analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -398,16 +398,17 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#product-overview">
-   Product overview
+   4.1: Product overview
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#how-the-product-works">
-   How the product works
+   4.2: How the product works
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#configs">
+     4.2.1:
      <code class="docutils literal notranslate">
       <span class="pre">
        configs
@@ -417,6 +418,7 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#dataset">
+     4.2.2:
      <code class="docutils literal notranslate">
       <span class="pre">
        dataset
@@ -426,6 +428,7 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#models">
+     4.2.3:
      <code class="docutils literal notranslate">
       <span class="pre">
        models
@@ -435,6 +438,7 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#train-evaluate">
+     4.2.4:
      <code class="docutils literal notranslate">
       <span class="pre">
        train_evaluate
@@ -444,6 +448,7 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#utils">
+     4.2.5:
      <code class="docutils literal notranslate">
       <span class="pre">
        utils
@@ -452,11 +457,6 @@ title="Print to PDF"
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#future-improvements">
-   Future improvements
-  </a>
  </li>
 </ul>
 
@@ -479,16 +479,17 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#product-overview">
-   Product overview
+   4.1: Product overview
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#how-the-product-works">
-   How the product works
+   4.2: How the product works
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#configs">
+     4.2.1:
      <code class="docutils literal notranslate">
       <span class="pre">
        configs
@@ -498,6 +499,7 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#dataset">
+     4.2.2:
      <code class="docutils literal notranslate">
       <span class="pre">
        dataset
@@ -507,6 +509,7 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#models">
+     4.2.3:
      <code class="docutils literal notranslate">
       <span class="pre">
        models
@@ -516,6 +519,7 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#train-evaluate">
+     4.2.4:
      <code class="docutils literal notranslate">
       <span class="pre">
        train_evaluate
@@ -525,6 +529,7 @@ title="Print to PDF"
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#utils">
+     4.2.5:
      <code class="docutils literal notranslate">
       <span class="pre">
        utils
@@ -533,11 +538,6 @@ title="Print to PDF"
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#future-improvements">
-   Future improvements
-  </a>
  </li>
 </ul>
 
@@ -552,7 +552,7 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="data-product">
 <h1>4. Data Product<a class="headerlink" href="#data-product" title="Permalink to this headline">#</a></h1>
 <section id="product-overview">
-<h2>Product overview<a class="headerlink" href="#product-overview" title="Permalink to this headline">#</a></h2>
+<h2>4.1: Product overview<a class="headerlink" href="#product-overview" title="Permalink to this headline">#</a></h2>
 <p>Our final data product is a modularized machine learning pipeline that ultimately can classify a particle decay with either PointNet or a Dynamic Graph CNN.  As input, the pipeline takes in raw experiement data in HDF5 file format.  The data is then preprocessed, and the models are trained and tested(alternatively, pre-trained models can also be loaded to skip the training process here).  Finally, the models can then be evaluated in order to classify a particle decay.  From a birds eye view, our pipeline works as shown in <a class="reference internal" href="#id1"><span class="std std-numref">Fig. 9</span></a></p>
 <figure class="align-default" id="id1">
 <img alt="../_images/product_overview.png" src="../_images/product_overview.png" />
@@ -562,8 +562,8 @@ title="Print to PDF"
 </figure>
 </section>
 <section id="how-the-product-works">
-<h2>How the product works<a class="headerlink" href="#how-the-product-works" title="Permalink to this headline">#</a></h2>
-<p>We have designed our data product to be designed by a master configuration file.  This configuration file is set before the scripts are run, and allows a user to set all of the desired parameters or hyperparameters related to a single experiment run.  At a high level, our modularized code has been structured into the following directories:</p>
+<h2>4.2: How the product works<a class="headerlink" href="#how-the-product-works" title="Permalink to this headline">#</a></h2>
+<p>We have designed our data product to be controlled by a master configuration file.  This configuration file is set before the scripts are run, and allows a user to set all of the desired parameters or hyperparameters related to a single experiment run.  At a high level, our modularized code has been structured into the following directories:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── configs
 ├── src/
 │   ├── dataset/
@@ -574,29 +574,25 @@ title="Print to PDF"
 </div>
 <p>This report will only include a very brief overview of each directory above, for full details please see the <code class="docutils literal notranslate"><span class="pre">README.md</span></code> file on our <a class="reference external" href="https://github.com/TRIUMF-Capstone2022/richai">GitHub repository</a>.</p>
 <section id="configs">
-<h3><code class="docutils literal notranslate"><span class="pre">configs</span></code><a class="headerlink" href="#configs" title="Permalink to this headline">#</a></h3>
+<h3>4.2.1: <code class="docutils literal notranslate"><span class="pre">configs</span></code><a class="headerlink" href="#configs" title="Permalink to this headline">#</a></h3>
 <p>The configs directory cotains the master configuration file that allows the user to control all parameters and hyperparameters related to the data set, data loader, deep learning models, and selection of which GPUs to train on.  Please note that the master configuration file is the only file that has been designed to be edited by a user, and the changes in this file will flow down programatically to the python scripts that are described in the directories below.</p>
 </section>
 <section id="dataset">
-<h3><code class="docutils literal notranslate"><span class="pre">dataset</span></code><a class="headerlink" href="#dataset" title="Permalink to this headline">#</a></h3>
+<h3>4.2.2: <code class="docutils literal notranslate"><span class="pre">dataset</span></code><a class="headerlink" href="#dataset" title="Permalink to this headline">#</a></h3>
 <p>The dataset directory contains the source code that builds a custom PyTorch data set, as well as PyTorch data loaders that are used in model tranining, validation, and evaluation.</p>
 </section>
 <section id="models">
-<h3><code class="docutils literal notranslate"><span class="pre">models</span></code><a class="headerlink" href="#models" title="Permalink to this headline">#</a></h3>
+<h3>4.2.3: <code class="docutils literal notranslate"><span class="pre">models</span></code><a class="headerlink" href="#models" title="Permalink to this headline">#</a></h3>
 <p>The models directory contains the source code for our implementation of both PointNet and Dynamic Graph CNN.</p>
 </section>
 <section id="train-evaluate">
-<h3><code class="docutils literal notranslate"><span class="pre">train_evaluate</span></code><a class="headerlink" href="#train-evaluate" title="Permalink to this headline">#</a></h3>
+<h3>4.2.4: <code class="docutils literal notranslate"><span class="pre">train_evaluate</span></code><a class="headerlink" href="#train-evaluate" title="Permalink to this headline">#</a></h3>
 <p>The train_evaluate directory cotains the source code for our model training and evaluation scripts.</p>
 </section>
 <section id="utils">
-<h3><code class="docutils literal notranslate"><span class="pre">utils</span></code><a class="headerlink" href="#utils" title="Permalink to this headline">#</a></h3>
+<h3>4.2.5: <code class="docutils literal notranslate"><span class="pre">utils</span></code><a class="headerlink" href="#utils" title="Permalink to this headline">#</a></h3>
 <p>The utils directory contains other various functions related to our project, such as plotting functions or other functions that did not fit into one of the previous directories explained.</p>
 </section>
-</section>
-<section id="future-improvements">
-<h2>Future improvements<a class="headerlink" href="#future-improvements" title="Permalink to this headline">#</a></h2>
-<p>We note that our final data product has room for improvement, and due to the time constraints of the capstone project, we did not implement everything that we would have liked to.  We leave the following suggestions to the TRIUMF team as potential future improvements.  The deep learning models could continue to be optimized, through a method such as Bayesian optimization.  Further, more muons could be added to the data set, while respecting the particle momentum bins, which may help the in generalizing better to muon decays and potentially improve muon efficiency.  Finally, once the models have been completely finalized and the scientists at TRIUMF decide that no further tuning is required, the models could be deployed.  Another more drastic suggestion would be to try other model architectures, such as PointNet++ <span id="id2">[<a class="reference internal" href="../references.html#id12" title="Charles Ruizhongtai Qi, Li Yi, Hao Su, and Leonidas J Guibas. Pointnet++: deep hierarchical feature learning on point sets in a metric space. Advances in neural information processing systems, 2017.">Qi <em>et al.</em>, 2017</a>]</span>.</p>
 </section>
 </section>
 

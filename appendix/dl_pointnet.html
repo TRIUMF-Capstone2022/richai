@@ -193,8 +193,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="notebooks/exploratory_data_analysis.html">
-     Exploratory data analysis
+    <a class="reference internal" href="notebooks/EDA.html">
+     RICH AI Exploratory Data Analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -480,12 +480,12 @@ title="Print to PDF"
 <li><p>Spatial transformation network (T-Net) <span id="id1">[<a class="reference internal" href="../references.html#id7" title="Max Jaderberg, Karen Simonyan, Andrew Zisserman, and Koray Kavukcuoglu. Spatial transformer networks. 2015. URL: https://arxiv.org/abs/1506.02025, doi:10.48550/ARXIV.1506.02025.">Jaderberg <em>et al.</em>, 2015</a>]</span></p></li>
 <li><p>Maxpooling</p></li>
 </ol>
-<p>The overall architecture can be seen in <a class="reference internal" href="#pointnetarch"><span class="std std-numref">Fig. 17</span></a> <span id="id2">[<a class="reference internal" href="../references.html#id2" title="Charles R Qi, Hao Su, Kaichun Mo, and Leonidas J Guibas. Pointnet: deep learning on point sets for 3d classification and segmentation. In Proceedings of the IEEE conference on computer vision and pattern recognition, 652–660. 2017.">Qi <em>et al.</em>, 2017</a>]</span>. The spatial transformer is the first part of the model, and makes the model invariant to rotations in the point cloud. The parameters for the matrix learnt by this network are data driven and therefore robust. The second application of T-Net acts on the features extracted from various point clouds and orient them in a latent feature space. This matrix learnt for this step is more complex.</p>
+<p>The overall architecture can be seen in <a class="reference internal" href="#pointnetarch"><span class="std std-numref">Fig. 19</span></a> <span id="id2">[<a class="reference internal" href="../references.html#id2" title="Charles R Qi, Hao Su, Kaichun Mo, and Leonidas J Guibas. Pointnet: deep learning on point sets for 3d classification and segmentation. In Proceedings of the IEEE conference on computer vision and pattern recognition, 652–660. 2017.">Qi <em>et al.</em>, 2017</a>]</span>. The spatial transformer is the first part of the model, and makes the model invariant to rotations in the point cloud. The parameters for the matrix learnt by this network are data driven and therefore robust. The second application of T-Net acts on the features extracted from various point clouds and orient them in a latent feature space. This matrix learnt for this step is more complex.</p>
 <p>These geometric invariant features are passed onto a fully connected layer for feature extraction. Subsequently, max pooling, a symmetric function, is applied to this output to capture the unordered nature of the points in the point cloud. The output is passed to a classification network.</p>
 <figure class="align-default" id="pointnetarch">
 <a class="reference internal image-reference" href="../_images/pointnetarch.png"><img alt="../_images/pointnetarch.png" src="../_images/pointnetarch.png" style="width: 900px; height: 300px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 17 </span><span class="caption-text">The architecture of the base PointNet model.</span><a class="headerlink" href="#pointnetarch" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">The architecture of the base PointNet model.</span><a class="headerlink" href="#pointnetarch" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>

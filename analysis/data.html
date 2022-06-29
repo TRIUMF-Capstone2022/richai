@@ -193,8 +193,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../appendix/notebooks/exploratory_data_analysis.html">
-     Exploratory data analysis
+    <a class="reference internal" href="../appendix/notebooks/EDA.html">
+     RICH AI Exploratory Data Analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -412,8 +412,18 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#additional-steps">
-     2.3.2: Additional Steps
+    <a class="reference internal nav-link" href="#additional-bias-in-ring-center-locations">
+     2.3.2: Additional Bias in ring center locations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conversion-to-point-cloud-data">
+     2.3.3: Conversion to point cloud data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#filtering-noise-hits">
+     2.3.4: Filtering noise hits
     </a>
    </li>
   </ul>
@@ -453,8 +463,18 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#additional-steps">
-     2.3.2: Additional Steps
+    <a class="reference internal nav-link" href="#additional-bias-in-ring-center-locations">
+     2.3.2: Additional Bias in ring center locations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conversion-to-point-cloud-data">
+     2.3.3: Conversion to point cloud data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#filtering-noise-hits">
+     2.3.4: Filtering noise hits
     </a>
    </li>
   </ul>
@@ -473,8 +493,8 @@ title="Print to PDF"
 <h1>2. Data<a class="headerlink" href="#data" title="Permalink to this headline">#</a></h1>
 <section id="volume-and-features">
 <h2>2.1: Volume and Features<a class="headerlink" href="#volume-and-features" title="Permalink to this headline">#</a></h2>
-<p>The data was generated as part of the NA62 experiments performed at CERN <span id="id1">[<a class="reference internal" href="../references.html#id8" title="Andrea Bizzeti. The na62 rich detector. 2017. URL: https://arxiv.org/abs/1706.08496, doi:10.48550/ARXIV.1706.08496.">Bizzeti, 2017</a>]</span>.  There are a total of 11 million labeled decay events, each containing features that can be utilized by machine learning models. However, there is a large class imbalance in the data set. Only 10% of the examples represent pion decays, the class of interest.</p>
-<p>Based on the experimental setup detailed in <a class="reference internal" href="../appendix/data.html#appendix-datagen-process"><span class="std std-ref">App. B.1</span></a>, two sets of features associated are derived for each event. The first set corresponds to the subatomic particle motion: the particle momentum and time spent in the detector (“CHOD” time). The second set of features are derived from the light emitted by the subatomic particle motion. Each photon detected by a PMT tube is recorded as a hit on the PMT grid with $x$ and $y$ coordinates relative to this grid and the time of the hit. As an abstraction to the hit scatter, the ring radius and center that result from the maximum likelihood fit that TRIUMF currently employs is also included.</p>
+<p>The data was generated as part of the NA62 experiments performed at CERN <span id="id1">[<a class="reference internal" href="../references.html#id8" title="Andrea Bizzeti. The na62 rich detector. 2017. URL: https://arxiv.org/abs/1706.08496, doi:10.48550/ARXIV.1706.08496.">Bizzeti, 2017</a>]</span>.  There are approximately a total of 11 million labeled decay events, each containing features that can be utilized by machine learning models. However, there is a high class imbalance in the data set. Only 10% of the examples represent pion decays, the class of interest.</p>
+<p>Based on the experimental setup detailed in <a class="reference internal" href="../appendix/data.html#appendix-datagen-process"><span class="std std-ref">App. B.1</span></a>, two sets of features associated are derived for each event. The first set corresponds to the subatomic particle motion: the particle momentum and time spent in the detector (“CHOD” time). The second set of features are derived from the light emitted by the subatomic particle motion. Each photon detected by a photomultiplier tube (PMT) tube is recorded as a hit on the PMT grid with X and Y coordinates relative to this grid and the time of the hit. As an abstraction to the hit scatter, the ring radius and center that result from the maximum likelihood fit that TRIUMF currently employs is also included.</p>
 </section>
 <section id="preprocessing">
 <h2>2.3: Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this headline">#</a></h2>
@@ -482,16 +502,24 @@ title="Print to PDF"
 <h3>2.3.1: Subsampling w/ respect to momentum bins<a class="headerlink" href="#subsampling-w-respect-to-momentum-bins" title="Permalink to this headline">#</a></h3>
 <p>The class imbalance will be detrimental to achieving a high pion efficiency as the pion is the minority class. Undersampling the muons to match the number of pions was a feasible solution to address this issue due to the large dataset. However, random sampling of muons examples cannot be used for this data. This is due to the systematic difference in the distribution of momentums between the two particles which is purely an artifact of the experimental setup as seen in <a class="reference internal" href="#momentum-distribution"><span class="std std-numref">Fig. 1</span></a>. This will bias the output as the objective of this project is to carry out the classification strictly based on differences in the ring size between the particles.</p>
 <figure class="align-default" id="momentum-distribution">
-<a class="reference internal image-reference" href="../_images/momentum_dist.svg"><img alt="../_images/momentum_dist.svg" height="700px" src="../_images/momentum_dist.svg" width="950px" /></a>
+<a class="reference internal image-reference" href="../_images/eda_p_dist.svg"><img alt="../_images/eda_p_dist.svg" height="405px" src="../_images/eda_p_dist.svg" width="550px" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 1 </span><span class="caption-text">Distribution of momentum for all samples by class.</span><a class="headerlink" href="#momentum-distribution" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The solution was to split the data into three equally sized bins by momentum in the range of 15-45 $GeV/c$, count the number of pions in each bin, and sample an equal number of muons within that bin. The resulting synthetic dataset contained 2 million examples. There were enough examples to feed into the machine learning models, and momentum as a feature was controlled.</p>
+<p>The solution was to split the data into three equally sized bins by momentum in the range of 15-45 <em>GeV/c</em>, count the number of pions in each bin, and sample an equal number of muons within that bin. The resulting synthetic dataset contained 2 million examples. There were enough examples to feed into the machine learning models, and momentum as a feature was controlled.</p>
 </section>
-<section id="additional-steps">
-<h3>2.3.2: Additional Steps<a class="headerlink" href="#additional-steps" title="Permalink to this headline">#</a></h3>
-<p>There were two additional preprocessing steps: removing the bias in the ring center and conversion of the hits data into a point cloud. The former was completed by subtracting the global mean $x$ and $y$ positions from every photon hit, and is shown in <a class="reference internal" href="../appendix/data.html#appendix-datagen-ringbias"><span class="std std-ref">App. B.2</span></a>. The latter process, descibed in <a class="reference internal" href="../appendix/data.html#appendix-datagen-cloud"><span class="std std-ref">App. B.3</span></a> involved adding a third dimension of time to the photon hit scatters.</p>
+<section id="additional-bias-in-ring-center-locations">
+<h3>2.3.2: Additional Bias in ring center locations<a class="headerlink" href="#additional-bias-in-ring-center-locations" title="Permalink to this headline">#</a></h3>
+<p>There exists a bias in the ring center locations for either particle as an artifact of the experiment, which is discussed in <a class="reference internal" href="../appendix/data.html#appendix-datagen-ringbias"><span class="std std-ref">App. B.2</span></a>.</p>
+</section>
+<section id="conversion-to-point-cloud-data">
+<h3>2.3.3: Conversion to point cloud data<a class="headerlink" href="#conversion-to-point-cloud-data" title="Permalink to this headline">#</a></h3>
+<p>Additionally, the scatter of points was convereted to a point cloud form by adding a thrid dimension of tume to the photon hit scatters. The process is detailed in <a class="reference internal" href="../appendix/data.html#appendix-datagen-cloud"><span class="std std-ref">App. B.3</span></a>. The appendix also details why the conversion was necessary.</p>
+</section>
+<section id="filtering-noise-hits">
+<h3>2.3.4: Filtering noise hits<a class="headerlink" href="#filtering-noise-hits" title="Permalink to this headline">#</a></h3>
+<p>The data for photon hits corresponding to each event was noisy and contained hits from a prior or subsequent event. Therefore this data was cleaned as diiscussed in  <a class="reference internal" href="../appendix/data.html#appendix-datagen-delta"><span class="std std-ref">App. B.4</span></a>.</p>
 </section>
 </section>
 </section>

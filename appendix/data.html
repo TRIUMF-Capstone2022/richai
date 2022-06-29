@@ -193,8 +193,8 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="notebooks/exploratory_data_analysis.html">
-     Exploratory data analysis
+    <a class="reference internal" href="notebooks/EDA.html">
+     RICH AI Exploratory Data Analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -418,6 +418,11 @@ title="Print to PDF"
    B.3: Point Cloud Generation
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#b-4-delta-to-filter-noise-hits">
+   B.4: Delta to filter noise hits
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -459,6 +464,11 @@ title="Print to PDF"
    B.3: Point Cloud Generation
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#b-4-delta-to-filter-noise-hits">
+   B.4: Delta to filter noise hits
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -481,7 +491,7 @@ title="Print to PDF"
 </figcaption>
 </figure>
 <ol class="simple">
-<li><p>A beam rich in kaon particles is delivered in “bursts” every four or five seconds into the detector. The set up as shown in <a class="reference internal" href="#na62-beam-detector"><span class="std std-numref">Fig. 13</span></a> <span id="id1">[<a class="reference internal" href="../references.html#id6" title="E. Cortina Gil et.al. The beam and detector of the NA62 experiment at CERN. Journal of Instrumentation, 12(05):P05025–P05025, may 2017. URL: https://doi.org/10.1088%2F1748-0221%2F12%2F05%2Fp05025, doi:10.1088/1748-0221/12/05/p05025.">et.al, 2017</a>]</span>.</p></li>
+<li><p>A beam rich in kaon particles is delivered in “bursts” every four or five seconds into the detector. The set up as shown in <a class="reference internal" href="#na62-beam-detector"><span class="std std-numref">Fig. 13</span></a> <span id="id1">[<a class="reference internal" href="../references.html#id6" title="Gil and others. The beam and detector of the NA62 experiment at CERN. Journal of Instrumentation, 12(05):P05025–P05025, may 2017. URL: https://doi.org/10.1088%2F1748-0221%2F12%2F05%2Fp05025, doi:10.1088/1748-0221/12/05/p05025.">Gil and others, 2017</a>]</span>.</p></li>
 <li><p>During a burst, several particle decays occur.  Each particle decay has an individual “event” ID associated with it.</p></li>
 </ol>
 <figure class="align-default" id="rich-detector">
@@ -502,23 +512,38 @@ title="Print to PDF"
 <section id="ring-center">
 <span id="appendix-datagen-ringbias"></span><h3>Ring center<a class="headerlink" href="#ring-center" title="Permalink to this headline">#</a></h3>
 <figure class="align-default" id="id3">
-<a class="reference internal image-reference" href="../_images/ring_cent_bias.png"><img alt="../_images/ring_cent_bias.png" src="../_images/ring_cent_bias.png" style="width: 500px; height: 450px;" /></a>
+<a class="reference internal image-reference" href="../_images/eda_ring_center_loc.png"><img alt="../_images/eda_ring_center_loc.png" src="../_images/eda_ring_center_loc.png" style="width: 700px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Distribution of ring center calcualted using the MLE algorithm for all samples by class.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Distribution of ring center calculated using the MLE algorithm for all samples by class.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Similarly,  <a class="reference internal" href="#id3"><span class="std std-numref">Fig. 15</span></a> details the difference in the ring centers computed using the MLE between the two classes. As this feature is an abstraction of the scatter of X and Y coordinates, it can be inferred that the bias exists in the raw hits information which will be fed into the deep learning models. These models identify this spatial difference on the standardized PMT grid, and therefore bias the classification. Demeaning each of the hits data using the global X and Y positions of the ring centers, irrespective of class, will remove this bias.</p>
+<p>Similarly,  <a class="reference internal" href="#id3"><span class="std std-numref">Fig. 15</span></a> details the difference in the ring centers, computed using the MLE, between the two classes. As this feature is an abstraction of the scatter of X and Y coordinates, it can be inferred that the bias exists in the raw hits information which will be fed into the deep learning models. These models can identify this spatial difference on the standardized PMT grid and bias the classification. Though the global X and Y coordinates of the mean ring center (over both classes) was subtracted from each photon hit coordinate in the analysis, this method is likely inadequate as it is simply a translation. This factor needs to be investigated further in subsequent studies.</p>
 </section>
 </section>
 <section id="b-3-point-cloud-generation">
 <span id="appendix-datagen-cloud"></span><h2>B.3: Point Cloud Generation<a class="headerlink" href="#b-3-point-cloud-generation" title="Permalink to this headline">#</a></h2>
-<figure class="align-default" id="point-cloud">
-<a class="reference internal image-reference" href="../_images/point_cloud.png"><img alt="../_images/point_cloud.png" src="../_images/point_cloud.png" style="width: 1250px; height: 350px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 16 </span><span class="caption-text">The generation of the point cloud from the 2D scatter through the addtion of a time dimension.</span><a class="headerlink" href="#point-cloud" title="Permalink to this image">#</a></p>
+<figure class="align-default" id="ring-plot">
+<img alt="../_images/ring_plots.svg" src="../_images/ring_plots.svg" /><figcaption>
+<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Origial 2D structure of scatter of hits.</span><a class="headerlink" href="#ring-plot" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Naturally, the photon hits information for each event is a system of X and Y coordinates that exists in a 2D plane. As the number of hits for an event usually ranges from 15-30, and the PMT grid is of size 1952, the information is very sparse when treated as a standard image. Hence the photon hits information was converted to a point cloud by adding a third dimension of time: the absolute value of the difference between the photon hit time and the particle travel. This is an eloquent solution as noise hits will have a large value in this new dimension and therefore be separated from the ring produced by the genuine motion of the particle. This is detailed in <a class="reference internal" href="#point-cloud"><span class="std std-numref">Fig. 16</span></a>.</p>
+<p>Naturally, the photon hits information for each event is a system of X and Y coordinates that exists in a 2D plane <a class="reference internal" href="#ring-plot"><span class="std std-numref">Fig. 16</span></a>. As the number of hits for an event usually ranges from 15-30, and the PMT grid is of size 1952, the information is very sparse when treated as a standard image. Furthermore, implementations of PointNet <a class="reference internal" href="dl_pointnet.html#appendix-deeplearning-pointnet-arch"><span class="std std-ref">App D.1</span></a> and the Dynamic Graph CNN<a class="reference internal" href="dl_dgcnn.html#appendix-deeplearning-dgcnn-arch"><span class="std std-ref">App E.1</span></a> require the feed to be three dimensional. Hence the photon hits information was converted to a point cloud by adding a third dimension of time. Specifically, this was the absolute value of the difference between the photon hit time and the particle travel. This is an eloquent solution as noise hits will have a large value in this new dimension and therefore be separated from the ring produced by the genuine motion of the particle.</p>
+</section>
+<section id="b-4-delta-to-filter-noise-hits">
+<span id="appendix-datagen-delta"></span><h2>B.4: Delta to filter noise hits<a class="headerlink" href="#b-4-delta-to-filter-noise-hits" title="Permalink to this headline">#</a></h2>
+<figure class="align-default" id="photon-hits">
+<a class="reference internal image-reference" href="../_images/photon_hits.svg"><img alt="../_images/photon_hits.svg" height="368px" src="../_images/photon_hits.svg" width="650px" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 17 </span><span class="caption-text">Time difference between the photon hit time and CHOD time for 1 event. The CHOD time is the moment at which the particle travels through the RICH detector and the photons of light are emitted.</span><a class="headerlink" href="#photon-hits" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The photon hits recorded for a particular event are noisy due to the limited instrument precision <a class="reference internal" href="#photon-hits"><span class="std std-numref">Fig. 17</span></a>. For an event, the data for photon hits may contain hits from a previous or subsequent event in addition to those from the current event {numref}. To correctly filter these, the hit times need to match closely with the CHOD time, which is the measure of the time at which the particle passes the RICH detector. As the photons are emitted in this exact process, the time difference between the two should be zero (or very close to that value). Therefore by filtering the hits using a thredhold, the hits information for every event follows a gausian distribution centered at zero, indicating that the hits only have statistical variance <a class="reference internal" href="#delta-time"><span class="std std-numref">Fig. 18</span></a>. This filtering parameter is referred to as <em>delta</em> in this study.</p>
+<figure class="align-default" id="delta-time">
+<a class="reference internal image-reference" href="../_images/eda_delta_time.svg"><img alt="../_images/eda_delta_time.svg" src="../_images/eda_delta_time.svg" width="700px" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Distribution of the difference between the photon hit times and CHOD time for a specific event.</span><a class="headerlink" href="#delta-time" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Exploratory data analysis &#8212; RICH AI Final Report</title>
+    <title>RICH AI Exploratory Data Analysis &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -194,7 +194,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Exploratory data analysis
+     RICH AI Exploratory Data Analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -310,7 +310,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/TRIUMF-Capstone2022/richai/master?urlpath=tree/docs/final_report/appendix/notebooks/exploratory_data_analysis.ipynb"
+        <a href="https://mybinder.org/v2/gh/TRIUMF-Capstone2022/richai/master?urlpath=tree/docs/final_report/appendix/notebooks/EDA.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -366,7 +366,7 @@ title="Source repository"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../_sources/appendix/notebooks/exploratory_data_analysis.ipynb"
+        <a href="../../_sources/appendix/notebooks/EDA.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -427,8 +427,15 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   Exploratory data analysis
+   RICH AI Exploratory Data Analysis
   </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#notes">
+     Notes
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#helper-functions">
@@ -542,11 +549,6 @@ title="Print to PDF"
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#delta-0-3">
      Delta=0.3
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#note-some-events-have-no-hits">
-     Note - some events have no hits
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
@@ -585,7 +587,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Exploratory data analysis</h1>
+                <h1>RICH AI Exploratory Data Analysis</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -597,8 +599,15 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   Exploratory data analysis
+   RICH AI Exploratory Data Analysis
   </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#notes">
+     Notes
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#helper-functions">
@@ -712,11 +721,6 @@ title="Print to PDF"
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#delta-0-3">
      Delta=0.3
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#note-some-events-have-no-hits">
-     Note - some events have no hits
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
@@ -756,18 +760,26 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="exploratory-data-analysis">
-<h1>Exploratory data analysis<a class="headerlink" href="#exploratory-data-analysis" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="rich-ai-exploratory-data-analysis">
+<h1>RICH AI Exploratory Data Analysis<a class="headerlink" href="#rich-ai-exploratory-data-analysis" title="Permalink to this headline">#</a></h1>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
-<li><p><strong>Purpose</strong>: The purpose of this notebook is to perform exploratory data analysis on the RICH AI Dataset.</p></li>
-<li><p><strong>Authors</strong>: Mukund Iyer, Nico Van den Hooff, Shiv Jena</p></li>
-<li><p><strong>Notes</strong>:</p>
-<ul>
 <li><p>Labels are 0: Muon, 1: Pion, 2: Positron</p></li>
-<li><p>Likelihood labels are different [Pion, Muon, Positron]</p></li>
+<li><p>Likelihood labels are different [Pion, Muon]</p></li>
 </ul>
-</li>
-</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">..</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/mukund/richai
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">h5py</span> 
@@ -778,22 +790,16 @@ title="Print to PDF"
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">utils.helpers</span> <span class="kn">import</span> <span class="n">events_to_pandas</span><span class="p">,</span> <span class="n">compute_seq_id</span>
+<span class="kn">from</span> <span class="nn">dataset.rich_dataset</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">../</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/mukund/richai
-</pre></div>
-</div>
-</div>
-</div>
+</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="helper-functions">
 <h1>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">#</a></h1>
@@ -894,7 +900,14 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_string_label</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Add string label to pandas df (to be used with map)&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Add string label to pandas df (to be used with map)</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    label : int</span>
+<span class="sd">        Integer specifying class the class of the particle</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;muon&quot;</span>
     <span class="k">elif</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -907,17 +920,17 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_seq_id</span><span class="p">(</span><span class="n">hit</span><span class="p">,</span> <span class="n">or_id</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Compute the RICH PMT sequence ID&quot;&quot;&quot;</span>
-    <span class="n">disk_id</span><span class="p">,</span> <span class="n">pm_id</span><span class="p">,</span> <span class="n">sc_id</span><span class="p">,</span> <span class="n">up_dw_id</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">hit</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># def compute_seq_id(hit, or_id=0):</span>
+<span class="c1">#     &quot;&quot;&quot;Compute the RICH PMT sequence ID&quot;&quot;&quot;</span>
+<span class="c1">#     disk_id, pm_id, sc_id, up_dw_id, _ = hit</span>
     
-    <span class="k">if</span> <span class="n">or_id</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">seq_id</span> <span class="o">=</span> <span class="n">sc_id</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">+</span> <span class="n">pm_id</span> <span class="o">+</span> <span class="n">up_dw_id</span> <span class="o">*</span> <span class="mi">61</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">+</span> <span class="n">disk_id</span> <span class="o">*</span> <span class="mi">61</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">*</span> <span class="mi">2</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">seq_id</span> <span class="o">=</span> <span class="mi">61</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sc_id</span> <span class="o">+</span> <span class="n">up_dw_id</span> <span class="o">*</span> <span class="mi">61</span> <span class="o">+</span> <span class="n">disk_id</span> <span class="o">*</span> <span class="mi">61</span> <span class="o">*</span> <span class="mi">2</span>
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">seq_id</span><span class="p">)</span>
+<span class="c1">#     if or_id &lt; 1:</span>
+<span class="c1">#         seq_id = sc_id * 8 + pm_id + up_dw_id * 61 * 8 + disk_id * 61 * 8 * 2</span>
+<span class="c1">#     else:</span>
+<span class="c1">#         seq_id = 61 * 8 * 2 * 2 + sc_id + up_dw_id * 61 + disk_id * 61 * 2</span>
+<span class="c1">#     return int(seq_id)</span>
 
-<span class="n">compute_seq_id</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">compute_seq_id</span><span class="p">,</span> <span class="n">otypes</span><span class="o">=</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span>
+<span class="c1"># compute_seq_id = np.vectorize(compute_seq_id, otypes=[int])</span>
 </pre></div>
 </div>
 </div>
@@ -925,12 +938,32 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">realign_x_hits</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mirror</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;translate X coordinates with fix</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : float</span>
+<span class="sd">        X-coordiante of hit.</span>
+<span class="sd">    mirror : int</span>
+<span class="sd">        Integer indicating mirror which photon hit. </span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">mirror</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="mf">146.8</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">196.7</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="mf">196.7</span>
     
 <span class="k">def</span> <span class="nf">realign_y_hits</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">mirror</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;translate Y coordinates with fix</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    y : float</span>
+<span class="sd">        X-coordiante of hit.</span>
+<span class="sd">    mirror : int</span>
+<span class="sd">        Integer indicating mirror which photon hit. </span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">mirror</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">19.8</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1002,7 +1035,30 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_class_samples</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">momentum_bin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wide</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Sample n samples for each particle class from the events dataframe&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Sample n samples for each particle class from the events dataframe</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : dataframe</span>
+<span class="sd">        A pandas DataFrame representation of the HDF5 Events file.</span>
+<span class="sd">        </span>
+<span class="sd">    n : int</span>
+<span class="sd">        The number of samples required.</span>
+<span class="sd">    </span>
+<span class="sd">    seed : int</span>
+<span class="sd">        RNG seed number. </span>
+<span class="sd">    </span>
+<span class="sd">    momentum_bin : boolean</span>
+<span class="sd">        Indicate whehter to sample using momentum bins.</span>
+<span class="sd">    </span>
+<span class="sd">    wide = boolean</span>
+<span class="sd">        Indicate whehter to use wide or narrow bins.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    samples : pd.DataFrame</span>
+<span class="sd">        Dataframe containing randomly sampled events.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="k">if</span> <span class="n">momentum_bin</span> <span class="ow">and</span> <span class="n">wide</span><span class="p">:</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;wide_momentum_bin == @momentum_bin&quot;</span><span class="p">)</span>
@@ -1041,6 +1097,18 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">undersample</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Undersample majority class to match number of minority class</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pd.dataframe</span>
+<span class="sd">        A pandas DataFrame representation of the HDF5 Events file.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    final_df : pd.DataFrame</span>
+<span class="sd">        Dataframe containing equal class sizes.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">classes</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
     <span class="n">least_class_amount</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">classes</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
     <span class="n">classes_list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1064,7 +1132,25 @@ title="Print to PDF"
     <span class="n">df_balanced</span><span class="p">,</span> 
     <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.3</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;extra delta stats&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Compute the mean difference between CHOD time and photon hits for each event after filtering</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dset_unbalanced : HDF5</span>
+<span class="sd">        Original HDF5 Events file.</span>
+<span class="sd">    </span>
+<span class="sd">    dset_unbalanced : HDF5</span>
+<span class="sd">        Synthetic data HDF5 Events file.</span>
+<span class="sd">    </span>
+<span class="sd">    delta : float</span>
+<span class="sd">        The cut-off value for filtering the difference between CHOD time and photon hit time</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df_balanced_copy : pd.DataFrame</span>
+<span class="sd">        Dataframe containing additional column with number of hits and mean_delta after filtering.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="c1"># Event indices in balanced dataset</span>
     <span class="n">event_nums</span> <span class="o">=</span> <span class="n">df_balanced</span><span class="p">[</span><span class="s1">&#39;original_index&#39;</span><span class="p">]</span>
@@ -1091,8 +1177,6 @@ title="Print to PDF"
     <span class="n">df_balanced_copy</span><span class="p">[</span><span class="s1">&#39;hits_filtered_per_event&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hits_filtered_perevent</span>
     <span class="n">df_balanced_copy</span><span class="p">[</span><span class="s1">&#39;mean_delta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta_perevent</span>
     
-    <span class="nb">print</span><span class="p">(</span><span class="n">delta_time</span><span class="p">)</span>
-    
     <span class="k">return</span> <span class="n">df_balanced_copy</span>
 </pre></div>
 </div>
@@ -1103,7 +1187,26 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_hit_data</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">mapper_event</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get the hit data for an event as a numpy array.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Get the hit data for an event as a numpy array.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f : HDF5</span>
+<span class="sd">        Original HDF5 Events file.</span>
+<span class="sd">    </span>
+<span class="sd">    mapper : HDF5</span>
+<span class="sd">        Synthetic data HDF5 Events file.</span>
+<span class="sd">    </span>
+<span class="sd">    mapper_event : int</span>
+<span class="sd">        The integer value of index of the event in the synthetic dataframe</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    hits_data : np.array</span>
+<span class="sd">        Array containing x, y, mirror, hit time, chod time, delta</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">event</span><span class="o">=</span><span class="n">mapper</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;table&#39;</span><span class="p">][</span><span class="n">mapper_event</span><span class="p">][</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
    
@@ -1147,24 +1250,29 @@ title="Print to PDF"
         <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;mirror&quot;</span><span class="p">,</span> <span class="s2">&quot;hit_time&quot;</span><span class="p">,</span> <span class="s2">&quot;chod_time&quot;</span><span class="p">,</span> <span class="s2">&quot;time_delta&quot;</span><span class="p">]</span>
     <span class="p">)</span>
 
-
-<span class="k">def</span> <span class="nf">realign_x_hits</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mirror</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Realign x hits based on mirror&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">mirror</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="mf">146.8</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="mf">196.7</span>
-    
-    
-<span class="k">def</span> <span class="nf">realign_y_hits</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">mirror</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Realign y hits based on mirror&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">mirror</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">19.8</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">9.5</span>
-    
     
 <span class="k">def</span> <span class="nf">plot_event</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">mapper_event</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f : HDF5</span>
+<span class="sd">        Original HDF5 Events file.</span>
+<span class="sd">    </span>
+<span class="sd">    mapper : HDF5</span>
+<span class="sd">        Synthetic data HDF5 Events file.</span>
+<span class="sd">    </span>
+<span class="sd">    mapper_event : int</span>
+<span class="sd">        The integer value of index of the event in the synthetic dataframe</span>
+<span class="sd">    </span>
+<span class="sd">    ax : bool</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    hits_data : np.array</span>
+<span class="sd">        Array containing x, y, mirror, hit time, chod time, delta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
     <span class="c1"># get the hit data for the event</span>
     <span class="n">hit_data</span> <span class="o">=</span> <span class="n">get_hit_data</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">mapper_event</span><span class="p">)</span>
     
@@ -1282,7 +1390,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;B/2018B&#39;, &#39;A/Run008553&#39;, &#39;A/Run008564&#39;, &#39;A/Run008548&#39;, &#39;C/2018E&#39;, &#39;A/Run008562&#39;, &#39;A/Run008563&#39;])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;B/2018B&#39;, &#39;B/2018B_copy&#39;, &#39;A/Run008553&#39;, &#39;A/Run008564&#39;, &#39;A/Run008548&#39;, &#39;C/2018E&#39;, &#39;A/Run008562&#39;, &#39;A/Run008563&#39;])
 </pre></div>
 </div>
 </div>
@@ -1322,8 +1430,7 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dataset.rich_dataset</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="n">dset_path</span> <span class="o">=</span> <span class="s2">&quot;/data/bvelghe/capstone2022/C/2018E.EOSlist.CTRL_patched.h5&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dset_path</span> <span class="o">=</span> <span class="s2">&quot;/data/bvelghe/capstone2022/C/2018E.EOSlist.CTRL_patched.h5&quot;</span>
 <span class="n">dset_unbalanced</span> <span class="o">=</span> <span class="n">RICHDataset</span><span class="p">(</span>
     <span class="n">dset_path</span>
 <span class="p">)</span>
@@ -1331,31 +1438,31 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-06-27 22:34:57,735  INFO      data_version: 5f0df761-9a34-4554-9c50-dc0b338dc19a
-2022-06-27 22:34:57,738  INFO      description: NA62 RICH PID dataset - MDS Capstone project - Thu 26 May 2022 09:33:42 AM CEST &lt;bob.velghe@triumf.ca&gt;
-2022-06-27 22:34:57,739  INFO      entries: 9662769
-2022-06-27 22:34:57,740  INFO      muon_offset: 0
-2022-06-27 22:34:57,741  INFO      pion_offset: 8583495
-2022-06-27 22:34:57,742  INFO      positron_offset: 9567650
-2022-06-27 22:34:58,613  INFO      hit map size: 77302160 bytes
-2022-06-27 22:34:58,616  INFO      Offsets: {&#39;entries&#39;: 9662769, &#39;muon&#39;: 0, &#39;pion&#39;: 8583495, &#39;positron&#39;: 9567650}
-2022-06-27 22:34:58,643  INFO      Entries: 9662769
-2022-06-27 22:34:58,644  INFO      Muons start at index: 0
-2022-06-27 22:34:58,644  INFO      Pions start at index: 8583495
-2022-06-27 22:34:58,645  INFO      Positron start at index: 9567650
-2022-06-27 22:34:58,697  INFO      
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2022-06-28 21:38:13,948  INFO      data_version: 5f0df761-9a34-4554-9c50-dc0b338dc19a
+2022-06-28 21:38:13,949  INFO      description: NA62 RICH PID dataset - MDS Capstone project - Thu 26 May 2022 09:33:42 AM CEST &lt;bob.velghe@triumf.ca&gt;
+2022-06-28 21:38:13,950  INFO      entries: 9662769
+2022-06-28 21:38:13,951  INFO      muon_offset: 0
+2022-06-28 21:38:13,953  INFO      pion_offset: 8583495
+2022-06-28 21:38:13,954  INFO      positron_offset: 9567650
+2022-06-28 21:38:15,157  INFO      hit map size: 77302160 bytes
+2022-06-28 21:38:15,160  INFO      Offsets: {&#39;entries&#39;: 9662769, &#39;muon&#39;: 0, &#39;pion&#39;: 8583495, &#39;positron&#39;: 9567650}
+2022-06-28 21:38:15,184  INFO      Entries: 9662769
+2022-06-28 21:38:15,185  INFO      Muons start at index: 0
+2022-06-28 21:38:15,186  INFO      Pions start at index: 8583495
+2022-06-28 21:38:15,186  INFO      Positron start at index: 9567650
+2022-06-28 21:38:15,675  INFO      
                     Mean centre locations: (-110.25,1.14)
                     Mean/std momentum: 31.338661, 7.523443
                     Mean/std radius: 174.97235, 12.013085
-2022-06-27 22:34:59,001  INFO      Total indices: 9662767
-2022-06-27 22:34:59,003  INFO      Total Train indices: 0
-2022-06-27 22:34:59,004  INFO      Total Validation indices: 0
-2022-06-27 22:34:59,005  INFO      Total Test indices: 0
-2022-06-27 22:34:59,005  INFO      First 5 Train indices: []
-2022-06-27 22:34:59,006  INFO      First 5 Validation indices: []
-2022-06-27 22:34:59,006  INFO      First 5 Test indices: []
-2022-06-27 22:34:59,007  INFO      hit array mmap size: 6921200020 bytes
-2022-06-27 22:34:59,008  INFO      event array mmap size: 695719368 bytes
+2022-06-28 21:38:16,033  INFO      Total indices: 9662767
+2022-06-28 21:38:16,034  INFO      Total Train indices: 0
+2022-06-28 21:38:16,035  INFO      Total Validation indices: 0
+2022-06-28 21:38:16,035  INFO      Total Test indices: 0
+2022-06-28 21:38:16,036  INFO      First 5 Train indices: []
+2022-06-28 21:38:16,036  INFO      First 5 Validation indices: []
+2022-06-28 21:38:16,037  INFO      First 5 Test indices: []
+2022-06-28 21:38:16,037  INFO      hit array mmap size: 6921200020 bytes
+2022-06-28 21:38:16,038  INFO      event array mmap size: 695719368 bytes
 </pre></div>
 </div>
 </div>
@@ -1499,20 +1606,25 @@ Name: class, dtype: int64
     <span class="n">legend</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 
-<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Track momentum histograms&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Track momentum histograms&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">set_titles</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">set_xlabels</span><span class="p">(</span><span class="s2">&quot;Track momentum (p[GeV/c])&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">set_ylabels</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_xlabels</span><span class="p">(</span><span class="s2">&quot;Track momentum (p[GeV/c])&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_ylabels</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/exploratory_data_analysis_35_0.png" src="../../_images/exploratory_data_analysis_35_0.png" />
+<img alt="../../_images/EDA_35_0.png" src="../../_images/EDA_35_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1549,23 +1661,23 @@ Name: class, dtype: int64
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/exploratory_data_analysis_36_1.png" src="../../_images/exploratory_data_analysis_36_1.png" />
+<img alt="../../_images/EDA_36_1.png" src="../../_images/EDA_36_1.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/exploratory_data_analysis_36_3.png" src="../../_images/exploratory_data_analysis_36_3.png" />
+<img alt="../../_images/EDA_36_3.png" src="../../_images/EDA_36_3.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/exploratory_data_analysis_36_5.png" src="../../_images/exploratory_data_analysis_36_5.png" />
+<img alt="../../_images/EDA_36_5.png" src="../../_images/EDA_36_5.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/exploratory_data_analysis_36_7.png" src="../../_images/exploratory_data_analysis_36_7.png" />
+<img alt="../../_images/EDA_36_7.png" src="../../_images/EDA_36_7.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/exploratory_data_analysis_36_9.png" src="../../_images/exploratory_data_analysis_36_9.png" />
+<img alt="../../_images/EDA_36_9.png" src="../../_images/EDA_36_9.png" />
 </div>
 </div>
 </section>
@@ -1593,7 +1705,7 @@ Name: class, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/exploratory_data_analysis_38_0.png" src="../../_images/exploratory_data_analysis_38_0.png" />
+<img alt="../../_images/EDA_38_0.png" src="../../_images/EDA_38_0.png" />
 </div>
 </div>
 </section>
@@ -1613,7 +1725,7 @@ Name: class, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/exploratory_data_analysis_40_0.png" src="../../_images/exploratory_data_analysis_40_0.png" />
+<img alt="../../_images/EDA_40_0.png" src="../../_images/EDA_40_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1632,11 +1744,11 @@ Name: class, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/exploratory_data_analysis_41_0.png" src="../../_images/exploratory_data_analysis_41_0.png" />
-<img alt="../../_images/exploratory_data_analysis_41_1.png" src="../../_images/exploratory_data_analysis_41_1.png" />
-<img alt="../../_images/exploratory_data_analysis_41_2.png" src="../../_images/exploratory_data_analysis_41_2.png" />
-<img alt="../../_images/exploratory_data_analysis_41_3.png" src="../../_images/exploratory_data_analysis_41_3.png" />
-<img alt="../../_images/exploratory_data_analysis_41_4.png" src="../../_images/exploratory_data_analysis_41_4.png" />
+<img alt="../../_images/EDA_41_0.png" src="../../_images/EDA_41_0.png" />
+<img alt="../../_images/EDA_41_1.png" src="../../_images/EDA_41_1.png" />
+<img alt="../../_images/EDA_41_2.png" src="../../_images/EDA_41_2.png" />
+<img alt="../../_images/EDA_41_3.png" src="../../_images/EDA_41_3.png" />
+<img alt="../../_images/EDA_41_4.png" src="../../_images/EDA_41_4.png" />
 </div>
 </div>
 </section>
@@ -1671,38 +1783,49 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">=</span><span class="n">df_small_combined</span>
 <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span>
     <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_radius &lt; 999999.000 &amp; label == 0&quot;</span><span class="p">)[</span><span class="s2">&quot;ring_radius&quot;</span><span class="p">],</span>
-    <span class="c1">#col=df.query(&quot;ring_radius &lt; 999999.000&quot;)[&quot;class&quot;],</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_radius &lt; 999999.000&quot;</span><span class="p">)[</span><span class="s2">&quot;ring_radius&quot;</span><span class="p">],</span>
+    <span class="n">col</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_radius &lt; 999999.000&quot;</span><span class="p">)[</span><span class="s2">&quot;class&quot;</span><span class="p">],</span>
     <span class="n">hue</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_radius &lt; 999999.000&quot;</span><span class="p">)[</span><span class="s2">&quot;class&quot;</span><span class="p">],</span>
     <span class="n">binwidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">facet_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">sharey</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-    <span class="c1">#col_wrap=1,</span>
+    <span class="n">col_wrap</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">legend</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 
-<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Distribution of Ring Radius&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Distribution of Ring Radius&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">set_titles</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">set_xlabels</span><span class="p">(</span><span class="s2">&quot;Ring radius (mm)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">set_ylabels</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_xlabels</span><span class="p">(</span><span class="s2">&quot;Ring radius (mm)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_ylabels</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
 
 <span class="c1">#for ax in g.axes:</span>
 <span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">220</span><span class="p">))</span>
 
 
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_radius &lt; 999999.000 &amp; label == 0&quot;</span><span class="p">)[</span><span class="s2">&quot;ring_radius&quot;</span><span class="p">]),</span> 
-            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> 
-            <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span> 
-           <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Muon </span><span class="se">\n</span><span class="s2"> median=</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;ring_radius &lt; 999999.000 &amp; label == 0&#39;</span><span class="p">)[</span><span class="s1">&#39;ring_radius&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span>
-           <span class="p">)</span>
+<span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">axes</span><span class="p">):</span>
+    
+    <span class="k">if</span> <span class="n">j</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_radius &lt; 999999.000 &amp; label == 0&quot;</span><span class="p">)[</span><span class="s2">&quot;ring_radius&quot;</span><span class="p">]),</span> 
+                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> 
+                    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span> 
+                   <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Class: Muon </span><span class="se">\n</span><span class="s2">median=</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;ring_radius &lt; 999999.000 &amp; label == 0&#39;</span><span class="p">)[</span><span class="s1">&#39;ring_radius&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span>
+                   <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_radius &lt; 999999.000 &amp; label == 1&quot;</span><span class="p">)[</span><span class="s2">&quot;ring_radius&quot;</span><span class="p">]),</span> 
+                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> 
+                    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span> 
+                   <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Class: Pion </span><span class="se">\n</span><span class="s2">median=</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;ring_radius &lt; 999999.000 &amp; label == 1&#39;</span><span class="p">)[</span><span class="s1">&#39;ring_radius&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span>
+                   <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_radius &lt; 999999.000 &amp; label == 1&quot;</span><span class="p">)[</span><span class="s2">&quot;ring_radius&quot;</span><span class="p">]),</span> 
-            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> 
-            <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span> 
-           <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Pion </span><span class="se">\n</span><span class="s2"> median=</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;ring_radius &lt; 999999.000 &amp; label == 1&#39;</span><span class="p">)[</span><span class="s1">&#39;ring_radius&#39;</span><span class="p">])</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span>
-           <span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1710,31 +1833,7 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/exploratory_data_analysis_48_0.png" src="../../_images/exploratory_data_analysis_48_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The median ring radius of muons in the sub-sample is </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;ring_radius &lt; 999999.000 &amp; label == 0&#39;</span><span class="p">)[</span><span class="s1">&#39;ring_radius&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The median ring radius of muons in the sub-sample is 180.68023681640625
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_radius &lt; 999999.000 &amp; label == 1&quot;</span><span class="p">)[</span><span class="s2">&quot;ring_radius&quot;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>173.40247
-</pre></div>
-</div>
+<img alt="../../_images/EDA_48_0.png" src="../../_images/EDA_48_0.png" />
 </div>
 </div>
 </section>
@@ -1769,7 +1868,7 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/exploratory_data_analysis_52_0.png" src="../../_images/exploratory_data_analysis_52_0.png" />
+<img alt="../../_images/EDA_50_0.png" src="../../_images/EDA_50_0.png" />
 </div>
 </div>
 </section>
@@ -1802,7 +1901,7 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/exploratory_data_analysis_54_0.png" src="../../_images/exploratory_data_analysis_54_0.png" />
+<img alt="../../_images/EDA_52_0.png" src="../../_images/EDA_52_0.png" />
 </div>
 </div>
 <!-- ## Location of Ring Centres for Each Particle --></section>
@@ -1820,26 +1919,35 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
     <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_centre_pos_y &lt; 500000.000&quot;</span><span class="p">)[</span><span class="s2">&quot;ring_centre_pos_y&quot;</span><span class="p">],</span>
     <span class="c1">#col=df.query(&quot;ring_centre_pos_y &lt; 500000.000&quot;)[&quot;class&quot;],</span>
     <span class="n">hue</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_centre_pos_y &lt; 500000.000&quot;</span><span class="p">)[</span><span class="s2">&quot;class&quot;</span><span class="p">],</span>
-    <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
     <span class="n">binwidth</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="c1">#col_wrap=1</span>
 <span class="p">);</span>
 
-<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;x (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;y (mm)&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;x (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;y (mm)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">set_titles</span><span class="p">(</span><span class="s2">&quot;Ring Centres for Label: </span><span class="si">{col_name}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">400</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
 <span class="n">g</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">))</span>
-<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Ring Centre Locations for Each Particle&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.05</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Ring Centre Locations for Each Particle&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.05</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">get_title</span><span class="p">()</span><span class="o">.</span><span class="n">set_fontsize</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">texts</span><span class="p">:</span>
+    <span class="n">text</span><span class="o">.</span><span class="n">set_fontsize</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/exploratory_data_analysis_58_0.png" src="../../_images/exploratory_data_analysis_58_0.png" />
+<img alt="../../_images/EDA_56_0.png" src="../../_images/EDA_56_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1872,23 +1980,23 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/exploratory_data_analysis_59_1.png" src="../../_images/exploratory_data_analysis_59_1.png" />
+<img alt="../../_images/EDA_57_1.png" src="../../_images/EDA_57_1.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/exploratory_data_analysis_59_3.png" src="../../_images/exploratory_data_analysis_59_3.png" />
+<img alt="../../_images/EDA_57_3.png" src="../../_images/EDA_57_3.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/exploratory_data_analysis_59_5.png" src="../../_images/exploratory_data_analysis_59_5.png" />
+<img alt="../../_images/EDA_57_5.png" src="../../_images/EDA_57_5.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/exploratory_data_analysis_59_7.png" src="../../_images/exploratory_data_analysis_59_7.png" />
+<img alt="../../_images/EDA_57_7.png" src="../../_images/EDA_57_7.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </pre></div>
 </div>
-<img alt="../../_images/exploratory_data_analysis_59_9.png" src="../../_images/exploratory_data_analysis_59_9.png" />
+<img alt="../../_images/EDA_57_9.png" src="../../_images/EDA_57_9.png" />
 </div>
 </div>
 </section>
@@ -1899,40 +2007,45 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">=</span><span class="n">df_small_combined</span>
-
-<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_centre_pos_y &lt; 500000.000&quot;</span><span class="p">)[</span><span class="s2">&quot;track_momentum&quot;</span><span class="p">],</span>
-    <span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_centre_pos_y &lt; 500000.000&quot;</span><span class="p">)[</span><span class="s2">&quot;ring_radius&quot;</span><span class="p">],</span>
-    <span class="n">hue</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_centre_pos_y &lt; 500000.000&quot;</span><span class="p">)[</span><span class="s2">&quot;class&quot;</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">df_small_combined</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_centre_pos_y &lt; 500000.000&quot;</span><span class="p">)[</span><span class="s2">&quot;track_momentum&quot;</span><span class="p">],</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">df_small_combined</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_centre_pos_y &lt; 500000.000&quot;</span><span class="p">)[</span><span class="s2">&quot;ring_radius&quot;</span><span class="p">],</span>
+    <span class="n">hue</span><span class="o">=</span><span class="n">df_small_combined</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;ring_centre_pos_y &lt; 500000.000&quot;</span><span class="p">)[</span><span class="s2">&quot;class&quot;</span><span class="p">],</span>
     <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
     <span class="n">binwidth</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
 <span class="p">);</span>
 
-<span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Track momentum vs. Ring radius&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;Track momentum (p[GeV/c])&quot;</span><span class="p">,</span> <span class="s2">&quot;Ring radius (mm)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Track momentum vs. Ring radius&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;Track momentum (p[GeV/c])&quot;</span><span class="p">,</span> <span class="s2">&quot;Ring radius (mm)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">set_titles</span><span class="p">(</span><span class="s2">&quot;Ring Centres for Label: </span><span class="si">{col_name}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
-<span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span> <span class="mi">14</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">])</span>    <span class="c1"># some noise above 300 makes the plot ugly</span>
 <span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
+<span class="n">g</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">get_title</span><span class="p">()</span><span class="o">.</span><span class="n">set_fontsize</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">texts</span><span class="p">:</span>
+    <span class="n">text</span><span class="o">.</span><span class="n">set_fontsize</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+    
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_rasterized</span><span class="p">(</span><span class="n">rasterized</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>
-<span class="c1">#plt.plot(ptrk_mev/1000, mu_ring_rad*1000, color=&#39;r&#39;)</span>
-<span class="c1">#plt.plot(ptrk_mev/1000, pi_ring_rad*1000, color=&#39;r&#39;)</span>
-
-<span class="c1">#plt.show()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7f94f663a1c0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x7f74e58f4070&gt;
 </pre></div>
 </div>
-<img alt="../../_images/exploratory_data_analysis_62_1.png" src="../../_images/exploratory_data_analysis_62_1.png" />
+<img alt="../../_images/EDA_60_1.png" src="../../_images/EDA_60_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1974,24 +2087,6 @@ Confirmed w/ TRIUMF that ring radii of 999999 represents a failure in the MLE al
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_47997/2577862333.py:30: RuntimeWarning: invalid value encountered in sqrt
-  r = F_M*N*p*np.sqrt(1 - (m**2 + p**2)/(N**2*p**2))/np.sqrt(m**2 + p**2)
-/tmp/ipykernel_47997/2577862333.py:33: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  df[&#39;expected_radius&#39;]=df.apply(lambda x: calc_ring_radius(x.track_momentum*1000, x.label)*1000, axis=1)
-/tmp/ipykernel_47997/2577862333.py:34: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  df[&#39;delta_radius&#39;]=df[&#39;expected_radius&#39;] - df[&#39;ring_radius&#39;]
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2025,7 +2120,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/exploratory_data_analysis_64_0.png" src="../../_images/exploratory_data_analysis_64_0.png" />
+<img alt="../../_images/EDA_62_0.png" src="../../_images/EDA_62_0.png" />
 </div>
 </div>
 </section>
@@ -2047,80 +2142,40 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
     <span class="n">x</span><span class="o">=</span><span class="s2">&quot;mean_delta&quot;</span><span class="p">,</span>
     <span class="n">col</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span>
     <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span>
-    <span class="n">binwidth</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span>
+    <span class="n">binwidth</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
     <span class="n">facet_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">sharey</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
     <span class="n">col_wrap</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">legend</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Distribution of time delta with cut-off of 0.3&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_titles</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;Mean filtered event delta (ns)&quot;</span><span class="p">,</span> <span class="s2">&quot;Count&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="c1">#g.set_titles(&quot;Ring Centres for Label: {col_name}&quot;)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
+<span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">(),</span> 
+                                <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/numpy/core/fromnumeric.py:3474: RuntimeWarning: Mean of empty slice.
-  return _methods._mean(a, axis=axis, dtype=dtype,
-/opt/conda/lib/python3.8/site-packages/numpy/core/_methods.py:189: RuntimeWarning: invalid value encountered in true_divide
-  ret = ret.dtype.type(ret / rcount)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Text(0, 0.0, &#39;0&#39;),
+ Text(0, 2000.0, &#39;2000&#39;),
+ Text(0, 4000.0, &#39;4000&#39;),
+ Text(0, 6000.0, &#39;6000&#39;),
+ Text(0, 8000.0, &#39;8000&#39;),
+ Text(0, 10000.0, &#39;10000&#39;),
+ Text(0, 12000.0, &#39;12000&#39;)]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0.00184727  0.567235   -0.10429764 -0.3984995  -0.32748127 -0.02021217
- -0.16900635 -0.16824532  0.01335812  0.40915775  0.6612129  -0.17619896
- -0.11240864  0.00427628 -0.11765194 -0.10954189 -0.19405365  0.24478531
- -0.31032753 -0.27432823 -0.24532795 -0.06127262 -0.92336845  0.17637253
- -0.2683277  -0.27082825 -0.7235279  -0.09352303 -0.09052277 -0.00552273
-  0.13040733  0.504303   -0.20832825 -0.09252262]
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="note-some-events-have-no-hits">
-<h2>Note - some events have no hits<a class="headerlink" href="#note-some-events-have-no-hits" title="Permalink to this headline">#</a></h2>
-<div class="alert alert-info" style="color:black">
-Confirmed w/ TRIUMF that sometimes there may be no hits for an event.
-</div><div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;total_hits &lt; 0&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;HitMapping&quot;</span><span class="p">][</span><span class="mi">162477</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;HitMapping&quot;</span><span class="p">][</span><span class="mi">162478</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;HitMapping&quot;</span><span class="p">][</span><span class="mi">180079</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;HitMapping&quot;</span><span class="p">][</span><span class="mi">180080</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove the last row of the df due to problems discussed prior</span>
-<span class="n">hits_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
-
-<span class="c1"># only plot positive number of hits for problems discussed prior</span>
-<span class="n">hits_df</span> <span class="o">=</span> <span class="n">hits_df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;total_hits &gt; 0&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<img alt="../../_images/EDA_64_1.png" src="../../_images/EDA_64_1.png" />
 </div>
 </div>
 </section>
@@ -2160,6 +2215,12 @@ Confirmed w/ TRIUMF that sometimes there may be no hits for an event.
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+</pre></div>
+</div>
+<img alt="../../_images/EDA_67_1.png" src="../../_images/EDA_67_1.png" />
+</div>
 </div>
 </section>
 <section id="distribution-of-hit-time-deltas">
@@ -2180,6 +2241,9 @@ Confirmed w/ TRIUMF that sometimes there may be no hits for an event.
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../../_images/EDA_70_0.png" src="../../_images/EDA_70_0.png" />
+</div>
 </div>
 </section>
 <section id="distribution-of-hit-time-deltas-hit-chod-for-25-events-for-each-particle">
@@ -2190,9 +2254,9 @@ Confirmed w/ TRIUMF that sometimes there may be no hits for an event.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="n">get_class_samples</span><span class="p">(</span><span class="n">hits_df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="n">get_class_samples</span><span class="p">(</span><span class="n">hits_df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">samples</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+<span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
     <span class="n">hit_info</span> <span class="o">=</span> <span class="n">get_hit_info_df</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
 
@@ -2209,12 +2273,21 @@ Confirmed w/ TRIUMF that sometimes there may be no hits for an event.
         <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#a3acb9&quot;</span>
 
     <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">hit_info</span><span class="p">[</span><span class="s2">&quot;chod_delta&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">binwidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time delta&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time delta&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/EDA_73_0.png" src="../../_images/EDA_73_0.png" />
+<img alt="../../_images/EDA_73_1.png" src="../../_images/EDA_73_1.png" />
+<img alt="../../_images/EDA_73_2.png" src="../../_images/EDA_73_2.png" />
+<img alt="../../_images/EDA_73_3.png" src="../../_images/EDA_73_3.png" />
 </div>
 </div>
 </section>
@@ -2226,6 +2299,12 @@ Confirmed w/ TRIUMF that sometimes there may be no hits for an event.
 <span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="s2">&quot;/fast_scratch_1/capstone_2022/datasetC_combined.h5&quot;</span><span class="p">)</span>
 <span class="n">df2</span> <span class="o">=</span> <span class="n">events_to_pandas</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="p">(</span><span class="n">df1</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[</span><span class="s1">&#39;track_momentum&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">df2</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">df1</span><span class="o">.</span><span class="n">original_index</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[</span><span class="s1">&#39;track_momentum&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True    1731226
+Name: track_momentum, dtype: int64
 </pre></div>
 </div>
 </div>
@@ -2246,13 +2325,442 @@ Confirmed w/ TRIUMF that sometimes there may be no hits for an event.
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+      <th>mirror</th>
+      <th>hit_time</th>
+      <th>chod_time</th>
+      <th>time_delta</th>
+      <th>x_realigned</th>
+      <th>y_realigned</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>63.0</td>
+      <td>-93.529999</td>
+      <td>0.0</td>
+      <td>5.220294</td>
+      <td>-9.273835</td>
+      <td>-14.494129</td>
+      <td>-83.8</td>
+      <td>-113.329999</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>225.0</td>
+      <td>31.180000</td>
+      <td>1.0</td>
+      <td>50.690220</td>
+      <td>-9.273835</td>
+      <td>-59.964054</td>
+      <td>28.3</td>
+      <td>21.680000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>216.0</td>
+      <td>15.590000</td>
+      <td>1.0</td>
+      <td>51.008915</td>
+      <td>-9.273835</td>
+      <td>-60.282749</td>
+      <td>19.3</td>
+      <td>6.090000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-54.0</td>
+      <td>265.000000</td>
+      <td>1.0</td>
+      <td>50.704521</td>
+      <td>-9.273835</td>
+      <td>-59.978355</td>
+      <td>-250.7</td>
+      <td>255.500000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-63.0</td>
+      <td>218.240005</td>
+      <td>1.0</td>
+      <td>-9.192118</td>
+      <td>-9.273835</td>
+      <td>-0.081717</td>
+      <td>-259.7</td>
+      <td>208.740005</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-117.0</td>
+      <td>62.349998</td>
+      <td>1.0</td>
+      <td>50.521793</td>
+      <td>-9.273835</td>
+      <td>-59.795628</td>
+      <td>-313.7</td>
+      <td>52.849998</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>171.0</td>
+      <td>31.180000</td>
+      <td>0.0</td>
+      <td>-9.111625</td>
+      <td>-9.273835</td>
+      <td>-0.162210</td>
+      <td>24.2</td>
+      <td>11.380000</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>225.0</td>
+      <td>124.709999</td>
+      <td>0.0</td>
+      <td>-9.890031</td>
+      <td>-9.273835</td>
+      <td>0.616196</td>
+      <td>78.2</td>
+      <td>104.909999</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>-45.0</td>
+      <td>31.180000</td>
+      <td>0.0</td>
+      <td>5.304433</td>
+      <td>-9.273835</td>
+      <td>-14.578268</td>
+      <td>-191.8</td>
+      <td>11.380000</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>-45.0</td>
+      <td>155.880005</td>
+      <td>0.0</td>
+      <td>5.233586</td>
+      <td>-9.273835</td>
+      <td>-14.507421</td>
+      <td>-191.8</td>
+      <td>136.080005</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>-45.0</td>
+      <td>124.709999</td>
+      <td>0.0</td>
+      <td>4.887667</td>
+      <td>-9.273835</td>
+      <td>-14.161503</td>
+      <td>-191.8</td>
+      <td>104.909999</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>45.0</td>
+      <td>249.419998</td>
+      <td>0.0</td>
+      <td>5.141663</td>
+      <td>-9.273835</td>
+      <td>-14.415499</td>
+      <td>-101.8</td>
+      <td>229.619998</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>-234.0</td>
+      <td>109.120003</td>
+      <td>0.0</td>
+      <td>-9.406904</td>
+      <td>-9.273835</td>
+      <td>0.133069</td>
+      <td>-380.8</td>
+      <td>89.320003</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>-108.0</td>
+      <td>77.940002</td>
+      <td>0.0</td>
+      <td>-9.004749</td>
+      <td>-9.273835</td>
+      <td>-0.269086</td>
+      <td>-254.8</td>
+      <td>58.140002</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>-99.0</td>
+      <td>62.349998</td>
+      <td>0.0</td>
+      <td>-9.228471</td>
+      <td>-9.273835</td>
+      <td>-0.045364</td>
+      <td>-245.8</td>
+      <td>42.549998</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>-117.0</td>
+      <td>93.529999</td>
+      <td>0.0</td>
+      <td>-9.216014</td>
+      <td>-9.273835</td>
+      <td>-0.057821</td>
+      <td>-263.8</td>
+      <td>73.729999</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.0</td>
+      <td>-46.770000</td>
+      <td>1.0</td>
+      <td>50.537575</td>
+      <td>-9.273835</td>
+      <td>-59.811409</td>
+      <td>-196.7</td>
+      <td>-56.270000</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>-99.0</td>
+      <td>31.180000</td>
+      <td>1.0</td>
+      <td>50.683868</td>
+      <td>-9.273835</td>
+      <td>-59.957703</td>
+      <td>-295.7</td>
+      <td>21.680000</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>-180.0</td>
+      <td>46.770000</td>
+      <td>0.0</td>
+      <td>-14.571120</td>
+      <td>-9.273835</td>
+      <td>5.297285</td>
+      <td>-326.8</td>
+      <td>26.970000</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>-63.0</td>
+      <td>124.709999</td>
+      <td>0.0</td>
+      <td>4.797160</td>
+      <td>-9.273835</td>
+      <td>-14.070995</td>
+      <td>-209.8</td>
+      <td>104.909999</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>9.0</td>
+      <td>249.419998</td>
+      <td>0.0</td>
+      <td>5.267110</td>
+      <td>-9.273835</td>
+      <td>-14.540945</td>
+      <td>-137.8</td>
+      <td>229.619998</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>-126.0</td>
+      <td>46.770000</td>
+      <td>0.0</td>
+      <td>-9.116506</td>
+      <td>-9.273835</td>
+      <td>-0.157330</td>
+      <td>-272.8</td>
+      <td>26.970000</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>-117.0</td>
+      <td>93.529999</td>
+      <td>0.0</td>
+      <td>-9.139846</td>
+      <td>-9.273835</td>
+      <td>-0.133989</td>
+      <td>-263.8</td>
+      <td>73.729999</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>-261.0</td>
+      <td>93.529999</td>
+      <td>0.0</td>
+      <td>-9.245846</td>
+      <td>-9.273835</td>
+      <td>-0.027989</td>
+      <td>-407.8</td>
+      <td>73.729999</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>225.0</td>
+      <td>124.709999</td>
+      <td>0.0</td>
+      <td>-9.694547</td>
+      <td>-9.273835</td>
+      <td>0.420712</td>
+      <td>78.2</td>
+      <td>104.909999</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>153.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>-8.878825</td>
+      <td>-9.273835</td>
+      <td>-0.395010</td>
+      <td>6.2</td>
+      <td>-19.800000</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>36.0</td>
+      <td>-109.120003</td>
+      <td>0.0</td>
+      <td>5.604186</td>
+      <td>-9.273835</td>
+      <td>-14.878021</td>
+      <td>-110.8</td>
+      <td>-128.920003</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>-180.0</td>
+      <td>15.590000</td>
+      <td>0.0</td>
+      <td>-14.067080</td>
+      <td>-9.273835</td>
+      <td>4.793244</td>
+      <td>-326.8</td>
+      <td>-4.210000</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>-126.0</td>
+      <td>46.770000</td>
+      <td>1.0</td>
+      <td>50.585552</td>
+      <td>-9.273835</td>
+      <td>-59.859386</td>
+      <td>-322.7</td>
+      <td>37.270000</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>-90.0</td>
+      <td>233.830002</td>
+      <td>1.0</td>
+      <td>50.977787</td>
+      <td>-9.273835</td>
+      <td>-60.251621</td>
+      <td>-286.7</td>
+      <td>224.330002</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>198.0</td>
+      <td>-15.590000</td>
+      <td>1.0</td>
+      <td>51.482487</td>
+      <td>-9.273835</td>
+      <td>-60.756321</td>
+      <td>1.3</td>
+      <td>-25.090000</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>207.0</td>
+      <td>31.180000</td>
+      <td>1.0</td>
+      <td>50.968788</td>
+      <td>-9.273835</td>
+      <td>-60.242622</td>
+      <td>10.3</td>
+      <td>21.680000</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>-99.0</td>
+      <td>187.059998</td>
+      <td>1.0</td>
+      <td>-8.932111</td>
+      <td>-9.273835</td>
+      <td>-0.341724</td>
+      <td>-295.7</td>
+      <td>177.559998</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>-135.0</td>
+      <td>0.000000</td>
+      <td>1.0</td>
+      <td>51.415897</td>
+      <td>-9.273835</td>
+      <td>-60.689732</td>
+      <td>-331.7</td>
+      <td>-9.500000</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>0.0</td>
+      <td>-46.770000</td>
+      <td>1.0</td>
+      <td>50.699764</td>
+      <td>-9.273835</td>
+      <td>-59.973598</td>
+      <td>-196.7</td>
+      <td>-56.270000</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>-81.0</td>
+      <td>31.180000</td>
+      <td>0.0</td>
+      <td>5.661971</td>
+      <td>-9.273835</td>
+      <td>-14.935806</td>
+      <td>-227.8</td>
+      <td>11.380000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 
 <span class="c1"># plot 10 examples</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="c1"># samples = np.random.randint(0, len(f[&quot;Events&quot;]), size=n)</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span><span class="s2">&quot;/fast_scratch_1/capstone_2022/datasetC_combined.h5&quot;</span><span class="p">)</span>
@@ -2273,6 +2781,9 @@ Confirmed w/ TRIUMF that sometimes there may be no hits for an event.
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/EDA_77_0.png" src="../../_images/EDA_77_0.png" />
 </div>
 </div>
 </section>
