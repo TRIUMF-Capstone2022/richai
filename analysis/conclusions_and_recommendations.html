@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Appendix A: Introduction" href="../appendix/introduction.html" />
-    <link rel="prev" title="4. Data Product" href="data_product.html" />
+    <link rel="prev" title="4. Data product" href="data_product.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -132,12 +132,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_science_methods.html">
-   3. Data Science Methods
+   3. Data science methods
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_product.html">
-   4. Data Product
+   4. Data product
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -164,22 +164,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../appendix/ml_gbm.html">
-   Appendix C: Gradient Boosted Tree (ML Baseline)
+   Appendix C: XGBoost
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../appendix/dl_pointnet.html">
-   Appendix D: PointNet (Deep Learning)
+   Appendix D: PointNet
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../appendix/dl_dgcnn.html">
-   Appendix E: Dynamic Convolutional Neural Network (Deep Learning)
+   Appendix E: Dynamic Convolutional Neural Network
   </a>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../appendix/supplementary_notebooks.html">
-   Supplementary Jupyter notebooks
+   Appendix F: Supplementary Jupyter notebooks
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -194,7 +194,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../appendix/notebooks/EDA.html">
-     RICH AI Exploratory Data Analysis
+     Exploratory Data Analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -417,8 +417,8 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#further-suggestions-on-models">
-     5.2.3: Further suggestions on models
+    <a class="reference internal nav-link" href="#further-suggestions-for-deep-learning">
+     5.2.3: Further suggestions for deep learning
     </a>
    </li>
   </ul>
@@ -463,8 +463,8 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#further-suggestions-on-models">
-     5.2.3: Further suggestions on models
+    <a class="reference internal nav-link" href="#further-suggestions-for-deep-learning">
+     5.2.3: Further suggestions for deep learning
     </a>
    </li>
   </ul>
@@ -483,22 +483,22 @@ title="Print to PDF"
 <h1>5. Conclusions and recommendations<a class="headerlink" href="#conclusions-and-recommendations" title="Permalink to this headline">#</a></h1>
 <section id="conclusion">
 <h2>5.1: Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">#</a></h2>
-<p>The goal of the RICH AI project was to build a deep learning classifier that was able to accurately classify a meson decay into either a pion or muon particle.  The main challenge of the project was to surpassing the prior performance of CERN’s NA62 particle classification project, with a focus on the pion efficiency (pion recall) and muon efficiency (1 - muon recall).</p>
-<p>As a solution, our final data product consisted of a machine learning pipeline that automates the model training, validation, testing, and prediction for raw input data.  Further, our final best model (PointNet), was able to surpass the prior CERN NA62 project in terms of pion efficiency, however, was unfortunately unable to achieve the same muon efficiency performance.  We note that the models may performance better with further tuning and/or additional training data.</p>
+<p>The goal of the RICH AI project was to build a binary machine learning classifier that would be able to accurately classify a meson decay into either a pion or muon particle.  The main challenge of the project was in surpassing the prior performance of CERN’s NA62 particle classification project, with a focus on the pion efficiency and muon efficiency.</p>
+<p>As a solution, the final data product created consisted of a machine learning pipeline that automates the model training, validation, testing, and prediction for raw input data.  Further, the best model (PointNet), was able to surpass the prior CERN NA62 project in terms of pion efficiency, however, was unfortunately unable to achieve the same muon efficiency performance. The model may perform better with further tuning and additional training data.</p>
 </section>
 <section id="recommendations">
 <h2>5.2: Recommendations<a class="headerlink" href="#recommendations" title="Permalink to this headline">#</a></h2>
 <section id="removal-of-bias-in-ring-centers">
 <h3>5.2.1: Removal of Bias in Ring Centers<a class="headerlink" href="#removal-of-bias-in-ring-centers" title="Permalink to this headline">#</a></h3>
-<p>As discussed in <a class="reference internal" href="../appendix/data.html#appendix-datagen-ringbias"><span class="std std-ref">App. B.3</span></a>, there exists a spatial bias in the ring centers which was inadequately addressed in this analysis. Further studies can seek to superimpose the mean ring centers of either class. Once further concern is that the PMT grid is in fact discreet (the photon hits can only land at certain coordinates), and therefore shifting the points using a mean can place these points in non-existent points. The effect of this needs to be studied.</p>
+<p>As discussed in <a class="reference internal" href="../appendix/data.html#appendix-datagen-ringbias"><span class="std std-ref">App. B.3</span></a>, there exists a spatial bias in the location of the ring centres determined by CERN’s prior algorithm, which was unaddressed in this analysis. Further studies can seek to superimpose the mean ring centers of either class. Once further concern is that the PMT grid is in fact discrete (the photon hits can only land at certain coordinates), and therefore shifting the points using can place these points in non-existent PMT locations. The effect of this needs to be further studied.</p>
 </section>
 <section id="operating-points-for-each-momentum-bin">
 <h3>5.2.2: Operating points for each momentum bin<a class="headerlink" href="#operating-points-for-each-momentum-bin" title="Permalink to this headline">#</a></h3>
-<p>The current comparison between the results of the PointNet and Dynamic Graph CNN model and the prior MLE estimate is based on the selection of a single operating point. The resulting pion and muon efficiencies for that operating point are compared with the MLE output across all bins. To further measure the performance of the DL models, the operating point can be selected to match the pion efficiency yeilded by the MLE algorithm at a particular momentum bin, and compare the muon efficiency. Though this requires extensive tuning, this is the most fair comparison between both models.</p>
+<p>The current comparison between the results of the PointNet and Dynamic Graph CNN model and the CERN algorithm is based on the selection of a single operating point for both models. The resulting pion and muon efficiencies for that operating point are compared with the CERN algorithm across all bins. To further measure the performance of the deep learning models, an operating point could be selected to match the pion efficiency yielded by the CERN algorithm at individual momentum bins, and then the muon efficiencies could be compared.  This could be explored in future studies.</p>
 </section>
-<section id="further-suggestions-on-models">
-<h3>5.2.3: Further suggestions on models<a class="headerlink" href="#further-suggestions-on-models" title="Permalink to this headline">#</a></h3>
-<p>We note that our final data product has room for improvement, and due to the time constraints of the capstone project, we did not implement everything that we would have liked to.  We leave the following suggestions to the TRIUMF team as potential future improvements.  The deep learning models could continue to be optimized, through a method such as Bayesian optimization.  Further, more muons could be added to the data set, while respecting the particle momentum bins, which may help the in generalizing better to muon decays and potentially improve muon efficiency.  Finally, once the models have been completely finalized and the scientists at TRIUMF decide that no further tuning is required, the models could be deployed.  Another more drastic suggestion would be to try other model architectures, such as PointNet++ <span id="id1">[<a class="reference internal" href="../references.html#id12" title="Charles Ruizhongtai Qi, Li Yi, Hao Su, and Leonidas J Guibas. Pointnet++: deep hierarchical feature learning on point sets in a metric space. Advances in neural information processing systems, 2017.">Qi <em>et al.</em>, 2017</a>]</span>.</p>
+<section id="further-suggestions-for-deep-learning">
+<h3>5.2.3: Further suggestions for deep learning<a class="headerlink" href="#further-suggestions-for-deep-learning" title="Permalink to this headline">#</a></h3>
+<p>The deep learning models could continue to be optimized, through a method such as Bayesian optimization.  Further, more muons could be added to the data set, while respecting the particle momentum bins, which may help the in generalizing better to muon decays and potentially improve muon efficiency.  Finally, once the models have been completely finalized the models could be productionized and deployed.  Another more drastic suggestion would be to try other model architectures, such as PointNet++ <span id="id1">[<a class="reference internal" href="../references.html#id12" title="Charles Ruizhongtai Qi, Li Yi, Hao Su, and Leonidas J Guibas. Pointnet++: deep hierarchical feature learning on point sets in a metric space. Advances in neural information processing systems, 2017.">Qi <em>et al.</em>, 2017</a>]</span>.</p>
 </section>
 </section>
 </section>
@@ -534,7 +534,7 @@ title="Print to PDF"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">4. Data Product</p>
+            <p class="prev-next-title">4. Data product</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="../appendix/introduction.html" title="next page">

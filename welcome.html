@@ -131,12 +131,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="analysis/data_science_methods.html">
-   3. Data Science Methods
+   3. Data science methods
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="analysis/data_product.html">
-   4. Data Product
+   4. Data product
   </a>
  </li>
  <li class="toctree-l1">
@@ -163,22 +163,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="appendix/ml_gbm.html">
-   Appendix C: Gradient Boosted Tree (ML Baseline)
+   Appendix C: XGBoost
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="appendix/dl_pointnet.html">
-   Appendix D: PointNet (Deep Learning)
+   Appendix D: PointNet
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="appendix/dl_dgcnn.html">
-   Appendix E: Dynamic Convolutional Neural Network (Deep Learning)
+   Appendix E: Dynamic Convolutional Neural Network
   </a>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="appendix/supplementary_notebooks.html">
-   Supplementary Jupyter notebooks
+   Appendix F: Supplementary Jupyter notebooks
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -193,7 +193,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="appendix/notebooks/EDA.html">
-     RICH AI Exploratory Data Analysis
+     Exploratory Data Analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -462,11 +462,13 @@ title="Print to PDF"
 <h1>Welcome!<a class="headerlink" href="#welcome" title="Permalink to this headline">#</a></h1>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
-<p>This <a class="reference external" href="https://jupyterbook.org/en/stable/intro.html">Jupyter Book</a> contains the final report for the 2022 RICH AI Capstone Project completed by <a class="reference external" href="https://www.linkedin.com/in/nicovandenhooff/">Nico Van den Hooff</a>, <a class="reference external" href="https://www.linkedin.com/in/rakeshpandey820/">Rakesh Pandey</a>, <a class="reference external" href="https://www.linkedin.com/in/mukund-iyer19/">Mukund Iyer</a>, and <a class="reference external" href="https://www.linkedin.com/in/shiva-jena/">Shiva Jena</a> as part of the University of British Columbia Master of Data Science program.  The project was completed in partnership with <a class="reference external" href="https://www.triumf.ca/">TRIUMF</a>, Canada’s particle accelerator centre and one of the world’s leading subatomic physics research centres.</p>
+<p>This <a class="reference external" href="https://jupyterbook.org/en/stable/intro.html">Jupyter Book</a> contains the final report for the 2022 RICH AI Capstone Project completed by <a class="reference external" href="https://www.linkedin.com/in/nicovandenhooff/">Nico Van den Hooff</a>, <a class="reference external" href="https://www.linkedin.com/in/rakeshpandey820/">Rakesh Pandey</a>, <a class="reference external" href="https://www.linkedin.com/in/mukund-iyer19/">Mukund Iyer</a>, and <a class="reference external" href="https://www.linkedin.com/in/shiva-jena/">Shiva Jena</a> as part of the University of British Columbia <a class="reference external" href="https://masterdatascience.ubc.ca/">Master of Data Science program</a>.  The project was completed in partnership with scientists at <a class="reference external" href="https://www.triumf.ca/">TRIUMF</a>, Canada’s particle accelerator centre and one of the world’s leading subatomic physics research centres.</p>
 </section>
 <section id="executive-summary">
 <h2>Executive summary<a class="headerlink" href="#executive-summary" title="Permalink to this headline">#</a></h2>
-<p>The NA62 experiment at CERN (European organization for nuclear research) studies the rate of the ultra-rate meson decay into a pion to verify the Standard Model in physics. The aim of this project is to develop a binary classification model based on advanced Machine Learning (ML) to distinguish pion decays from muon decays using the output of the Ring Imaging Cherenkov (RICH). The challenge lies in concurrently increasing the pion efficiency and mion efficiency and surpassing the performance of the maximum likelihood estimate (MLE) algorithm. The data used to build the machine learning models had 2 million examples. It was controlled for momentum and converted to point cloud form by the addition of a time dimension. Two deep learning models were applied: PointNet and Dynamic Graph CNN (DGCNN). Both were built using the point clouds of hits, particle momentum and the ring radius computed using the MLE. The best performing PointNet and DGCNN models used all these features. The overall best performing model was PointNet as it has the highest area under the recieving operating curve (ROC AUC), exceeds the pion efficiency from the MLE estimate for all momentum bins, and maintains a low muon efficiency for momentums beyond 34 GeV/c. Meanwhile, the DGCNN maintains a similar pion efficiency to PointNet but fails to maintain an adequate muon efficiency to surpass the MLE estimate. The final data product is a machine learning pipeline that takes in the experiment data in a HDP5 format, pre-processes it, prepares training data, trains classifier models on the training data and evaluates model results on test data through modular scripts. In furhter studies, the debiasing of ring centers and further model tuning can be explored.</p>
+<p>The <a class="reference external" href="https://home.cern/science/experiments/na62">NA62 experiment</a> at <a class="reference external" href="https://home.cern/">CERN</a> (European organization for nuclear research) studies the rate of the ultra-rare meson decay into a pion particle to verify the <a class="reference external" href="https://en.wikipedia.org/wiki/Standard_Model">Standard Model</a> in physics. The aim of the RICH AI project is to develop a binary classification model that utilizes advanced Machine Learning (“ML”) to distinguish pion decays from muon decays by using the output of a <a class="reference external" href="https://en.wikipedia.org/wiki/Ring-imaging_Cherenkov_detector">Ring Imaging Cherenkov</a> (“RICH”) detector. The challenge of the project lies in concurrently <em>increasing</em> the “pion efficiency” (the rate at which pion decays are correctly classified) while also <em>decreasing</em> the muon efficiency (the rate at which muon decays are incorrectly classified as pion decays), in order to surpass the performance of CERN’s current algorithm that is employed (i.e. a simple maximum likelihood algorithm that fits a circle to the light image emitted by a particle decay, and classifies the particle based on an expected radius size).</p>
+<p>The data used to build the machine learning models had 2 million examples. It was controlled for momentum and converted to point cloud form by the addition of a time dimension. Two deep learning models based on recent academic research were applied: <a class="reference external" href="https://arxiv.org/abs/1612.00593">PointNet</a> and <a class="reference external" href="https://arxiv.org/abs/1801.07829">Dynamic Graph CNN</a> (“DGCNN”). The overall best performing model was PointNet as it exceeded the prior pion efficiency achieved by CERN’s NA62 algorithm, while also maintaining a similar muon efficiency.</p>
+<p>The final data product of the project consists of a modularized machine learning pipeline that takes in the raw experiment data in a HDF5 format, pre-processes it, prepares training data, trains a classifier model on the training data (or alternatively loads a trained model), and finally evaluates the model to make a prediction. In further studies, there is room for more work to be done on debiasing the ring centre locations of the particles, as well as further hyperparameter tuning for the machine learning models.</p>
 </section>
 <section id="table-of-contents">
 <h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">#</a></h2>
@@ -475,8 +477,8 @@ title="Print to PDF"
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="analysis/introduction.html">1. Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="analysis/data.html">2. Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis/data_science_methods.html">3. Data Science Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="analysis/data_product.html">4. Data Product</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysis/data_science_methods.html">3. Data science methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysis/data_product.html">4. Data product</a></li>
 <li class="toctree-l1"><a class="reference internal" href="analysis/conclusions_and_recommendations.html">5. Conclusions and recommendations</a></li>
 </ul>
 </div>
@@ -485,10 +487,10 @@ title="Print to PDF"
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="appendix/introduction.html">Appendix A: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix/data.html">Appendix B: Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/ml_gbm.html">Appendix C: Gradient Boosted Tree (ML Baseline)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/dl_pointnet.html">Appendix D: PointNet (Deep Learning)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/dl_dgcnn.html">Appendix E: Dynamic Convolutional Neural Network (Deep Learning)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/supplementary_notebooks.html">Supplementary Jupyter notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/ml_gbm.html">Appendix C: XGBoost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/dl_pointnet.html">Appendix D: PointNet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/dl_dgcnn.html">Appendix E: Dynamic Convolutional Neural Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/supplementary_notebooks.html">Appendix F: Supplementary Jupyter notebooks</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">

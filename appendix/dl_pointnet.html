@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Appendix D: PointNet (Deep Learning) &#8212; RICH AI Final Report</title>
+    <title>Appendix D: PointNet &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/TRIUMF_Favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Appendix E: Dynamic Convolutional Neural Network (Deep Learning)" href="dl_dgcnn.html" />
-    <link rel="prev" title="Appendix C: Gradient Boosted Tree (ML Baseline)" href="ml_gbm.html" />
+    <link rel="next" title="Appendix E: Dynamic Convolutional Neural Network" href="dl_dgcnn.html" />
+    <link rel="prev" title="Appendix C: XGBoost" href="ml_gbm.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -132,12 +132,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../analysis/data_science_methods.html">
-   3. Data Science Methods
+   3. Data science methods
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../analysis/data_product.html">
-   4. Data Product
+   4. Data product
   </a>
  </li>
  <li class="toctree-l1">
@@ -164,22 +164,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="ml_gbm.html">
-   Appendix C: Gradient Boosted Tree (ML Baseline)
+   Appendix C: XGBoost
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Appendix D: PointNet (Deep Learning)
+   Appendix D: PointNet
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="dl_dgcnn.html">
-   Appendix E: Dynamic Convolutional Neural Network (Deep Learning)
+   Appendix E: Dynamic Convolutional Neural Network
   </a>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="supplementary_notebooks.html">
-   Supplementary Jupyter notebooks
+   Appendix F: Supplementary Jupyter notebooks
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -194,7 +194,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="notebooks/EDA.html">
-     RICH AI Exploratory Data Analysis
+     Exploratory Data Analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -402,13 +402,13 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#base-architecture">
-     Base Architecture
+    <a class="reference internal nav-link" href="#d-1-1-base-architecture">
+     D.1.1: Base Architecture
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#additional-features">
-     Additional features
+    <a class="reference internal nav-link" href="#d-1-2-additional-features">
+     D.1.2: Additional features
     </a>
    </li>
   </ul>
@@ -427,7 +427,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Appendix D: PointNet (Deep Learning)</h1>
+                <h1>Appendix D: PointNet</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -443,13 +443,13 @@ title="Print to PDF"
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#base-architecture">
-     Base Architecture
+    <a class="reference internal nav-link" href="#d-1-1-base-architecture">
+     D.1.1: Base Architecture
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#additional-features">
-     Additional features
+    <a class="reference internal nav-link" href="#d-1-2-additional-features">
+     D.1.2: Additional features
     </a>
    </li>
   </ul>
@@ -469,18 +469,18 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="appendix-d-pointnet-deep-learning">
-<span id="appendix-deeplearning-pointnet"></span><h1>Appendix D: PointNet (Deep Learning)<a class="headerlink" href="#appendix-d-pointnet-deep-learning" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="appendix-d-pointnet">
+<span id="appendix-deeplearning-pointnet"></span><h1>Appendix D: PointNet<a class="headerlink" href="#appendix-d-pointnet" title="Permalink to this headline">#</a></h1>
 <section id="d-1-model-architecture">
 <span id="appendix-deeplearning-pointnet-arch"></span><h2>D.1: Model architecture<a class="headerlink" href="#d-1-model-architecture" title="Permalink to this headline">#</a></h2>
-<section id="base-architecture">
-<h3>Base Architecture<a class="headerlink" href="#base-architecture" title="Permalink to this headline">#</a></h3>
+<section id="d-1-1-base-architecture">
+<h3>D.1.1: Base Architecture<a class="headerlink" href="#d-1-1-base-architecture" title="Permalink to this headline">#</a></h3>
 <p>The PointNet architecture has two key features which allow it to handle pointcloud data effectively:</p>
 <ol class="simple">
 <li><p>Spatial transformation network (T-Net) <span id="id1">[<a class="reference internal" href="../references.html#id7" title="Max Jaderberg, Karen Simonyan, Andrew Zisserman, and Koray Kavukcuoglu. Spatial transformer networks. 2015. URL: https://arxiv.org/abs/1506.02025, doi:10.48550/ARXIV.1506.02025.">Jaderberg <em>et al.</em>, 2015</a>]</span></p></li>
 <li><p>Maxpooling</p></li>
 </ol>
-<p>The overall architecture can be seen in <a class="reference internal" href="#pointnetarch"><span class="std std-numref">Fig. 19</span></a> <span id="id2">[<a class="reference internal" href="../references.html#id2" title="Charles R Qi, Hao Su, Kaichun Mo, and Leonidas J Guibas. Pointnet: deep learning on point sets for 3d classification and segmentation. In Proceedings of the IEEE conference on computer vision and pattern recognition, 652–660. 2017.">Qi <em>et al.</em>, 2017</a>]</span>. The spatial transformer is the first part of the model, and makes the model invariant to rotations in the point cloud. The parameters for the matrix learnt by this network are data driven and therefore robust. The second application of T-Net acts on the features extracted from various point clouds and orient them in a latent feature space. This matrix learnt for this step is more complex.</p>
+<p>The overall architecture can be seen in <a class="reference internal" href="#pointnetarch"><span class="std std-numref">Fig. 19</span></a> <span id="id2">[<a class="reference internal" href="../references.html#id2" title="Charles R Qi, Hao Su, Kaichun Mo, and Leonidas J Guibas. Pointnet: deep learning on point sets for 3d classification and segmentation. In Proceedings of the IEEE conference on computer vision and pattern recognition, 652–660. 2017.">Qi <em>et al.</em>, 2017</a>]</span>. The spatial transformer (“T-net”) is the first part of the model, and makes the model invariant to geometric transformations in the point cloud. The parameters for the matrix learnt by this network are data driven and therefore robust. The second application of T-Net acts on the features extracted from various point clouds and orient them in a latent feature space. This matrix learnt for this step is more complex.</p>
 <p>These geometric invariant features are passed onto a fully connected layer for feature extraction. Subsequently, max pooling, a symmetric function, is applied to this output to capture the unordered nature of the points in the point cloud. The output is passed to a classification network.</p>
 <figure class="align-default" id="pointnetarch">
 <a class="reference internal image-reference" href="../_images/pointnetarch.png"><img alt="../_images/pointnetarch.png" src="../_images/pointnetarch.png" style="width: 900px; height: 300px;" /></a>
@@ -489,9 +489,9 @@ title="Print to PDF"
 </figcaption>
 </figure>
 </section>
-<section id="additional-features">
-<h3>Additional features<a class="headerlink" href="#additional-features" title="Permalink to this headline">#</a></h3>
-<p>To this base architecture, two features specific to our problem, the ring radius corresponding to the point cloud generated using the MLE and the momentum of the particle, were concatenated to the fully connected layer. Both features were normalized batchwise to ensure stability of the network.</p>
+<section id="d-1-2-additional-features">
+<h3>D.1.2: Additional features<a class="headerlink" href="#d-1-2-additional-features" title="Permalink to this headline">#</a></h3>
+<p>The particle momentum and ring radius were added to this architecture by concatenating them to the fully connected layer. Both features were standardized and normalized batchwise to ensure stability of the network.</p>
 </section>
 </section>
 <section id="d-2-model-hyperparamters">
@@ -536,13 +536,13 @@ title="Print to PDF"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Appendix C: Gradient Boosted Tree (ML Baseline)</p>
+            <p class="prev-next-title">Appendix C: XGBoost</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="dl_dgcnn.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Appendix E: Dynamic Convolutional Neural Network (Deep Learning)</p>
+        <p class="prev-next-title">Appendix E: Dynamic Convolutional Neural Network</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

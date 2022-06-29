@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>RICH AI Exploratory Data Analysis &#8212; RICH AI Final Report</title>
+    <title>Exploratory Data Analysis &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -132,12 +132,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../analysis/data_science_methods.html">
-   3. Data Science Methods
+   3. Data science methods
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../analysis/data_product.html">
-   4. Data Product
+   4. Data product
   </a>
  </li>
  <li class="toctree-l1">
@@ -164,22 +164,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../ml_gbm.html">
-   Appendix C: Gradient Boosted Tree (ML Baseline)
+   Appendix C: XGBoost
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../dl_pointnet.html">
-   Appendix D: PointNet (Deep Learning)
+   Appendix D: PointNet
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../dl_dgcnn.html">
-   Appendix E: Dynamic Convolutional Neural Network (Deep Learning)
+   Appendix E: Dynamic Convolutional Neural Network
   </a>
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="../supplementary_notebooks.html">
-   Supplementary Jupyter notebooks
+   Appendix F: Supplementary Jupyter notebooks
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -194,7 +194,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     RICH AI Exploratory Data Analysis
+     Exploratory Data Analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -427,27 +427,8 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   RICH AI Exploratory Data Analysis
+   Exploratory Data Analysis
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#notes">
-     Notes
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#helper-functions">
-   Helper functions
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#helper-functions-for-plotting-rings">
-     Helper functions for plotting Rings
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#read-in-data-files">
@@ -587,7 +568,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>RICH AI Exploratory Data Analysis</h1>
+                <h1>Exploratory Data Analysis</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -599,27 +580,8 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   RICH AI Exploratory Data Analysis
+   Exploratory Data Analysis
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#notes">
-     Notes
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#helper-functions">
-   Helper functions
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#helper-functions-for-plotting-rings">
-     Helper functions for plotting Rings
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#read-in-data-files">
@@ -760,610 +722,17 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="rich-ai-exploratory-data-analysis">
-<h1>RICH AI Exploratory Data Analysis<a class="headerlink" href="#rich-ai-exploratory-data-analysis" title="Permalink to this headline">#</a></h1>
-<section id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="exploratory-data-analysis">
+<h1>Exploratory Data Analysis<a class="headerlink" href="#exploratory-data-analysis" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p><strong>Purpose</strong>: The purpose of this notebook is to demonstrate the balanced data generation process.</p></li>
+<li><p><strong>Author</strong>: Shiv Jena</p></li>
+</ul>
+<p><strong>Notes</strong></p>
 <ul class="simple">
 <li><p>Labels are 0: Muon, 1: Pion, 2: Positron</p></li>
 <li><p>Likelihood labels are different [Pion, Muon]</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">..</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/mukund/richai
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">h5py</span> 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">utils.helpers</span> <span class="kn">import</span> <span class="n">events_to_pandas</span><span class="p">,</span> <span class="n">compute_seq_id</span>
-<span class="kn">from</span> <span class="nn">dataset.rich_dataset</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="helper-functions">
-<h1>Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_RICHAI_data</span><span class="p">(</span><span class="n">file_paths</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Read in all the 2018 RICHAI data</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    file_paths : list of str</span>
-<span class="sd">        List of file paths of all data sets.</span>
-<span class="sd">        </span>
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    data_files : dict</span>
-<span class="sd">        Dictionary of HFD data sets     </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-
-    
-    <span class="n">data_files</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">file_paths</span><span class="p">:</span>
-        
-        <span class="k">if</span> <span class="n">file_paths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;fast_scratch_1&quot;</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="n">file_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">file_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="n">file_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">file_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                    
-            <span class="n">patch_check</span><span class="o">=</span><span class="n">file_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
-        
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">patch_check</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> 
-                    <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">patch_check</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>   
-        
-        <span class="n">data_files</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">data_files</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">events_to_pandas</span><span class="p">(</span><span class="n">dfile</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Convert HDF5 events data to Pandas</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    dfile : HDF5 file</span>
-<span class="sd">        The RICHAI HDF5 file to convert to pandas.</span>
-<span class="sd">        </span>
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    df : pd.DataFrame</span>
-<span class="sd">        pandas DataFrame with Events data</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-    
-    <span class="c1"># event features</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;run_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="s2">&quot;run_id&quot;</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;burst_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="s2">&quot;burst_id&quot;</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="s2">&quot;event_id&quot;</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;track_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="s2">&quot;track_id&quot;</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;track_momentum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="s2">&quot;track_momentum&quot;</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;chod_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="s2">&quot;chod_time&quot;</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;ring_radius&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="s2">&quot;ring_radius&quot;</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;ring_centre_pos_x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="s2">&quot;ring_centre_pos&quot;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;ring_centre_pos_y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="s2">&quot;ring_centre_pos&quot;</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;ring_likelihood_pion&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="s2">&quot;ring_likelihood&quot;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;ring_likelihood_muon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="s2">&quot;ring_likelihood&quot;</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;ring_likelihood_positron&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="s2">&quot;ring_likelihood&quot;</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">]</span>
-    
-    <span class="c1"># labels</span>
-    <span class="n">mu_off</span> <span class="o">=</span> <span class="n">dfile</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;muon_offset&quot;</span><span class="p">]</span>
-    <span class="n">pi_off</span> <span class="o">=</span> <span class="n">dfile</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;pion_offset&quot;</span><span class="p">]</span>
-    <span class="n">pos_off</span> <span class="o">=</span> <span class="n">dfile</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;positron_offset&quot;</span><span class="p">]</span>
-    <span class="n">entries</span> <span class="o">=</span> <span class="n">dfile</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;entries&quot;</span><span class="p">]</span>
-    
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
-    <span class="n">labels</span><span class="p">[</span><span class="n">mu_off</span><span class="p">:</span><span class="n">pi_off</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">labels</span><span class="p">[</span><span class="n">pi_off</span><span class="p">:</span><span class="n">pos_off</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">labels</span><span class="p">[</span><span class="n">pos_off</span><span class="p">:]</span> <span class="o">=</span> <span class="mi">2</span>
-    
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
-    
-    <span class="c1"># hit mapping values</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;first_hit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;HitMapping&quot;</span><span class="p">])[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># hit n</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;last_hit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dfile</span><span class="p">[</span><span class="s2">&quot;HitMapping&quot;</span><span class="p">])[</span><span class="mi">1</span><span class="p">:]</span>    <span class="c1"># hit n + 1</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;total_hits&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;last_hit&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;first_hit&quot;</span><span class="p">]</span>
-    
-    <span class="k">return</span> <span class="n">df</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_string_label</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Add string label to pandas df (to be used with map)</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    label : int</span>
-<span class="sd">        Integer specifying class the class of the particle</span>
-<span class="sd">    </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;muon&quot;</span>
-    <span class="k">elif</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;pion&quot;</span>
-    <span class="k">elif</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;positron&quot;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># def compute_seq_id(hit, or_id=0):</span>
-<span class="c1">#     &quot;&quot;&quot;Compute the RICH PMT sequence ID&quot;&quot;&quot;</span>
-<span class="c1">#     disk_id, pm_id, sc_id, up_dw_id, _ = hit</span>
-    
-<span class="c1">#     if or_id &lt; 1:</span>
-<span class="c1">#         seq_id = sc_id * 8 + pm_id + up_dw_id * 61 * 8 + disk_id * 61 * 8 * 2</span>
-<span class="c1">#     else:</span>
-<span class="c1">#         seq_id = 61 * 8 * 2 * 2 + sc_id + up_dw_id * 61 + disk_id * 61 * 2</span>
-<span class="c1">#     return int(seq_id)</span>
-
-<span class="c1"># compute_seq_id = np.vectorize(compute_seq_id, otypes=[int])</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">realign_x_hits</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mirror</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;translate X coordinates with fix</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    x : float</span>
-<span class="sd">        X-coordiante of hit.</span>
-<span class="sd">    mirror : int</span>
-<span class="sd">        Integer indicating mirror which photon hit. </span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">mirror</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="mf">146.8</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="mf">196.7</span>
-    
-<span class="k">def</span> <span class="nf">realign_y_hits</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">mirror</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;translate Y coordinates with fix</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    y : float</span>
-<span class="sd">        X-coordiante of hit.</span>
-<span class="sd">    mirror : int</span>
-<span class="sd">        Integer indicating mirror which photon hit. </span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">mirror</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">19.8</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">9.5</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_hit_info_df</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get the hit info for an event in a pandas dataframe</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    f : HDF5 file</span>
-<span class="sd">        The RICHAI HDF5 file.</span>
-<span class="sd">    df : pandas DataFrame</span>
-<span class="sd">        A pandas DataFrame representation of the HDF5 Events file.</span>
-<span class="sd">    event : int</span>
-<span class="sd">        The event number to get the hit info for.</span>
-<span class="sd">        </span>
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    positions : pd.DataFrame</span>
-<span class="sd">        pandas DataFrame with hits data for a given event</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">positions</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="c1"># get our hit data for this event</span>
-    <span class="n">idx_from</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">event</span><span class="p">][</span><span class="s2">&quot;first_hit&quot;</span><span class="p">]</span>
-    <span class="n">idx_to</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">event</span><span class="p">][</span><span class="s2">&quot;last_hit&quot;</span><span class="p">]</span>
-    <span class="n">hit_data</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;Hits&quot;</span><span class="p">][</span><span class="n">idx_from</span><span class="p">:</span><span class="n">idx_to</span><span class="p">]</span>
-    
-    <span class="c1"># get our pm locations for this event</span>
-    <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">hit_data</span><span class="p">:</span>
-        <span class="n">pm_idx</span> <span class="o">=</span> <span class="n">compute_seq_id</span><span class="p">(</span><span class="n">hit</span><span class="p">)</span>
-        <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">position_map</span><span class="p">[</span><span class="n">pm_idx</span><span class="p">])</span>
-    
-    <span class="c1"># add hit time, chod time, and delta</span>
-    <span class="n">positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;mirror&quot;</span><span class="p">])</span>
-    <span class="n">positions</span><span class="p">[</span><span class="s2">&quot;x_realigned&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">realign_x_hits</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">mirror</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">positions</span><span class="p">[</span><span class="s2">&quot;y_realigned&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">realign_y_hits</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">mirror</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">positions</span><span class="p">[</span><span class="s2">&quot;hit_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hit_data</span><span class="p">[</span><span class="s2">&quot;hit_time&quot;</span><span class="p">]</span>
-    <span class="n">positions</span><span class="p">[</span><span class="s2">&quot;chod_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;chod_time&quot;</span><span class="p">][</span><span class="n">event</span><span class="p">]</span>
-    <span class="n">positions</span><span class="p">[</span><span class="s2">&quot;chod_delta&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[</span><span class="s2">&quot;hit_time&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">positions</span><span class="p">[</span><span class="s2">&quot;chod_time&quot;</span><span class="p">]</span>
-    <span class="n">positions</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">][</span><span class="n">event</span><span class="p">]</span>
-    <span class="n">positions</span><span class="p">[</span><span class="s2">&quot;event&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span>
-    
-    <span class="k">return</span> <span class="n">positions</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">draw_pmt_pos</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">pmt_pos</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add circle patches corresponding to the PMT position to the Axes object ax</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pmt_pos</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># 0: Jura / 1: Salève, PMT disks are identical, we can pick either one. [TODO: CHECK!]</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">ax</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_class_samples</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">momentum_bin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wide</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Sample n samples for each particle class from the events dataframe</span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    df : dataframe</span>
-<span class="sd">        A pandas DataFrame representation of the HDF5 Events file.</span>
-<span class="sd">        </span>
-<span class="sd">    n : int</span>
-<span class="sd">        The number of samples required.</span>
-<span class="sd">    </span>
-<span class="sd">    seed : int</span>
-<span class="sd">        RNG seed number. </span>
-<span class="sd">    </span>
-<span class="sd">    momentum_bin : boolean</span>
-<span class="sd">        Indicate whehter to sample using momentum bins.</span>
-<span class="sd">    </span>
-<span class="sd">    wide = boolean</span>
-<span class="sd">        Indicate whehter to use wide or narrow bins.</span>
-<span class="sd">        </span>
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    samples : pd.DataFrame</span>
-<span class="sd">        Dataframe containing randomly sampled events.</span>
-<span class="sd">    </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="k">if</span> <span class="n">momentum_bin</span> <span class="ow">and</span> <span class="n">wide</span><span class="p">:</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;wide_momentum_bin == @momentum_bin&quot;</span><span class="p">)</span>
-        
-    <span class="k">if</span> <span class="n">momentum_bin</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">wide</span><span class="p">:</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;narrow_momentum_bin == @momentum_bin&quot;</span><span class="p">)</span>
-        
-    <span class="n">samples</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;muon&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">),</span>
-            <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;pion&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">),</span>
-           <span class="c1"># df[df[&quot;class&quot;] == &quot;positron&quot;].sample(n=n, random_state=seed)        </span>
-        <span class="p">]</span>
-
-    <span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">samples</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_string_label</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Add string label to pandas df (to be used with map)&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;muon&quot;</span>
-    <span class="k">elif</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;pion&quot;</span>
-    <span class="c1">#elif label == 2:</span>
-    <span class="c1">#    return &quot;positron&quot;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">undersample</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Undersample majority class to match number of minority class</span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    df : pd.dataframe</span>
-<span class="sd">        A pandas DataFrame representation of the HDF5 Events file.</span>
-<span class="sd">        </span>
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    final_df : pd.DataFrame</span>
-<span class="sd">        Dataframe containing equal class sizes.</span>
-<span class="sd">    </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">classes</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-    <span class="n">least_class_amount</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">classes</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-    <span class="n">classes_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
-        <span class="n">classes_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">key</span><span class="p">])</span> 
-    <span class="n">classes_sample</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">classes_list</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">classes_sample</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">classes_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">least_class_amount</span><span class="p">))</span>
-    <span class="n">df_maybe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">classes_sample</span><span class="p">)</span>
-    <span class="n">final_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_maybe</span><span class="p">,</span><span class="n">classes_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">final_df</span> <span class="o">=</span> <span class="n">final_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">final_df</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">delta</span><span class="p">(</span>
-    <span class="n">dset_unbalanced</span><span class="p">,</span> 
-    <span class="n">df_balanced</span><span class="p">,</span> 
-    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.3</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Compute the mean difference between CHOD time and photon hits for each event after filtering</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    dset_unbalanced : HDF5</span>
-<span class="sd">        Original HDF5 Events file.</span>
-<span class="sd">    </span>
-<span class="sd">    dset_unbalanced : HDF5</span>
-<span class="sd">        Synthetic data HDF5 Events file.</span>
-<span class="sd">    </span>
-<span class="sd">    delta : float</span>
-<span class="sd">        The cut-off value for filtering the difference between CHOD time and photon hit time</span>
-<span class="sd">        </span>
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    df_balanced_copy : pd.DataFrame</span>
-<span class="sd">        Dataframe containing additional column with number of hits and mean_delta after filtering.</span>
-<span class="sd">    </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="c1"># Event indices in balanced dataset</span>
-    <span class="n">event_nums</span> <span class="o">=</span> <span class="n">df_balanced</span><span class="p">[</span><span class="s1">&#39;original_index&#39;</span><span class="p">]</span>
-
-    <span class="c1"># Defining total_hits_filtered</span>
-    <span class="n">hits_filtered_perevent</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">df_balanced</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int32&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">event_nums</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int32&#39;</span><span class="p">)</span>
-    <span class="n">delta_perevent</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">df_balanced</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int32&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">event_nums</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int32&#39;</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">event_idx</span> <span class="ow">in</span> <span class="n">event_nums</span><span class="p">:</span>
-        <span class="c1"># Finding the number of hits for each event in the hit_array from hit_mapping</span>
-        <span class="n">idx_from</span> <span class="o">=</span> <span class="n">dset_unbalanced</span><span class="o">.</span><span class="n">hit_mapping</span><span class="p">[</span><span class="n">event_idx</span><span class="p">]</span>
-        <span class="n">idx_to</span> <span class="o">=</span> <span class="n">dset_unbalanced</span><span class="o">.</span><span class="n">hit_mapping</span><span class="p">[</span><span class="n">event_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">hit_times</span> <span class="o">=</span> <span class="n">dset_unbalanced</span><span class="o">.</span><span class="n">hit_array</span><span class="p">[</span><span class="s1">&#39;hit_time&#39;</span><span class="p">][</span><span class="n">idx_from</span><span class="p">:</span><span class="n">idx_to</span><span class="p">]</span>
-
-        <span class="c1"># Extracting delta for each event</span>
-        <span class="n">delta_time</span> <span class="o">=</span> <span class="n">dset_unbalanced</span><span class="o">.</span><span class="n">event_array</span><span class="p">[</span><span class="n">event_idx</span><span class="p">][</span><span class="s2">&quot;chod_time&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">hit_times</span>
-
-        <span class="c1"># Fetching the count of hit_times in the range hit_time +- delta_tolerance</span>
-        <span class="n">hits_filtered_perevent</span><span class="p">[</span><span class="n">event_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta_time</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">delta_time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">delta</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">delta_perevent</span><span class="p">[</span><span class="n">event_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">delta_time</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">delta_time</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">delta</span><span class="p">])</span>
-
-    <span class="c1"># updating df_balanced for total hits</span>
-    <span class="n">df_balanced_copy</span> <span class="o">=</span> <span class="n">df_balanced</span>
-    <span class="n">df_balanced_copy</span><span class="p">[</span><span class="s1">&#39;hits_filtered_per_event&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hits_filtered_perevent</span>
-    <span class="n">df_balanced_copy</span><span class="p">[</span><span class="s1">&#39;mean_delta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta_perevent</span>
-    
-    <span class="k">return</span> <span class="n">df_balanced_copy</span>
-</pre></div>
-</div>
-</div>
-</div>
-<section id="helper-functions-for-plotting-rings">
-<h2>Helper functions for plotting Rings<a class="headerlink" href="#helper-functions-for-plotting-rings" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_hit_data</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">mapper_event</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get the hit data for an event as a numpy array.</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    f : HDF5</span>
-<span class="sd">        Original HDF5 Events file.</span>
-<span class="sd">    </span>
-<span class="sd">    mapper : HDF5</span>
-<span class="sd">        Synthetic data HDF5 Events file.</span>
-<span class="sd">    </span>
-<span class="sd">    mapper_event : int</span>
-<span class="sd">        The integer value of index of the event in the synthetic dataframe</span>
-<span class="sd">        </span>
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    hits_data : np.array</span>
-<span class="sd">        Array containing x, y, mirror, hit time, chod time, delta</span>
-<span class="sd">    </span>
-<span class="sd">    </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">event</span><span class="o">=</span><span class="n">mapper</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;table&#39;</span><span class="p">][</span><span class="n">mapper_event</span><span class="p">][</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-   
-    <span class="n">hit_data</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="c1"># get the raw hit data, hit time, and chod time</span>
-    <span class="n">hits</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;Hits&quot;</span><span class="p">][</span>
-        <span class="n">f</span><span class="p">[</span><span class="s2">&quot;HitMapping&quot;</span><span class="p">][</span><span class="n">event</span><span class="p">]:</span><span class="n">f</span><span class="p">[</span><span class="s2">&quot;HitMapping&quot;</span><span class="p">][</span><span class="n">event</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-    <span class="p">]</span>
-    <span class="n">hit_times</span> <span class="o">=</span> <span class="n">hits</span><span class="p">[</span><span class="s2">&quot;hit_time&quot;</span><span class="p">]</span>
-    <span class="n">chod_time</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="n">event</span><span class="p">][</span><span class="s2">&quot;chod_time&quot;</span><span class="p">]</span>
-    
-    <span class="c1"># compute (x, y) positions</span>
-    <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span>
-        <span class="n">idx</span> <span class="o">=</span> <span class="n">compute_seq_id</span><span class="p">(</span>
-            <span class="n">hit</span>
-        <span class="p">)</span>
-
-        <span class="n">hit_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">position_map</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
-
-    <span class="c1"># convert (x, y) positions to numpy array</span>
-    <span class="n">hit_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">hit_data</span><span class="p">)</span>
-
-    <span class="c1"># create array of chod times</span>
-    <span class="n">chod_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">hit_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="n">chod_time</span><span class="p">)</span>
-
-    <span class="c1"># join hits, hit times, and chod time</span>
-    <span class="n">hit_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">hit_data</span><span class="p">,</span> <span class="n">hit_times</span><span class="p">,</span> <span class="n">chod_time</span><span class="p">]</span>
-
-    <span class="c1"># create CHOD - time delta column</span>
-    <span class="n">hit_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hit_data</span><span class="p">,</span> <span class="n">hit_data</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">:]</span> <span class="o">-</span> <span class="n">hit_data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    
-    <span class="c1"># final columns are x, y, mirror, hit time, chod time, delta</span>
-    <span class="k">return</span> <span class="n">hit_data</span>
-
-
-<span class="k">def</span> <span class="nf">hit_data_to_pandas</span><span class="p">(</span><span class="n">hit_data</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Convert numpy array hits data to pandas format&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="n">data</span><span class="o">=</span><span class="n">hit_data</span><span class="p">,</span>
-        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;mirror&quot;</span><span class="p">,</span> <span class="s2">&quot;hit_time&quot;</span><span class="p">,</span> <span class="s2">&quot;chod_time&quot;</span><span class="p">,</span> <span class="s2">&quot;time_delta&quot;</span><span class="p">]</span>
-    <span class="p">)</span>
-
-    
-<span class="k">def</span> <span class="nf">plot_event</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">mapper_event</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    f : HDF5</span>
-<span class="sd">        Original HDF5 Events file.</span>
-<span class="sd">    </span>
-<span class="sd">    mapper : HDF5</span>
-<span class="sd">        Synthetic data HDF5 Events file.</span>
-<span class="sd">    </span>
-<span class="sd">    mapper_event : int</span>
-<span class="sd">        The integer value of index of the event in the synthetic dataframe</span>
-<span class="sd">    </span>
-<span class="sd">    ax : bool</span>
-<span class="sd">        </span>
-<span class="sd">        </span>
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    hits_data : np.array</span>
-<span class="sd">        Array containing x, y, mirror, hit time, chod time, delta</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="c1"># get the hit data for the event</span>
-    <span class="n">hit_data</span> <span class="o">=</span> <span class="n">get_hit_data</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">mapper_event</span><span class="p">)</span>
-    
-    <span class="n">event</span><span class="o">=</span><span class="n">mapper</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;table&#39;</span><span class="p">][</span><span class="n">mapper_event</span><span class="p">][</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-    
-    <span class="c1"># labels</span>
-    <span class="n">mu_off</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;muon_offset&quot;</span><span class="p">]</span>
-    <span class="n">pi_off</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;pion_offset&quot;</span><span class="p">]</span>
-    <span class="n">pos_off</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;positron_offset&quot;</span><span class="p">]</span>
-    <span class="n">entries</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;entries&quot;</span><span class="p">]</span>
-    
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">entries</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
-    <span class="n">labels</span><span class="p">[</span><span class="n">mu_off</span><span class="p">:</span><span class="n">pi_off</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">labels</span><span class="p">[</span><span class="n">pi_off</span><span class="p">:</span><span class="n">pos_off</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="c1">#labels[pos_off:] = 2</span>
-    
-    
-    <span class="c1"># convert data to pandas to make plotting code more readable</span>
-    <span class="n">hit_data_df</span> <span class="o">=</span> <span class="n">hit_data_to_pandas</span><span class="p">(</span><span class="n">hit_data</span><span class="p">)</span>
-    
-    <span class="c1"># realign x and y hits</span>
-    <span class="n">hit_data_df</span><span class="p">[</span><span class="s2">&quot;x_realigned&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hit_data_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">realign_x_hits</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">mirror</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
-    <span class="p">)</span>
-    <span class="n">hit_data_df</span><span class="p">[</span><span class="s2">&quot;y_realigned&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hit_data_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-        <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">realign_y_hits</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">mirror</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
-    <span class="p">)</span>
-     
-    <span class="c1"># get values for title</span>
-    <span class="n">radius</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="n">event</span><span class="p">][</span><span class="s1">&#39;ring_radius&#39;</span><span class="p">]</span>
-    <span class="n">momentum</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="n">event</span><span class="p">][</span><span class="s1">&#39;track_momentum&#39;</span><span class="p">]</span>
-    <span class="n">centre_x</span><span class="p">,</span> <span class="n">centre_y</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">][</span><span class="n">event</span><span class="p">][</span><span class="s1">&#39;ring_centre_pos&#39;</span><span class="p">]</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">event</span><span class="p">]</span>
-    
-    <span class="c1"># determine which mirror was hit</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">hit_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
-        <span class="n">mirror</span> <span class="o">=</span> <span class="s2">&quot;Jura&quot;</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="n">hit_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
-        <span class="n">mirror</span> <span class="o">=</span> <span class="s2">&quot;Saleve&quot;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">mirror</span> <span class="o">=</span> <span class="s2">&quot;Both&quot;</span>
-    
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">ax</span><span class="p">:</span>
-        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-    
-    <span class="c1"># plot realigned hits</span>
-    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
-        <span class="n">x</span><span class="o">=</span><span class="n">hit_data_df</span><span class="p">[</span><span class="s2">&quot;x_realigned&quot;</span><span class="p">],</span>
-        <span class="n">y</span><span class="o">=</span><span class="n">hit_data_df</span><span class="p">[</span><span class="s2">&quot;y_realigned&quot;</span><span class="p">],</span>
-<span class="c1">#         c=hit_data_df[&quot;time_delta&quot;],</span>
-        <span class="n">c</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">hit_data_df</span><span class="p">[</span><span class="s2">&quot;time_delta&quot;</span><span class="p">],</span> <span class="mi">2</span><span class="p">),</span>
-<span class="c1">#         c=np.abs(hit_data_df[&quot;time_delta&quot;]),</span>
-        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;cividis&quot;</span><span class="p">,</span>
-        <span class="n">vmin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">30</span>
-    <span class="p">)</span>
-    
-    <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#1170aa&quot;</span>
-    <span class="k">elif</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#fc7d0b&quot;</span>
-    <span class="c1">#elif label == 2:</span>
-    <span class="c1">#    color = &quot;#a3acb9&quot;</span>
-    
-    <span class="c1"># plot the circle</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="n">centre_x</span><span class="p">,</span> <span class="n">centre_y</span><span class="p">),</span> <span class="n">radius</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
-    <span class="p">)</span>
-    
-    <span class="c1"># add a colourbar</span>
-    <span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-    
-    <span class="c1"># other customizations</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Event: </span><span class="si">{</span><span class="n">event</span><span class="si">}</span><span class="s2">, Mirror:</span><span class="si">{</span><span class="n">mirror</span><span class="si">}</span><span class="s2"></span>
-<span class="s2">        Radius: </span><span class="si">{</span><span class="n">radius</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Momentum: </span><span class="si">{</span><span class="n">momentum</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"></span>
-<span class="s2">        Centre (</span><span class="si">{</span><span class="n">centre_x</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">centre_y</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)</span>
-<span class="s2">        Label: </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span> 
-    <span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X (mm)&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y (mm)&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">ax</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="read-in-data-files">
 <h1>Read in data files<a class="headerlink" href="#read-in-data-files" title="Permalink to this headline">#</a></h1>

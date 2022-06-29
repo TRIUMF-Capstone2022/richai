@@ -132,12 +132,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../analysis/data_science_methods.html">
-   3. Data Science Methods
+   3. Data science methods
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../../analysis/data_product.html">
-   4. Data Product
+   4. Data product
   </a>
  </li>
  <li class="toctree-l1">
@@ -164,22 +164,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../ml_gbm.html">
-   Appendix C: Gradient Boosted Tree (ML Baseline)
+   Appendix C: XGBoost
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../dl_pointnet.html">
-   Appendix D: PointNet (Deep Learning)
+   Appendix D: PointNet
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../dl_dgcnn.html">
-   Appendix E: Dynamic Convolutional Neural Network (Deep Learning)
+   Appendix E: Dynamic Convolutional Neural Network
   </a>
  </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="../supplementary_notebooks.html">
-   Supplementary Jupyter notebooks
+   Appendix F: Supplementary Jupyter notebooks
   </a>
   <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -194,7 +194,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="EDA.html">
-     RICH AI Exploratory Data Analysis
+     Exploratory Data Analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -445,11 +445,6 @@ title="Print to PDF"
      Test datasets
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#checking-gpu-status">
-     Checking GPU status
-    </a>
-   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -590,11 +585,6 @@ title="Print to PDF"
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#test-datasets">
      Test datasets
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#checking-gpu-status">
-     Checking GPU status
     </a>
    </li>
   </ul>
@@ -773,135 +763,6 @@ title="Print to PDF"
 <li><p>balanced test set</p></li>
 <li><p>unbalanced test set</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">../</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/shiv/richai
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
-
-<span class="c1"># system libraries</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-
-<span class="c1"># modeling libraries</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">cudf</span>
-<span class="kn">import</span> <span class="nn">cupy</span>
-<span class="kn">from</span> <span class="nn">lightgbm.sklearn</span> <span class="kn">import</span> <span class="n">LGBMClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span>
-<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">plot_roc_curve</span><span class="p">,</span>    
-    <span class="n">auc</span><span class="p">,</span> 
-    <span class="n">accuracy_score</span><span class="p">,</span>
-    <span class="n">confusion_matrix</span><span class="p">,</span> 
-    <span class="n">classification_report</span><span class="p">,</span>
-    <span class="n">precision_recall_curve</span>  
-<span class="p">)</span>
-<span class="kn">import</span> <span class="nn">optuna</span>
-
-<span class="c1"># visualization libraries</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
-<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
-<span class="kn">import</span> <span class="nn">h5py</span> 
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-
-<span class="c1"># utils</span>
-<span class="kn">from</span> <span class="nn">utils.helpers</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">utils.gbt_dataset</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">utils.plotting</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
-<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="checking-gpu-status">
-<h3>Checking GPU status<a class="headerlink" href="#checking-gpu-status" title="Permalink to this headline">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>nvidia-smi
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tue Jun 28 15:09:04 2022       
-+-----------------------------------------------------------------------------+
-| NVIDIA-SMI 510.47.03    Driver Version: 510.47.03    CUDA Version: 11.6     |
-|-------------------------------+----------------------+----------------------+
-| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-|                               |                      |               MIG M. |
-|===============================+======================+======================|
-|   0  NVIDIA GeForce ...  Off  | 00000000:1A:00.0 Off |                  N/A |
-| 31%   38C    P8     6W / 250W |   9395MiB / 11264MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-|   1  NVIDIA GeForce ...  Off  | 00000000:1B:00.0 Off |                  N/A |
-| 31%   33C    P8    17W / 250W |    730MiB / 11264MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-|   2  NVIDIA GeForce ...  Off  | 00000000:3D:00.0 Off |                  N/A |
-| 47%   75C    P2   234W / 250W |   6972MiB / 11264MiB |     94%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-|   3  NVIDIA GeForce ...  Off  | 00000000:3E:00.0 Off |                  N/A |
-|111%   79C    P2   227W / 250W |   6972MiB / 11264MiB |     99%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-|   4  NVIDIA GeForce ...  Off  | 00000000:88:00.0 Off |                  N/A |
-| 32%   38C    P2    53W / 250W |   8818MiB / 11264MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-|   5  NVIDIA GeForce ...  Off  | 00000000:89:00.0 Off |                  N/A |
-| 31%   31C    P8    21W / 250W |      3MiB / 11264MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-|   6  NVIDIA GeForce ...  Off  | 00000000:B1:00.0 Off |                  N/A |
-| 31%   31C    P8     2W / 250W |      3MiB / 11264MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-|   7  NVIDIA GeForce ...  Off  | 00000000:B2:00.0 Off |                  N/A |
-| 22%   31C    P8    23W / 250W |   9592MiB / 11264MiB |      0%      Default |
-|                               |                      |                  N/A |
-+-------------------------------+----------------------+----------------------+
-                                                                               
-+-----------------------------------------------------------------------------+
-| Processes:                                                                  |
-|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
-|        ID   ID                                                   Usage      |
-|=============================================================================|
-|    0   N/A  N/A     39246      C   /usr/bin/python3                 8687MiB |
-|    0   N/A  N/A     60661      C   /opt/conda/bin/python3.8          705MiB |
-|    1   N/A  N/A     60661      C   /opt/conda/bin/python3.8          727MiB |
-|    2   N/A  N/A     43894      C   /opt/conda/bin/python3           6967MiB |
-|    3   N/A  N/A     43896      C   /opt/conda/bin/python3           6967MiB |
-|    4   N/A  N/A     29374      C   python3                          8815MiB |
-|    7   N/A  N/A     54261      C   /usr/bin/python3                 9589MiB |
-+-----------------------------------------------------------------------------+
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Global objects</span>

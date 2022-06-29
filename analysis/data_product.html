@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>4. Data Product &#8212; RICH AI Final Report</title>
+    <title>4. Data product &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="5. Conclusions and recommendations" href="conclusions_and_recommendations.html" />
-    <link rel="prev" title="3. Data Science Methods" href="data_science_methods.html" />
+    <link rel="prev" title="3. Data science methods" href="data_science_methods.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -132,12 +132,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_science_methods.html">
-   3. Data Science Methods
+   3. Data science methods
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   4. Data Product
+   4. Data product
   </a>
  </li>
  <li class="toctree-l1">
@@ -164,22 +164,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../appendix/ml_gbm.html">
-   Appendix C: Gradient Boosted Tree (ML Baseline)
+   Appendix C: XGBoost
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../appendix/dl_pointnet.html">
-   Appendix D: PointNet (Deep Learning)
+   Appendix D: PointNet
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../appendix/dl_dgcnn.html">
-   Appendix E: Dynamic Convolutional Neural Network (Deep Learning)
+   Appendix E: Dynamic Convolutional Neural Network
   </a>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="../appendix/supplementary_notebooks.html">
-   Supplementary Jupyter notebooks
+   Appendix F: Supplementary Jupyter notebooks
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -194,7 +194,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../appendix/notebooks/EDA.html">
-     RICH AI Exploratory Data Analysis
+     Exploratory Data Analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -437,11 +437,11 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#train-evaluate">
+    <a class="reference internal nav-link" href="#src">
      4.2.4:
      <code class="docutils literal notranslate">
       <span class="pre">
-       train_evaluate
+       src
       </span>
      </code>
     </a>
@@ -467,7 +467,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>4. Data Product</h1>
+                <h1>4. Data product</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -518,11 +518,11 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#train-evaluate">
+    <a class="reference internal nav-link" href="#src">
      4.2.4:
      <code class="docutils literal notranslate">
       <span class="pre">
-       train_evaluate
+       src
       </span>
      </code>
     </a>
@@ -550,10 +550,10 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="data-product">
-<h1>4. Data Product<a class="headerlink" href="#data-product" title="Permalink to this headline">#</a></h1>
+<h1>4. Data product<a class="headerlink" href="#data-product" title="Permalink to this headline">#</a></h1>
 <section id="product-overview">
 <h2>4.1: Product overview<a class="headerlink" href="#product-overview" title="Permalink to this headline">#</a></h2>
-<p>Our final data product is a modularized machine learning pipeline that ultimately can classify a particle decay with either PointNet or a Dynamic Graph CNN.  As input, the pipeline takes in raw experiement data in HDF5 file format.  The data is then preprocessed, and the models are trained and tested(alternatively, pre-trained models can also be loaded to skip the training process here).  Finally, the models can then be evaluated in order to classify a particle decay.  From a birds eye view, our pipeline works as shown in <a class="reference internal" href="#id1"><span class="std std-numref">Fig. 9</span></a></p>
+<p>The final data product of RICH AI is a modularized machine learning pipeline that can classify a particle decay with either PointNet or Dynamic Graph CNN.  As input, the pipeline takes in raw experiment data in HDF5 file format.  The data is then preprocessed, and the models are trained and tested(alternatively, pre-trained models can also be loaded to skip the training process here).  Finally, the models can then be evaluated in order to classify a particle decay.  From a birds eye view, the pipeline works as shown in <a class="reference internal" href="#id1"><span class="std std-numref">Fig. 9</span></a></p>
 <figure class="align-default" id="id1">
 <img alt="../_images/product_overview.png" src="../_images/product_overview.png" />
 <figcaption>
@@ -563,35 +563,34 @@ title="Print to PDF"
 </section>
 <section id="how-the-product-works">
 <h2>4.2: How the product works<a class="headerlink" href="#how-the-product-works" title="Permalink to this headline">#</a></h2>
-<p>We have designed our data product to be controlled by a master configuration file.  This configuration file is set before the scripts are run, and allows a user to set all of the desired parameters or hyperparameters related to a single experiment run.  At a high level, our modularized code has been structured into the following directories:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── configs
+<p>The product as been designed to be controlled by a master configuration file.  This configuration file is set before the scripts are run, and this allows a user to set all of the desired hyperparameters related to a single experiment run.  At a high level, the modularized code has been structured into the following directories:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── configs/
+├── dataset/
+├── models/
 ├── src/
-│   ├── dataset/
-│   ├── models/
-│   ├── train_evaluate/
-│   └── utils/
+├── utils/
 </pre></div>
 </div>
-<p>This report will only include a very brief overview of each directory above, for full details please see the <code class="docutils literal notranslate"><span class="pre">README.md</span></code> file on our <a class="reference external" href="https://github.com/TRIUMF-Capstone2022/richai">GitHub repository</a>.</p>
+<p>This report will only include a very brief overview of each directory above, for full details please see the <code class="docutils literal notranslate"><span class="pre">README.md</span></code> file of the project’s <a class="reference external" href="https://github.com/TRIUMF-Capstone2022/richai">GitHub repository</a>.</p>
 <section id="configs">
 <h3>4.2.1: <code class="docutils literal notranslate"><span class="pre">configs</span></code><a class="headerlink" href="#configs" title="Permalink to this headline">#</a></h3>
-<p>The configs directory cotains the master configuration file that allows the user to control all parameters and hyperparameters related to the data set, data loader, deep learning models, and selection of which GPUs to train on.  Please note that the master configuration file is the only file that has been designed to be edited by a user, and the changes in this file will flow down programatically to the python scripts that are described in the directories below.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">configs</span></code> directory contains the master configuration file that allows the user to control all parameters and hyperparameters related to the data set, data loader, deep learning models, and selection of which GPUs to train on.  Please note that the master configuration file is the only file that has been designed to be edited by a user, and the changes in this file will flow down programmatically to the python scripts that are described in the directories below.</p>
 </section>
 <section id="dataset">
 <h3>4.2.2: <code class="docutils literal notranslate"><span class="pre">dataset</span></code><a class="headerlink" href="#dataset" title="Permalink to this headline">#</a></h3>
-<p>The dataset directory contains the source code that builds a custom PyTorch data set, as well as PyTorch data loaders that are used in model tranining, validation, and evaluation.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dataset</span></code> directory contains the source code that builds a custom PyTorch <code class="docutils literal notranslate"><span class="pre">Dataset</span></code>, as well as PyTorch <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code>s that are used in model training, validation, and evaluation.</p>
 </section>
 <section id="models">
 <h3>4.2.3: <code class="docutils literal notranslate"><span class="pre">models</span></code><a class="headerlink" href="#models" title="Permalink to this headline">#</a></h3>
-<p>The models directory contains the source code for our implementation of both PointNet and Dynamic Graph CNN.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">models</span></code> directory contains the source code for the implementation of both PointNet and Dynamic Graph CNN.</p>
 </section>
-<section id="train-evaluate">
-<h3>4.2.4: <code class="docutils literal notranslate"><span class="pre">train_evaluate</span></code><a class="headerlink" href="#train-evaluate" title="Permalink to this headline">#</a></h3>
-<p>The train_evaluate directory cotains the source code for our model training and evaluation scripts.</p>
+<section id="src">
+<h3>4.2.4: <code class="docutils literal notranslate"><span class="pre">src</span></code><a class="headerlink" href="#src" title="Permalink to this headline">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">src</span></code> directory contains the source code for the model training and evaluation scripts that can be used for either deep learning model.</p>
 </section>
 <section id="utils">
 <h3>4.2.5: <code class="docutils literal notranslate"><span class="pre">utils</span></code><a class="headerlink" href="#utils" title="Permalink to this headline">#</a></h3>
-<p>The utils directory contains other various functions related to our project, such as plotting functions or other functions that did not fit into one of the previous directories explained.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">utils</span></code> directory contains other various functions related to the project, such as plotting functions or other functions that did not fit into one of the previous directories explained.</p>
 </section>
 </section>
 </section>
@@ -627,7 +626,7 @@ title="Print to PDF"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">3. Data Science Methods</p>
+            <p class="prev-next-title">3. Data science methods</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="conclusions_and_recommendations.html" title="next page">

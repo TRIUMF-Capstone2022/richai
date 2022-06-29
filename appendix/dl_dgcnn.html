@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Appendix E: Dynamic Convolutional Neural Network (Deep Learning) &#8212; RICH AI Final Report</title>
+    <title>Appendix E: Dynamic Convolutional Neural Network &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/TRIUMF_Favicon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Supplementary Jupyter notebooks" href="supplementary_notebooks.html" />
-    <link rel="prev" title="Appendix D: PointNet (Deep Learning)" href="dl_pointnet.html" />
+    <link rel="next" title="Appendix F: Supplementary Jupyter notebooks" href="supplementary_notebooks.html" />
+    <link rel="prev" title="Appendix D: PointNet" href="dl_pointnet.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -132,12 +132,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../analysis/data_science_methods.html">
-   3. Data Science Methods
+   3. Data science methods
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../analysis/data_product.html">
-   4. Data Product
+   4. Data product
   </a>
  </li>
  <li class="toctree-l1">
@@ -164,22 +164,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="ml_gbm.html">
-   Appendix C: Gradient Boosted Tree (ML Baseline)
+   Appendix C: XGBoost
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="dl_pointnet.html">
-   Appendix D: PointNet (Deep Learning)
+   Appendix D: PointNet
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Appendix E: Dynamic Convolutional Neural Network (Deep Learning)
+   Appendix E: Dynamic Convolutional Neural Network
   </a>
  </li>
  <li class="toctree-l1 has-children">
   <a class="reference internal" href="supplementary_notebooks.html">
-   Supplementary Jupyter notebooks
+   Appendix F: Supplementary Jupyter notebooks
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -194,7 +194,7 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="notebooks/EDA.html">
-     RICH AI Exploratory Data Analysis
+     Exploratory Data Analysis
     </a>
    </li>
    <li class="toctree-l2">
@@ -422,7 +422,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Appendix E: Dynamic Convolutional Neural Network (Deep Learning)</h1>
+                <h1>Appendix E: Dynamic Convolutional Neural Network</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -459,11 +459,11 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="appendix-e-dynamic-convolutional-neural-network-deep-learning">
-<span id="appendix-deeplearning-dgcnn"></span><h1>Appendix E: Dynamic Convolutional Neural Network (Deep Learning)<a class="headerlink" href="#appendix-e-dynamic-convolutional-neural-network-deep-learning" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="appendix-e-dynamic-convolutional-neural-network">
+<span id="appendix-deeplearning-dgcnn"></span><h1>Appendix E: Dynamic Convolutional Neural Network<a class="headerlink" href="#appendix-e-dynamic-convolutional-neural-network" title="Permalink to this headline">#</a></h1>
 <section id="e-1-model-architecture">
 <span id="appendix-deeplearning-dgcnn-arch"></span><h2>E.1: Model architecture<a class="headerlink" href="#e-1-model-architecture" title="Permalink to this headline">#</a></h2>
-<p>The dynamic graph CNN is built up of a series edge convolution layers which apply the concept of traditional convolutions to the specified $k$ edges for each point. At the end of the series, the extracted features are passed onto a fully connected layers for the image classification. As in the PointNet model <a class="reference internal" href="dl_pointnet.html#appendix-deeplearning-pointnet-arch"><span class="std std-ref">App.C.1</span></a>, the point clouds are made transformation invariant through the use of a spatial transformer in the first step. The whole architecture is summarized in <a class="reference internal" href="#dgcnnarch"><span class="std std-numref">Fig. 20</span></a> <span id="id1">[<a class="reference internal" href="../references.html#id3" title="Yue Wang, Yongbin Sun, Ziwei Liu, Sanjay E Sarma, Michael M Bronstein, and Justin M Solomon. Dynamic graph cnn for learning on point clouds. Acm Transactions On Graphics (tog), 38(5):1–12, 2019.">Wang <em>et al.</em>, 2019</a>]</span>.</p>
+<p>The dynamic graph CNN is built up of a series edge convolution layers which apply the concept of traditional convolutions to the specified <em>k</em> edges for each point. At the end of the series, the extracted features are passed onto a fully connected layers for the image classification. As in the PointNet model <a class="reference internal" href="dl_pointnet.html#appendix-deeplearning-pointnet-arch"><span class="std std-ref">App.C.1</span></a>, the point clouds are made transformation invariant through the use of a spatial transformer in the first step. The whole architecture is summarized in <a class="reference internal" href="#dgcnnarch"><span class="std std-numref">Fig. 20</span></a> <span id="id1">[<a class="reference internal" href="../references.html#id3" title="Yue Wang, Yongbin Sun, Ziwei Liu, Sanjay E Sarma, Michael M Bronstein, and Justin M Solomon. Dynamic graph cnn for learning on point clouds. Acm Transactions On Graphics (tog), 38(5):1–12, 2019.">Wang <em>et al.</em>, 2019</a>]</span>.</p>
 <figure class="align-default" id="dgcnnarch">
 <a class="reference internal image-reference" href="../_images/dgcnnarch.png"><img alt="../_images/dgcnnarch.png" src="../_images/dgcnnarch.png" style="width: 900px; height: 500px;" /></a>
 <figcaption>
@@ -472,13 +472,19 @@ title="Print to PDF"
 </figure>
 <section id="e-1-1-edge-convolutions">
 <h3>E.1.1: Edge convolutions<a class="headerlink" href="#e-1-1-edge-convolutions" title="Permalink to this headline">#</a></h3>
-<figure class="align-default" id="dgcnnedgeconv">
-<a class="reference internal image-reference" href="../_images/dgcnnedgeconv.png"><img alt="../_images/dgcnnedgeconv.png" src="../_images/dgcnnedgeconv.png" style="width: 700px; height: 300px;" /></a>
+<figure class="align-default" id="dgcnnedgeconv1">
+<a class="reference internal image-reference" href="../_images/dgcnnedgeconv1.png"><img alt="../_images/dgcnnedgeconv1.png" src="../_images/dgcnnedgeconv1.png" style="width: 700px; height: 300px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Structure of Edge Convolutions found in the dynamic graph CNN.</span><a class="headerlink" href="#dgcnnedgeconv" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">First three steps of an EdgeConv layer.</span><a class="headerlink" href="#dgcnnedgeconv1" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Each edge convolution has two functions that are applied to each point in the point cloud. The first is a non-linear function with learnable functions that is used to define the edges between a point and its $k$ nearest neighbours. The second is a max function which is used to abstract information from the edges.</p>
+<figure class="align-default" id="dgcnnedgeconv2">
+<a class="reference internal image-reference" href="../_images/dgcnnedgeconv2.png"><img alt="../_images/dgcnnedgeconv2.png" src="../_images/dgcnnedgeconv2.png" style="width: 700px; height: 300px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 22 </span><span class="caption-text">Steps three to five of an EdgeConv layer.</span><a class="headerlink" href="#dgcnnedgeconv2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Each edge convolution has two functions that are applied to each point in the point cloud. The first is a non-linear function with learnable functions that is used to define the edges between a point and it’s <em>k</em> nearest neighbours. The second is a max function which is used to abstract information from the edges.</p>
 </section>
 </section>
 <section id="e-2-model-hyperparameters">
@@ -488,7 +494,7 @@ title="Print to PDF"
 <li><p>Time delta between the hit time and the CHOD time, for which values of 0.20ns to 0.50ns were used</p></li>
 <li><p>Learning rate, for which a constant learning rate and a learning rate scheduler were used</p></li>
 <li><p>Number of epochs, for which a maximum of 24 epochs were used</p></li>
-<li><p>$k$ for the K-nearest neighbours graph that is dynamically generated by the models architecture, which ranged from 8 to 20 nearest neighbors</p></li>
+<li><p><em>k</em> for the K-nearest neighbours graph that is dynamically generated by the models architecture, which ranged from 8 to 20 nearest neighbors</p></li>
 </ul>
 </section>
 </section>
@@ -524,13 +530,13 @@ title="Print to PDF"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Appendix D: PointNet (Deep Learning)</p>
+            <p class="prev-next-title">Appendix D: PointNet</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="supplementary_notebooks.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Supplementary Jupyter notebooks</p>
+        <p class="prev-next-title">Appendix F: Supplementary Jupyter notebooks</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
