@@ -40,10 +40,3 @@ The difference in the expected ring radius versus the computed ring radius using
 ```
 
 
-```{figure} ../images/delta_ring_radius.svg
----
-name: delta_ring_radius
----
-
-The difference in the expected ring radius versus the computed ring radius using the maximum likelihood estimate across different momentum bins.  The plot was generated using a subsample of the overall data in which an equal number of pions and muons were selected.
-```
