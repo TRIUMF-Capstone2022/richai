@@ -2,7 +2,9 @@
 
 This directory contains the master configuration file which controls all of the hyperparameters for model training.  A summary of these hyperparameters is below:
 
-## Dataset hyperparameters
+## Data set hyperparameters
+
+These are the hyperparameters related to the data set used for training.
 
 | Hyperparameter                  | Description                                                                      | Value                                                 |
 |---------------------------------|----------------------------------------------------------------------------------|-------------------------------------------------------|
@@ -26,6 +28,8 @@ This directory contains the master configuration file which controls all of the 
 
 ## Data loader hyperparameters
 
+These are the hyperparameters related to the data loaders used for training.
+
 | Hyperparameter | Description                                                              | Value   |
 |----------------|--------------------------------------------------------------------------|---------|
 | `batch_size`   | The batch size to use for the data loaders                               | Integer |
@@ -33,6 +37,8 @@ This directory contains the master configuration file which controls all of the 
 | `drop_last`    | Whether or not to drop the last batch if it is not equal to `batch_size` | Boolean |
 
 ## Model hyperparameters
+
+These are the hyperparameters related to the two models we trained, Pointnet and Dynamic Graph CNN.
 
 ### PointNet
 
