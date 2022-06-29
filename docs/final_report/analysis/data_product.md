@@ -1,4 +1,4 @@
-# 4. Data Product
+# 4. Data product
 
 ## 4.1: Product overview
 

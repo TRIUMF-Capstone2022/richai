@@ -1,4 +1,4 @@
-# 3. Data Science Methods
+# 3. Data science methods
 
 ## 3.1: Baseline model: XGBoost
 

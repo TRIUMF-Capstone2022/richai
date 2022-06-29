@@ -43,7 +43,7 @@ Due to the sensitivity of the detectors, the data recorded for photon hits corre
 Ultimately, the following features were available for our machine learning models:
 
 - Particle momentum
-- Light hit locations on PMT tubes (x, y)
+- Light hit locations on PMT tubes *(x, y)*
 - Time of each hit on a PMT tube
 - Time particle entered RICH detector (CHOD time)
 - Fitted ring radius (mm) from CERN's prior algorithm
@@ -51,6 +51,6 @@ Ultimately, the following features were available for our machine learning model
 
 The point cloud data was created as:
 
-- Light hit locations on PMT tubes (x, y) with the addition of (time of hit - CHOD time) as a z dimension to create a point cloud of *(x, y, z)* coordinates.
+- Light hit locations on PMT tubes *(x, y)* with the addition of (time of hit - CHOD time) as a *z* dimension to create a point cloud of *(x, y, z)* coordinates.
 
 
