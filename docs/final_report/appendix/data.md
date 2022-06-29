@@ -43,8 +43,6 @@ Ring-imaging Cherenkov detector
 
 ```{figure} ../images/eda_ring_center_loc.png
 ---
-height: 280px
-width: 600px
 name: ring_center
 ---
 
@@ -84,8 +82,7 @@ The photon hits recorded for a particular event are noisy due to the limited ins
 
 ```{figure} ../images/eda_delta_time.svg
 ---
-height: 386px
-width: 700px
+width: 800px
 name: delta_time
 ---
 
