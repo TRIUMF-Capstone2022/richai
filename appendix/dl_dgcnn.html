@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Appendix E: Dynamic Convolutional Neural Network &#8212; RICH AI Final Report</title>
+    <title>Appendix E: Dynamic Graph Convolutional Neural Network &#8212; RICH AI Final Report</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -174,7 +174,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Appendix E: Dynamic Convolutional Neural Network
+   Appendix E: Dynamic Graph Convolutional Neural Network
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -422,7 +422,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Appendix E: Dynamic Convolutional Neural Network</h1>
+                <h1>Appendix E: Dynamic Graph Convolutional Neural Network</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -459,8 +459,8 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="appendix-e-dynamic-convolutional-neural-network">
-<span id="appendix-deeplearning-dgcnn"></span><h1>Appendix E: Dynamic Convolutional Neural Network<a class="headerlink" href="#appendix-e-dynamic-convolutional-neural-network" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="appendix-e-dynamic-graph-convolutional-neural-network">
+<span id="appendix-deeplearning-dgcnn"></span><h1>Appendix E: Dynamic Graph Convolutional Neural Network<a class="headerlink" href="#appendix-e-dynamic-graph-convolutional-neural-network" title="Permalink to this headline">#</a></h1>
 <section id="e-1-model-architecture">
 <span id="appendix-deeplearning-dgcnn-arch"></span><h2>E.1: Model architecture<a class="headerlink" href="#e-1-model-architecture" title="Permalink to this headline">#</a></h2>
 <p>The dynamic graph CNN is built up of a series edge convolution layers which apply the concept of traditional convolutions to the specified <em>k</em> edges for each point. At the end of the series, the extracted features are passed onto a fully connected layers for the image classification. As in the PointNet model <a class="reference internal" href="dl_pointnet.html#appendix-deeplearning-pointnet-arch"><span class="std std-ref">App.C.1</span></a>, the point clouds are made transformation invariant through the use of a spatial transformer in the first step. The whole architecture is summarized in <a class="reference internal" href="#dgcnnarch"><span class="std std-numref">Fig. 20</span></a> <span id="id1">[<a class="reference internal" href="../references.html#id3" title="Yue Wang, Yongbin Sun, Ziwei Liu, Sanjay E Sarma, Michael M Bronstein, and Justin M Solomon. Dynamic graph cnn for learning on point clouds. Acm Transactions On Graphics (tog), 38(5):1–12, 2019.">Wang <em>et al.</em>, 2019</a>]</span>.</p>

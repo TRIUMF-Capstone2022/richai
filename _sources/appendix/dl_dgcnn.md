@@ -1,5 +1,5 @@
 (appendix:deeplearning:dgcnn)=
-# Appendix E: Dynamic Convolutional Neural Network
+# Appendix E: Dynamic Graph Convolutional Neural Network
 
 (appendix:deeplearning:dgcnn:arch)=
 ## E.1: Model architecture 
