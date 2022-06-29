@@ -77,7 +77,6 @@ At a high level, the overall project structure is as follows:
 ├── docs/
 │   ├── final_presentation/
 │   ├── final_report/
-│   ├── images/
 │   ├── proposal/
 │   └── README.md
 ├── models/
