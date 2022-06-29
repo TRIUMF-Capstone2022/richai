@@ -179,6 +179,7 @@ The `richai/utils` directory contains the following scripts:
 
 - `helpers.py` which contains code for useful helper functions that were used throughout the project.
 - `plotting.py` which contains code for useful plotting functions that were used throughout the project.
+- `gbt_dataset.py` which contains the code for the data set used for the XGBoost model
 
 ## Jupyter Notebooks
 
