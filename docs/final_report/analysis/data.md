@@ -14,8 +14,8 @@ The class imbalance will be detrimental to achieving a high pion efficiency as t
 
 ```{figure} ../images/eda_p_dist.svg
 ---
-height: 700px
-width: 950px
+height: 405px
+width: 550px
 name: momentum_distribution
 ---
 
