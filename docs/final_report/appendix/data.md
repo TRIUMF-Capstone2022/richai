@@ -43,7 +43,7 @@ Ring-imaging Cherenkov detector
 
 ```{figure} ../images/eda_ring_center_loc.png
 ---
-height: 479px
+height: 368px
 width: 650px
 name: ring_center
 ---
@@ -58,6 +58,7 @@ Similarly,  {numref}`ring_center` details the difference in the ring centers, co
 
 ```{figure} ../images/ring_plots.svg
 ---
+
 name: ring_plot
 ---
 
@@ -71,6 +72,8 @@ Naturally, the photon hits information for each event is a system of X and Y coo
 
 ```{figure} ../images/photon_hits.svg
 ---
+height: 368px
+width: 650px
 name: photon_hits
 ---
 
@@ -81,6 +84,8 @@ The photon hits recorded for a particular event are noisy due to the limited ins
 
 ```{figure} ../images/eda_delta_time.svg
 ---
+height: 368px
+width: 650px
 name: delta_time
 ---
 
