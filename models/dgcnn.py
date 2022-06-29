@@ -13,7 +13,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def knn(x, k):
@@ -61,10 +61,7 @@ def get_graph_feature(x, k, idx=None):
     idx = knn(x, k=k)
 
     # index for each point: (batch_size) -> view -> (batch_size, 1, 1)
-    idx_base = (
-        torch.arange(0, batch_size, device=x.device).view(-1, 1, 1)
-        * num_points
-    )
+    idx_base = torch.arange(0, batch_size, device=x.device).view(-1, 1, 1) * num_points
 
     # index + knn index: (batch_size, num_dims, num_points)
     idx = idx + idx_base
@@ -85,9 +82,7 @@ def get_graph_feature(x, k, idx=None):
     x = x.view(batch_size, num_points, 1, num_dims).repeat(1, 1, k, 1)
 
     # (batch_size, 2*num_dims, num_points, k)
-    feature = (
-        torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
-    )
+    feature = torch.cat((feature - x, x), dim=3).permute(0, 3, 1, 2).contiguous()
 
     return feature
 

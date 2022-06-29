@@ -20,9 +20,7 @@ from torch.utils.data.sampler import SubsetRandomSampler
 logger = get_logger()
 
 
-def get_predictions(
-    model, dataloader, device, operating_point=0.5, unstandardize=True
-):
+def get_predictions(model, dataloader, device, operating_point=0.5, unstandardize=True):
     """Evaluate the trained model on the test set.
 
     Parameters
@@ -44,7 +42,7 @@ def get_predictions(
         Returns evaluation results for the trained model on test set.
     """
 
-    logger.info('Getting predictions...')
+    logger.info("Getting predictions...")
 
     labels, predictions, probabilities, momentum = [], [], [], []
 
@@ -73,21 +71,21 @@ def get_predictions(
             predictions.extend(preds)
             momentum.extend(p)
 
-    logger.info(f'Model evaluation complete')
+    logger.info(f"Model evaluation complete")
 
     df = pd.DataFrame(
         {
-            'labels': labels,
-            'predictions': predictions,
-            'probabilities': probabilities,
-            'momentum': momentum,
+            "labels": labels,
+            "predictions": predictions,
+            "probabilities": probabilities,
+            "momentum": momentum,
         }
     )
 
     if unstandardize:
-        mean_momentum = get_config('dataset.standardize.mean_momentum')
-        std_momentum = get_config('dataset.standardize.std_momentum')
-        df['momentum'] = df['momentum'] * std_momentum + mean_momentum
+        mean_momentum = get_config("dataset.standardize.mean_momentum")
+        std_momentum = get_config("dataset.standardize.std_momentum")
+        df["momentum"] = df["momentum"] * std_momentum + mean_momentum
 
     return df
 
@@ -108,102 +106,102 @@ def evaluate(model_name, test_only=False):
         Raises error if unable to load model.
     """
 
-    logger.info(f'{model_name} evaluation starting...')
+    logger.info(f"{model_name} evaluation starting...")
 
     result = pd.DataFrame()
 
     # get config
-    output_channels = get_config(f'model.{model_name}.output_channels')
-    momentum = get_config(f'model.{model_name}.momentum')
-    radius = get_config(f'model.{model_name}.radius')
-    state_dict = get_config(f'model.{model_name}.saved_model')
-    gpus = get_config('gpu')
+    output_channels = get_config(f"model.{model_name}.output_channels")
+    momentum = get_config(f"model.{model_name}.momentum")
+    radius = get_config(f"model.{model_name}.radius")
+    state_dict = get_config(f"model.{model_name}.saved_model")
+    gpus = get_config("gpu")
 
     # define model
-    if model_name == 'pointnet':
+    if model_name == "pointnet":
         model = PointNetFc(
             num_classes=output_channels,
             momentum=momentum,
             radius=radius,
         )
-    elif model_name == f'{model_name}':
+    elif model_name == f"{model_name}":
         model = DGCNN(
-            k=get_config(f'model.{model_name}.k'),
+            k=get_config(f"model.{model_name}.k"),
             output_channels=output_channels,
             momentum=momentum,
             radius=radius,
         )
     else:
-        raise ValueError(f'Model {model_name} not supported')
+        raise ValueError(f"Model {model_name} not supported")
 
     # run in parallel
     if torch.cuda.device_count() > 1:
-        logger.info(f'Using gpus {gpus}')
+        logger.info(f"Using gpus {gpus}")
         model = torch.nn.DataParallel(model, device_ids=gpus)
-        device = f'cuda:{model.device_ids[0]}'
+        device = f"cuda:{model.device_ids[0]}"
     else:
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        logger.info(f'Using {device}')
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        logger.info(f"Using {device}")
 
     model.to(device)
 
     # load model
     model.load_state_dict(torch.load(state_dict))
 
-    logger.info(f'Model loaded from {state_dict}')
+    logger.info(f"Model loaded from {state_dict}")
 
-    files = get_config('dataset.test')
+    files = get_config("dataset.test")
 
     for file_, sample_file in files.items():
 
-        logger.info(f'Evaluating for {file_}')
+        logger.info(f"Evaluating for {file_}")
 
         dataset = RICHDataset(
             dset_path=file_,
             val_split=None,
             test_split=None,
-            seed=get_config(f'model.{model_name}.seed'),
-            delta=get_config('dataset.delta'),
+            seed=get_config(f"model.{model_name}.seed"),
+            delta=get_config("dataset.delta"),
             test_only=test_only,
         )
 
         data_loader = torch.utils.data.DataLoader(
             dataset,
-            batch_size=get_config('data_loader.batch_size'),
+            batch_size=get_config("data_loader.batch_size"),
             shuffle=False,
             sampler=SubsetRandomSampler(dataset.test_indices),
-            num_workers=get_config('data_loader.num_workers'),
-            drop_last=get_config('data_loader.drop_last'),
+            num_workers=get_config("data_loader.num_workers"),
+            drop_last=get_config("data_loader.drop_last"),
         )
 
         df = get_predictions(model, data_loader, device)
         result = pd.concat([result, df])
 
     # writing the results to disk
-    results_path = get_config(f'model.{model_name}.predictions')
+    results_path = get_config(f"model.{model_name}.predictions")
     result.to_csv(results_path, index=False)
 
-    logger.info(f'{model_name} evaluation completed!')
-    logger.info(f'Results successfully saved to {results_path}')
+    logger.info(f"{model_name} evaluation completed!")
+    logger.info(f"Results successfully saved to {results_path}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # argument parser
-    parser = argparse.ArgumentParser('Neural Network Training')
+    parser = argparse.ArgumentParser("Neural Network Training")
     parser.add_argument(
-        '-m',
-        '--model',
+        "-m",
+        "--model",
         type=str,
         required=True,
-        help='Model name - pointnet or dgcnn',
+        help="Model name - pointnet or dgcnn",
     )
     parser.add_argument(
-        '-t',
-        '--test_only',
+        "-t",
+        "--test_only",
         type=str,
         default=True,
-        help='If the data is test only dataset',
+        help="If the data is test only dataset",
     )
 
     args = parser.parse_args()

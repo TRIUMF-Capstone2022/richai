@@ -1,17 +1,17 @@
 (appendix:deeplearning:pointnet)=
-# Appendix D: PointNet (Deep Learning)
+# Appendix D: PointNet
 
 (appendix:deeplearning:pointnet:arch)=
 ## D.1: Model architecture 
 
-### Base Architecture
+### D.1.1: Base Architecture
 
 The PointNet architecture has two key features which allow it to handle pointcloud data effectively: 
 
 1. Spatial transformation network (T-Net) {cite}`https://doi.org/10.48550/arxiv.1506.02025` 
 2. Maxpooling
 
-The overall architecture can be seen in {numref}`pointnetarch` {cite}`qi2017pointnet`. The spatial transformer is the first part of the model, and makes the model invariant to rotations in the point cloud. The parameters for the matrix learnt by this network are data driven and therefore robust. The second application of T-Net acts on the features extracted from various point clouds and orient them in a latent feature space. This matrix learnt for this step is more complex. 
+The overall architecture can be seen in {numref}`pointnetarch` {cite}`qi2017pointnet`. The spatial transformer ("T-net") is the first part of the model, and makes the model invariant to geometric transformations in the point cloud. The parameters for the matrix learnt by this network are data driven and therefore robust. The second application of T-Net acts on the features extracted from various point clouds and orient them in a latent feature space. This matrix learnt for this step is more complex. 
 
 These geometric invariant features are passed onto a fully connected layer for feature extraction. Subsequently, max pooling, a symmetric function, is applied to this output to capture the unordered nature of the points in the point cloud. The output is passed to a classification network. 
 
@@ -25,10 +25,10 @@ name: pointnetarch
 
 The architecture of the base PointNet model. 
 ```
-### Additional features 
 
-To this base architecture, two features specific to our problem, the ring radius corresponding to the point cloud generated using the MLE and the momentum of the particle, were concatenated to the fully connected layer. Both features were normalized batchwise to ensure stability of the network. 
+### D.1.2: Additional features 
 
+The particle momentum and ring radius were added to this architecture by concatenating them to the fully connected layer. Both features were standardized and normalized batchwise to ensure stability of the network. 
 
 (appendix:deeplearning:pointnet:hyp)=
 ## D.2: Model hyperparamters 
