@@ -18,6 +18,8 @@ parts:
     - file: appendix/dl_dgcnn
     - file: appendix/supplementary_notebooks
       sections:
+      # note: these are dynamically copied from richai/notebooks with the
+      # GitHub actions workflow when the Jupyter book is built
         - file: appendix/notebooks/data_generation_process
         - file: appendix/notebooks/EDA
         - file: appendix/notebooks/plotting_NA62_rings
