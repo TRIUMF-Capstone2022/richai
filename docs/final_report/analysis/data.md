@@ -2,9 +2,9 @@
 
 ## 2.1: Volume and Features
 
-The data was generated as part of the NA62 experiments performed at CERN {cite}`https://doi.org/10.48550/arxiv.1706.08496`.  There are a total of 11 million labeled decay events, each containing features that can be utilized by machine learning models. However, there is a large class imbalance in the data set. Only 10% of the examples represent pion decays, the class of interest.
+The data was generated as part of the NA62 experiments performed at CERN {cite}`https://doi.org/10.48550/arxiv.1706.08496`.  There are approximately a total of 11 million labeled decay events, each containing features that can be utilized by machine learning models. However, there is a high class imbalance in the data set. Only 10% of the examples represent pion decays, the class of interest.
 
-Based on the experimental setup detailed in {ref}`App. B.1 <appendix:datagen:process>`, two sets of features associated are derived for each event. The first set corresponds to the subatomic particle motion: the particle momentum and time spent in the detector ("CHOD" time). The second set of features are derived from the light emitted by the subatomic particle motion. Each photon detected by a PMT tube is recorded as a hit on the PMT grid with X and Y coordinates relative to this grid and the time of the hit. As an abstraction to the hit scatter, the ring radius and center that result from the maximum likelihood fit that TRIUMF currently employs is also included.
+Based on the experimental setup detailed in {ref}`App. B.1 <appendix:datagen:process>`, two sets of features associated are derived for each event. The first set corresponds to the subatomic particle motion: the particle momentum and time spent in the detector ("CHOD" time). The second set of features are derived from the light emitted by the subatomic particle motion. Each photon detected by a photomultiplier tube (PMT) tube is recorded as a hit on the PMT grid with X and Y coordinates relative to this grid and the time of the hit. As an abstraction to the hit scatter, the ring radius and center that result from the maximum likelihood fit that TRIUMF currently employs is also included.
 
 ## 2.3: Preprocessing
 
@@ -22,7 +22,7 @@ name: momentum_distribution
 Distribution of momentum for all samples by class. 
 ```
 
-The solution was to split the data into three equally sized bins by momentum in the range of 15-45 $GeV/c$, count the number of pions in each bin, and sample an equal number of muons within that bin. The resulting synthetic dataset contained 2 million examples. There were enough examples to feed into the machine learning models, and momentum as a feature was controlled. 
+The solution was to split the data into three equally sized bins by momentum in the range of 15-45 *GeV/c*, count the number of pions in each bin, and sample an equal number of muons within that bin. The resulting synthetic dataset contained 2 million examples. There were enough examples to feed into the machine learning models, and momentum as a feature was controlled. 
 
 ### 2.3.2: Additional Bias in ring center locations 
 
