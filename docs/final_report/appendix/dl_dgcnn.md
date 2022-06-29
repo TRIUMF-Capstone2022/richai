@@ -4,7 +4,7 @@
 (appendix:deeplearning:dgcnn:arch)=
 ## E.1: Model architecture 
 
-The dynamic graph CNN is built up of a series edge convolution layers which apply the concept of traditional convolutions to the specified $k$ edges for each point. At the end of the series, the extracted featrues are passed onto a fully connected layers for the image classification. As in the PointNet model {ref}`App.C.1 <appendix:deeplearning:pointnet:arch>`, the point clouds are made transformation invariant through the use of a spatial transformer in the first step. The whole architecture is summarized in {numref}`dgcnnarch` {cite}`wang2019dynamic`. 
+The dynamic graph CNN is built up of a series edge convolution layers which apply the concept of traditional convolutions to the specified $k$ edges for each point. At the end of the series, the extracted features are passed onto a fully connected layers for the image classification. As in the PointNet model {ref}`App.C.1 <appendix:deeplearning:pointnet:arch>`, the point clouds are made transformation invariant through the use of a spatial transformer in the first step. The whole architecture is summarized in {numref}`dgcnnarch` {cite}`wang2019dynamic`. 
 
 ```{figure} ../images/dgcnnarch.png
 ---
@@ -20,16 +20,16 @@ The architecture of the base dynamic graph CNN model.
 
 ```{figure} ../images/dgcnnedgeconv.png
 ---
-height: 500px
-width: 900px
+height: 300px
+width: 700px
 name: dgcnnedgeconv
 ---
 Structure of Edge Convolutions found in the dynamic graph CNN. 
 ```
-Each edge convolution has two funcitons that are applied to each point in the point cloud. The first is a non-linear funciton with learnable functions that is used to define the edges between a point and its $k$ nearest neighbours. The second is a max function which is used to abstract information from the edges.
+Each edge convolution has two functions that are applied to each point in the point cloud. The first is a non-linear function with learnable functions that is used to define the edges between a point and its $k$ nearest neighbours. The second is a max function which is used to abstract information from the edges.
 
 (appendix:deeplearning:dgcnn:hyp)=
-## E.2: Model hyperparamters 
+## E.2: Model hyperparameters 
 
 The hyperparameters that were tuned were:
 
